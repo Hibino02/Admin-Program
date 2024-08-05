@@ -98,6 +98,7 @@
     <Compile Include="ObjectClass\JobType.cs" />
     <Compile Include="ObjectClass\Plan.cs" />
     <Compile Include="ObjectClass\PlanPeriod.cs" />
+    <Compile Include="ObjectClass\PlanProcess.cs" />
     <Compile Include="ObjectClass\PlanType.cs" />
     <Compile Include="ObjectClass\RentalBasis.cs" />
     <Compile Include="Program.cs" />

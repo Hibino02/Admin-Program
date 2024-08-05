@@ -8,7 +8,8 @@ namespace Equipment_Management
     {
         static void Main(string[] args)
         {
-            /*List<Plan> acc = Plan.GetPlanList();
+            /*
+            List<Plan> acc = Plan.GetPlanList();
             foreach (Plan job in acc)
             {
                 Console.WriteLine($"ID: {job.ID}");
