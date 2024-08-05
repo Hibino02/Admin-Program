@@ -33,7 +33,11 @@ namespace Equipment_Management
             Console.WriteLine($"Plan Period: {p.PPeriod.PPeriod}");
             Console.WriteLine($"Equipment Name: {p.Eqp.Name}");
             Console.WriteLine($"Equipment Install Date: {p.Eqp.InsDate}");
-            Console.WriteLine($"Equipment Install Date: {p.Eqp.EStatusObj.EStatus}"); */
+            Console.WriteLine($"Equipment Install Date: {p.Eqp.EStatusObj.EStatus}");
+
+            PlanProcess pp = new PlanProcess(1);
+            Console.WriteLine($"Process Date: {pp.ProcessDate}");
+            Console.WriteLine($"Equipment Name: {pp.RE.Name}"); */
         }
     }
 }
