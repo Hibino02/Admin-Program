@@ -319,5 +319,36 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
             }
             return planList;
         }
+
+        public bool UpdateEquipment()
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                if (eqp != null)
+                {
+                    conn = new MySqlConnection(connstr);
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        string update = "UPDATE job SET EID = @eid WHERE ID = @id";
+                        cmd.CommandText = update;
+                        cmd.Parameters.AddWithValue("@eid", eqp.ID);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
     }
 }

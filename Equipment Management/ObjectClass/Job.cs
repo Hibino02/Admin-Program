@@ -620,5 +620,72 @@ LEFT JOIN jobtype jt ON j.JTypeID = jt.ID";
             }
             return jobList;
         }
+
+        public bool UpdateEquipment()
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                if(jeq != null)
+                {
+                    conn = new MySqlConnection(connstr);
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        string update = "UPDATE job SET EID = @eid WHERE ID = @id";
+                        cmd.CommandText = update;
+                        cmd.Parameters.AddWithValue("@eid", jeq.ID);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                    }     
+                }
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
+        public bool UpdateReplaceEquipment()
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string clearReid = "UPDATE job SET REID = NULL WHERE ID = @id";
+                    cmd.CommandText = clearReid;
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+
+                    if (req != null)
+                    {
+                        cmd.Parameters.Clear();
+                        string update = "UPDATE job SET REID = @reid WHERE ID = @id";
+                        cmd.CommandText = update;
+                        cmd.Parameters.AddWithValue("@reid", req.ID);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
     }
 }
