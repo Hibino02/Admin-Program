@@ -71,7 +71,7 @@
             this.equipmentControlLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.equipmentControlLabel.Location = new System.Drawing.Point(6, 11);
             this.equipmentControlLabel.Name = "equipmentControlLabel";
-            this.equipmentControlLabel.Size = new System.Drawing.Size(349, 39);
+            this.equipmentControlLabel.Size = new System.Drawing.Size(282, 31);
             this.equipmentControlLabel.TabIndex = 0;
             this.equipmentControlLabel.Text = "อุปกรณ์ และการแจ้งซ่อม";
             // 
@@ -131,7 +131,7 @@
             this.jobProcessingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.jobProcessingLabel.Location = new System.Drawing.Point(9, 465);
             this.jobProcessingLabel.Name = "jobProcessingLabel";
-            this.jobProcessingLabel.Size = new System.Drawing.Size(212, 24);
+            this.jobProcessingLabel.Size = new System.Drawing.Size(164, 18);
             this.jobProcessingLabel.TabIndex = 9;
             this.jobProcessingLabel.Text = "รายการงานที่กำลังดำเนินการ";
             // 
@@ -170,7 +170,7 @@
             this.jobCreatedList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.jobCreatedList.Location = new System.Drawing.Point(9, 110);
             this.jobCreatedList.Name = "jobCreatedList";
-            this.jobCreatedList.Size = new System.Drawing.Size(225, 24);
+            this.jobCreatedList.Size = new System.Drawing.Size(179, 18);
             this.jobCreatedList.TabIndex = 5;
             this.jobCreatedList.Text = "รายการแจ้งซ่อมที่รอดำเนินการ";
             // 
@@ -213,6 +213,7 @@
             this.installationButton.TabIndex = 1;
             this.installationButton.Text = "ติดตั้ง";
             this.installationButton.UseVisualStyleBackColor = true;
+            this.installationButton.Click += new System.EventHandler(this.installationButton_Click);
             // 
             // maintainancePlanLabel
             // 
@@ -220,7 +221,7 @@
             this.maintainancePlanLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.maintainancePlanLabel.Location = new System.Drawing.Point(6, 11);
             this.maintainancePlanLabel.Name = "maintainancePlanLabel";
-            this.maintainancePlanLabel.Size = new System.Drawing.Size(208, 39);
+            this.maintainancePlanLabel.Size = new System.Drawing.Size(168, 31);
             this.maintainancePlanLabel.TabIndex = 0;
             this.maintainancePlanLabel.Text = "แผนซ่อมบำรุง";
             // 
@@ -303,7 +304,7 @@
             this.planProcessingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.planProcessingLabel.Location = new System.Drawing.Point(9, 465);
             this.planProcessingLabel.Name = "planProcessingLabel";
-            this.planProcessingLabel.Size = new System.Drawing.Size(239, 24);
+            this.planProcessingLabel.Size = new System.Drawing.Size(191, 18);
             this.planProcessingLabel.TabIndex = 13;
             this.planProcessingLabel.Text = "อุปกรณ์ที่กำลังซ่อมบำรุงตามแผน";
             // 
@@ -332,7 +333,7 @@
             this.currentMaintainencePlanList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.currentMaintainencePlanList.Location = new System.Drawing.Point(6, 110);
             this.currentMaintainencePlanList.Name = "currentMaintainencePlanList";
-            this.currentMaintainencePlanList.Size = new System.Drawing.Size(215, 24);
+            this.currentMaintainencePlanList.Size = new System.Drawing.Size(171, 18);
             this.currentMaintainencePlanList.TabIndex = 13;
             this.currentMaintainencePlanList.Text = "รายการแผนซ่อมบำรุงปัจจุบัน";
             // 

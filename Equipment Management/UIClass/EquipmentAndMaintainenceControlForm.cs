@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Equipment_Management.CustomViewClass;
+using Equipment_Management.UIClass.InstallationSource;
 
 namespace Equipment_Management.UIClass
 {
     public partial class EquipmentAndMaintainenceControlForm : Form
     {
+        MainBackGroundFrom main;
+
+        private InstallationEquipment installRquipment;
+
         BindingSource jobCreatedBindingSource;
         BindingSource jobProcessedBindingSource;
 
@@ -15,6 +20,7 @@ namespace Equipment_Management.UIClass
         List<AllJobInProcessView> jobfilteredList;
 
         public event EventHandler returnMain;
+        public event EventHandler installationEquipment;
 
         public EquipmentAndMaintainenceControlForm()
         {
@@ -37,11 +43,6 @@ namespace Equipment_Management.UIClass
         private void EquipmentAndMaintainenceControlForm_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.None;
-        }
-        private void backToMainMenuButton_Click(object sender, EventArgs e)
-        {
-            returnMain?.Invoke(this, EventArgs.Empty);
-            Close();
         }
         //Job Created Methods section
         private void UpdateCreatedJobView()
@@ -154,6 +155,18 @@ namespace Equipment_Management.UIClass
                 }
             }
             return filteredList;
+        }
+
+        private void installationButton_Click(object sender, EventArgs e)
+        {
+            installRquipment = new InstallationEquipment();
+            installRquipment.Owner = main;
+            installRquipment.ShowDialog();
+        }
+        private void backToMainMenuButton_Click(object sender, EventArgs e)
+        {
+            returnMain?.Invoke(this, EventArgs.Empty);
+            Close();
         }
     }
 }
