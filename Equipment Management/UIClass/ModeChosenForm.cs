@@ -25,7 +25,6 @@ namespace Equipment_Management.UIClass
         private void ModeChosenForm_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.None;
-            //this.WindowState = FormWindowState.Maximized;
         }
     }
 }
