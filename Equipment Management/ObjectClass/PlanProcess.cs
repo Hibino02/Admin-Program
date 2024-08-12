@@ -49,7 +49,7 @@ namespace Equipment_Management.ObjectClass
                     string select = @"SELECT
 pp.ID, pp.ProcessDate, pp.StartDetails, pp.PSup, pp.PSupDetails, pp.Cost,
 pp.WorkPermit, pp.Contract, pp.FinishDate, pp.FinishDetails, pp.FinishDoc,
-pp.PlanID, pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails,
+pp.PlanID, pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
 e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.WriteOff, e.ETypeID, et.EType, 
 e.EOwnerID, eo.Owner, e.EAcqID, ea.Accquire, e.EStatusID, es.EStatus, e.ERentID, er.Basis
 FROM planprocess pp
@@ -109,7 +109,8 @@ WHERE pp.ID = @id";
                                 int basisid = Convert.ToInt32(reader["ERentID"]);
                                 string basis = reader["Basis"].ToString();
                                 RentalBasis erentalbasis = new RentalBasis(basisid, basis);
-                                re = new Equipment(id1, name, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                                bool onplan = Convert.ToBoolean(reader["OnPlan"]);
+                                re = new Equipment(id1, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
                                     serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                     writeoffpath);
                             }
@@ -285,7 +286,7 @@ WHERE pp.ID = @id";
 pp.ID, pp.ProcessDate, pp.StartDetails, pp.PSup, pp.PSupDetails, pp.Cost,
 pp.WorkPermit, pp.Contract, pp.FinishDate, pp.FinishDetails, pp.FinishDoc,
 pp.PlanID, 
-pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails,
+pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
 e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate,
 e.WriteOff, e.ETypeID, et.EType, 
 e.EOwnerID, eo.Owner,
@@ -344,7 +345,8 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
                             int basisid = Convert.ToInt32(reader["ERentID"]);
                             string basis = reader["Basis"].ToString();
                             RentalBasis erentalbasis = new RentalBasis(basisid, basis);
-                            Equipment re = new Equipment(reid, name, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                            bool onplan = Convert.ToBoolean(reader["OnPlan"]);
+                            Equipment re = new Equipment(reid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
                                 serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                 writeoffpath);
 

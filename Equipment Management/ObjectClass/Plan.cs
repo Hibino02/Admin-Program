@@ -38,8 +38,8 @@ namespace Equipment_Management.ObjectClass
 p.ID, p.TimesToDo, p.DateToDo, p.PlanStatus,
 p.PTypeID, pt.PType,
 p.PPeriodID, pp.PPeriod,
-p.EID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails,
-e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate,
+p.EID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
+e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.InsDetails,
 e.WriteOff, e.ETypeID, et.EType, 
 e.EOwnerID, eo.Owner,
 e.EAcqID, ea.Accquire,
@@ -99,9 +99,11 @@ WHERE p.ID = @id";
                             int basisid = Convert.ToInt32(reader["ERentID"]);
                             string basis = reader["Basis"].ToString();
                             RentalBasis erentalbasis = new RentalBasis(basisid, basis);
-                            eqp = new Equipment(id, name, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                            string insdetail = reader["InsDetails"].ToString();
+                            bool onplan = Convert.ToBoolean(reader["OnPlan"]);
+                            eqp = new Equipment(id, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
                                 serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
-                                writeoffpath);
+                                writeoffpath,insdetail);
                         }
                     }
                 }
@@ -242,8 +244,8 @@ WHERE p.ID = @id";
 p.ID, p.TimesToDo, p.DateToDo, p.PlanStatus,
 p.PTypeID, pt.PType,
 p.PPeriodID, pp.PPeriod,
-p.EID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails,
-e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate,
+p.EID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
+e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.InsDetails,
 e.WriteOff, e.ETypeID, et.EType, 
 e.EOwnerID, eo.Owner,
 e.EAcqID, ea.Accquire,
@@ -301,9 +303,11 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
                             int basisid = Convert.ToInt32(reader["ERentID"]);
                             string basis = reader["Basis"].ToString();
                             RentalBasis erentalbasis = new RentalBasis(basisid, basis);
-                            Equipment eqp = new Equipment(id, name, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                            string insdetail = reader["InsDetails"].ToString();
+                            bool onplan = Convert.ToBoolean(reader["OnPlan"]);
+                            Equipment eqp = new Equipment(id, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
                                 serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
-                                writeoffpath);
+                                writeoffpath,insdetail);
 
                             Plan p = new Plan(id,eqp,ptype1,pperiod1,timestodo,planstatus, datetodo);
                             planList.Add(p);

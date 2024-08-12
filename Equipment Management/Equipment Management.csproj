@@ -89,7 +89,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomViewClass\AllEquipmentView.cs" />
     <Compile Include="CustomViewClass\AllJobInProcessView.cs" />
+    <Compile Include="CustomWindowComponents\CustomMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomWindowComponents\CustomMessageBox.Designer.cs">
+      <DependentUpon>CustomMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalVariable\Global.cs" />
     <Compile Include="ObjectClass\Acquisition.cs" />
     <Compile Include="ObjectClass\Equipment.cs" />
     <Compile Include="ObjectClass\EquipmentOwner.cs" />
@@ -116,11 +124,65 @@
     <Compile Include="UIClass\EquipmentAndMaintainenceControlForm.Designer.cs">
       <DependentUpon>EquipmentAndMaintainenceControlForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UIClass\InstallationSource\InstallationEquipment.cs">
+    <Compile Include="UIClass\EquipmentInstallEditWriteOffSource\EditEquipmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UIClass\InstallationSource\InstallationEquipment.Designer.cs">
+    <Compile Include="UIClass\EquipmentInstallEditWriteOffSource\EditEquipmentForm.Designer.cs">
+      <DependentUpon>EditEquipmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\EquipmentInstallEditWriteOffSource\WriteOffAndTransferEquipmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\EquipmentInstallEditWriteOffSource\WriteOffAndTransferEquipmentForm.Designer.cs">
+      <DependentUpon>WriteOffAndTransferEquipmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\EquipmentInstallEditWriteOffSource\WriteOffNTransferDocumentAttachment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\EquipmentInstallEditWriteOffSource\WriteOffNTransferDocumentAttachment.Designer.cs">
+      <DependentUpon>WriteOffNTransferDocumentAttachment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\EquipmentListSource\EquipmentList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\EquipmentListSource\EquipmentList.Designer.cs">
+      <DependentUpon>EquipmentList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\EquipmentInstallEditWriteOffSource\InstallationEquipment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\EquipmentInstallEditWriteOffSource\InstallationEquipment.Designer.cs">
       <DependentUpon>InstallationEquipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\Job\CreateJobForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Job\CreateJobForm.Designer.cs">
+      <DependentUpon>CreateJobForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\Job\EditJobProcessing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Job\EditJobProcessing.Designer.cs">
+      <DependentUpon>EditJobProcessing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\Job\JobAcceptation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Job\JobAcceptation.Designer.cs">
+      <DependentUpon>JobAcceptation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\Job\JobProcessing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Job\JobProcessing.Designer.cs">
+      <DependentUpon>JobProcessing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\Job\RemoveJobForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Job\RemoveJobForm.Designer.cs">
+      <DependentUpon>RemoveJobForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UIClass\MainBackGroundFrom.cs">
       <SubType>Form</SubType>
@@ -134,6 +196,9 @@
     <Compile Include="UIClass\ModeChosenForm.Designer.cs">
       <DependentUpon>ModeChosenForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CustomWindowComponents\CustomMessageBox.resx">
+      <DependentUpon>CustomMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -149,8 +214,35 @@
     <EmbeddedResource Include="UIClass\EquipmentAndMaintainenceControlForm.resx">
       <DependentUpon>EquipmentAndMaintainenceControlForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UIClass\InstallationSource\InstallationEquipment.resx">
+    <EmbeddedResource Include="UIClass\EquipmentInstallEditWriteOffSource\EditEquipmentForm.resx">
+      <DependentUpon>EditEquipmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\EquipmentInstallEditWriteOffSource\WriteOffAndTransferEquipmentForm.resx">
+      <DependentUpon>WriteOffAndTransferEquipmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\EquipmentInstallEditWriteOffSource\WriteOffNTransferDocumentAttachment.resx">
+      <DependentUpon>WriteOffNTransferDocumentAttachment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\EquipmentListSource\EquipmentList.resx">
+      <DependentUpon>EquipmentList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\EquipmentInstallEditWriteOffSource\InstallationEquipment.resx">
       <DependentUpon>InstallationEquipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Job\CreateJobForm.resx">
+      <DependentUpon>CreateJobForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Job\EditJobProcessing.resx">
+      <DependentUpon>EditJobProcessing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Job\JobAcceptation.resx">
+      <DependentUpon>JobAcceptation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Job\JobProcessing.resx">
+      <DependentUpon>JobProcessing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Job\RemoveJobForm.resx">
+      <DependentUpon>RemoveJobForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIClass\MainBackGroundFrom.resx">
       <DependentUpon>MainBackGroundFrom.cs</DependentUpon>
@@ -172,7 +264,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

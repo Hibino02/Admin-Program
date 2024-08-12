@@ -43,5 +43,20 @@ namespace Equipment_Management.UIClass
         {
             ShowModeChosenForm();
         }
+
+        private void MainBackGroundFrom_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Prompt the user with a MessageBox
+            DialogResult result = MessageBox.Show("ต้องการออกจากโปรแกรม ใช่หรือไม่?",
+                                                  "ยืนยันการออกจากโปรแกรม",
+                                                  MessageBoxButtons.YesNo,
+                                                  MessageBoxIcon.Question);
+
+            // If the user clicks 'No', cancel the close operation
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

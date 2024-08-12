@@ -84,18 +84,18 @@ namespace Equipment_Management.ObjectClass
     j.WorkPermit, j.Cost, j.Contract, j.StartDate, j.FinishDate,
     j.FinishPhoto, j.FinishDocument, j.Acceptor, j.JobStatus,
     j.JTypeID, jt.Type,
-    j.EID, e1.Name AS E1_Name, e1.Serial AS E1_Serial, e1.EPhoto AS E1_EPhoto, 
+    j.EID, e1.Name AS E1_Name, e1.Serial AS E1_Serial, e1.EPhoto AS E1_EPhoto, e1.OnPlan AS E1_onPlan, 
     e1.OPlacePhoto AS E1_OPlacePhoto, e1.EDetails AS E1_EDetails, e1.Replacement AS E1_Replacement, 
-    e1.SellDetails AS E1_SellDetails, e1.Price AS E1_Price,
+    e1.SellDetails AS E1_SellDetails, e1.Price AS E1_Price, e1.InsDetails AS E1_InsDetails,
     e1.EDocument AS E1_EDocument, e1.InsDate AS E1_InsDate, e1.WriteOff AS E1_WriteOff,
     e1.ETypeID AS E1_ETypeID, et1.EType AS E1_EType,
     e1.EOwnerID AS E1_EOwnerID, eo1.Owner AS E1_Owner,
     e1.EAcqID AS E1_AcqID, ea1.Accquire AS E1_Accquire,
     e1.EStatusID AS E1_EStatusID, es1.EStatus AS E1_EStatus,
     e1.ERentID AS E1_ERentID, er1.Basis AS E1_Basis,
-    j.REID, e2.Name AS E2_Name, e2.Serial AS E2_Serial, e2.EPhoto AS E2_EPhoto, 
+    j.REID, e2.Name AS E2_Name, e2.Serial AS E2_Serial, e2.EPhoto AS E2_EPhoto, e2.OnPlan AS E2_onPlan,
     e2.OPlacePhoto AS E2_OPlacePhoto, e2.EDetails AS E2_EDetails, e2.Replacement AS E2_Replacement, 
-    e2.SellDetails AS E2_SellDetails, e2.Price AS E2_Price,
+    e2.SellDetails AS E2_SellDetails, e2.Price AS E2_Price, e2.InsDetails AS E2_InsDetails,
     e2.EDocument AS E2_EDocument, e2.InsDate AS E2_InsDate, e2.WriteOff AS E2_WriteOff,
     e2.ETypeID AS E2_ETypeID, et2.EType AS E2_EType,
     e2.EOwnerID AS E2_EOwnerID, eo2.Owner AS E2_Owner,
@@ -178,12 +178,16 @@ WHERE j.ID = @jid;";
                             int estaid = Convert.ToInt32(reader["E1_EStatusID"]);
                             string status = reader["E1_EStatus"].ToString();
                             EquipmentStatus estatusobj = new EquipmentStatus(estaid, status);
-                            int basisid = Convert.ToInt32(reader["E1_ERentID"]);
-                            string basis = reader["E1_Basis"].ToString();
-                            RentalBasis erentalbasis = new RentalBasis(basisid, basis);
-                            jeq = new Equipment(eid, name, insdate, etypeobj, eownerobj, acquisitionobj, estatusobj,
-                                erentalbasis, serial, ephotopath, oplacephotopath, edetails, replacement, selldetails,
-                                price, edocumentpath, writeoffpath);
+
+                            int? basisid = reader["E1_ERentID"] != DBNull.Value ? Convert.ToInt32(reader["E1_ERentID"]) : (int?)null;
+                            string basis = reader["E2_Basis"] != DBNull.Value ? reader["E2_Basis"].ToString() : null;
+                            RentalBasis rent = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
+
+                            string insdetail = reader["E1_InsDetails"].ToString();
+                            bool onplan = Convert.ToBoolean(reader["E1_onPlan"]);
+                            jeq = new Equipment(eid, name,onplan, insdate, etypeobj, eownerobj, acquisitionobj, estatusobj,
+                                rent, serial, ephotopath, oplacephotopath, edetails, replacement, selldetails,
+                                price, edocumentpath, writeoffpath,insdetail);
 
                             //Replacement equipment for this job
                             int? track = reader["REID"] != DBNull.Value ? Convert.ToInt32(reader["REID"]) : (int?)null;
@@ -213,12 +217,16 @@ WHERE j.ID = @jid;";
                                 int estaid1 = Convert.ToInt32(reader["E2_EStatusID"]);
                                 string status1 = reader["E2_EStatus"].ToString();
                                 EquipmentStatus estatusobj1 = new EquipmentStatus(estaid, status);
-                                int basisid1 = Convert.ToInt32(reader["E2_ERentID"]);
-                                string basis1 = reader["E2_Basis"].ToString();
-                                RentalBasis erentalbasis1 = new RentalBasis(basisid, basis);
-                                req = new Equipment(eid1, name1, insdate1, etypeobj1, eownerobj1, acquisitionobj1, estatusobj1,
-                                    erentalbasis1, serial1, ephotopath1, oplacephotopath1, edetails1, replacement1, selldetails1,
-                                    price1, edocumentpath1, writeoffpath1);
+
+                                int? basisid1 = reader["E1_ERentID"] != DBNull.Value ? Convert.ToInt32(reader["E1_ERentID"]) : (int?)null;
+                                string basis1 = reader["E2_Basis"] != DBNull.Value ? reader["E2_Basis"].ToString() : null;
+                                RentalBasis rent1 = basisid.HasValue ? new RentalBasis(basisid1.Value, basis1) : null;
+
+                                string insdetail1 = reader["E2_InsDetails"].ToString();
+                                bool onplan1 = Convert.ToBoolean(reader["E2_onPlan"]);
+                                req = new Equipment(eid1, name1,onplan1, insdate1, etypeobj1, eownerobj1, acquisitionobj1, estatusobj1,
+                                    rent1, serial1, ephotopath1, oplacephotopath1, edetails1, replacement1, selldetails1,
+                                    price1, edocumentpath1, writeoffpath1,insdetail1);
                             }
                             else
                             {
@@ -339,7 +347,16 @@ WHERE j.ID = @jid;";
                     cmd.Parameters.AddWithValue("@jdocument", jdocument);
                     cmd.Parameters.AddWithValue("@eid", jeq.ID);
                     cmd.Parameters.AddWithValue("@jtypeid", jtype.ID);
-                    cmd.Parameters.AddWithValue("@reid", req.ID);
+
+                    if (req?.ID == null)
+                    {
+                        cmd.Parameters.AddWithValue("@reid", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@reid", req.ID);
+                    }
+
                     cmd.Parameters.AddWithValue("@vendname", vendname);
                     cmd.Parameters.AddWithValue("@venddetails", venddetails);
                     cmd.Parameters.AddWithValue("@repairdetails", repairdetails);
@@ -391,7 +408,16 @@ WHERE j.ID = @jid;";
                     cmd.Parameters.AddWithValue("@jdocument", jdocument);
                     cmd.Parameters.AddWithValue("@eid", jeq.ID);
                     cmd.Parameters.AddWithValue("@jtypeid", jtype.ID);
-                    cmd.Parameters.AddWithValue("@reid", req.ID);
+
+                    if (req?.ID == null)
+                    {
+                        cmd.Parameters.AddWithValue("@reid", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@reid", req.ID);
+                    }
+
                     cmd.Parameters.AddWithValue("@vendname", vendname);
                     cmd.Parameters.AddWithValue("@venddetails", venddetails);
                     cmd.Parameters.AddWithValue("@repairdetails", repairdetails);
@@ -464,18 +490,18 @@ WHERE j.ID = @jid;";
     j.WorkPermit, j.Cost, j.Contract, j.StartDate, j.FinishDate,
     j.FinishPhoto, j.FinishDocument, j.Acceptor, j.JobStatus,
     j.JTypeID, jt.Type,
-    j.EID, e1.Name AS E1_Name, e1.Serial AS E1_Serial, e1.EPhoto AS E1_EPhoto, 
+    j.EID, e1.Name AS E1_Name, e1.Serial AS E1_Serial, e1.EPhoto AS E1_EPhoto, e1.OnPlan AS E1_onPlan,
     e1.OPlacePhoto AS E1_OPlacePhoto, e1.EDetails AS E1_EDetails, e1.Replacement AS E1_Replacement, 
-    e1.SellDetails AS E1_SellDetails, e1.Price AS E1_Price,
+    e1.SellDetails AS E1_SellDetails, e1.Price AS E1_Price, e1.InsDetails AS E1_InsDetails,
     e1.EDocument AS E1_EDocument, e1.InsDate AS E1_InsDate, e1.WriteOff AS E1_WriteOff,
     e1.ETypeID AS E1_ETypeID, et1.EType AS E1_EType,
     e1.EOwnerID AS E1_EOwnerID, eo1.Owner AS E1_Owner,
     e1.EAcqID AS E1_AcqID, ea1.Accquire AS E1_Accquire,
     e1.EStatusID AS E1_EStatusID, es1.EStatus AS E1_EStatus,
     e1.ERentID AS E1_ERentID, er1.Basis AS E1_Basis,
-    j.REID, e2.Name AS E2_Name, e2.Serial AS E2_Serial, e2.EPhoto AS E2_EPhoto, 
+    j.REID, e2.Name AS E2_Name, e2.Serial AS E2_Serial, e2.EPhoto AS E2_EPhoto, e2.OnPlan AS E2_onPlan, 
     e2.OPlacePhoto AS E2_OPlacePhoto, e2.EDetails AS E2_EDetails, e2.Replacement AS E2_Replacement, 
-    e2.SellDetails AS E2_SellDetails, e2.Price AS E2_Price,
+    e2.SellDetails AS E2_SellDetails, e2.Price AS E2_Price, e2.InsDetails AS E2_InsDetails,
     e2.EDocument AS E2_EDocument, e2.InsDate AS E2_InsDate, e2.WriteOff AS E2_WriteOff,
     e2.ETypeID AS E2_ETypeID, et2.EType AS E2_EType,
     e2.EOwnerID AS E2_EOwnerID, eo2.Owner AS E2_Owner,
@@ -556,12 +582,16 @@ LEFT JOIN jobtype jt ON j.JTypeID = jt.ID";
                             int estaid = Convert.ToInt32(reader["E1_EStatusID"]);
                             string status = reader["E1_EStatus"].ToString();
                             EquipmentStatus estatusobj = new EquipmentStatus(estaid, status);
-                            int basisid = Convert.ToInt32(reader["E1_ERentID"]);
-                            string basis = reader["E1_Basis"].ToString();
-                            RentalBasis erentalbasis = new RentalBasis(basisid, basis);
-                            Equipment jeq = new Equipment(eid, name, insdate, etypeobj, eownerobj, acquisitionobj, estatusobj,
-                                erentalbasis, serial, ephotopath, oplacephotopath, edetails, replacement, selldetails,
-                                price, edocumentpath, writeoffpath);
+
+                            int? basisid = reader["E1_ERentID"] != DBNull.Value ? Convert.ToInt32(reader["E1_ERentID"]) : (int?)null;
+                            string basis = reader["E2_Basis"] != DBNull.Value ? reader["E2_Basis"].ToString() : null;
+                            RentalBasis rent = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
+
+                            string insdetail = reader["E1_InsDetails"].ToString();
+                            bool onplan = Convert.ToBoolean(reader["E1_onPlan"]);
+                            Equipment jeq = new Equipment(eid, name,onplan, insdate, etypeobj, eownerobj, acquisitionobj, estatusobj,
+                                rent, serial, ephotopath, oplacephotopath, edetails, replacement, selldetails,
+                                price, edocumentpath, writeoffpath,insdetail);
 
                             //Replacement equipment for this job
                             int? track = reader["REID"] != DBNull.Value ? Convert.ToInt32(reader["REID"]) : (int?)null;
@@ -592,12 +622,16 @@ LEFT JOIN jobtype jt ON j.JTypeID = jt.ID";
                                 int estaid1 = Convert.ToInt32(reader["E2_EStatusID"]);
                                 string status1 = reader["E2_EStatus"].ToString();
                                 EquipmentStatus estatusobj1 = new EquipmentStatus(estaid, status);
-                                int basisid1 = Convert.ToInt32(reader["E2_ERentID"]);
-                                string basis1 = reader["E2_Basis"].ToString();
-                                RentalBasis erentalbasis1 = new RentalBasis(basisid, basis);
-                                req = new Equipment(eid1, name1, insdate1, etypeobj1, eownerobj1, acquisitionobj1, estatusobj1,
-                                    erentalbasis1, serial1, ephotopath1, oplacephotopath1, edetails1, replacement1, selldetails1,
-                                    price1, edocumentpath1, writeoffpath1);
+
+                                int? basisid1 = reader["E1_ERentID"] != DBNull.Value ? Convert.ToInt32(reader["E1_ERentID"]) : (int?)null;
+                                string basis1 = reader["E2_Basis"] != DBNull.Value ? reader["E2_Basis"].ToString() : null;
+                                RentalBasis rent1 = basisid.HasValue ? new RentalBasis(basisid1.Value, basis1) : null;
+
+                                string insdetail1 = reader["E2_InsDetails"].ToString();
+                                bool onplan1 = Convert.ToBoolean(reader["E2_onPlan"]);
+                                req = new Equipment(eid1, name1,onplan1, insdate1, etypeobj1, eownerobj1, acquisitionobj1, estatusobj1,
+                                    rent1, serial1, ephotopath1, oplacephotopath1, edetails1, replacement1, selldetails1,
+                                    price1, edocumentpath1, writeoffpath1,insdetail1);
                             }
                             else
                             {

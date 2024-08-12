@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Equipment_Management.ObjectClass;
 using Equipment_Management.UIClass.CreateWindowComponent;
 using System.IO;
+using Equipment_Management.CustomWindowComponents;
 
 namespace Equipment_Management.UIClass.InstallationSource
 {
@@ -19,6 +15,8 @@ namespace Equipment_Management.UIClass.InstallationSource
         string equipmentPhotoPath;
         string installationPlacePhotoPath;
         string acquisitionDocumentPath;
+
+        string targetFilePath;
 
         private CreateWindow create;
         //variable for update components
@@ -40,6 +38,7 @@ namespace Equipment_Management.UIClass.InstallationSource
         EquipmentStatus selectedEquipmentStatus;
         RentalBasis selectedRentalBasis;
         double priceFromTextBox;
+
         public InstallationEquipment()
         {
             InitializeComponent();
@@ -115,13 +114,13 @@ namespace Equipment_Management.UIClass.InstallationSource
                     EquipmentType newEqt = new EquipmentType(receiveType);
                     if (newEqt.Create())
                     {
-                        MessageBox.Show("ประเภทอุปกรณ์ใหม่ : " + receiveType);
+                        ShowCustomMessageBox("ประเภทอุปกรณ์ใหม่ : " + receiveType);
                         UpdateComponents();
                         isCreating = false;
                     }
                     else
                     {
-                        MessageBox.Show("ประเภทอุปกรณ์นี้ ถูกใช้แล้วจึงไม่สามาถบันทึก");
+                        ShowCustomMessageBox("ประเภทอุปกรณ์นี้ ถูกใช้แล้วจึงไม่สามาถบันทึก");
                     }
                     create.DetailsText = string.Empty;
                 }
@@ -144,13 +143,13 @@ namespace Equipment_Management.UIClass.InstallationSource
                     EquipmentOwner newEqo = new EquipmentOwner(receiveOwner);
                     if (newEqo.Create())
                     {
-                        MessageBox.Show("ชื่อเจ้าของอุปกรณ์ใหม่ : " + receiveOwner);
+                        ShowCustomMessageBox("ชื่อเจ้าของอุปกรณ์ใหม่ : " + receiveOwner);
                         UpdateComponents();
                         isCreating = false;
                     }
                     else
                     {
-                        MessageBox.Show("ชื่อเจ้าของอุปกรณ์นี้ ถูกใช้แล้วจึงไม่สามาถบันทึก");
+                        ShowCustomMessageBox("ชื่อเจ้าของอุปกรณ์นี้ ถูกใช้แล้วจึงไม่สามาถบันทึก");
                     }
                     create.DetailsText = string.Empty;
                 }
@@ -179,7 +178,7 @@ namespace Equipment_Management.UIClass.InstallationSource
                     }
                     else
                     {
-                        MessageBox.Show("ประเภทการเช่านี้ ถูกใช้แล้วจึงไม่สามาถบันทึก");
+                        ShowCustomMessageBox("ประเภทการเช่านี้ ถูกใช้แล้วจึงไม่สามาถบันทึก");
                     }
                     create.DetailsText = string.Empty;
                 }
@@ -259,39 +258,63 @@ namespace Equipment_Management.UIClass.InstallationSource
         //Saving photo to target directory
         private void SavePhotoToDirectory(string sourceFilePath, string targetDirectory)
         {
-            // Check if the directory exists
-            if (!Directory.Exists(targetDirectory))
+            try
             {
-                // Create the directory if it doesn't exist
-                Directory.CreateDirectory(targetDirectory);
+                // Check if the directory exists
+                if (!Directory.Exists(targetDirectory))
+                {
+                    // Create the directory if it doesn't exist
+                    Directory.CreateDirectory(targetDirectory);
+                }
+
+                // Define the target file path
+                targetFilePath = Path.Combine(targetDirectory, Path.GetFileName(sourceFilePath));
+
+                // Check if the file is locked by another process
+                if (IsFileLocked(new FileInfo(sourceFilePath)))
+                {
+                    ShowCustomMessageBox("ไฟล์นี้กำลังถูกเปิด จึงไม่สามารถก๊อปปี้ได้");
+                    return;
+                }
+
+                // Copy the file to the target directory
+                File.Copy(sourceFilePath, targetFilePath, true); // 'true' allows overwriting if the file already exists
+
+                ShowCustomMessageBox($"File saved to: {targetFilePath}");
             }
-
-            // Define the target file path
-            string targetFilePath = Path.Combine(targetDirectory, Path.GetFileName(sourceFilePath));
-
-            // Copy the file to the target directory
-            File.Copy(sourceFilePath, targetFilePath, true); // 'true' allows overwriting if the file already exists
-
-            MessageBox.Show($"File saved to: {targetFilePath}");
+            catch (IOException ex)
+            {
+                ShowCustomMessageBox($"An error occurred: {ex.Message}");
+            }
         }
+        //Save photo & documents into folder
         private void SaveEquipmentPhoto()
         {
             if (!string.IsNullOrEmpty(equipmentPhotoPath))
             {
-                SavePhotoToDirectory(equipmentPhotoPath, @"D:\EquipmentPhoto");
+                SavePhotoToDirectory(equipmentPhotoPath, @"C:\EquipmentPhoto");
+                equipmentPhotoPath = targetFilePath;
             }
         }
         private void SaveInstallationPlacePhoto()
         {
             if (!string.IsNullOrEmpty(installationPlacePhotoPath))
             {
-                SavePhotoToDirectory(installationPlacePhotoPath, @"D:\InstallationPlacePhoto");
+                SavePhotoToDirectory(installationPlacePhotoPath, @"C:\InstallationPlacePhoto");
+                installationPlacePhotoPath = targetFilePath;
+            }
+        }
+        private void SaveAcquisitionDocument()
+        {
+            if (!string.IsNullOrEmpty(acquisitionDocumentPath))
+            {
+                SavePhotoToDirectory(acquisitionDocumentPath, @"C:\AcquisitionDocument");
+                acquisitionDocumentPath = targetFilePath;
             }
         }
 
         private bool CheckAllAttribute()
         {
-            bool isComplete = true;
             int selectTypeIndex = choseEquipmentTypeCombobox.SelectedIndex;
             if(selectTypeIndex >= 0 && selectTypeIndex < equipmentTypeID.Count)
             {
@@ -300,13 +323,13 @@ namespace Equipment_Management.UIClass.InstallationSource
             }
             else
             {
-                MessageBox.Show(this, "กรุณาเลือกประเภท ของอุปกรณ์");
-                isComplete = false;
+                ShowCustomMessageBox("กรุณาเลือกประเภท ของอุปกรณ์");
+                return false;
             }
             if (string.IsNullOrEmpty(equipmentNameTextBox.Text))
             {
-                MessageBox.Show(this, "ต้องระบุชื่อเรียก ของอุปกรณ์");
-                isComplete = false;
+                ShowCustomMessageBox("ต้องระบุชื่อเรียก ของอุปกรณ์");
+                return false;
             }
             int selectOwnerIndex = equipmentOwnerComboBox.SelectedIndex;
             if(selectOwnerIndex >= 0 && selectOwnerIndex < equipmentOwnerID.Count)
@@ -316,8 +339,8 @@ namespace Equipment_Management.UIClass.InstallationSource
             }
             else
             {
-                MessageBox.Show(this, "กรุณาเลือกเจ้าของ อุปกรณ์ชิ้นนี้");
-                isComplete = false;
+                ShowCustomMessageBox("กรุณาเลือกเจ้าของ อุปกรณ์ชิ้นนี้");
+                return false;
             }
             int selectAcquisitionIndex = acquisitionComboBox.SelectedIndex;
             if(selectAcquisitionIndex >= 0 && selectAcquisitionIndex < equipmentAcquisitionID.Count)
@@ -327,8 +350,8 @@ namespace Equipment_Management.UIClass.InstallationSource
             }
             else
             {
-                MessageBox.Show(this, "กรูณาเลือกการได้มา ของอุปกรณ์");
-                isComplete = false;
+                ShowCustomMessageBox("กรูณาเลือกการได้มา ของอุปกรณ์");
+                return false;
             }
             int selectInitialStatus = equipmentInitialStatusComboBox.SelectedIndex;
             if(selectInitialStatus >= 0 && selectInitialStatus < equipmentInitialStatusID.Count)
@@ -338,18 +361,22 @@ namespace Equipment_Management.UIClass.InstallationSource
             }
             else
             {
-                MessageBox.Show(this, "กรุณาเลือกสถานะเริ่มต้น ของอุปกรณ์");
-                isComplete = false;
+                ShowCustomMessageBox("กรุณาเลือกสถานะเริ่มต้น ของอุปกรณ์");
+                return false;
             }
             if (string.IsNullOrEmpty(priceTextBox.Text))
             {
-                MessageBox.Show(this, "ต้องใส่ราคาอย่างน้อย 1");
-                isComplete = false;
+                ShowCustomMessageBox("ต้องใส่ราคาอย่างน้อย 0");
+                return false;
             }
             else if (!double.TryParse(priceTextBox.Text, out priceFromTextBox))
             {
-                MessageBox.Show(this, "กรุณาใส่ราคาเป็นตัวเลขที่ถูกต้อง");
-                isComplete = false;
+                ShowCustomMessageBox("กรุณาใส่ราคาเป็นตัวเลขที่ถูกต้อง");
+                return false;
+            }
+            else if (priceFromTextBox < 0)
+            {
+                priceFromTextBox = 0;
             }
             if (rentalBasisCombobox.Enabled)
             {
@@ -361,35 +388,89 @@ namespace Equipment_Management.UIClass.InstallationSource
                 }
                 else
                 {
-                    MessageBox.Show(this, "กรุณาเลือก รอบในการเช่า");
-                    isComplete = false;
+                    ShowCustomMessageBox("กรุณาเลือก รอบในการเช่า");
+                    return false;
                 }
+            }
+            if (replacementCheckBox.Checked && selectedEquipmentStatus.ID == 3)
+            {
+                ShowCustomMessageBox("อุปกรณ์ที่มีสถานะชำรุด จะไม่สามารถนำไปทดแทนได้\nกรุณาเลือกประเภทอุปกรณ์ที่ถูกต้อง");
+                return false;
             }
             if (string.IsNullOrEmpty(sellDetailsRichTextBox.Text))
             {
-                MessageBox.Show(this, "กรุณาระบุรายละเอียดผู้ขาย ให้เช่า หรือหน่วยงานที่ย้ายมา");
-                isComplete = false;
+                ShowCustomMessageBox("กรุณาระบุรายละเอียดผู้ขาย ให้เช่า หรือหน่วยงานที่ย้ายมา");
+                return false;
             }
-            return isComplete;
+            else
+            {
+                SaveEquipmentPhoto();
+                SaveInstallationPlacePhoto();
+                SaveAcquisitionDocument();
+            }
+            return true;
         }
 
         private void createEquipmentButton_Click(object sender, EventArgs e)
         {
             if (CheckAllAttribute())
             {
-                Equipment newEq = new Equipment(equipmentNameTextBox.Text, installationDateTimePicker.Value, selectedEquipmentType,
+                Equipment newEq = new Equipment(equipmentNameTextBox.Text,false, installationDateTimePicker.Value, selectedEquipmentType,
                 selectedEquipmentOwner, selectedEquipmentAcquisition, selectedEquipmentStatus, selectedRentalBasis,
-                equipmentSerialTextBox.Text, equipmentPhotoPath, installationPlacePhotoPath, InstallationPlaceRichTextBox.Text,
-                replacementCheckBox.Checked, sellDetailsRichTextBox.Text, priceFromTextBox, acquisitionDocumentPath, null);
+                equipmentSerialTextBox.Text, equipmentPhotoPath, installationPlacePhotoPath, equipmentDetailRichTextBox.Text,
+                replacementCheckBox.Checked, sellDetailsRichTextBox.Text, priceFromTextBox, acquisitionDocumentPath, null,InstallationDetailsRichTextBox.Text);
                 if (newEq.Create())
                 {
-                    MessageBox.Show(this, "อุปกรณ์ใหม่ถูกเพิ่มในระบบเรียบร้อย");
+                    ShowCustomMessageBox("อุปกรณ์ใหม่ถูกเพิ่มในระบบเรียบร้อย");
+                    Close();
                 }
                 else
                 {
-                    MessageBox.Show(this, "ขั้นตอนการสร้างข้อมูลลงใน ฐานข้อมูลเกิดความผิดพลาด กรุณาติดต่อผู้ดูแล");
+                    ShowCustomMessageBox("ขั้นตอนการสร้างข้อมูลลงใน ฐานข้อมูลเกิดความผิดพลาด กรุณาติดต่อผู้ดูแล");
                 }
             }
+        }
+        //Open Invoice
+        private void invoiceLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (File.Exists(acquisitionDocumentPath))
+            {
+                System.Diagnostics.Process.Start(acquisitionDocumentPath);
+            }
+            else
+            {
+                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+            }
+        }
+        //Call custom message box
+        private void ShowCustomMessageBox(string message)
+        {
+            using (var messageBox = new CustomMessageBox())
+            {
+                messageBox.MessageText = message;
+                var result = messageBox.ShowDialog();
+            }
+        }
+        //Method to check file is being open
+        private bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (IOException)
+            {
+                // The file is locked by another process
+                return true;
+            }
+            finally
+            {
+                stream?.Close();
+            }
+
+            // The file is not locked
+            return false;
         }
     }
 }

@@ -4,14 +4,23 @@ using System.Drawing;
 using System.Windows.Forms;
 using Equipment_Management.CustomViewClass;
 using Equipment_Management.UIClass.InstallationSource;
+using Equipment_Management.UIClass.EquipmentListSource;
+using Equipment_Management.UIClass.Job;
+using Equipment_Management.GlobalVariable;
 
 namespace Equipment_Management.UIClass
 {
     public partial class EquipmentAndMaintainenceControlForm : Form
     {
         MainBackGroundFrom main;
-
+        //variable for calling other windows
         private InstallationEquipment installRquipment;
+        private EquipmentList equipmentList;
+        private CreateJobForm jobCreate;
+        private RemoveJobForm jobRemove;
+        private JobProcessing jobProcessing;
+        private JobAcceptation jobAcceptation;
+        private EditJobProcessing editJobProcessing;
 
         BindingSource jobCreatedBindingSource;
         BindingSource jobProcessedBindingSource;
@@ -20,7 +29,6 @@ namespace Equipment_Management.UIClass
         List<AllJobInProcessView> jobfilteredList;
 
         public event EventHandler returnMain;
-        public event EventHandler installationEquipment;
 
         public EquipmentAndMaintainenceControlForm()
         {
@@ -127,7 +135,7 @@ namespace Equipment_Management.UIClass
             if (jobProcessingDatagridview.Columns["EquipmentStatus"] != null)
             {
                 jobProcessingDatagridview.Columns["EquipmentStatus"].HeaderText = "สถานะปัจจุบัน";
-                jobProcessingDatagridview.Columns["StartDate"].DisplayIndex = 3;
+                jobProcessingDatagridview.Columns["EquipmentStatus"].DisplayIndex = 3;
             }
             if (jobProcessingDatagridview.Columns["ID"] != null)
             {
@@ -156,17 +164,86 @@ namespace Equipment_Management.UIClass
             }
             return filteredList;
         }
-
+        //Install
         private void installationButton_Click(object sender, EventArgs e)
         {
             installRquipment = new InstallationEquipment();
             installRquipment.Owner = main;
             installRquipment.ShowDialog();
         }
+        //Equipment List
+        private void equipmentListButton_Click(object sender, EventArgs e)
+        {
+            equipmentList = new EquipmentList();
+            equipmentList.Owner = main;
+            equipmentList.ShowDialog();
+        }
+        //Create Job
+        private void createJobButton_Click(object sender, EventArgs e)
+        {
+            jobCreate = new CreateJobForm();
+            jobCreate.Owner = main;
+            jobCreate.updateCreatedJobDatagridView += OnUpdateCreatedJob;
+            jobCreate.ShowDialog();
+        }
+        //Remove Job
+        private void removeJobButton_Click(object sender, EventArgs e)
+        {
+            Global.ID = -1;
+            DataGridViewRow selectedRow = jobCreatedDatagridview.CurrentRow;
+            Global.ID = (int)selectedRow.Cells["ID"].Value;
+            jobRemove = new RemoveJobForm();
+            jobRemove.Owner = main;
+            jobRemove.UpdateGrid += OnUpdateCreatedJob;
+            jobRemove.ShowDialog();
+        }
+        //Job processing
+        private void jobProcessingButton_Click(object sender, EventArgs e)
+        {
+            Global.ID = -1;
+            DataGridViewRow selectedRow = jobCreatedDatagridview.CurrentRow;
+            Global.ID = (int)selectedRow.Cells["ID"].Value;
+            jobProcessing = new JobProcessing();
+            jobProcessing.Owner = main;
+            jobProcessing.UpdateGrid += OnUpdateCreatedJob;
+            jobProcessing.UpdateGrid += OnUpdateProcessJob;
+            jobProcessing.ShowDialog();
+        }
+        //Job acceptation
+        private void jobAcceptationButton_Click(object sender, EventArgs e)
+        {
+            Global.ID = -1;
+            DataGridViewRow selectedRow = jobProcessingDatagridview.CurrentRow;
+            Global.ID = (int)selectedRow.Cells["ID"].Value;
+            jobAcceptation = new JobAcceptation();
+            jobAcceptation.Owner = main;
+            jobAcceptation.UpdateGrid += OnUpdateProcessJob;
+            jobAcceptation.ShowDialog();
+        }
+        //Edit Job processing
+        private void editJobProcessingButton_Click(object sender, EventArgs e)
+        {
+            Global.ID = -1;
+            DataGridViewRow selectedRow = jobProcessingDatagridview.CurrentRow;
+            Global.ID = (int)selectedRow.Cells["ID"].Value;
+            editJobProcessing = new EditJobProcessing();
+            editJobProcessing.Owner = main;
+            editJobProcessing.UpdateGrid += OnUpdateProcessJob;
+            editJobProcessing.ShowDialog();
+        }
+        //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)
         {
             returnMain?.Invoke(this, EventArgs.Empty);
             Close();
+        }
+        private void OnUpdateCreatedJob(object sender, EventArgs e)
+        {
+            UpdateCreatedJobView();
+        }
+        private void OnUpdateProcessJob(object sender, EventArgs e)
+        {
+            UpdateProcessedJobView();
         }
     }
 }

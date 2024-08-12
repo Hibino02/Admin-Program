@@ -105,6 +105,7 @@
             this.editJobProcessingButton.TabIndex = 12;
             this.editJobProcessingButton.Text = "แก้ใขงานแจ้งซ่อมที่กำลังดำเนินการ";
             this.editJobProcessingButton.UseVisualStyleBackColor = true;
+            this.editJobProcessingButton.Click += new System.EventHandler(this.editJobProcessingButton_Click);
             // 
             // jobAcceptationButton
             // 
@@ -115,13 +116,22 @@
             this.jobAcceptationButton.TabIndex = 11;
             this.jobAcceptationButton.Text = "ตรวจรับงาน";
             this.jobAcceptationButton.UseVisualStyleBackColor = true;
+            this.jobAcceptationButton.Click += new System.EventHandler(this.jobAcceptationButton_Click);
             // 
             // jobProcessingDatagridview
             // 
+            this.jobProcessingDatagridview.AllowUserToAddRows = false;
+            this.jobProcessingDatagridview.AllowUserToDeleteRows = false;
+            this.jobProcessingDatagridview.AllowUserToResizeColumns = false;
+            this.jobProcessingDatagridview.AllowUserToResizeRows = false;
             this.jobProcessingDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.jobProcessingDatagridview.Location = new System.Drawing.Point(6, 492);
+            this.jobProcessingDatagridview.MultiSelect = false;
             this.jobProcessingDatagridview.Name = "jobProcessingDatagridview";
+            this.jobProcessingDatagridview.ReadOnly = true;
+            this.jobProcessingDatagridview.RowHeadersVisible = false;
             this.jobProcessingDatagridview.RowTemplate.Height = 24;
+            this.jobProcessingDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.jobProcessingDatagridview.Size = new System.Drawing.Size(696, 203);
             this.jobProcessingDatagridview.TabIndex = 10;
             // 
@@ -144,6 +154,7 @@
             this.removeJobButton.TabIndex = 8;
             this.removeJobButton.Text = "ลบงานแจ้งซ่อม";
             this.removeJobButton.UseVisualStyleBackColor = true;
+            this.removeJobButton.Click += new System.EventHandler(this.removeJobButton_Click);
             // 
             // jobProcessingButton
             // 
@@ -154,13 +165,22 @@
             this.jobProcessingButton.TabIndex = 7;
             this.jobProcessingButton.Text = "ดำเนินการงานแจ้งซ่อม";
             this.jobProcessingButton.UseVisualStyleBackColor = true;
+            this.jobProcessingButton.Click += new System.EventHandler(this.jobProcessingButton_Click);
             // 
             // jobCreatedDatagridview
             // 
+            this.jobCreatedDatagridview.AllowUserToAddRows = false;
+            this.jobCreatedDatagridview.AllowUserToDeleteRows = false;
+            this.jobCreatedDatagridview.AllowUserToResizeColumns = false;
+            this.jobCreatedDatagridview.AllowUserToResizeRows = false;
             this.jobCreatedDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.jobCreatedDatagridview.Location = new System.Drawing.Point(6, 137);
+            this.jobCreatedDatagridview.MultiSelect = false;
             this.jobCreatedDatagridview.Name = "jobCreatedDatagridview";
+            this.jobCreatedDatagridview.ReadOnly = true;
+            this.jobCreatedDatagridview.RowHeadersVisible = false;
             this.jobCreatedDatagridview.RowTemplate.Height = 24;
+            this.jobCreatedDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.jobCreatedDatagridview.Size = new System.Drawing.Size(696, 262);
             this.jobCreatedDatagridview.TabIndex = 6;
             // 
@@ -193,6 +213,7 @@
             this.equipmentListButton.TabIndex = 3;
             this.equipmentListButton.Text = "รายการอุปกรณ์ทั้งหมด";
             this.equipmentListButton.UseVisualStyleBackColor = true;
+            this.equipmentListButton.Click += new System.EventHandler(this.equipmentListButton_Click);
             // 
             // createJobButton
             // 
@@ -203,6 +224,7 @@
             this.createJobButton.TabIndex = 2;
             this.createJobButton.Text = "แจ้งซ่อม";
             this.createJobButton.UseVisualStyleBackColor = true;
+            this.createJobButton.Click += new System.EventHandler(this.createJobButton_Click);
             // 
             // installationButton
             // 
@@ -291,10 +313,18 @@
             // 
             // planProcessingDatagridview
             // 
+            this.planProcessingDatagridview.AllowUserToAddRows = false;
+            this.planProcessingDatagridview.AllowUserToDeleteRows = false;
+            this.planProcessingDatagridview.AllowUserToResizeColumns = false;
+            this.planProcessingDatagridview.AllowUserToResizeRows = false;
             this.planProcessingDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.planProcessingDatagridview.Location = new System.Drawing.Point(5, 492);
+            this.planProcessingDatagridview.MultiSelect = false;
             this.planProcessingDatagridview.Name = "planProcessingDatagridview";
+            this.planProcessingDatagridview.ReadOnly = true;
+            this.planProcessingDatagridview.RowHeadersVisible = false;
             this.planProcessingDatagridview.RowTemplate.Height = 24;
+            this.planProcessingDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.planProcessingDatagridview.Size = new System.Drawing.Size(697, 203);
             this.planProcessingDatagridview.TabIndex = 13;
             // 
@@ -320,10 +350,18 @@
             // 
             // currentMaintainencePlanDatagridview
             // 
+            this.currentMaintainencePlanDatagridview.AllowUserToAddRows = false;
+            this.currentMaintainencePlanDatagridview.AllowUserToDeleteRows = false;
+            this.currentMaintainencePlanDatagridview.AllowUserToResizeColumns = false;
+            this.currentMaintainencePlanDatagridview.AllowUserToResizeRows = false;
             this.currentMaintainencePlanDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.currentMaintainencePlanDatagridview.Location = new System.Drawing.Point(5, 137);
+            this.currentMaintainencePlanDatagridview.MultiSelect = false;
             this.currentMaintainencePlanDatagridview.Name = "currentMaintainencePlanDatagridview";
+            this.currentMaintainencePlanDatagridview.ReadOnly = true;
+            this.currentMaintainencePlanDatagridview.RowHeadersVisible = false;
             this.currentMaintainencePlanDatagridview.RowTemplate.Height = 24;
+            this.currentMaintainencePlanDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.currentMaintainencePlanDatagridview.Size = new System.Drawing.Size(697, 262);
             this.currentMaintainencePlanDatagridview.TabIndex = 13;
             // 
