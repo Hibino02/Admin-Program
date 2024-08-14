@@ -24,6 +24,8 @@ namespace Equipment_Management.UIClass.Job
         string finishPhotoPath;
 
         private ToolTip finishJobDocumentTooltip;
+        private ToolTip workpermitTooltip;
+        private ToolTip contractTooltip;
 
         public JobAcceptation()
         {
@@ -41,6 +43,22 @@ namespace Equipment_Management.UIClass.Job
             finishJobDocumentTooltip.AutoPopDelay = 5000;
             finishDocumentlinkLabel.MouseEnter += finishDocumentlinkLabel_MouseEnter;
             finishDocumentlinkLabel.MouseLeave += finishDocumentlinkLabel_MouseLeave;
+            // --------------------------------------------------------------------------------------------//
+            //Workpermit Document Tooltip
+            workpermitTooltip = new ToolTip();
+            workpermitTooltip.InitialDelay = 0;
+            workpermitTooltip.ReshowDelay = 0;
+            workpermitTooltip.AutoPopDelay = 5000;
+            workPermitDocLinkLabel.MouseEnter += workPermitDocLinkLabel_MouseEnter;
+            workPermitDocLinkLabel.MouseLeave += workPermitDocLinkLabel_MouseLeave;
+            // --------------------------------------------------------------------------------------------//
+            //Contract Document Tooltip
+            contractTooltip = new ToolTip();
+            contractTooltip.InitialDelay = 0;
+            contractTooltip.ReshowDelay = 0;
+            contractTooltip.AutoPopDelay = 5000;
+            contractLinkLabel.MouseEnter += contractLinkLabel_MouseEnter;
+            contractLinkLabel.MouseLeave += contractLinkLabel_MouseLeave;
 
             UpdateComponents();
         }
@@ -79,13 +97,9 @@ namespace Equipment_Management.UIClass.Job
             currentELabel.Text = jobToFinish.JEq.EStatusObj.EStatus;
             jDetailsRichTextBox.Text = jobToFinish.JDetails;
             aDateLabel.Text = jobToFinish.ADate.Value.ToString("yyyy-MM-dd");
-            if (!string.IsNullOrEmpty(jobToFinish.CasePhoto) && File.Exists(jobToFinish.CasePhoto))
+            if (!string.IsNullOrEmpty(jobToFinish.CasePhoto))
             {
-                if (fixEquipmentPictureBox.Image != null)
-                {
-                    fixEquipmentPictureBox.Image.Dispose();
-                }
-                fixEquipmentPictureBox.Image = Image.FromFile(jobToFinish.CasePhoto);
+                Global.LoadImageIntoPictureBox(jobToFinish.CasePhoto, fixEquipmentPictureBox);
             }
             startDateLabel.Text = jobToFinish.StartDate?.ToString("yyyy-MM-dd")??"ไม่ได้ระบุ";
             vendorNameTextBox.Text = jobToFinish.VendName;
@@ -98,13 +112,9 @@ namespace Equipment_Management.UIClass.Job
         //Click to open attached PDF file ------------------------------------------------------------------------
         private void workPermitDocLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (File.Exists(workPermitDocumentPath))
+            if (!string.IsNullOrEmpty(workPermitDocumentPath))
             {
-                System.Diagnostics.Process.Start(workPermitDocumentPath);
-            }
-            else if (!string.IsNullOrEmpty(workPermitDocumentPath))
-            {
-                ShowCustomMessageBox("ไม่สารมารถเปิดไฟล์ดังกล่าวได้\nหรือไฟล์อาจโดนลบ");
+                Global.DownloadAndOpenPdf(workPermitDocumentPath);
             }
             else
             {
@@ -113,13 +123,9 @@ namespace Equipment_Management.UIClass.Job
         }
         private void contractLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (File.Exists(contractDocumentPath))
+            if (!string.IsNullOrEmpty(contractDocumentPath))
             {
-                System.Diagnostics.Process.Start(contractDocumentPath);
-            }
-            else if (!string.IsNullOrEmpty(contractDocumentPath))
-            {
-                ShowCustomMessageBox("ไม่สารมารถเปิดไฟล์ดังกล่าวได้\nหรือไฟล์อาจโดนลบ");
+                Global.DownloadAndOpenPdf(contractDocumentPath);
             }
             else
             {
@@ -128,7 +134,7 @@ namespace Equipment_Management.UIClass.Job
         }
         private void finishDocumentlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (File.Exists(finishDocumentPath))
+            if (!string.IsNullOrEmpty(finishDocumentPath))
             {
                 System.Diagnostics.Process.Start(finishDocumentPath);
             }
@@ -209,6 +215,36 @@ namespace Equipment_Management.UIClass.Job
         {
             finishJobDocumentTooltip.Hide(finishDocumentlinkLabel);
         }
+        private void workPermitDocLinkLabel_MouseEnter(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(workPermitDocumentPath))
+            {
+                workpermitTooltip.Show($"Attached File: {Path.GetFileName(workPermitDocumentPath)}", workPermitDocLinkLabel);
+            }
+            else
+            {
+                workpermitTooltip.Show("No file attached", workPermitDocLinkLabel);
+            }
+        }
+        private void workPermitDocLinkLabel_MouseLeave(object sender, EventArgs e)
+        {
+            workpermitTooltip.Hide(workPermitDocLinkLabel);
+        }
+        private void contractLinkLabel_MouseEnter(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(contractDocumentPath))
+            {
+                contractTooltip.Show($"Attached File: {Path.GetFileName(contractDocumentPath)}", contractLinkLabel);
+            }
+            else
+            {
+                contractTooltip.Show("No file attached", contractLinkLabel);
+            }
+        }
+        private void contractLinkLabel_MouseLeave(object sender, EventArgs e)
+        {
+            contractTooltip.Hide(contractLinkLabel);
+        }
         //Method to call custom message Box
         private void ShowCustomMessageBox(string message)
         {
@@ -273,5 +309,7 @@ namespace Equipment_Management.UIClass.Job
                 }
             }
         }
+
+        
     }
 }

@@ -152,21 +152,13 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
             priceTextBox.Text = edit.Price.ToString();
             rentalBasisCombobox.Text = edit.ERentalBasis?.Basis??string.Empty;
             installationDateTimePicker.Value = edit.InsDate;
-            if(!string.IsNullOrEmpty(edit.EPhotoPath) && File.Exists(edit.EPhotoPath))
+            if(!string.IsNullOrEmpty(edit.EPhotoPath))
             {
-                if (equipmentPictureBox.Image != null)
-                {
-                    equipmentPictureBox.Image.Dispose();
-                }
-                equipmentPictureBox.Image = Image.FromFile(edit.EPhotoPath);
+                Global.LoadImageIntoPictureBox(edit.EPhotoPath, equipmentPictureBox);
             }
-            if (!string.IsNullOrEmpty(edit.OPlacePhotoPath) && File.Exists(edit.OPlacePhotoPath))
+            if (!string.IsNullOrEmpty(edit.OPlacePhotoPath))
             {
-                if (installationPlacePictureBox.Image != null)
-                {
-                    installationPlacePictureBox.Image.Dispose();
-                }
-                installationPlacePictureBox.Image = Image.FromFile(edit.OPlacePhotoPath);
+                Global.LoadImageIntoPictureBox(edit.OPlacePhotoPath, installationPlacePictureBox);
             }
             sellDetailsRichTextBox.Text = edit.SellDetails;
             equipmentDetailRichTextBox.Text = edit.EDetails;
@@ -176,6 +168,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
             {
                 replacementCheckBox.Enabled = false;
             }
+            acquisitionDocumentPath = edit.EDocumentPath;
         }
 
         private void createTypeButton_Click(object sender, EventArgs e)
@@ -483,13 +476,9 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
         //Open invoice
         private void invoiceLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (File.Exists(edit.EDocumentPath))
+            if (!string.IsNullOrEmpty(acquisitionDocumentPath))
             {
-                System.Diagnostics.Process.Start(edit.EDocumentPath);
-            }
-            else if (!string.IsNullOrEmpty(acquisitionDocumentPath))
-            {
-                ShowCustomMessageBox("ไม่สารมารถเปิดไฟล์ดังกล่าวได้\nหรือไฟล์อาจโดนลบ");
+                Global.DownloadAndOpenPdf(acquisitionDocumentPath);
             }
             else
             {

@@ -413,7 +413,7 @@ namespace Equipment_Management.UIClass.InstallationSource
         //Open Invoice
         private void invoiceLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (File.Exists(acquisitionDocumentPath))
+            if (!string.IsNullOrEmpty(acquisitionDocumentPath))
             {
                 System.Diagnostics.Process.Start(acquisitionDocumentPath);
             }

@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System;
 using System.Net;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace Equipment_Management.GlobalVariable
 {
@@ -15,29 +16,25 @@ namespace Equipment_Management.GlobalVariable
         public static Equipment equipmentGlobal { get; set; }
         public static AllEquipmentView selectedEquipmentInJob { get; set; }
         public static string TargetFilePath { get; set; }
-        //private static string directory = "\\home\\";
-        //public static string Directory { get { return directory; } }
-        private static string directory = "C:\\";
-        public static string Directory { get { return directory; } }
 
-        public static string user = "equipment-managementblc5";
+        public static string user = "TEST"; // equipment-managementblc5
         public static string pass = "Meg@lomaniac001";
         //Uploading photo into Server ------------------------------------------------------------------------------------------
         public static void SaveFileToServer(string filepath, string directory)
         {
             if (!string.IsNullOrEmpty(filepath))
             {
-                string ftpServerUrl = $"ftp://127.0.0.1/EquipmentManagementBLC5/{directory}/"; // change ip for local use
+                string ftpServerUrl = $"ftp://192.168.1.116/TESTSERVER/{directory}/"; // change ip for local use
                 string ftpUsername = user;
                 string ftpPassword = pass;
 
                 try
                 {
-                    if (!FtpDirectoryExists(ftpServerUrl))//, ftpUsername, ftpPassword
+                    if (!FtpDirectoryExists(ftpServerUrl, ftpUsername, ftpPassword))
                     {
-                        CreateFtpDirectory(ftpServerUrl);//, ftpUsername, ftpPassword
+                        CreateFtpDirectory(ftpServerUrl, ftpUsername, ftpPassword);
                     }
-                    UploadFileToFtp(filepath, ftpServerUrl);//, ftpUsername, ftpPassword
+                    UploadFileToFtp(filepath, ftpServerUrl, ftpUsername, ftpPassword);
                     filepath = Path.Combine(ftpServerUrl, Path.GetFileName(filepath));
                     TargetFilePath = filepath;
                 }
@@ -47,14 +44,14 @@ namespace Equipment_Management.GlobalVariable
                 }
             }
         }
-        public static bool FtpDirectoryExists(string ftpServerUrl)//string ftpUsername, string ftpPassword
+        private static bool FtpDirectoryExists(string ftpServerUrl,string ftpUsername,string ftpPassword)
         {
             try
             {
                 // Create an FtpWebRequest to list the contents of the directory.
                 var request = (FtpWebRequest)WebRequest.Create(ftpServerUrl);
                 request.Method = WebRequestMethods.Ftp.ListDirectory;
-                request.Credentials = new NetworkCredential();
+                request.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
 
                 // Get the response from the server.
                 using (var response = (FtpWebResponse)request.GetResponse())
@@ -74,12 +71,12 @@ namespace Equipment_Management.GlobalVariable
                 throw; // Re-throw any other exceptions.
             }
         }
-        public static void CreateFtpDirectory(string ftpServerUrl)//string ftpUsername, string ftpPassword
+        private static void CreateFtpDirectory(string ftpServerUrl, string ftpUsername, string ftpPassword)
         {
             // Create an FtpWebRequest to make a new directory.
             var request = (FtpWebRequest)WebRequest.Create(ftpServerUrl);
             request.Method = WebRequestMethods.Ftp.MakeDirectory;
-            request.Credentials = new NetworkCredential();
+            request.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
 
             // Get the response from the server.
             using (var response = (FtpWebResponse)request.GetResponse())
@@ -91,14 +88,14 @@ namespace Equipment_Management.GlobalVariable
                 }
             }
         }
-        private static void UploadFileToFtp(string sourceFilePath, string ftpServerUrl)//string username, string password
+        private static void UploadFileToFtp(string sourceFilePath, string ftpServerUrl, string username, string password)
         {
             FileInfo fileInfo = new FileInfo(sourceFilePath);
             string targetUri = new Uri(new Uri(ftpServerUrl), fileInfo.Name).ToString();
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(targetUri);
             request.Method = WebRequestMethods.Ftp.UploadFile;
-            request.Credentials = new NetworkCredential();// delete use and pass for local use
+            request.Credentials = new NetworkCredential(username, password);
             request.UseBinary = true;
             request.UsePassive = true;
             request.KeepAlive = false;
@@ -150,5 +147,51 @@ namespace Equipment_Management.GlobalVariable
                 MessageBox.Show("Error loading image: " + ex.Message);
             }
         }
+        //Opening PDF from FTP Server ------------------------------------------------------------------------------------------
+        public static void DownloadAndOpenPdf(string ftpUri)
+        {
+            string tempFilePath = Path.GetTempFileName();
+            string pdfFilePath = Path.ChangeExtension(tempFilePath, ".pdf");
+            // Download the PDF file from the FTP server
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ftpUri);
+            request.Method = WebRequestMethods.Ftp.DownloadFile;
+            request.Credentials = new NetworkCredential(user, pass);
+
+            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+            using (Stream responseStream = response.GetResponseStream())
+            using (FileStream fileStream = new FileStream(pdfFilePath, FileMode.Create))
+            {
+                responseStream.CopyTo(fileStream);
+            }
+
+            // Open the downloaded PDF file
+            try
+            {
+                Process process = new Process();
+                process.StartInfo.FileName = pdfFilePath;
+                process.StartInfo.UseShellExecute = true; // Important: Allows using the system default application
+                process.Start();
+
+                // The process might not be available for waiting if the user is prompted to select a program
+                if (!process.HasExited)
+                {
+                    process.WaitForExit();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while opening the PDF: {ex.Message}");
+            }
+            finally
+            {
+                // Delete the file after the process has exited or failed to start
+                if (File.Exists(pdfFilePath))
+                {
+                    File.Delete(pdfFilePath);
+                    Console.WriteLine("File deleted.");
+                }
+            }
+        }
+
     }
 }

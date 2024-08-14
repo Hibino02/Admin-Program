@@ -72,13 +72,9 @@ namespace Equipment_Management.UIClass.Job
             reasdonToChoserepairRichTextBox.Text = jobToRemove.JTypeReason;
             deciderNameTextBox.Text = jobToRemove.Decider;
             decideDateTimePicker.Value = jobToRemove.DDate.Value;
-            if (!string.IsNullOrEmpty(jobToRemove.CasePhoto) && File.Exists(jobToRemove.CasePhoto))
+            if (!string.IsNullOrEmpty(jobToRemove.CasePhoto))
             {
-                if (equipmentRepaiePictureBox.Image != null)
-                {
-                    equipmentRepaiePictureBox.Image.Dispose();
-                }
-                equipmentRepaiePictureBox.Image = Image.FromFile(jobToRemove.CasePhoto);
+                Global.LoadImageIntoPictureBox(jobToRemove.CasePhoto, equipmentRepaiePictureBox);
             }
             jDetailsrichTextBox.Text = jobToRemove.JDetails;
             reasonToAppRichTextBox.Text = jobToRemove.AppReason;

@@ -212,7 +212,10 @@ namespace Equipment_Management.UIClass.Job
             }
             if (equipmentDisplaydataGridView.Columns["EquipmentPhoto"] != null)
             {
-                equipmentDisplaydataGridView.Columns["EquipmentPhoto"].HeaderText = "ภาพอุปกรณ์";
+                var photoColumn = equipmentDisplaydataGridView.Columns["EquipmentPhoto"];
+                photoColumn.HeaderText = "ไฟล์ภาพอุปกรณ์";
+                equipmentDisplaydataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                photoColumn.Width = 100;
             }
             //No use columns
             if (equipmentDisplaydataGridView.Columns["EDetails"] != null)
@@ -273,7 +276,10 @@ namespace Equipment_Management.UIClass.Job
             }
             if (equipmentSelecteddataGridView.Columns["EquipmentPhoto"] != null)
             {
-                equipmentSelecteddataGridView.Columns["EquipmentPhoto"].HeaderText = "ภาพอุปกรณ์";
+                var photoColumn = equipmentSelecteddataGridView.Columns["EquipmentPhoto"];
+                photoColumn.HeaderText = "ไฟล์ภาพอุปกรณ์";
+                equipmentSelecteddataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                photoColumn.Width = 100;
             }
             //No use columns
             if (equipmentSelecteddataGridView.Columns["EDetails"] != null)
@@ -338,17 +344,21 @@ namespace Equipment_Management.UIClass.Job
         //Event to appear pcturebox
         private void equipmentDisplaydataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            if (e.RowIndex >= 0)
             {
-                // Assuming the cell contains the image path
-                string imagePath = equipmentDisplaydataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
-
-                if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
+                string columnName = equipmentDisplaydataGridView.Columns[e.ColumnIndex].Name;
+                if (columnName == "EquipmentPhoto")
                 {
-                    pictureBox.Image = Image.FromFile(imagePath);
-                    pictureBox.Visible = true;
+                    string imagePath = equipmentDisplaydataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
+                    if (string.IsNullOrEmpty(imagePath))
+                    {
+                        return;
+                    }
 
+                    Global.LoadImageIntoPictureBox(imagePath, pictureBox);
+                    pictureBox.Visible = true;
                     pictureBox.BringToFront();
+
                 }
             }
         }
@@ -370,17 +380,21 @@ namespace Equipment_Management.UIClass.Job
         //Event to appear pcturebox in selected Equipment
         private void equipmentSelecteddataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            if (e.RowIndex >= 0)
             {
-                // Assuming the cell contains the image path
-                string imagePath = equipmentSelecteddataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
+                string columnName = equipmentSelecteddataGridView.Columns[e.ColumnIndex].Name;
+                if (columnName == "EquipmentPhoto")
+                {// Assuming the cell contains the image path
+                    string imagePath = equipmentSelecteddataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
+                    if (string.IsNullOrEmpty(imagePath))
+                    {
+                        return;
+                    }
 
-                if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
-                {
-                    selectedEquipmentpictureBox.Image = Image.FromFile(imagePath);
+                    Global.LoadImageIntoPictureBox(imagePath, selectedEquipmentpictureBox);
                     selectedEquipmentpictureBox.Visible = true;
-
                     selectedEquipmentpictureBox.BringToFront();
+
                 }
             }
         }
@@ -399,11 +413,11 @@ namespace Equipment_Management.UIClass.Job
                     int selectedID = (int)equipmentDisplaydataGridView.Rows[e.RowIndex].Cells["ID"].Value;
 
                     Global.selectedEquipmentInJob = originalEquipmentList.FirstOrDefault(eq => eq.ID == selectedID);
-
                     // Update the selected equipment list and refresh the grid
                     UpdateSelectedEquipmentList();
                     FormatSelectedEquipmentListDataGridView();
                     equipmentDisplaydataGridView.Enabled = false;
+                    pictureBox.Visible = false;
                 }
             }
         }
@@ -460,7 +474,7 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(repairEquipmentPhotoPath))
             {
-                Global.SaveFileToServer(repairEquipmentPhotoPath, Global.Directory + @"EquipmentManagementBLC5\CreatedJobEquipmentPhoto");
+                Global.SaveFileToServer(repairEquipmentPhotoPath, "CreatedJobEquipmentPhoto");
                 repairEquipmentPhotoPath = Global.TargetFilePath;
             }
         }
@@ -468,7 +482,7 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(createdJobDocumentPath))
             {
-                Global.SaveFileToServer(createdJobDocumentPath, Global.Directory + @"EquipmentManagementBLC5\CreatedJobDocument");
+                Global.SaveFileToServer(createdJobDocumentPath, "CreatedJobDocument");
                 createdJobDocumentPath = Global.TargetFilePath;
             }
         }

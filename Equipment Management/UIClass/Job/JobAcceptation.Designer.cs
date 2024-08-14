@@ -58,17 +58,17 @@
             this.vendorNameTextBox = new System.Windows.Forms.TextBox();
             this.startDateLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.finishDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.finishDateLabel = new System.Windows.Forms.Label();
-            this.finishPictureBox = new System.Windows.Forms.PictureBox();
-            this.finishPhotobutton = new System.Windows.Forms.Button();
-            this.finishDocumentbutton = new System.Windows.Forms.Button();
-            this.finishDocumentlinkLabel = new System.Windows.Forms.LinkLabel();
-            this.acceptorNametextBox = new System.Windows.Forms.TextBox();
-            this.acceptorNamelabel = new System.Windows.Forms.Label();
-            this.finishRepairJobbutton = new System.Windows.Forms.Button();
-            this.eStatusComboBox = new System.Windows.Forms.ComboBox();
             this.eStatusLabel = new System.Windows.Forms.Label();
+            this.eStatusComboBox = new System.Windows.Forms.ComboBox();
+            this.finishRepairJobbutton = new System.Windows.Forms.Button();
+            this.acceptorNamelabel = new System.Windows.Forms.Label();
+            this.acceptorNametextBox = new System.Windows.Forms.TextBox();
+            this.finishDocumentlinkLabel = new System.Windows.Forms.LinkLabel();
+            this.finishDocumentbutton = new System.Windows.Forms.Button();
+            this.finishPhotobutton = new System.Windows.Forms.Button();
+            this.finishPictureBox = new System.Windows.Forms.PictureBox();
+            this.finishDateLabel = new System.Windows.Forms.Label();
+            this.finishDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.JobEquipmentDetailsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fixEquipmentPictureBox)).BeginInit();
             this.repairGroupBox.SuspendLayout();
@@ -273,6 +273,8 @@
             this.contractLinkLabel.TabStop = true;
             this.contractLinkLabel.Text = "ดูไฟล์แนบ";
             this.contractLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.contractLinkLabel_LinkClicked);
+            this.contractLinkLabel.MouseEnter += new System.EventHandler(this.contractLinkLabel_MouseEnter);
+            this.contractLinkLabel.MouseLeave += new System.EventHandler(this.contractLinkLabel_MouseLeave);
             // 
             // workPermitDocLinkLabel
             // 
@@ -285,6 +287,8 @@
             this.workPermitDocLinkLabel.TabStop = true;
             this.workPermitDocLinkLabel.Text = "ดูไฟล์แนบ";
             this.workPermitDocLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.workPermitDocLinkLabel_LinkClicked);
+            this.workPermitDocLinkLabel.MouseEnter += new System.EventHandler(this.workPermitDocLinkLabel_MouseEnter);
+            this.workPermitDocLinkLabel.MouseLeave += new System.EventHandler(this.workPermitDocLinkLabel_MouseLeave);
             // 
             // costTextBox
             // 
@@ -419,55 +423,57 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ตรวจรับงานแจ้งซ่อม";
             // 
-            // finishDateTimePicker
+            // eStatusLabel
             // 
-            this.finishDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.finishDateTimePicker.Location = new System.Drawing.Point(3, 70);
-            this.finishDateTimePicker.Name = "finishDateTimePicker";
-            this.finishDateTimePicker.Size = new System.Drawing.Size(200, 20);
-            this.finishDateTimePicker.TabIndex = 0;
+            this.eStatusLabel.AutoSize = true;
+            this.eStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eStatusLabel.Location = new System.Drawing.Point(15, 257);
+            this.eStatusLabel.Name = "eStatusLabel";
+            this.eStatusLabel.Size = new System.Drawing.Size(177, 20);
+            this.eStatusLabel.TabIndex = 59;
+            this.eStatusLabel.Text = "สถานะอุปกรณ์หลังจากซ่อม :";
             // 
-            // finishDateLabel
+            // eStatusComboBox
             // 
-            this.finishDateLabel.AutoSize = true;
-            this.finishDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.finishDateLabel.Location = new System.Drawing.Point(58, 47);
-            this.finishDateLabel.Name = "finishDateLabel";
-            this.finishDateLabel.Size = new System.Drawing.Size(99, 20);
-            this.finishDateLabel.TabIndex = 46;
-            this.finishDateLabel.Text = "วันที่ซ่อมเสร็จ :";
+            this.eStatusComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eStatusComboBox.FormattingEnabled = true;
+            this.eStatusComboBox.Location = new System.Drawing.Point(3, 280);
+            this.eStatusComboBox.Name = "eStatusComboBox";
+            this.eStatusComboBox.Size = new System.Drawing.Size(210, 32);
+            this.eStatusComboBox.TabIndex = 58;
             // 
-            // finishPictureBox
+            // finishRepairJobbutton
             // 
-            this.finishPictureBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.finishPictureBox.Location = new System.Drawing.Point(219, 13);
-            this.finishPictureBox.Name = "finishPictureBox";
-            this.finishPictureBox.Size = new System.Drawing.Size(587, 499);
-            this.finishPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.finishPictureBox.TabIndex = 47;
-            this.finishPictureBox.TabStop = false;
+            this.finishRepairJobbutton.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.finishRepairJobbutton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.finishRepairJobbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.finishRepairJobbutton.Location = new System.Drawing.Point(31, 471);
+            this.finishRepairJobbutton.Name = "finishRepairJobbutton";
+            this.finishRepairJobbutton.Size = new System.Drawing.Size(148, 34);
+            this.finishRepairJobbutton.TabIndex = 57;
+            this.finishRepairJobbutton.Text = "บันทึก";
+            this.finishRepairJobbutton.UseVisualStyleBackColor = false;
+            this.finishRepairJobbutton.Click += new System.EventHandler(this.finishRepairJobbutton_Click);
             // 
-            // finishPhotobutton
+            // acceptorNamelabel
             // 
-            this.finishPhotobutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.finishPhotobutton.Location = new System.Drawing.Point(31, 112);
-            this.finishPhotobutton.Name = "finishPhotobutton";
-            this.finishPhotobutton.Size = new System.Drawing.Size(148, 34);
-            this.finishPhotobutton.TabIndex = 55;
-            this.finishPhotobutton.Text = "แนบรูป";
-            this.finishPhotobutton.UseVisualStyleBackColor = true;
-            this.finishPhotobutton.Click += new System.EventHandler(this.finishPhotobutton_Click);
+            this.acceptorNamelabel.AutoSize = true;
+            this.acceptorNamelabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.acceptorNamelabel.Location = new System.Drawing.Point(58, 365);
+            this.acceptorNamelabel.Name = "acceptorNamelabel";
+            this.acceptorNamelabel.Size = new System.Drawing.Size(90, 20);
+            this.acceptorNamelabel.TabIndex = 55;
+            this.acceptorNamelabel.Text = "ชื่อผู้ตรวจรับ :";
             // 
-            // finishDocumentbutton
+            // acceptorNametextBox
             // 
-            this.finishDocumentbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.finishDocumentbutton.Location = new System.Drawing.Point(31, 161);
-            this.finishDocumentbutton.Name = "finishDocumentbutton";
-            this.finishDocumentbutton.Size = new System.Drawing.Size(148, 34);
-            this.finishDocumentbutton.TabIndex = 56;
-            this.finishDocumentbutton.Text = "แนบเอกสารรับงาน";
-            this.finishDocumentbutton.UseVisualStyleBackColor = true;
-            this.finishDocumentbutton.Click += new System.EventHandler(this.finishDocumentbutton_Click);
+            this.acceptorNametextBox.BackColor = System.Drawing.SystemColors.Info;
+            this.acceptorNametextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.acceptorNametextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.acceptorNametextBox.Location = new System.Drawing.Point(0, 388);
+            this.acceptorNametextBox.Name = "acceptorNametextBox";
+            this.acceptorNametextBox.Size = new System.Drawing.Size(213, 29);
+            this.acceptorNametextBox.TabIndex = 55;
             // 
             // finishDocumentlinkLabel
             // 
@@ -483,57 +489,55 @@
             this.finishDocumentlinkLabel.MouseEnter += new System.EventHandler(this.finishDocumentlinkLabel_MouseEnter);
             this.finishDocumentlinkLabel.MouseLeave += new System.EventHandler(this.finishDocumentlinkLabel_MouseLeave);
             // 
-            // acceptorNametextBox
+            // finishDocumentbutton
             // 
-            this.acceptorNametextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.acceptorNametextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.acceptorNametextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.acceptorNametextBox.Location = new System.Drawing.Point(0, 388);
-            this.acceptorNametextBox.Name = "acceptorNametextBox";
-            this.acceptorNametextBox.Size = new System.Drawing.Size(213, 29);
-            this.acceptorNametextBox.TabIndex = 55;
+            this.finishDocumentbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.finishDocumentbutton.Location = new System.Drawing.Point(31, 161);
+            this.finishDocumentbutton.Name = "finishDocumentbutton";
+            this.finishDocumentbutton.Size = new System.Drawing.Size(148, 34);
+            this.finishDocumentbutton.TabIndex = 56;
+            this.finishDocumentbutton.Text = "แนบเอกสารรับงาน";
+            this.finishDocumentbutton.UseVisualStyleBackColor = true;
+            this.finishDocumentbutton.Click += new System.EventHandler(this.finishDocumentbutton_Click);
             // 
-            // acceptorNamelabel
+            // finishPhotobutton
             // 
-            this.acceptorNamelabel.AutoSize = true;
-            this.acceptorNamelabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.acceptorNamelabel.Location = new System.Drawing.Point(58, 365);
-            this.acceptorNamelabel.Name = "acceptorNamelabel";
-            this.acceptorNamelabel.Size = new System.Drawing.Size(90, 20);
-            this.acceptorNamelabel.TabIndex = 55;
-            this.acceptorNamelabel.Text = "ชื่อผู้ตรวจรับ :";
+            this.finishPhotobutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.finishPhotobutton.Location = new System.Drawing.Point(31, 112);
+            this.finishPhotobutton.Name = "finishPhotobutton";
+            this.finishPhotobutton.Size = new System.Drawing.Size(148, 34);
+            this.finishPhotobutton.TabIndex = 55;
+            this.finishPhotobutton.Text = "แนบรูป";
+            this.finishPhotobutton.UseVisualStyleBackColor = true;
+            this.finishPhotobutton.Click += new System.EventHandler(this.finishPhotobutton_Click);
             // 
-            // finishRepairJobbutton
+            // finishPictureBox
             // 
-            this.finishRepairJobbutton.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.finishRepairJobbutton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.finishRepairJobbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.finishRepairJobbutton.Location = new System.Drawing.Point(31, 471);
-            this.finishRepairJobbutton.Name = "finishRepairJobbutton";
-            this.finishRepairJobbutton.Size = new System.Drawing.Size(148, 34);
-            this.finishRepairJobbutton.TabIndex = 57;
-            this.finishRepairJobbutton.Text = "บันทึก";
-            this.finishRepairJobbutton.UseVisualStyleBackColor = false;
-            this.finishRepairJobbutton.Click += new System.EventHandler(this.finishRepairJobbutton_Click);
+            this.finishPictureBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.finishPictureBox.Location = new System.Drawing.Point(219, 13);
+            this.finishPictureBox.Name = "finishPictureBox";
+            this.finishPictureBox.Size = new System.Drawing.Size(587, 499);
+            this.finishPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.finishPictureBox.TabIndex = 47;
+            this.finishPictureBox.TabStop = false;
             // 
-            // eStatusComboBox
+            // finishDateLabel
             // 
-            this.eStatusComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.eStatusComboBox.FormattingEnabled = true;
-            this.eStatusComboBox.Location = new System.Drawing.Point(3, 280);
-            this.eStatusComboBox.Name = "eStatusComboBox";
-            this.eStatusComboBox.Size = new System.Drawing.Size(210, 32);
-            this.eStatusComboBox.TabIndex = 58;
+            this.finishDateLabel.AutoSize = true;
+            this.finishDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.finishDateLabel.Location = new System.Drawing.Point(58, 47);
+            this.finishDateLabel.Name = "finishDateLabel";
+            this.finishDateLabel.Size = new System.Drawing.Size(99, 20);
+            this.finishDateLabel.TabIndex = 46;
+            this.finishDateLabel.Text = "วันที่ซ่อมเสร็จ :";
             // 
-            // eStatusLabel
+            // finishDateTimePicker
             // 
-            this.eStatusLabel.AutoSize = true;
-            this.eStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.eStatusLabel.Location = new System.Drawing.Point(15, 257);
-            this.eStatusLabel.Name = "eStatusLabel";
-            this.eStatusLabel.Size = new System.Drawing.Size(177, 20);
-            this.eStatusLabel.TabIndex = 59;
-            this.eStatusLabel.Text = "สถานะอุปกรณ์หลังจากซ่อม :";
+            this.finishDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.finishDateTimePicker.Location = new System.Drawing.Point(3, 70);
+            this.finishDateTimePicker.Name = "finishDateTimePicker";
+            this.finishDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.finishDateTimePicker.TabIndex = 0;
             // 
             // JobAcceptation
             // 
