@@ -33,7 +33,6 @@ namespace Equipment_Management.UIClass.Job
         private int currentFilterID = -1; // Holds the currently selected filter ID
         private List<AllEquipmentView> originalEquipmentList;
         //Saving photo & documentd variable
-        string targetFilePath;
         string repairEquipmentPhotoPath;
         string createdJobDocumentPath;
         //variable for Created job
@@ -66,7 +65,7 @@ namespace Equipment_Management.UIClass.Job
             toolTip1.ReshowDelay = 0;
             toolTip1.AutoPopDelay = 5000;
 
-            repairDocLinkLabel.MouseHover += repairDocLinkLabel_MouseEnter;
+            repairDocLinkLabel.MouseEnter += repairDocLinkLabel_MouseEnter;
             repairDocLinkLabel.MouseLeave += repairDocLinkLabel_MouseLeave_1;
 
             //--------------------------------------------------------------------------------------------//
@@ -421,38 +420,6 @@ namespace Equipment_Management.UIClass.Job
             selectedEquipmentpictureBox.Visible = false;
         }
 
-        //Saving photo to target directory
-        private void SavePhotoToDirectory(string sourceFilePath, string targetDirectory)
-        {
-            try
-            {
-                // Check if the directory exists
-                if (!Directory.Exists(targetDirectory))
-                {
-                    // Create the directory if it doesn't exist
-                    Directory.CreateDirectory(targetDirectory);
-                }
-
-                // Define the target file path
-                targetFilePath = Path.Combine(targetDirectory, Path.GetFileName(sourceFilePath));
-
-                // Check if the file is locked by another process
-                if (IsFileLocked(new FileInfo(sourceFilePath)))
-                {
-                    ShowCustomMessageBox("ไฟล์นี้กำลังถูกเปิด จึงไม่สามารถก๊อปปี้ได้");
-                    return;
-                }
-
-                // Copy the file to the target directory
-                File.Copy(sourceFilePath, targetFilePath, true); // 'true' allows overwriting if the file already exists
-
-                ShowCustomMessageBox($"File saved to: {targetFilePath}");
-            }
-            catch (IOException ex)
-            {
-                ShowCustomMessageBox($"An error occurred: {ex.Message}");
-            }
-        }
         //Get file path from user and stream to PictureBox
         private void equipmentPhotoButton_Click(object sender, EventArgs e)
         {
@@ -493,16 +460,16 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(repairEquipmentPhotoPath))
             {
-                SavePhotoToDirectory(repairEquipmentPhotoPath, @"C:\CreatedJobEquipmentPhoto");
-                repairEquipmentPhotoPath = targetFilePath;
+                Global.SaveFileToServer(repairEquipmentPhotoPath, Global.Directory + @"EquipmentManagementBLC5\CreatedJobEquipmentPhoto");
+                repairEquipmentPhotoPath = Global.TargetFilePath;
             }
         }
         private void SaveCreatedJobDocument()
         {
             if (!string.IsNullOrEmpty(createdJobDocumentPath))
             {
-                SavePhotoToDirectory(createdJobDocumentPath, @"C:\CreatedJobDocument");
-                createdJobDocumentPath = targetFilePath;
+                Global.SaveFileToServer(createdJobDocumentPath, Global.Directory + @"EquipmentManagementBLC5\CreatedJobDocument");
+                createdJobDocumentPath = Global.TargetFilePath;
             }
         }
         //Click to open attached PDF file
@@ -632,27 +599,6 @@ namespace Equipment_Management.UIClass.Job
         private void CreateJobForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Global.selectedEquipmentInJob = null;
-        }
-        //Method to check file is being open
-        private bool IsFileLocked(FileInfo file)
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-            }
-            catch (IOException)
-            {
-                // The file is locked by another process
-                return true;
-            }
-            finally
-            {
-                stream?.Close();
-            }
-
-            // The file is not locked
-            return false;
         }
     }
 }

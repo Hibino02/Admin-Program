@@ -27,8 +27,6 @@ namespace Equipment_Management.UIClass.Job
         string workPermitDocumentPath;
         string contractDocumentPath;
 
-        string targetFilePath;
-
         double costFromtextBox;
 
         Equipment JREq;
@@ -404,56 +402,24 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(writeOffDocumentPath))
             {
-                SavePhotoToDirectory(writeOffDocumentPath, @"C:\WriteOffDocument");
-                writeOffDocumentPath = targetFilePath;
+                Global.SaveFileToServer(writeOffDocumentPath, "WriteOffDocument");
+                writeOffDocumentPath = Global.TargetFilePath;
             }
         }
         private void SaveWorkPermitDocument()
         {
             if (!string.IsNullOrEmpty(workPermitDocumentPath))
             {
-                SavePhotoToDirectory(workPermitDocumentPath, @"C:\WorkPermitDocument");
-                workPermitDocumentPath = targetFilePath;
+                Global.SaveFileToServer(workPermitDocumentPath, "WorkPermitDocument");
+                workPermitDocumentPath = Global.TargetFilePath;
             }
         }
         private void SaveContractDocument()
         {
             if (!string.IsNullOrEmpty(contractDocumentPath))
             {
-                SavePhotoToDirectory(contractDocumentPath, @"C:\ContractDocument");
-                contractDocumentPath = targetFilePath;
-            }
-        }
-        //Saving file to folder Method
-        private void SavePhotoToDirectory(string sourceFilePath, string targetDirectory)
-        {
-            try
-            {
-                // Check if the directory exists
-                if (!Directory.Exists(targetDirectory))
-                {
-                    // Create the directory if it doesn't exist
-                    Directory.CreateDirectory(targetDirectory);
-                }
-
-                // Define the target file path
-                targetFilePath = Path.Combine(targetDirectory, Path.GetFileName(sourceFilePath));
-
-                // Check if the file is locked by another process
-                if (IsFileLocked(new FileInfo(sourceFilePath)))
-                {
-                    ShowCustomMessageBox("ไฟล์นี้กำลังถูกเปิด จึงไม่สามารถก๊อปปี้ได้");
-                    return;
-                }
-
-                // Copy the file to the target directory
-                File.Copy(sourceFilePath, targetFilePath, true); // 'true' allows overwriting if the file already exists
-
-                ShowCustomMessageBox($"File saved to: {targetFilePath}");
-            }
-            catch (IOException ex)
-            {
-                ShowCustomMessageBox($"An error occurred: {ex.Message}");
+                Global.SaveFileToServer(contractDocumentPath, "ContractDocument");
+                contractDocumentPath = Global.TargetFilePath;
             }
         }
         //Click to open attached PDF file ------------------------------------------------------------------------
@@ -697,27 +663,6 @@ namespace Equipment_Management.UIClass.Job
         private void JobProcessing_FormClosing(object sender, FormClosingEventArgs e)
         {
             Global.selectedEquipmentInJob = null;
-        }
-        //Method to check file is being open
-        private bool IsFileLocked(FileInfo file)
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-            }
-            catch (IOException)
-            {
-                // The file is locked by another process
-                return true;
-            }
-            finally
-            {
-                stream?.Close();
-            }
-
-            // The file is not locked
-            return false;
         }
     }
 }

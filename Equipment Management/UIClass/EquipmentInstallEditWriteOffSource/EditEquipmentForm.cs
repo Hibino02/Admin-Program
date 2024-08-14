@@ -16,11 +16,11 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
         MainBackGroundFrom main;
         public event EventHandler UpdateGrid;
 
+        private ToolTip accToolTip;
+
         string equipmentPhotoPath;
         string installationPlacePhotoPath;
         string acquisitionDocumentPath;
-
-        string targetFilePath;
 
         private CreateWindow create;
         //variable for update components
@@ -64,6 +64,17 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
                 equipmentInitialStatusComboBox.Enabled = false;
             }
             //Close Acquisition combobox to cant edit
+
+            //--------------------------------------------------------------------------------------------//
+            //AccToolTip
+            accToolTip = new ToolTip();
+            accToolTip.InitialDelay = 0;
+            accToolTip.ReshowDelay = 0;
+            accToolTip.AutoPopDelay = 5000;
+
+            invoiceLinkLabel.MouseEnter += invoiceLinkLabel_MouseEnter;
+            invoiceLinkLabel.MouseLeave += invoiceLinkLabel_MouseLeave;
+
             acquisitionComboBox.Enabled = false;
             UpdateComponents();
             SetEquipmentCurrentStatus();
@@ -321,82 +332,31 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
                 }
             }
         }
-        //Saving photo to target directory
-        private void SavePhotoToDirectory(string sourceFilePath, string targetDirectory)
-        {
-            try
-            {
-                // Check if the directory exists
-                if (!Directory.Exists(targetDirectory))
-                {
-                    // Create the directory if it doesn't exist
-                    Directory.CreateDirectory(targetDirectory);
-                }
-
-                // Define the target file path
-                targetFilePath = Path.Combine(targetDirectory, Path.GetFileName(sourceFilePath));
-
-                // Check if the file is locked by another process
-                if (IsFileLocked(new FileInfo(sourceFilePath)))
-                {
-                    ShowCustomMessageBox("ไฟล์นี้กำลังถูกเปิด จึงไม่สามารถก๊อปปี้ได้");
-                    return;
-                }
-
-                // Copy the file to the target directory
-                File.Copy(sourceFilePath, targetFilePath, true); // 'true' allows overwriting if the file already exists
-
-                ShowCustomMessageBox($"File saved to: {targetFilePath}");
-            }
-            catch (IOException ex)
-            {
-                ShowCustomMessageBox($"An error occurred: {ex.Message}");
-            }
-        }
-        //Method to check file is being open
-        private bool IsFileLocked(FileInfo file)
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-            }
-            catch (IOException)
-            {
-                // The file is locked by another process
-                return true;
-            }
-            finally
-            {
-                stream?.Close();
-            }
-
-            // The file is not locked
-            return false;
-        }
+       
+       
         //Save photo & documents into folder
         private void SaveEquipmentPhoto()
         {
             if (!string.IsNullOrEmpty(equipmentPhotoPath))
             {
-                SavePhotoToDirectory(equipmentPhotoPath, @"C:\EquipmentPhoto");
-                equipmentPhotoPath = targetFilePath;
+                Global.SaveFileToServer(equipmentPhotoPath, "EquipmentPhoto");
+                equipmentPhotoPath = Global.TargetFilePath;
             }
         }
         private void SaveInstallationPlacePhoto()
         {
             if (!string.IsNullOrEmpty(installationPlacePhotoPath))
             {
-                SavePhotoToDirectory(installationPlacePhotoPath, @"C:\InstallationPlacePhoto");
-                installationPlacePhotoPath = targetFilePath;
+                Global.SaveFileToServer(installationPlacePhotoPath, "InstallationPlacePhoto");
+                installationPlacePhotoPath = Global.TargetFilePath;
             }
         }
         private void SaveAcquisitionDocument()
         {
             if (!string.IsNullOrEmpty(acquisitionDocumentPath))
             {
-                SavePhotoToDirectory(acquisitionDocumentPath, @"C:\AcquisitionDocument");
-                acquisitionDocumentPath = targetFilePath;
+                Global.SaveFileToServer(acquisitionDocumentPath, "AcquisitionDocument");
+                acquisitionDocumentPath = Global.TargetFilePath;
             }
         }
 
@@ -544,6 +504,22 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
                 messageBox.MessageText = message;
                 var result = messageBox.ShowDialog();
             }
+        }
+        //Event to drive tooltip accDocument
+        private void invoiceLinkLabel_MouseEnter(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(acquisitionDocumentPath))
+            {
+                accToolTip.Show($"Attached File: {Path.GetFileName(acquisitionDocumentPath)}", invoiceLinkLabel);
+            }
+            else
+            {
+                accToolTip.Show("No file attached", invoiceLinkLabel);
+            }
+        }
+        private void invoiceLinkLabel_MouseLeave(object sender, EventArgs e)
+        {
+            accToolTip.Hide(invoiceLinkLabel);
         }
     }
 }

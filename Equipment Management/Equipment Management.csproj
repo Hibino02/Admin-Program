@@ -98,6 +98,7 @@
       <DependentUpon>CustomMessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalVariable\Global.cs" />
+    <Compile Include="GlobalVariable\ImageLoader.cs" />
     <Compile Include="ObjectClass\Acquisition.cs" />
     <Compile Include="ObjectClass\Equipment.cs" />
     <Compile Include="ObjectClass\EquipmentOwner.cs" />
@@ -172,6 +173,12 @@
     <Compile Include="UIClass\Job\JobAcceptation.Designer.cs">
       <DependentUpon>JobAcceptation.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIClass\Job\JobHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Job\JobHistory.Designer.cs">
+      <DependentUpon>JobHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIClass\Job\JobProcessing.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +190,12 @@
     </Compile>
     <Compile Include="UIClass\Job\RemoveJobForm.Designer.cs">
       <DependentUpon>RemoveJobForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\Job\removeJobProcessing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Job\removeJobProcessing.Designer.cs">
+      <DependentUpon>removeJobProcessing.cs</DependentUpon>
     </Compile>
     <Compile Include="UIClass\MainBackGroundFrom.cs">
       <SubType>Form</SubType>
@@ -238,11 +251,17 @@
     <EmbeddedResource Include="UIClass\Job\JobAcceptation.resx">
       <DependentUpon>JobAcceptation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Job\JobHistory.resx">
+      <DependentUpon>JobHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIClass\Job\JobProcessing.resx">
       <DependentUpon>JobProcessing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIClass\Job\RemoveJobForm.resx">
       <DependentUpon>RemoveJobForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Job\removeJobProcessing.resx">
+      <DependentUpon>removeJobProcessing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIClass\MainBackGroundFrom.resx">
       <DependentUpon>MainBackGroundFrom.cs</DependentUpon>

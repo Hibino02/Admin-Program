@@ -12,7 +12,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
     {
         Equipment equipmentDocAttach = Global.equipmentGlobal;
         string acquisitionDocumentPath;
-        string targetFilePath;
+
         EquipmentStatus estatus;
 
         private ToolTip toolTip1;
@@ -58,45 +58,14 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
                 ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
             }
         }
-        //Method to save photo to target directory
-        private void SavePhotoToDirectory(string sourceFilePath, string targetDirectory)
-        {
-            try
-            {
-                // Check if the directory exists
-                if (!Directory.Exists(targetDirectory))
-                {
-                    // Create the directory if it doesn't exist
-                    Directory.CreateDirectory(targetDirectory);
-                }
-
-                // Define the target file path
-                targetFilePath = Path.Combine(targetDirectory, Path.GetFileName(sourceFilePath));
-
-                // Check if the file is locked by another process
-                if (IsFileLocked(new FileInfo(sourceFilePath)))
-                {
-                    ShowCustomMessageBox("ไฟล์นี้กำลังถูกเปิด จึงไม่สามารถก๊อปปี้ได้");
-                    return;
-                }
-
-                // Copy the file to the target directory
-                File.Copy(sourceFilePath, targetFilePath, true); // 'true' allows overwriting if the file already exists
-
-                ShowCustomMessageBox($"File saved to: {targetFilePath}");
-            }
-            catch (IOException ex)
-            {
-                ShowCustomMessageBox($"An error occurred: {ex.Message}");
-            }
-        }
+        
         //Save documents into folder
         private void SaveAcquisitionDocument()
         {
             if (!string.IsNullOrEmpty(acquisitionDocumentPath))
             {
-                SavePhotoToDirectory(acquisitionDocumentPath, @"C:\WriteOffNTransferDocument");
-                acquisitionDocumentPath = targetFilePath;
+                Global.SaveFileToServer(acquisitionDocumentPath, "WriteOffNTransferDocument");
+                acquisitionDocumentPath = Global.TargetFilePath;
             }
         }
         //Check everything
@@ -169,27 +138,6 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
         private void documentLinkLabel_MouseLeave(object sender, EventArgs e)
         {
             toolTip1.Hide(documentLinkLabel);
-        }
-        //Method to check file is being open
-        private bool IsFileLocked(FileInfo file)
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-            }
-            catch (IOException)
-            {
-                // The file is locked by another process
-                return true;
-            }
-            finally
-            {
-                stream?.Close();
-            }
-
-            // The file is not locked
-            return false;
         }
     }
 }

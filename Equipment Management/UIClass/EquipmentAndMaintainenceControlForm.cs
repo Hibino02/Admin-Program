@@ -191,45 +191,57 @@ namespace Equipment_Management.UIClass
         {
             Global.ID = -1;
             DataGridViewRow selectedRow = jobCreatedDatagridview.CurrentRow;
-            Global.ID = (int)selectedRow.Cells["ID"].Value;
-            jobRemove = new RemoveJobForm();
-            jobRemove.Owner = main;
-            jobRemove.UpdateGrid += OnUpdateCreatedJob;
-            jobRemove.ShowDialog();
+            if (selectedRow != null)
+            {
+                Global.ID = (int)selectedRow.Cells["ID"].Value;
+                jobRemove = new RemoveJobForm();
+                jobRemove.Owner = main;
+                jobRemove.UpdateGrid += OnUpdateCreatedJob;
+                jobRemove.ShowDialog();
+            }    
         }
         //Job processing
         private void jobProcessingButton_Click(object sender, EventArgs e)
         {
             Global.ID = -1;
             DataGridViewRow selectedRow = jobCreatedDatagridview.CurrentRow;
-            Global.ID = (int)selectedRow.Cells["ID"].Value;
-            jobProcessing = new JobProcessing();
-            jobProcessing.Owner = main;
-            jobProcessing.UpdateGrid += OnUpdateCreatedJob;
-            jobProcessing.UpdateGrid += OnUpdateProcessJob;
-            jobProcessing.ShowDialog();
+            if (selectedRow != null)
+            {
+                Global.ID = (int)selectedRow.Cells["ID"].Value;
+                jobProcessing = new JobProcessing();
+                jobProcessing.Owner = main;
+                jobProcessing.UpdateGrid += OnUpdateCreatedJob;
+                jobProcessing.UpdateGrid += OnUpdateProcessJob;
+                jobProcessing.ShowDialog();
+            }          
         }
         //Job acceptation
         private void jobAcceptationButton_Click(object sender, EventArgs e)
         {
             Global.ID = -1;
             DataGridViewRow selectedRow = jobProcessingDatagridview.CurrentRow;
-            Global.ID = (int)selectedRow.Cells["ID"].Value;
-            jobAcceptation = new JobAcceptation();
-            jobAcceptation.Owner = main;
-            jobAcceptation.UpdateGrid += OnUpdateProcessJob;
-            jobAcceptation.ShowDialog();
+            if (selectedRow != null)
+            {
+                Global.ID = (int)selectedRow.Cells["ID"].Value;
+                jobAcceptation = new JobAcceptation();
+                jobAcceptation.Owner = main;
+                jobAcceptation.UpdateGrid += OnUpdateProcessJob;
+                jobAcceptation.ShowDialog();
+            }    
         }
         //Edit Job processing
         private void editJobProcessingButton_Click(object sender, EventArgs e)
         {
             Global.ID = -1;
             DataGridViewRow selectedRow = jobProcessingDatagridview.CurrentRow;
-            Global.ID = (int)selectedRow.Cells["ID"].Value;
-            editJobProcessing = new EditJobProcessing();
-            editJobProcessing.Owner = main;
-            editJobProcessing.UpdateGrid += OnUpdateProcessJob;
-            editJobProcessing.ShowDialog();
+            if (selectedRow != null)
+            {
+                Global.ID = (int)selectedRow.Cells["ID"].Value;
+                editJobProcessing = new EditJobProcessing();
+                editJobProcessing.Owner = main;
+                editJobProcessing.UpdateGrid += OnUpdateProcessJob;
+                editJobProcessing.ShowDialog();
+            }
         }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)

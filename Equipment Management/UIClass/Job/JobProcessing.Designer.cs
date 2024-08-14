@@ -43,6 +43,7 @@
             this.serialLabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.buyGroupBox = new System.Windows.Forms.GroupBox();
+            this.writeOffLinkLabel1 = new System.Windows.Forms.LinkLabel();
             this.writeOffButton = new System.Windows.Forms.Button();
             this.equipmentSelecteddataGridView = new System.Windows.Forms.DataGridView();
             this.selectedEquipmentLabel = new System.Windows.Forms.Label();
@@ -64,7 +65,6 @@
             this.processDateLabel = new System.Windows.Forms.Label();
             this.processDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.processButton = new System.Windows.Forms.Button();
-            this.writeOffLinkLabel1 = new System.Windows.Forms.LinkLabel();
             this.JobEquipmentDetailsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fixEquipmentPictureBox)).BeginInit();
             this.buyGroupBox.SuspendLayout();
@@ -89,9 +89,11 @@
             this.JobEquipmentDetailsGroupBox.Controls.Add(this.serialLabel);
             this.JobEquipmentDetailsGroupBox.Controls.Add(this.nameLabel);
             this.JobEquipmentDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.JobEquipmentDetailsGroupBox.Location = new System.Drawing.Point(2, 1);
+            this.JobEquipmentDetailsGroupBox.Location = new System.Drawing.Point(3, 1);
+            this.JobEquipmentDetailsGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.JobEquipmentDetailsGroupBox.Name = "JobEquipmentDetailsGroupBox";
-            this.JobEquipmentDetailsGroupBox.Size = new System.Drawing.Size(638, 781);
+            this.JobEquipmentDetailsGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.JobEquipmentDetailsGroupBox.Size = new System.Drawing.Size(851, 961);
             this.JobEquipmentDetailsGroupBox.TabIndex = 0;
             this.JobEquipmentDetailsGroupBox.TabStop = false;
             this.JobEquipmentDetailsGroupBox.Text = "รายละเอียดอุปกรณ์";
@@ -100,9 +102,10 @@
             // 
             this.aDateLabel.AutoSize = true;
             this.aDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aDateLabel.Location = new System.Drawing.Point(443, 147);
+            this.aDateLabel.Location = new System.Drawing.Point(591, 181);
+            this.aDateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.aDateLabel.Name = "aDateLabel";
-            this.aDateLabel.Size = new System.Drawing.Size(42, 20);
+            this.aDateLabel.Size = new System.Drawing.Size(53, 25);
             this.aDateLabel.TabIndex = 53;
             this.aDateLabel.Text = "label";
             // 
@@ -110,9 +113,10 @@
             // 
             this.currentELabel.AutoSize = true;
             this.currentELabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.currentELabel.Location = new System.Drawing.Point(155, 111);
+            this.currentELabel.Location = new System.Drawing.Point(207, 137);
+            this.currentELabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.currentELabel.Name = "currentELabel";
-            this.currentELabel.Size = new System.Drawing.Size(42, 20);
+            this.currentELabel.Size = new System.Drawing.Size(53, 25);
             this.currentELabel.TabIndex = 52;
             this.currentELabel.Text = "label";
             // 
@@ -120,9 +124,10 @@
             // 
             this.jTypeLabel.AutoSize = true;
             this.jTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.jTypeLabel.Location = new System.Drawing.Point(155, 84);
+            this.jTypeLabel.Location = new System.Drawing.Point(207, 103);
+            this.jTypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.jTypeLabel.Name = "jTypeLabel";
-            this.jTypeLabel.Size = new System.Drawing.Size(42, 20);
+            this.jTypeLabel.Size = new System.Drawing.Size(53, 25);
             this.jTypeLabel.TabIndex = 51;
             this.jTypeLabel.Text = "label";
             // 
@@ -130,9 +135,10 @@
             // 
             this.eSerialLabel.AutoSize = true;
             this.eSerialLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.eSerialLabel.Location = new System.Drawing.Point(155, 59);
+            this.eSerialLabel.Location = new System.Drawing.Point(207, 73);
+            this.eSerialLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.eSerialLabel.Name = "eSerialLabel";
-            this.eSerialLabel.Size = new System.Drawing.Size(42, 20);
+            this.eSerialLabel.Size = new System.Drawing.Size(53, 25);
             this.eSerialLabel.TabIndex = 50;
             this.eSerialLabel.Text = "label";
             // 
@@ -140,9 +146,10 @@
             // 
             this.eNameLabel.AutoSize = true;
             this.eNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.eNameLabel.Location = new System.Drawing.Point(155, 32);
+            this.eNameLabel.Location = new System.Drawing.Point(207, 39);
+            this.eNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.eNameLabel.Name = "eNameLabel";
-            this.eNameLabel.Size = new System.Drawing.Size(42, 20);
+            this.eNameLabel.Size = new System.Drawing.Size(53, 25);
             this.eNameLabel.TabIndex = 49;
             this.eNameLabel.Text = "label";
             // 
@@ -150,9 +157,10 @@
             // 
             this.detailLabel.AutoSize = true;
             this.detailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.detailLabel.Location = new System.Drawing.Point(10, 146);
+            this.detailLabel.Location = new System.Drawing.Point(13, 180);
+            this.detailLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.detailLabel.Name = "detailLabel";
-            this.detailLabel.Size = new System.Drawing.Size(159, 20);
+            this.detailLabel.Size = new System.Drawing.Size(186, 25);
             this.detailLabel.TabIndex = 48;
             this.detailLabel.Text = "รายละเอียดการแจ้งซ่อม :";
             // 
@@ -160,10 +168,11 @@
             // 
             this.jDetailsRichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.jDetailsRichTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.jDetailsRichTextBox.Location = new System.Drawing.Point(6, 170);
+            this.jDetailsRichTextBox.Location = new System.Drawing.Point(8, 209);
+            this.jDetailsRichTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.jDetailsRichTextBox.Name = "jDetailsRichTextBox";
             this.jDetailsRichTextBox.ReadOnly = true;
-            this.jDetailsRichTextBox.Size = new System.Drawing.Size(626, 87);
+            this.jDetailsRichTextBox.Size = new System.Drawing.Size(833, 106);
             this.jDetailsRichTextBox.TabIndex = 47;
             this.jDetailsRichTextBox.Text = "";
             // 
@@ -171,18 +180,20 @@
             // 
             this.pDateLabel.AutoSize = true;
             this.pDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pDateLabel.Location = new System.Drawing.Point(358, 147);
+            this.pDateLabel.Location = new System.Drawing.Point(477, 181);
+            this.pDateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.pDateLabel.Name = "pDateLabel";
-            this.pDateLabel.Size = new System.Drawing.Size(79, 20);
+            this.pDateLabel.Size = new System.Drawing.Size(100, 25);
             this.pDateLabel.TabIndex = 42;
             this.pDateLabel.Text = "วันที่อนุมัติ :";
             // 
             // fixEquipmentPictureBox
             // 
             this.fixEquipmentPictureBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.fixEquipmentPictureBox.Location = new System.Drawing.Point(6, 263);
+            this.fixEquipmentPictureBox.Location = new System.Drawing.Point(8, 324);
+            this.fixEquipmentPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.fixEquipmentPictureBox.Name = "fixEquipmentPictureBox";
-            this.fixEquipmentPictureBox.Size = new System.Drawing.Size(626, 512);
+            this.fixEquipmentPictureBox.Size = new System.Drawing.Size(835, 630);
             this.fixEquipmentPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.fixEquipmentPictureBox.TabIndex = 41;
             this.fixEquipmentPictureBox.TabStop = false;
@@ -191,9 +202,10 @@
             // 
             this.typeLabel.AutoSize = true;
             this.typeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.typeLabel.Location = new System.Drawing.Point(10, 84);
+            this.typeLabel.Location = new System.Drawing.Point(13, 103);
+            this.typeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.typeLabel.Name = "typeLabel";
-            this.typeLabel.Size = new System.Drawing.Size(139, 20);
+            this.typeLabel.Size = new System.Drawing.Size(163, 25);
             this.typeLabel.TabIndex = 23;
             this.typeLabel.Text = "ประเภทการแจ้งซ่อม :";
             // 
@@ -201,9 +213,10 @@
             // 
             this.statusLabel.AutoSize = true;
             this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.Location = new System.Drawing.Point(49, 111);
+            this.statusLabel.Location = new System.Drawing.Point(65, 137);
+            this.statusLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(100, 20);
+            this.statusLabel.Size = new System.Drawing.Size(125, 25);
             this.statusLabel.TabIndex = 22;
             this.statusLabel.Text = "สถานะปัจจุบัน :";
             // 
@@ -211,9 +224,10 @@
             // 
             this.serialLabel.AutoSize = true;
             this.serialLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serialLabel.Location = new System.Drawing.Point(61, 59);
+            this.serialLabel.Location = new System.Drawing.Point(81, 73);
+            this.serialLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.serialLabel.Name = "serialLabel";
-            this.serialLabel.Size = new System.Drawing.Size(88, 20);
+            this.serialLabel.Size = new System.Drawing.Size(106, 25);
             this.serialLabel.TabIndex = 21;
             this.serialLabel.Text = "ชื่อทางบัญชี :";
             // 
@@ -221,9 +235,10 @@
             // 
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameLabel.Location = new System.Drawing.Point(85, 32);
+            this.nameLabel.Location = new System.Drawing.Point(113, 39);
+            this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(64, 20);
+            this.nameLabel.Size = new System.Drawing.Size(76, 25);
             this.nameLabel.TabIndex = 20;
             this.nameLabel.Text = "ชื่อเรียก :";
             // 
@@ -236,19 +251,37 @@
             this.buyGroupBox.Controls.Add(this.equipmentDisplaydataGridView);
             this.buyGroupBox.Controls.Add(this.choseEquipmentLabel);
             this.buyGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buyGroupBox.Location = new System.Drawing.Point(658, 1);
+            this.buyGroupBox.Location = new System.Drawing.Point(877, 1);
+            this.buyGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buyGroupBox.Name = "buyGroupBox";
-            this.buyGroupBox.Size = new System.Drawing.Size(803, 364);
+            this.buyGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buyGroupBox.Size = new System.Drawing.Size(1071, 448);
             this.buyGroupBox.TabIndex = 1;
             this.buyGroupBox.TabStop = false;
             this.buyGroupBox.Text = "กลุ่มงานประเภท เช่า / ซื้อใหม่ / โอนย้าย เพื่อทดแทน";
             // 
+            // writeOffLinkLabel1
+            // 
+            this.writeOffLinkLabel1.AutoSize = true;
+            this.writeOffLinkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.writeOffLinkLabel1.Location = new System.Drawing.Point(627, 404);
+            this.writeOffLinkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.writeOffLinkLabel1.Name = "writeOffLinkLabel1";
+            this.writeOffLinkLabel1.Size = new System.Drawing.Size(87, 25);
+            this.writeOffLinkLabel1.TabIndex = 54;
+            this.writeOffLinkLabel1.TabStop = true;
+            this.writeOffLinkLabel1.Text = "ดูไฟล์แนบ";
+            this.writeOffLinkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.writeOffLinkLabel1_LinkClicked);
+            this.writeOffLinkLabel1.MouseEnter += new System.EventHandler(this.writeOffLinkLabel1_MouseEnter);
+            this.writeOffLinkLabel1.MouseLeave += new System.EventHandler(this.writeOffLinkLabel1_MouseLeave);
+            // 
             // writeOffButton
             // 
             this.writeOffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeOffButton.Location = new System.Drawing.Point(546, 321);
+            this.writeOffButton.Location = new System.Drawing.Point(728, 395);
+            this.writeOffButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.writeOffButton.Name = "writeOffButton";
-            this.writeOffButton.Size = new System.Drawing.Size(248, 34);
+            this.writeOffButton.Size = new System.Drawing.Size(331, 42);
             this.writeOffButton.TabIndex = 53;
             this.writeOffButton.Text = "แนบเอกสาร Write-Off อุปกรณ์เก่า";
             this.writeOffButton.UseVisualStyleBackColor = true;
@@ -261,13 +294,14 @@
             this.equipmentSelecteddataGridView.AllowUserToResizeColumns = false;
             this.equipmentSelecteddataGridView.AllowUserToResizeRows = false;
             this.equipmentSelecteddataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.equipmentSelecteddataGridView.Location = new System.Drawing.Point(6, 226);
+            this.equipmentSelecteddataGridView.Location = new System.Drawing.Point(8, 278);
+            this.equipmentSelecteddataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.equipmentSelecteddataGridView.MultiSelect = false;
             this.equipmentSelecteddataGridView.Name = "equipmentSelecteddataGridView";
             this.equipmentSelecteddataGridView.ReadOnly = true;
             this.equipmentSelecteddataGridView.RowHeadersVisible = false;
             this.equipmentSelecteddataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.equipmentSelecteddataGridView.Size = new System.Drawing.Size(788, 87);
+            this.equipmentSelecteddataGridView.Size = new System.Drawing.Size(1051, 107);
             this.equipmentSelecteddataGridView.TabIndex = 45;
             this.equipmentSelecteddataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.equipmentSelecteddataGridView_CellDoubleClick);
             this.equipmentSelecteddataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.equipmentSelecteddataGridView_CellMouseEnter);
@@ -277,9 +311,10 @@
             // 
             this.selectedEquipmentLabel.AutoSize = true;
             this.selectedEquipmentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectedEquipmentLabel.Location = new System.Drawing.Point(11, 198);
+            this.selectedEquipmentLabel.Location = new System.Drawing.Point(15, 244);
+            this.selectedEquipmentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.selectedEquipmentLabel.Name = "selectedEquipmentLabel";
-            this.selectedEquipmentLabel.Size = new System.Drawing.Size(357, 25);
+            this.selectedEquipmentLabel.Size = new System.Drawing.Size(463, 31);
             this.selectedEquipmentLabel.TabIndex = 44;
             this.selectedEquipmentLabel.Text = "ยกเลิกเครื่องมือที่ถูกเลือก โดยการดับเบิ้ลคลิก";
             // 
@@ -290,13 +325,14 @@
             this.equipmentDisplaydataGridView.AllowUserToResizeColumns = false;
             this.equipmentDisplaydataGridView.AllowUserToResizeRows = false;
             this.equipmentDisplaydataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.equipmentDisplaydataGridView.Location = new System.Drawing.Point(8, 50);
+            this.equipmentDisplaydataGridView.Location = new System.Drawing.Point(11, 62);
+            this.equipmentDisplaydataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.equipmentDisplaydataGridView.MultiSelect = false;
             this.equipmentDisplaydataGridView.Name = "equipmentDisplaydataGridView";
             this.equipmentDisplaydataGridView.ReadOnly = true;
             this.equipmentDisplaydataGridView.RowHeadersVisible = false;
             this.equipmentDisplaydataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.equipmentDisplaydataGridView.Size = new System.Drawing.Size(786, 117);
+            this.equipmentDisplaydataGridView.Size = new System.Drawing.Size(1048, 144);
             this.equipmentDisplaydataGridView.TabIndex = 2;
             this.equipmentDisplaydataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.equipmentDisplaydataGridView_CellDoubleClick);
             this.equipmentDisplaydataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.equipmentDisplaydataGridView_CellMouseEnter);
@@ -306,9 +342,10 @@
             // 
             this.choseEquipmentLabel.AutoSize = true;
             this.choseEquipmentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.choseEquipmentLabel.Location = new System.Drawing.Point(11, 22);
+            this.choseEquipmentLabel.Location = new System.Drawing.Point(15, 27);
+            this.choseEquipmentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.choseEquipmentLabel.Name = "choseEquipmentLabel";
-            this.choseEquipmentLabel.Size = new System.Drawing.Size(452, 25);
+            this.choseEquipmentLabel.Size = new System.Drawing.Size(582, 31);
             this.choseEquipmentLabel.TabIndex = 1;
             this.choseEquipmentLabel.Text = "เลือกเครื่องมือ / อุปกรณ์ ที่มาทดแทน โดยการดับเบิ้ลคลิก";
             // 
@@ -327,9 +364,11 @@
             this.repairGroupBox.Controls.Add(this.reporterNameLabel);
             this.repairGroupBox.Controls.Add(this.vendorNameTextBox);
             this.repairGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.repairGroupBox.Location = new System.Drawing.Point(658, 401);
+            this.repairGroupBox.Location = new System.Drawing.Point(877, 494);
+            this.repairGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.repairGroupBox.Name = "repairGroupBox";
-            this.repairGroupBox.Size = new System.Drawing.Size(803, 330);
+            this.repairGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.repairGroupBox.Size = new System.Drawing.Size(1071, 406);
             this.repairGroupBox.TabIndex = 2;
             this.repairGroupBox.TabStop = false;
             this.repairGroupBox.Text = "กลุ่มงานประเภทซ่อม";
@@ -338,9 +377,10 @@
             // 
             this.contractLinkLabel.AutoSize = true;
             this.contractLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contractLinkLabel.Location = new System.Drawing.Point(172, 237);
+            this.contractLinkLabel.Location = new System.Drawing.Point(229, 292);
+            this.contractLinkLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.contractLinkLabel.Name = "contractLinkLabel";
-            this.contractLinkLabel.Size = new System.Drawing.Size(70, 20);
+            this.contractLinkLabel.Size = new System.Drawing.Size(87, 25);
             this.contractLinkLabel.TabIndex = 54;
             this.contractLinkLabel.TabStop = true;
             this.contractLinkLabel.Text = "ดูไฟล์แนบ";
@@ -352,9 +392,10 @@
             // 
             this.workPermitDocLinkLabel.AutoSize = true;
             this.workPermitDocLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.workPermitDocLinkLabel.Location = new System.Drawing.Point(172, 197);
+            this.workPermitDocLinkLabel.Location = new System.Drawing.Point(229, 242);
+            this.workPermitDocLinkLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.workPermitDocLinkLabel.Name = "workPermitDocLinkLabel";
-            this.workPermitDocLinkLabel.Size = new System.Drawing.Size(70, 20);
+            this.workPermitDocLinkLabel.Size = new System.Drawing.Size(87, 25);
             this.workPermitDocLinkLabel.TabIndex = 53;
             this.workPermitDocLinkLabel.TabStop = true;
             this.workPermitDocLinkLabel.Text = "ดูไฟล์แนบ";
@@ -367,27 +408,30 @@
             this.costTextBox.BackColor = System.Drawing.SystemColors.Info;
             this.costTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.costTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.costTextBox.Location = new System.Drawing.Point(564, 185);
+            this.costTextBox.Location = new System.Drawing.Point(752, 228);
+            this.costTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.costTextBox.Name = "costTextBox";
-            this.costTextBox.Size = new System.Drawing.Size(230, 29);
+            this.costTextBox.Size = new System.Drawing.Size(306, 34);
             this.costTextBox.TabIndex = 52;
             // 
             // costLabel
             // 
             this.costLabel.AutoSize = true;
             this.costLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.costLabel.Location = new System.Drawing.Point(487, 190);
+            this.costLabel.Location = new System.Drawing.Point(649, 234);
+            this.costLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.costLabel.Name = "costLabel";
-            this.costLabel.Size = new System.Drawing.Size(72, 20);
+            this.costLabel.Size = new System.Drawing.Size(88, 25);
             this.costLabel.TabIndex = 51;
             this.costLabel.Text = "ค่าใช้จ่าย :";
             // 
             // contractButton
             // 
             this.contractButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contractButton.Location = new System.Drawing.Point(6, 230);
+            this.contractButton.Location = new System.Drawing.Point(8, 283);
+            this.contractButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.contractButton.Name = "contractButton";
-            this.contractButton.Size = new System.Drawing.Size(148, 34);
+            this.contractButton.Size = new System.Drawing.Size(197, 42);
             this.contractButton.TabIndex = 50;
             this.contractButton.Text = "แนบสัญญาจ้าง";
             this.contractButton.UseVisualStyleBackColor = true;
@@ -396,9 +440,10 @@
             // workPermitButton
             // 
             this.workPermitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.workPermitButton.Location = new System.Drawing.Point(6, 190);
+            this.workPermitButton.Location = new System.Drawing.Point(8, 234);
+            this.workPermitButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.workPermitButton.Name = "workPermitButton";
-            this.workPermitButton.Size = new System.Drawing.Size(148, 34);
+            this.workPermitButton.Size = new System.Drawing.Size(197, 42);
             this.workPermitButton.TabIndex = 49;
             this.workPermitButton.Text = "แนบ Work Permit";
             this.workPermitButton.UseVisualStyleBackColor = true;
@@ -406,9 +451,10 @@
             // 
             // fixDetailsRichTextBox
             // 
-            this.fixDetailsRichTextBox.Location = new System.Drawing.Point(564, 66);
+            this.fixDetailsRichTextBox.Location = new System.Drawing.Point(752, 81);
+            this.fixDetailsRichTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.fixDetailsRichTextBox.Name = "fixDetailsRichTextBox";
-            this.fixDetailsRichTextBox.Size = new System.Drawing.Size(230, 109);
+            this.fixDetailsRichTextBox.Size = new System.Drawing.Size(305, 133);
             this.fixDetailsRichTextBox.TabIndex = 48;
             this.fixDetailsRichTextBox.Text = "";
             // 
@@ -416,17 +462,19 @@
             // 
             this.fixDetailsLabel.AutoSize = true;
             this.fixDetailsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fixDetailsLabel.Location = new System.Drawing.Point(396, 68);
+            this.fixDetailsLabel.Location = new System.Drawing.Point(528, 84);
+            this.fixDetailsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.fixDetailsLabel.Name = "fixDetailsLabel";
-            this.fixDetailsLabel.Size = new System.Drawing.Size(165, 20);
+            this.fixDetailsLabel.Size = new System.Drawing.Size(197, 25);
             this.fixDetailsLabel.TabIndex = 47;
             this.fixDetailsLabel.Text = "รายละเอียดที่จะซ่อมแซม :";
             // 
             // vendorDetailsRichTextBox
             // 
-            this.vendorDetailsRichTextBox.Location = new System.Drawing.Point(160, 68);
+            this.vendorDetailsRichTextBox.Location = new System.Drawing.Point(213, 84);
+            this.vendorDetailsRichTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vendorDetailsRichTextBox.Name = "vendorDetailsRichTextBox";
-            this.vendorDetailsRichTextBox.Size = new System.Drawing.Size(230, 109);
+            this.vendorDetailsRichTextBox.Size = new System.Drawing.Size(305, 133);
             this.vendorDetailsRichTextBox.TabIndex = 46;
             this.vendorDetailsRichTextBox.Text = "";
             // 
@@ -434,9 +482,10 @@
             // 
             this.vendorDetailsLabel.AutoSize = true;
             this.vendorDetailsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vendorDetailsLabel.Location = new System.Drawing.Point(12, 66);
+            this.vendorDetailsLabel.Location = new System.Drawing.Point(16, 81);
+            this.vendorDetailsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.vendorDetailsLabel.Name = "vendorDetailsLabel";
-            this.vendorDetailsLabel.Size = new System.Drawing.Size(142, 20);
+            this.vendorDetailsLabel.Size = new System.Drawing.Size(168, 25);
             this.vendorDetailsLabel.TabIndex = 45;
             this.vendorDetailsLabel.Text = "รายละเอียดผู้รับเหมา :";
             // 
@@ -444,9 +493,10 @@
             // 
             this.reporterNameLabel.AutoSize = true;
             this.reporterNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reporterNameLabel.Location = new System.Drawing.Point(15, 25);
+            this.reporterNameLabel.Location = new System.Drawing.Point(20, 31);
+            this.reporterNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.reporterNameLabel.Name = "reporterNameLabel";
-            this.reporterNameLabel.Size = new System.Drawing.Size(139, 20);
+            this.reporterNameLabel.Size = new System.Drawing.Size(168, 25);
             this.reporterNameLabel.TabIndex = 19;
             this.reporterNameLabel.Text = "ชื่อผู้รับเหมา / ผู้ซ่อม :";
             // 
@@ -455,59 +505,49 @@
             this.vendorNameTextBox.BackColor = System.Drawing.SystemColors.Info;
             this.vendorNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.vendorNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vendorNameTextBox.Location = new System.Drawing.Point(160, 20);
+            this.vendorNameTextBox.Location = new System.Drawing.Point(213, 25);
+            this.vendorNameTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vendorNameTextBox.Name = "vendorNameTextBox";
-            this.vendorNameTextBox.Size = new System.Drawing.Size(430, 29);
+            this.vendorNameTextBox.Size = new System.Drawing.Size(573, 34);
             this.vendorNameTextBox.TabIndex = 18;
             // 
             // processDateLabel
             // 
             this.processDateLabel.AutoSize = true;
             this.processDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.processDateLabel.Location = new System.Drawing.Point(870, 375);
+            this.processDateLabel.Location = new System.Drawing.Point(1160, 462);
+            this.processDateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.processDateLabel.Name = "processDateLabel";
-            this.processDateLabel.Size = new System.Drawing.Size(141, 20);
+            this.processDateLabel.Size = new System.Drawing.Size(170, 25);
             this.processDateLabel.TabIndex = 19;
             this.processDateLabel.Text = "วันที่เริ่มงาน / ได้ของ :";
             // 
             // processDateTimePicker
             // 
-            this.processDateTimePicker.Location = new System.Drawing.Point(1017, 375);
+            this.processDateTimePicker.Location = new System.Drawing.Point(1356, 462);
+            this.processDateTimePicker.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.processDateTimePicker.Name = "processDateTimePicker";
-            this.processDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.processDateTimePicker.Size = new System.Drawing.Size(265, 22);
             this.processDateTimePicker.TabIndex = 20;
             // 
             // processButton
             // 
             this.processButton.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.processButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.processButton.Location = new System.Drawing.Point(1255, 737);
+            this.processButton.Location = new System.Drawing.Point(1673, 907);
+            this.processButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.processButton.Name = "processButton";
-            this.processButton.Size = new System.Drawing.Size(197, 34);
+            this.processButton.Size = new System.Drawing.Size(263, 42);
             this.processButton.TabIndex = 53;
             this.processButton.Text = "บันทึก";
             this.processButton.UseVisualStyleBackColor = false;
             this.processButton.Click += new System.EventHandler(this.processButton_Click);
             // 
-            // writeOffLinkLabel1
-            // 
-            this.writeOffLinkLabel1.AutoSize = true;
-            this.writeOffLinkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeOffLinkLabel1.Location = new System.Drawing.Point(470, 328);
-            this.writeOffLinkLabel1.Name = "writeOffLinkLabel1";
-            this.writeOffLinkLabel1.Size = new System.Drawing.Size(70, 20);
-            this.writeOffLinkLabel1.TabIndex = 54;
-            this.writeOffLinkLabel1.TabStop = true;
-            this.writeOffLinkLabel1.Text = "ดูไฟล์แนบ";
-            this.writeOffLinkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.writeOffLinkLabel1_LinkClicked);
-            this.writeOffLinkLabel1.MouseEnter += new System.EventHandler(this.writeOffLinkLabel1_MouseEnter);
-            this.writeOffLinkLabel1.MouseLeave += new System.EventHandler(this.writeOffLinkLabel1_MouseLeave);
-            // 
             // JobProcessing
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.ClientSize = new System.Drawing.Size(1462, 773);
             this.Controls.Add(this.processButton);
             this.Controls.Add(this.processDateTimePicker);
             this.Controls.Add(this.processDateLabel);
@@ -515,6 +555,7 @@
             this.Controls.Add(this.buyGroupBox);
             this.Controls.Add(this.JobEquipmentDetailsGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "JobProcessing";

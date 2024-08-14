@@ -155,11 +155,15 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             }
             if (EquipmentListDataGridView.Columns["InstallEPhoto"] != null)
             {
-                EquipmentListDataGridView.Columns["InstallEPhoto"].HeaderText = "ไฟล์ภาพจุดที่ติดตั้ง";
+                var photoColumn = EquipmentListDataGridView.Columns["InstallEPhoto"];
+                photoColumn.HeaderText = "ไฟล์ภาพจุดติดตั้งอุปกรณ์";
+                photoColumn.Width = 100;
             }
             if (EquipmentListDataGridView.Columns["EquipmentPhoto"] != null)
             {
-                EquipmentListDataGridView.Columns["EquipmentPhoto"].HeaderText = "ไฟล์ภาพอุปกรณ์";
+                var photoColumn = EquipmentListDataGridView.Columns["EquipmentPhoto"];
+                photoColumn.HeaderText = "ไฟล์ภาพอุปกรณ์";
+                photoColumn.Width = 100;
             }
             if (EquipmentListDataGridView.Columns["Replacement"] != null)
             {
@@ -206,12 +210,14 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         {
             Global.ID = -1;
             DataGridViewRow selectedRow = EquipmentListDataGridView.CurrentRow;
-            Global.ID = (int)selectedRow.Cells["ID"].Value;
-
-            editForm = new EditEquipmentForm();
-            editForm.Owner = main;
-            editForm.UpdateGrid += OnUpdate;
-            editForm.ShowDialog();
+            if (selectedRow != null)
+            {
+                Global.ID = (int)selectedRow.Cells["ID"].Value;
+                editForm = new EditEquipmentForm();
+                editForm.Owner = main;
+                editForm.UpdateGrid += OnUpdate;
+                editForm.ShowDialog();
+            }        
         }
         //Click remove equipment
         private void removeEquipmentButton_Click(object sender, EventArgs e)
@@ -221,17 +227,25 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             if(result == DialogResult.OK)
             {
                 DataGridViewRow selectedRow = EquipmentListDataGridView.CurrentRow;
-                int eid = (int)selectedRow.Cells["ID"].Value;
-                equipment = new Equipment(eid);
-                if (equipment.Remove())
+                if (selectedRow != null)
                 {
-                    ShowCustomMessageBox("ลบอุปกรณ์เสร็จสมบูรณ์");
-                    UpdateEquipmentList();
+                    int eid = (int)selectedRow.Cells["ID"].Value;
+                    equipment = new Equipment(eid);
+                    if (equipment.Remove())
+                    {
+                        ShowCustomMessageBox("ลบอุปกรณ์เสร็จสมบูรณ์");
+                        UpdateEquipmentList();
+                    }
+                    else
+                    {
+                        ShowCustomMessageBox("อุปกรณ์นี้ไม่สามารถลบได้ เนื่องจากมีประวัติการดำเนินการเกิดขึ้นแล้ว " + "\n" + " กรุณาใช้คำสั่ง Write-Off เพื่อสิ้นสุดการใช้งาน");
+                    }
                 }
                 else
                 {
-                    ShowCustomMessageBox("อุปกรณ์นี้ไม่สามารถลบได้ เนื่องจากมีประวัติการดำเนินการเกิดขึ้นแล้ว " + "\n" + " กรุณาใช้คำสั่ง Write-Off เพื่อสิ้นสุดการใช้งาน");
+                    ShowCustomMessageBox("กรุณาเลือกรายการที่ต้องการดำเนินการ");
                 }
+                
             }
             
         }
@@ -279,18 +293,25 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         {
             Global.ID = -1;
             DataGridViewRow selectedRow = EquipmentListDataGridView.CurrentRow;
-            Global.ID = (int)selectedRow.Cells["ID"].Value;
-
-            Global.EStatusID = -1;
-            Global.EStatusID = (int)selectedRow.Cells["EStatusID"].Value;
-
-            if (CheckEquipmentStatusBeforeWriteOffNTransfer())
+            if (selectedRow != null)
             {
-                writeoffAndTransferForm = new WriteOffAndTransferEquipmentForm();
-                writeoffAndTransferForm.Owner = main;
-                writeoffAndTransferForm.UpdateGrid += OnUpdate;
-                writeoffAndTransferForm.ShowDialog();
-            }  
+                Global.ID = (int)selectedRow.Cells["ID"].Value;
+                Global.EStatusID = -1;
+                Global.EStatusID = (int)selectedRow.Cells["EStatusID"].Value;
+
+                if (CheckEquipmentStatusBeforeWriteOffNTransfer())
+                {
+                    writeoffAndTransferForm = new WriteOffAndTransferEquipmentForm();
+                    writeoffAndTransferForm.Owner = main;
+                    writeoffAndTransferForm.UpdateGrid += OnUpdate;
+                    writeoffAndTransferForm.ShowDialog();
+                }
+            }       
+        }
+        private void jobHistoryButton_Click(object sender, EventArgs e)
+        {
+            Global.ID = -1;
+            
         }
         //Event to show equipment photo
         private void EquipmentListDataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
@@ -299,10 +320,13 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             {
                 // Assuming the cell contains the image path
                 string imagePath = EquipmentListDataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
-
-                if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
+                if (string.IsNullOrEmpty(imagePath))
                 {
-                    pictureBox.Image = Image.FromFile(imagePath);
+                    return;
+                }
+                if (!string.IsNullOrEmpty(imagePath))
+                {
+                    Global.LoadImageIntoPictureBox(imagePath,pictureBox);
                     pictureBox.Visible = true;
 
                     pictureBox.BringToFront();
@@ -313,5 +337,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         {
             pictureBox.Visible = false;
         }
+
+
     }
 }

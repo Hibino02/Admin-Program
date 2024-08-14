@@ -21,8 +21,6 @@ namespace Equipment_Management.UIClass.Job
         string contractDocumentPath;
         string finishDocumentPath;
 
-        string targetFilePath;
-
         string finishPhotoPath;
 
         private ToolTip finishJobDocumentTooltip;
@@ -164,48 +162,16 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(finishDocumentPath))
             {
-                SavePhotoToDirectory(finishDocumentPath, @"C:\FinishJobDocument");
-                finishDocumentPath = targetFilePath;
+                Global.SaveFileToServer(finishDocumentPath, "FinishJobDocument");
+                finishDocumentPath = Global.TargetFilePath;
             }
         }
         private void SaveFinishPhoto()
         {
             if (!string.IsNullOrEmpty(finishPhotoPath))
             {
-                SavePhotoToDirectory(finishPhotoPath, @"C:\FinishJobPhoto");
-                finishPhotoPath = targetFilePath;
-            }
-        }
-        //Saving file to folder Method
-        private void SavePhotoToDirectory(string sourceFilePath, string targetDirectory)
-        {
-            try
-            {
-                // Check if the directory exists
-                if (!Directory.Exists(targetDirectory))
-                {
-                    // Create the directory if it doesn't exist
-                    Directory.CreateDirectory(targetDirectory);
-                }
-
-                // Define the target file path
-                targetFilePath = Path.Combine(targetDirectory, Path.GetFileName(sourceFilePath));
-
-                // Check if the file is locked by another process
-                if (IsFileLocked(new FileInfo(sourceFilePath)))
-                {
-                    ShowCustomMessageBox("ไฟล์นี้กำลังถูกเปิด จึงไม่สามารถก๊อปปี้ได้");
-                    return;
-                }
-
-                // Copy the file to the target directory
-                File.Copy(sourceFilePath, targetFilePath, true); // 'true' allows overwriting if the file already exists
-
-                ShowCustomMessageBox($"File saved to: {targetFilePath}");
-            }
-            catch (IOException ex)
-            {
-                ShowCustomMessageBox($"An error occurred: {ex.Message}");
+                Global.SaveFileToServer(finishPhotoPath, "FinishJobPhoto");
+                finishPhotoPath = Global.TargetFilePath;
             }
         }
         //Get pictures path from user and streamto picturebox ----------------------------------------------------
@@ -306,28 +272,6 @@ namespace Equipment_Management.UIClass.Job
                     return;
                 }
             }
-        }
-
-        //Method to check file is being open
-        private bool IsFileLocked(FileInfo file)
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-            }
-            catch (IOException)
-            {
-                // The file is locked by another process
-                return true;
-            }
-            finally
-            {
-                stream?.Close();
-            }
-
-            // The file is not locked
-            return false;
         }
     }
 }

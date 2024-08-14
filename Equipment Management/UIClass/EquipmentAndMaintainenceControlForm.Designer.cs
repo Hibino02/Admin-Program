@@ -38,7 +38,6 @@
             this.jobProcessingButton = new System.Windows.Forms.Button();
             this.jobCreatedDatagridview = new System.Windows.Forms.DataGridView();
             this.jobCreatedList = new System.Windows.Forms.Label();
-            this.jobHistoryButton = new System.Windows.Forms.Button();
             this.equipmentListButton = new System.Windows.Forms.Button();
             this.createJobButton = new System.Windows.Forms.Button();
             this.installationButton = new System.Windows.Forms.Button();
@@ -57,6 +56,7 @@
             this.completeOrRemovePlanButton = new System.Windows.Forms.Button();
             this.editPlanButton = new System.Windows.Forms.Button();
             this.createPlanButton = new System.Windows.Forms.Button();
+            this.removeJobProcessingbutton = new System.Windows.Forms.Button();
             this.equipmentControlGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.jobProcessingDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.jobCreatedDatagridview)).BeginInit();
@@ -71,12 +71,13 @@
             this.equipmentControlLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.equipmentControlLabel.Location = new System.Drawing.Point(6, 11);
             this.equipmentControlLabel.Name = "equipmentControlLabel";
-            this.equipmentControlLabel.Size = new System.Drawing.Size(282, 31);
+            this.equipmentControlLabel.Size = new System.Drawing.Size(349, 39);
             this.equipmentControlLabel.TabIndex = 0;
             this.equipmentControlLabel.Text = "อุปกรณ์ และการแจ้งซ่อม";
             // 
             // equipmentControlGroupBox
             // 
+            this.equipmentControlGroupBox.Controls.Add(this.removeJobProcessingbutton);
             this.equipmentControlGroupBox.Controls.Add(this.editJobProcessingButton);
             this.equipmentControlGroupBox.Controls.Add(this.jobAcceptationButton);
             this.equipmentControlGroupBox.Controls.Add(this.jobProcessingDatagridview);
@@ -85,7 +86,6 @@
             this.equipmentControlGroupBox.Controls.Add(this.jobProcessingButton);
             this.equipmentControlGroupBox.Controls.Add(this.jobCreatedDatagridview);
             this.equipmentControlGroupBox.Controls.Add(this.jobCreatedList);
-            this.equipmentControlGroupBox.Controls.Add(this.jobHistoryButton);
             this.equipmentControlGroupBox.Controls.Add(this.equipmentListButton);
             this.equipmentControlGroupBox.Controls.Add(this.createJobButton);
             this.equipmentControlGroupBox.Controls.Add(this.installationButton);
@@ -141,7 +141,7 @@
             this.jobProcessingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.jobProcessingLabel.Location = new System.Drawing.Point(9, 465);
             this.jobProcessingLabel.Name = "jobProcessingLabel";
-            this.jobProcessingLabel.Size = new System.Drawing.Size(164, 18);
+            this.jobProcessingLabel.Size = new System.Drawing.Size(212, 24);
             this.jobProcessingLabel.TabIndex = 9;
             this.jobProcessingLabel.Text = "รายการงานที่กำลังดำเนินการ";
             // 
@@ -190,19 +190,9 @@
             this.jobCreatedList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.jobCreatedList.Location = new System.Drawing.Point(9, 110);
             this.jobCreatedList.Name = "jobCreatedList";
-            this.jobCreatedList.Size = new System.Drawing.Size(179, 18);
+            this.jobCreatedList.Size = new System.Drawing.Size(225, 24);
             this.jobCreatedList.TabIndex = 5;
             this.jobCreatedList.Text = "รายการแจ้งซ่อมที่รอดำเนินการ";
-            // 
-            // jobHistoryButton
-            // 
-            this.jobHistoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.jobHistoryButton.Location = new System.Drawing.Point(378, 55);
-            this.jobHistoryButton.Name = "jobHistoryButton";
-            this.jobHistoryButton.Size = new System.Drawing.Size(181, 52);
-            this.jobHistoryButton.TabIndex = 4;
-            this.jobHistoryButton.Text = "ประวัติงานแจ้งซ่อม";
-            this.jobHistoryButton.UseVisualStyleBackColor = true;
             // 
             // equipmentListButton
             // 
@@ -243,7 +233,7 @@
             this.maintainancePlanLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.maintainancePlanLabel.Location = new System.Drawing.Point(6, 11);
             this.maintainancePlanLabel.Name = "maintainancePlanLabel";
-            this.maintainancePlanLabel.Size = new System.Drawing.Size(168, 31);
+            this.maintainancePlanLabel.Size = new System.Drawing.Size(208, 39);
             this.maintainancePlanLabel.TabIndex = 0;
             this.maintainancePlanLabel.Text = "แผนซ่อมบำรุง";
             // 
@@ -334,7 +324,7 @@
             this.planProcessingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.planProcessingLabel.Location = new System.Drawing.Point(9, 465);
             this.planProcessingLabel.Name = "planProcessingLabel";
-            this.planProcessingLabel.Size = new System.Drawing.Size(191, 18);
+            this.planProcessingLabel.Size = new System.Drawing.Size(239, 24);
             this.planProcessingLabel.TabIndex = 13;
             this.planProcessingLabel.Text = "อุปกรณ์ที่กำลังซ่อมบำรุงตามแผน";
             // 
@@ -371,7 +361,7 @@
             this.currentMaintainencePlanList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.currentMaintainencePlanList.Location = new System.Drawing.Point(6, 110);
             this.currentMaintainencePlanList.Name = "currentMaintainencePlanList";
-            this.currentMaintainencePlanList.Size = new System.Drawing.Size(171, 18);
+            this.currentMaintainencePlanList.Size = new System.Drawing.Size(215, 24);
             this.currentMaintainencePlanList.TabIndex = 13;
             this.currentMaintainencePlanList.Text = "รายการแผนซ่อมบำรุงปัจจุบัน";
             // 
@@ -415,6 +405,16 @@
             this.createPlanButton.Text = "สร้างแผน";
             this.createPlanButton.UseVisualStyleBackColor = true;
             // 
+            // removeJobProcessingbutton
+            // 
+            this.removeJobProcessingbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.removeJobProcessingbutton.Location = new System.Drawing.Point(290, 704);
+            this.removeJobProcessingbutton.Name = "removeJobProcessingbutton";
+            this.removeJobProcessingbutton.Size = new System.Drawing.Size(144, 52);
+            this.removeJobProcessingbutton.TabIndex = 13;
+            this.removeJobProcessingbutton.Text = "ลบงานแจ้งซ่อมที่กำลังดำเนินการ";
+            this.removeJobProcessingbutton.UseVisualStyleBackColor = true;
+            // 
             // EquipmentAndMaintainenceControlForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -452,7 +452,6 @@
         private System.Windows.Forms.GroupBox maintainancePlanGroupBox;
         private System.Windows.Forms.Button createJobButton;
         private System.Windows.Forms.Button installationButton;
-        private System.Windows.Forms.Button jobHistoryButton;
         private System.Windows.Forms.Button equipmentListButton;
         private System.Windows.Forms.Label jobCreatedList;
         private System.Windows.Forms.DataGridView jobCreatedDatagridview;
@@ -475,5 +474,6 @@
         private System.Windows.Forms.Button planProcessingButton;
         private System.Windows.Forms.DataGridView currentMaintainencePlanDatagridview;
         private System.Windows.Forms.Button backToMainMenuButton;
+        private System.Windows.Forms.Button removeJobProcessingbutton;
     }
 }
