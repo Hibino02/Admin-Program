@@ -115,7 +115,8 @@ namespace Equipment_Management.UIClass.Job
         {
             equipmentStatusList = EquipmentStatus.GetEquipmentStatusList();
             currentStatusComboBox.Items.Clear();
-            foreach(EquipmentStatus eqis in equipmentStatusList)
+            equipmentStatusID.Clear();
+            foreach (EquipmentStatus eqis in equipmentStatusList)
             {
                 if(eqis.ID == 4 || eqis.ID == 5)
                 {
@@ -126,7 +127,8 @@ namespace Equipment_Management.UIClass.Job
             jobTypeList = JobType.GetJobTypeList();
             jobTypeList.Sort((x, y) => x.Type.CompareTo(y.Type));
             repairTypeComboBox.Items.Clear();
-            foreach(JobType job in jobTypeList)
+            jobTypeID.Clear();
+            foreach (JobType job in jobTypeList)
             {
                 repairTypeComboBox.Items.Add(job.Type);
                 jobTypeID.Add(job.ID);
@@ -135,6 +137,7 @@ namespace Equipment_Management.UIClass.Job
             equipmentTypeList = EquipmentType.GetEquipmentTypeList();
             equipmentTypeList.Sort((x, y) => x.EType.CompareTo(y.EType));
             equipmentTypeComboBox.Items.Clear();
+            equipmentTypeID.Clear();
 
             equipmentTypeComboBox.Items.Add("--------------------------------------");
             equipmentTypeID.Add(-1);

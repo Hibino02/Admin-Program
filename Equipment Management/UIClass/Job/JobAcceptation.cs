@@ -66,6 +66,7 @@ namespace Equipment_Management.UIClass.Job
         {
             equipmentStatusList = EquipmentStatus.GetEquipmentStatusList();
             eStatusComboBox.Items.Clear();
+            equipmentStatusID.Clear();
             if (jobToFinish.JEq.OnPlan == true)
             {
                 foreach (EquipmentStatus eqis in equipmentStatusList)

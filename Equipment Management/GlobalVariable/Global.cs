@@ -1,11 +1,11 @@
 ﻿using Equipment_Management.ObjectClass;
 using Equipment_Management.CustomViewClass;
 using System.IO;
-using System.Windows.Forms;
 using System;
 using System.Net;
 using System.Drawing;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Equipment_Management.GlobalVariable
 {
@@ -16,10 +16,11 @@ namespace Equipment_Management.GlobalVariable
         public static Equipment equipmentGlobal { get; set; }
         public static AllEquipmentView selectedEquipmentInJob { get; set; }
         public static string TargetFilePath { get; set; }
+        private static Timer deletionTimer;
 
         public static string user = "TEST"; // equipment-managementblc5
         public static string pass = "Meg@lomaniac001";
-        //Uploading photo into Server ------------------------------------------------------------------------------------------
+        //Uploading photo & PDF into Server ------------------------------------------------------------------------------------------
         public static void SaveFileToServer(string filepath, string directory)
         {
             if (!string.IsNullOrEmpty(filepath))
@@ -40,7 +41,7 @@ namespace Equipment_Management.GlobalVariable
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Failed to upload photo: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show($"Failed to upload photo: {ex.Message}", "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                 }
             }
         }
@@ -117,7 +118,7 @@ namespace Equipment_Management.GlobalVariable
             }
         }
         //Reading photo into Server --------------------------------------------------------------------------------------------
-        public static void LoadImageIntoPictureBox(string ftpFilePath, PictureBox pictureBox)
+        public static void LoadImageIntoPictureBox(string ftpFilePath, System.Windows.Forms.PictureBox pictureBox)
         {
             try
             {
@@ -139,12 +140,12 @@ namespace Equipment_Management.GlobalVariable
                 }
                 else
                 {
-                    MessageBox.Show("Failed to download image data.");
+                    System.Windows.Forms.MessageBox.Show("Failed to download image data.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading image: " + ex.Message);
+                System.Windows.Forms.MessageBox.Show("Error loading image: " + ex.Message);
             }
         }
         //Opening PDF from FTP Server ------------------------------------------------------------------------------------------
@@ -172,24 +173,35 @@ namespace Equipment_Management.GlobalVariable
                 process.StartInfo.UseShellExecute = true; // Important: Allows using the system default application
                 process.Start();
 
-                // The process might not be available for waiting if the user is prompted to select a program
-                if (!process.HasExited)
-                {
-                    process.WaitForExit();
-                }
+                // Start a timer to check for file deletion
+                deletionTimer = new Timer(DeleteFileIfUnlocked, pdfFilePath, 10000, Timeout.Infinite);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while opening the PDF: {ex.Message}");
+                // Clean up the file immediately if an error occurs
+                DeleteFileIfUnlocked(pdfFilePath);
             }
-            finally
+        }
+        private static void DeleteFileIfUnlocked(object state)
+        {
+            string pdfFilePath = (string)state;
+
+            try
             {
-                // Delete the file after the process has exited or failed to start
-                if (File.Exists(pdfFilePath))
+                // Attempt to open the file with write access to see if it is unlocked
+                using (FileStream stream = new FileStream(pdfFilePath, FileMode.Open, FileAccess.ReadWrite))
                 {
-                    File.Delete(pdfFilePath);
-                    Console.WriteLine("File deleted.");
+                    stream.Close();
                 }
+
+                // If we reach here, the file is unlocked
+                File.Delete(pdfFilePath);
+                deletionTimer?.Dispose(); // Stop the timer
+            }
+            catch (IOException)
+            {
+                // The file is still locked; do nothing and try again later
             }
         }
 

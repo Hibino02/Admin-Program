@@ -114,6 +114,7 @@ namespace Equipment_Management.UIClass.Job
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     workPermitDocumentPath = openFileDialog.FileName;
+                    SaveWorkPermitDocument();
                 }
             }
         }
@@ -129,6 +130,7 @@ namespace Equipment_Management.UIClass.Job
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     contractDocumentPath = openFileDialog.FileName;
+                    SaveContractDocument();
                 }
             }
         }
@@ -153,13 +155,9 @@ namespace Equipment_Management.UIClass.Job
         //Click to open attached PDF file ------------------------------------------------------------------------
         private void workPermitDocLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (File.Exists(workPermitDocumentPath))
+            if (!string.IsNullOrEmpty(workPermitDocumentPath))
             {
-                System.Diagnostics.Process.Start(workPermitDocumentPath);
-            }
-            else if (!string.IsNullOrEmpty(workPermitDocumentPath))
-            {
-                ShowCustomMessageBox("ไม่สารมารถเปิดไฟล์ดังกล่าวได้\nหรือไฟล์อาจโดนลบ");
+               Global.DownloadAndOpenPdf(workPermitDocumentPath);
             }
             else
             {
@@ -168,13 +166,9 @@ namespace Equipment_Management.UIClass.Job
         }
         private void contractLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (File.Exists(contractDocumentPath))
+            if (!string.IsNullOrEmpty(contractDocumentPath))
             {
-                System.Diagnostics.Process.Start(contractDocumentPath);
-            }
-            else if (!string.IsNullOrEmpty(contractDocumentPath))
-            {
-                ShowCustomMessageBox("ไม่สารมารถเปิดไฟล์ดังกล่าวได้\nหรือไฟล์อาจโดนลบ");
+                Global.DownloadAndOpenPdf(contractDocumentPath);
             }
             else
             {
@@ -209,8 +203,6 @@ namespace Equipment_Management.UIClass.Job
             {
                 costFromtextBox = 0;
             }
-            SaveWorkPermitDocument();
-            SaveContractDocument();
             return true;
         }
         //Methodto call custom message Box

@@ -71,6 +71,7 @@ namespace Equipment_Management.UIClass.InstallationSource
             equipmentTypeList = EquipmentType.GetEquipmentTypeList();
             equipmentTypeList.Sort((x, y) => x.EType.CompareTo(y.EType));
             choseEquipmentTypeCombobox.Items.Clear();
+            equipmentTypeID.Clear();
             foreach (EquipmentType eqt in equipmentTypeList)
             {
                 choseEquipmentTypeCombobox.Items.Add(eqt.EType);
@@ -79,6 +80,7 @@ namespace Equipment_Management.UIClass.InstallationSource
             equipmentOwnerList = EquipmentOwner.GetEquipmentOwnerList();
             equipmentOwnerList.Sort((x, y) => x.Owner.CompareTo(y.Owner));
             equipmentOwnerComboBox.Items.Clear();
+            equipmentOwnerID.Clear();
             foreach (EquipmentOwner eqo in equipmentOwnerList)
             {
                 equipmentOwnerComboBox.Items.Add(eqo.Owner);
@@ -87,6 +89,7 @@ namespace Equipment_Management.UIClass.InstallationSource
             equipmentAcquisitionList = Acquisition.GetAcquisitionList();
             equipmentAcquisitionList.Sort((x, y) => x.Accquire.CompareTo(y.Accquire));
             acquisitionComboBox.Items.Clear();
+            equipmentAcquisitionID.Clear();
             foreach (Acquisition acc in equipmentAcquisitionList)
             {
                 acquisitionComboBox.Items.Add(acc.Accquire);
@@ -94,6 +97,7 @@ namespace Equipment_Management.UIClass.InstallationSource
             }
             equipmentInitialStatusList = EquipmentStatus.GetEquipmentStatusList();
             equipmentInitialStatusComboBox.Items.Clear();
+            equipmentInitialStatusID.Clear();
             foreach (EquipmentStatus eqis in equipmentInitialStatusList)
             {
                 if (eqis.ID == 1 || eqis.ID == 2 || eqis.ID == 3)
@@ -105,6 +109,7 @@ namespace Equipment_Management.UIClass.InstallationSource
             rentalBasisList = RentalBasis.GetRentalBasisList();
             rentalBasisList.Sort((x, y) => x.Basis.CompareTo(y.Basis));
             rentalBasisCombobox.Items.Clear();
+            rentalBasisID.Clear();
             foreach (RentalBasis rent in rentalBasisList)
             {
                 rentalBasisCombobox.Items.Add(rent.Basis);

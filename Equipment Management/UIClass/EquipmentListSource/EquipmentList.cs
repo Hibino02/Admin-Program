@@ -67,6 +67,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             equipmentTypeList = EquipmentType.GetEquipmentTypeList();
             equipmentTypeList.Sort((x, y) => x.EType.CompareTo(y.EType));
             equipmentTypeComboBox.Items.Clear();
+            equipmentTypeID.Clear();
 
             equipmentTypeComboBox.Items.Add("--------------------------------------");
             equipmentTypeID.Add(-1);
@@ -106,7 +107,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         //Setting Datagridview looks
         private void FormatEquipmentListDataGridView()
         {
-            EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            //EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
             if (EquipmentListDataGridView.Columns["ID"] != null)
             {
@@ -114,7 +115,10 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             }
             if (EquipmentListDataGridView.Columns["Name"] != null)
             {
-                EquipmentListDataGridView.Columns["Name"].HeaderText = "ชื่อเรียกอุปกรณ์";
+                var photoColumn = EquipmentListDataGridView.Columns["Name"];
+                photoColumn.HeaderText = "ชื่อเรียกอุปกรณ์";
+                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                photoColumn.Width = 150;
             }
             if (EquipmentListDataGridView.Columns["Serial"] != null)
             {
@@ -122,7 +126,10 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             }
             if (EquipmentListDataGridView.Columns["EDetails"] != null)
             {
-                EquipmentListDataGridView.Columns["EDetails"].HeaderText = "รายละเอียดอุปกรณ์";
+                var photoColumn = EquipmentListDataGridView.Columns["EDetails"];
+                photoColumn.HeaderText = "รายละเอียดอุปกรณ์";
+                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                photoColumn.Width = 170;
             }
             if (EquipmentListDataGridView.Columns["InsDate"] != null)
             {
@@ -131,22 +138,31 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             }
             if (EquipmentListDataGridView.Columns["EType"] != null)
             {
-                EquipmentListDataGridView.Columns["EType"].HeaderText = "ประเภทอุปกรณ์";
+                var photoColumn = EquipmentListDataGridView.Columns["EType"];
+                photoColumn.HeaderText = "ประเภทอุปกรณ์";
+                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                photoColumn.Width = 300;
             }
             if (EquipmentListDataGridView.Columns["EOwner"] != null)
             {
-                EquipmentListDataGridView.Columns["EOwner"].HeaderText = "เจ้าของอุปกรณ์";
+                var photoColumn = EquipmentListDataGridView.Columns["EOwner"];
+                photoColumn.HeaderText = "เจ้าของอุปกรณ์";
+                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                photoColumn.Width = 70;
             }
             if (EquipmentListDataGridView.Columns["EStatus"] != null)
             {
-                EquipmentListDataGridView.Columns["EStatus"].HeaderText = "สถานะปัจจุบัน";
+                var photoColumn = EquipmentListDataGridView.Columns["EStatus"];
+                photoColumn.HeaderText = "สถานะปัจจุบัน";
+                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                photoColumn.Width = 100;
             }
             if (EquipmentListDataGridView.Columns["InsDetails"] != null)
             {
                 var photoColumn = EquipmentListDataGridView.Columns["InsDetails"];
                 photoColumn.HeaderText = "รายละเอียดจุดที่ติดตั้ง";
                 EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-                photoColumn.Width = 300;
+                photoColumn.Width = 250;
             }
             if (EquipmentListDataGridView.Columns["ETypeID"] != null)
             {
@@ -161,7 +177,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
                 var photoColumn = EquipmentListDataGridView.Columns["InstallEPhoto"];
                 photoColumn.HeaderText = "ไฟล์ภาพจุดติดตั้งอุปกรณ์";
                 EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-                photoColumn.Width = 150;
+                photoColumn.Width = 100;
             }
             if (EquipmentListDataGridView.Columns["EquipmentPhoto"] != null)
             {
