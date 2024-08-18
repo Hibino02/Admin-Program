@@ -16,7 +16,9 @@ namespace Equipment_Management.UIClass.Job
         private ToolTip contractTooltip;
 
         string workPermitDocumentPath;
+        string oldWorkPermitDocumentPath;
         string contractDocumentPath;
+        string oldContractDocumentPath;
 
         double costFromtextBox;
 
@@ -53,13 +55,9 @@ namespace Equipment_Management.UIClass.Job
             currentELabel.Text = editjobToProcess.JEq.EStatusObj.EStatus;
             jDetailsRichTextBox.Text = editjobToProcess.JDetails;
             aDateLabel.Text = editjobToProcess.ADate.Value.ToString("yyyy-MM-dd");
-            if (!string.IsNullOrEmpty(editjobToProcess.CasePhoto) && File.Exists(editjobToProcess.CasePhoto))
+            if (!string.IsNullOrEmpty(editjobToProcess.CasePhoto))
             {
-                if (fixEquipmentPictureBox.Image != null)
-                {
-                    fixEquipmentPictureBox.Image.Dispose();
-                }
-                fixEquipmentPictureBox.Image = Image.FromFile(editjobToProcess.CasePhoto);
+                Global.LoadImageIntoPictureBox(editjobToProcess.CasePhoto, fixEquipmentPictureBox);
             }
             processDateTimePicker.Value = editjobToProcess.StartDate.Value;
             vendorNameTextBox.Text = editjobToProcess.VendName;
@@ -67,7 +65,9 @@ namespace Equipment_Management.UIClass.Job
             fixDetailsRichTextBox.Text  = editjobToProcess.RepairDetails;
             costTextBox.Text = editjobToProcess.Cost.ToString("F2");
             workPermitDocumentPath = editjobToProcess.WorkPermit;
+            oldWorkPermitDocumentPath = editjobToProcess.WorkPermit;
             contractDocumentPath = editjobToProcess.Contract;
+            oldContractDocumentPath = editjobToProcess.Contract;
         }
         //Work permit tooltips event -----------------------------------------------------------------------------
         private void workPermitDocLinkLabel_MouseEnter(object sender, EventArgs e)
@@ -137,17 +137,29 @@ namespace Equipment_Management.UIClass.Job
         //Save PDF file to folder --------------------------------------------------------------------------------
         private void SaveWorkPermitDocument()
         {
+            if (!string.IsNullOrEmpty(oldWorkPermitDocumentPath))
+            {
+                Global.DeleteFileFromFtp(oldWorkPermitDocumentPath);
+            }
             if (!string.IsNullOrEmpty(workPermitDocumentPath))
             {
-                Global.SaveFileToServer(workPermitDocumentPath, "WorkPermitDocument");
+                Global.Directory = "WorkPermitDocument";
+                Global.SaveFileToServer(workPermitDocumentPath);
+                Global.Directory = null;
                 workPermitDocumentPath = Global.TargetFilePath;
             }
         }
         private void SaveContractDocument()
         {
+            if (!string.IsNullOrEmpty(oldContractDocumentPath))
+            {
+                Global.DeleteFileFromFtp(oldContractDocumentPath);
+            }
             if (!string.IsNullOrEmpty(contractDocumentPath))
             {
-                Global.SaveFileToServer(contractDocumentPath, "ContractDocument");
+                Global.Directory = "ContractDocument";
+                Global.SaveFileToServer(contractDocumentPath);
+                Global.Directory = null;
                 contractDocumentPath = Global.TargetFilePath;
             }
         }

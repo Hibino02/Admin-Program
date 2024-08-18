@@ -3,7 +3,6 @@ using Equipment_Management.CustomWindowComponents;
 using System.Drawing;
 using Equipment_Management.GlobalVariable;
 using System.Windows.Forms;
-using System.IO;
 using Equipment_Management.ObjectClass;
 using System.Collections.Generic;
 
@@ -18,6 +17,8 @@ namespace Equipment_Management.UIClass.Job
         List<int> equipmentInitialStatusID = new List<int>();
         EquipmentStatus selectedEquipmentStatus;
         Equipment eq;
+        string casePhotoToDelete;
+        string jobDocumentToDelete;
 
         public RemoveJobForm()
         {
@@ -79,6 +80,8 @@ namespace Equipment_Management.UIClass.Job
             jDetailsrichTextBox.Text = jobToRemove.JDetails;
             reasonToAppRichTextBox.Text = jobToRemove.AppReason;
             approveCheckBox.Checked = jobToRemove.Approve;
+            jobDocumentToDelete = jobToRemove.JDocument;
+            casePhotoToDelete = jobToRemove.CasePhoto;
         }
         private bool CheckAllAttribute()
         {
@@ -113,6 +116,8 @@ namespace Equipment_Management.UIClass.Job
             {
                 if (jobToRemove.Remove())
                 {
+                    Global.DeleteFileFromFtp(jobDocumentToDelete);
+                    Global.DeleteFileFromFtp(casePhotoToDelete);
                     ShowCustomMessageBox("ลบงานแจ้งซ่อมที่ยังไม่ได้ดำเนินการแล้ว");
                     UpdateGrid?.Invoke(this, EventArgs.Empty);
                     Close();

@@ -9,12 +9,15 @@ using Equipment_Management.UIClass.EquipmentInstallationSource;
 using Equipment_Management.GlobalVariable;
 using Equipment_Management.CustomWindowComponents;
 using Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource;
+using Equipment_Management.UIClass.Job;
 
 namespace Equipment_Management.UIClass.EquipmentListSource
 {
     public partial class EquipmentList : Form
     {
         MainBackGroundFrom main;
+
+        public event EventHandler UpdateGrid;
 
         private PictureBox pictureBox;
         //Fillter algorithm variable
@@ -23,6 +26,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         //variable to call other form
         EditEquipmentForm editForm;
         WriteOffAndTransferEquipmentForm writeoffAndTransferForm;
+        JobHistory jobHistory;
         Equipment equipment;
         //variable for update components
         private List<int> equipmentTypeID = new List<int>();
@@ -83,8 +87,6 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             equipmentList = AllEquipmentView.GetAllEquipmentView();
             originalEquipmentList = new List<AllEquipmentView>(equipmentList);
             ApplyCurrentFilter();
-
-            FormatEquipmentListDataGridView();
         }
         private void ApplyCurrentFilter()
         {
@@ -107,8 +109,6 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         //Setting Datagridview looks
         private void FormatEquipmentListDataGridView()
         {
-            //EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
             if (EquipmentListDataGridView.Columns["ID"] != null)
             {
                 EquipmentListDataGridView.Columns["ID"].Visible = false;
@@ -117,8 +117,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             {
                 var photoColumn = EquipmentListDataGridView.Columns["Name"];
                 photoColumn.HeaderText = "ชื่อเรียกอุปกรณ์";
-                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-                photoColumn.Width = 150;
+                photoColumn.Width = 200;
             }
             if (EquipmentListDataGridView.Columns["Serial"] != null)
             {
@@ -128,7 +127,6 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             {
                 var photoColumn = EquipmentListDataGridView.Columns["EDetails"];
                 photoColumn.HeaderText = "รายละเอียดอุปกรณ์";
-                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                 photoColumn.Width = 170;
             }
             if (EquipmentListDataGridView.Columns["InsDate"] != null)
@@ -140,28 +138,24 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             {
                 var photoColumn = EquipmentListDataGridView.Columns["EType"];
                 photoColumn.HeaderText = "ประเภทอุปกรณ์";
-                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-                photoColumn.Width = 300;
+                photoColumn.Width = 250;
             }
             if (EquipmentListDataGridView.Columns["EOwner"] != null)
             {
                 var photoColumn = EquipmentListDataGridView.Columns["EOwner"];
                 photoColumn.HeaderText = "เจ้าของอุปกรณ์";
-                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                 photoColumn.Width = 70;
             }
             if (EquipmentListDataGridView.Columns["EStatus"] != null)
             {
                 var photoColumn = EquipmentListDataGridView.Columns["EStatus"];
                 photoColumn.HeaderText = "สถานะปัจจุบัน";
-                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                 photoColumn.Width = 100;
             }
             if (EquipmentListDataGridView.Columns["InsDetails"] != null)
             {
                 var photoColumn = EquipmentListDataGridView.Columns["InsDetails"];
                 photoColumn.HeaderText = "รายละเอียดจุดที่ติดตั้ง";
-                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                 photoColumn.Width = 250;
             }
             if (EquipmentListDataGridView.Columns["ETypeID"] != null)
@@ -176,14 +170,12 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             {
                 var photoColumn = EquipmentListDataGridView.Columns["InstallEPhoto"];
                 photoColumn.HeaderText = "ไฟล์ภาพจุดติดตั้งอุปกรณ์";
-                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                 photoColumn.Width = 100;
             }
             if (EquipmentListDataGridView.Columns["EquipmentPhoto"] != null)
             {
                 var photoColumn = EquipmentListDataGridView.Columns["EquipmentPhoto"];
                 photoColumn.HeaderText = "ไฟล์ภาพอุปกรณ์";
-                EquipmentListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                 photoColumn.Width = 100;
             }
             if (EquipmentListDataGridView.Columns["Replacement"] != null)
@@ -192,6 +184,44 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             }
         }
 
+        //Event to highlight text match
+        private void equipmentTypeComboBox_TextChanged(object sender, EventArgs e)
+        {
+            // Temporarily unsubscribe from the TextChanged event to avoid recursion
+            equipmentTypeComboBox.TextChanged -= equipmentTypeComboBox_TextChanged;
+
+            string typedText = equipmentTypeComboBox.Text;
+            int currentCaretPosition = equipmentTypeComboBox.SelectionStart;
+
+            // Filter items that start with the typed text
+            var matchingItems = equipmentTypeComboBox.Items.Cast<string>()
+                                         .Where(item => item.StartsWith(typedText, StringComparison.OrdinalIgnoreCase))
+                                         .ToList();
+
+            // Only suggest and highlight if the user is typing and a match is found
+            if (matchingItems.Any() && !string.IsNullOrEmpty(typedText))
+            {
+                string selectedItem = matchingItems.First();
+
+                // Update the text and highlight the matching part only if the typed text is less than the selected item
+                if (typedText.Length < selectedItem.Length && selectedItem.StartsWith(typedText, StringComparison.OrdinalIgnoreCase))
+                {
+                    equipmentTypeComboBox.Text = selectedItem;
+                    equipmentTypeComboBox.SelectionStart = currentCaretPosition;
+                    equipmentTypeComboBox.SelectionLength = selectedItem.Length - typedText.Length;
+                }
+            }
+            else
+            {
+                // If no match found or text is empty, keep the typed text
+                equipmentTypeComboBox.Text = typedText;
+                equipmentTypeComboBox.SelectionStart = currentCaretPosition;
+                equipmentTypeComboBox.SelectionLength = 0;
+            }
+
+            // Re-subscribe to the TextChanged event
+            equipmentTypeComboBox.TextChanged += equipmentTypeComboBox_TextChanged;
+        }
         private void equipmentTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectTypeIndex = equipmentTypeComboBox.SelectedIndex;
@@ -199,7 +229,6 @@ namespace Equipment_Management.UIClass.EquipmentListSource
 
             ApplyCurrentFilter();
         }
-
         private void equipmentListSearchTextBox_TextChanged(object sender, EventArgs e)
         {
             string searchText = equipmentListSearchTextBox.Text.ToLower();
@@ -226,6 +255,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
                 EquipmentListDataGridView.DataSource = equipmentListBindingSource;
             }
         }
+
         //Click edit equipment
         private void editEquipmentButton_Click(object sender, EventArgs e)
         {
@@ -252,8 +282,14 @@ namespace Equipment_Management.UIClass.EquipmentListSource
                 {
                     int eid = (int)selectedRow.Cells["ID"].Value;
                     equipment = new Equipment(eid);
+                    string ePhoto = equipment.EPhotoPath;
+                    string oPlacePhoto = equipment.OPlacePhotoPath;
+                    string eDoc = equipment.EDocumentPath;
                     if (equipment.Remove())
                     {
+                        Global.DeleteFileFromFtp(ePhoto);
+                        Global.DeleteFileFromFtp(oPlacePhoto);
+                        Global.DeleteFileFromFtp(eDoc);
                         ShowCustomMessageBox("ลบอุปกรณ์เสร็จสมบูรณ์");
                         UpdateEquipmentList();
                     }
@@ -332,7 +368,15 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         private void jobHistoryButton_Click(object sender, EventArgs e)
         {
             Global.ID = -1;
-            
+            DataGridViewRow selectedRow = EquipmentListDataGridView.CurrentRow;
+            if(selectedRow != null)
+            {
+                Global.ID = (int)selectedRow.Cells["ID"].Value;
+                jobHistory = new JobHistory();
+                jobHistory.Owner = main;
+                jobHistory.UpdateGrid += OnUpdate;
+                jobHistory.ShowDialog();
+            }
         }
         //Event to show equipment photo
         private void EquipmentListDataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
@@ -359,7 +403,5 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         {
             pictureBox.Visible = false;
         }
-
-
     }
 }

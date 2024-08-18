@@ -317,38 +317,49 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
                             string finishdetails = reader["FinishDetails"].ToString();
                             string finishdoc = reader["FinishDoc"].ToString();
                             string startdetails = reader["StartDetails"].ToString();
-                            //Replace equipment forthis process
-                            int reid = Convert.ToInt32(reader["REID"]);
-                            string name = reader["Name"].ToString();
-                            string serial = reader["Serial"].ToString();
-                            string ephotopath = reader["EPhoto"].ToString();
-                            string oplacephotopath = reader["OPlacePhoto"].ToString();
-                            string edetails = reader["EDetails"].ToString();
-                            bool replacement = Convert.ToBoolean(reader["Replacement"]);
-                            string selldetails = reader["SellDetails"].ToString();
-                            double price = Convert.ToDouble(reader["Price"]);
-                            string edocumentpath = reader["EDocument"].ToString();
-                            DateTime insdate = Convert.ToDateTime(reader["InsDate"]);
-                            string writeoffpath = reader["WriteOff"].ToString();
-                            int etypeid = Convert.ToInt32(reader["ETypeID"]);
-                            string type = reader["EType"].ToString();
-                            EquipmentType etype = new EquipmentType(etypeid, type);
-                            int eownerid = Convert.ToInt32(reader["EOwnerID"]);
-                            string owner = reader["Owner"].ToString();
-                            EquipmentOwner eowner = new EquipmentOwner(eownerid, owner);
-                            int acqid = Convert.ToInt32(reader["EAcqID"]);
-                            string acq = reader["Accquire"].ToString();
-                            Acquisition acquisition = new Acquisition(acqid, acq);
-                            int estaid = Convert.ToInt32(reader["EStatusID"]);
-                            string status = reader["EStatus"].ToString();
-                            EquipmentStatus estatus = new EquipmentStatus(estaid, status);
-                            int basisid = Convert.ToInt32(reader["ERentID"]);
-                            string basis = reader["Basis"].ToString();
-                            RentalBasis erentalbasis = new RentalBasis(basisid, basis);
-                            bool onplan = Convert.ToBoolean(reader["OnPlan"]);
-                            Equipment re = new Equipment(reid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
-                                serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
-                                writeoffpath);
+
+
+                            //Replace equipment for this process
+                            int? track = reader["REID"] != DBNull.Value ? Convert.ToInt32(reader["REID"]) : (int?)null;
+                            Equipment re;
+                            if (track.HasValue)
+                            {
+                                int reid = Convert.ToInt32(reader["REID"]);
+                                string name = reader["Name"].ToString();
+                                string serial = reader["Serial"].ToString();
+                                string ephotopath = reader["EPhoto"].ToString();
+                                string oplacephotopath = reader["OPlacePhoto"].ToString();
+                                string edetails = reader["EDetails"].ToString();
+                                bool replacement = Convert.ToBoolean(reader["Replacement"]);
+                                string selldetails = reader["SellDetails"].ToString();
+                                double price = Convert.ToDouble(reader["Price"]);
+                                string edocumentpath = reader["EDocument"].ToString();
+                                DateTime insdate = Convert.ToDateTime(reader["InsDate"]);
+                                string writeoffpath = reader["WriteOff"].ToString();
+                                int etypeid = Convert.ToInt32(reader["ETypeID"]);
+                                string type = reader["EType"].ToString();
+                                EquipmentType etype = new EquipmentType(etypeid, type);
+                                int eownerid = Convert.ToInt32(reader["EOwnerID"]);
+                                string owner = reader["Owner"].ToString();
+                                EquipmentOwner eowner = new EquipmentOwner(eownerid, owner);
+                                int acqid = Convert.ToInt32(reader["EAcqID"]);
+                                string acq = reader["Accquire"].ToString();
+                                Acquisition acquisition = new Acquisition(acqid, acq);
+                                int estaid = Convert.ToInt32(reader["EStatusID"]);
+                                string status = reader["EStatus"].ToString();
+                                EquipmentStatus estatus = new EquipmentStatus(estaid, status);
+                                int basisid = Convert.ToInt32(reader["ERentID"]);
+                                string basis = reader["Basis"].ToString();
+                                RentalBasis erentalbasis = new RentalBasis(basisid, basis);
+                                bool onplan = Convert.ToBoolean(reader["OnPlan"]);
+                                re = new Equipment(reid, name, onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                                    serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
+                                    writeoffpath);
+                            }
+                            else
+                            {
+                                re = null;
+                            }
 
                             PlanProcess pp = new PlanProcess(id,planid,processdate,startdetails,psup,psupdetails,
                                 cost,workpermit,contract,finishdetails,finishdoc,re,finishdate);

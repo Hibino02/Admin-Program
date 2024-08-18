@@ -71,7 +71,7 @@ namespace Equipment_Management.UIClass.Job
             {
                 foreach (EquipmentStatus eqis in equipmentStatusList)
                 {
-                    if (eqis.ID == 7 || eqis.ID == 8)
+                    if (eqis.ID == 6 || eqis.ID == 7)
                     {
                         eStatusComboBox.Items.Add(eqis.EStatus);
                         equipmentStatusID.Add(eqis.ID);
@@ -169,7 +169,9 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(finishDocumentPath))
             {
-                Global.SaveFileToServer(finishDocumentPath, "FinishJobDocument");
+                Global.Directory = "FinishJobDocument";
+                Global.SaveFileToServer(finishDocumentPath);
+                Global.Directory = null;
                 finishDocumentPath = Global.TargetFilePath;
             }
         }
@@ -177,7 +179,9 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(finishPhotoPath))
             {
-                Global.SaveFileToServer(finishPhotoPath, "FinishJobPhoto");
+                Global.Directory = "FinishJobPhoto";
+                Global.SaveFileToServer(finishPhotoPath);
+                Global.Directory = null;
                 finishPhotoPath = Global.TargetFilePath;
             }
         }
@@ -274,6 +278,8 @@ namespace Equipment_Management.UIClass.Job
                 ShowCustomMessageBox("กรุณาเลือกสถานะอุปกรณ์หลังจากซ่อม");
                 return false;
             }
+            SaveFinishPhoto();
+            SaveFinishDocument();
             return true;
         }
 
@@ -305,6 +311,8 @@ namespace Equipment_Management.UIClass.Job
                 }
                 else
                 {
+                    Global.DeleteFileFromFtp(finishDocumentPath);
+                    Global.DeleteFileFromFtp(finishPhotoPath);
                     ShowCustomMessageBox("บันทึกการแจ้งซ่อมเสร็จสมบูรณ์");
                     return;
                 }

@@ -11,7 +11,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
     public partial class WriteOffNTransferDocumentAttachment : Form
     {
         Equipment equipmentDocAttach = Global.equipmentGlobal;
-        string acquisitionDocumentPath;
+        string writeOffDocumentPath;
 
         EquipmentStatus estatus;
 
@@ -42,16 +42,16 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    acquisitionDocumentPath = openFileDialog.FileName;
+                    writeOffDocumentPath = openFileDialog.FileName;
                 }
             }
         }
         //Open Invoice
         private void documentLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (File.Exists(acquisitionDocumentPath))
+            if (File.Exists(writeOffDocumentPath))
             {
-                System.Diagnostics.Process.Start(acquisitionDocumentPath);
+                System.Diagnostics.Process.Start(writeOffDocumentPath);
             }
             else
             {
@@ -60,28 +60,29 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
         }
         
         //Save documents into folder
-        private void SaveAcquisitionDocument()
+        private void SaveWriteOffDocument()
         {
-            if (!string.IsNullOrEmpty(acquisitionDocumentPath))
+            if (!string.IsNullOrEmpty(writeOffDocumentPath))
             {
-                Global.SaveFileToServer(acquisitionDocumentPath, "WriteOffNTransferDocument");
-                acquisitionDocumentPath = Global.TargetFilePath;
+                Global.Directory = "WriteOffNTransferDocument";
+                Global.SaveFileToServer(writeOffDocumentPath);
+                Global.Directory = null;
+                writeOffDocumentPath = Global.TargetFilePath;
             }
         }
         //Check everything
         private bool CheckAllAttributes()
         {
-            bool isComplete = true;
-            if (string.IsNullOrEmpty(acquisitionDocumentPath))
+            if (string.IsNullOrEmpty(writeOffDocumentPath))
             {
                 ShowCustomMessageBox("กรุณาแนบเอกสาร Write-Off หรือ Transfer");
-                isComplete = false;
+                return false;
             }
-            if (isComplete)
+            else
             {
-                SaveAcquisitionDocument();
+                SaveWriteOffDocument();
             }
-            return isComplete;
+            return true;
         }
         //Call custom message box
         private void ShowCustomMessageBox(string message)
@@ -96,7 +97,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
         {
             if (CheckAllAttributes())
             {
-                equipmentDocAttach.WriteOffPath = acquisitionDocumentPath;
+                equipmentDocAttach.WriteOffPath = writeOffDocumentPath;
                 estatus = new EquipmentStatus(10);
                 equipmentDocAttach.EStatusObj = estatus;
                 if (equipmentDocAttach.Change())
@@ -108,6 +109,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
                else
                 {
                     ShowCustomMessageBox("ขั้นตอนการอัพเดทข้อมูลลงใน ฐานข้อมูลเกิดความผิดพลาด กรุณาติดต่อผู้ดูแล");
+                    Global.DeleteFileFromFtp(writeOffDocumentPath);
                 }
             }
         }
@@ -126,9 +128,9 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
         //Event to show tooltips    
         private void documentLinkLabel_MouseEnter(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(acquisitionDocumentPath))
+            if (!string.IsNullOrEmpty(writeOffDocumentPath))
             {
-                toolTip1.Show($"Attached File: {Path.GetFileName(acquisitionDocumentPath)}", documentLinkLabel);
+                toolTip1.Show($"Attached File: {Path.GetFileName(writeOffDocumentPath)}", documentLinkLabel);
             }
             else
             {

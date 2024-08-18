@@ -59,6 +59,59 @@ namespace Equipment_Management.ObjectClass
             this.pperiod = pperiod;
         }
 
+        public bool Create()
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string insert = "INSERT INTO planperiod (ID, PPeriod) VALUES (NULL, @pperiod)";
+                    cmd.CommandText = insert;
+                    cmd.Parameters.AddWithValue("@pperiod", pperiod);
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
+        public bool Remove()
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string delete = "DELETE FROM planperiod WHERE ID = @id";
+                    cmd.CommandText = delete;
+                    cmd.Parameters.AddWithValue("@id", id.ToString());
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
+
         public static List<PlanPeriod> GetPlanPeriodList()
         {
             MySqlConnection conn = null;

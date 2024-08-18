@@ -89,8 +89,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomViewClass\AllEquipmentForCreatedJobView.cs" />
     <Compile Include="CustomViewClass\AllEquipmentView.cs" />
+    <Compile Include="CustomViewClass\AllJobByEquipmentView.cs" />
     <Compile Include="CustomViewClass\AllJobInProcessView.cs" />
+    <Compile Include="CustomViewClass\AllPlanView.cs" />
     <Compile Include="CustomWindowComponents\CustomMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -209,6 +212,18 @@
     <Compile Include="UIClass\ModeChosenForm.Designer.cs">
       <DependentUpon>ModeChosenForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIClass\Plan\CreatePlanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Plan\CreatePlanForm.Designer.cs">
+      <DependentUpon>CreatePlanForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\Plan\EditPlanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Plan\EditPlanForm.Designer.cs">
+      <DependentUpon>EditPlanForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CustomWindowComponents\CustomMessageBox.resx">
       <DependentUpon>CustomMessageBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -268,6 +283,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIClass\ModeChosenForm.resx">
       <DependentUpon>ModeChosenForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Plan\CreatePlanForm.resx">
+      <DependentUpon>CreatePlanForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Plan\EditPlanForm.resx">
+      <DependentUpon>EditPlanForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

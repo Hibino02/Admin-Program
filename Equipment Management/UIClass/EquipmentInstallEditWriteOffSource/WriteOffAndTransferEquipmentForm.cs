@@ -35,21 +35,13 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
             priceTextBox.Text = writeOffNTransfer.Price.ToString();
             rentalBasisCombobox.Text = writeOffNTransfer.ERentalBasis?.Basis ?? string.Empty;
             installationDateTimePicker.Value = writeOffNTransfer.InsDate;
-            if (!string.IsNullOrEmpty(writeOffNTransfer.EPhotoPath) && File.Exists(writeOffNTransfer.EPhotoPath))
+            if (!string.IsNullOrEmpty(writeOffNTransfer.EPhotoPath))
             {
-                if (equipmentPictureBox.Image != null)
-                {
-                    equipmentPictureBox.Image.Dispose();
-                }
-                equipmentPictureBox.Image = Image.FromFile(writeOffNTransfer.EPhotoPath);
+                Global.LoadImageIntoPictureBox(writeOffNTransfer.EPhotoPath, equipmentPictureBox);
             }
-            if (!string.IsNullOrEmpty(writeOffNTransfer.OPlacePhotoPath) && File.Exists(writeOffNTransfer.OPlacePhotoPath))
+            if (!string.IsNullOrEmpty(writeOffNTransfer.OPlacePhotoPath))
             {
-                if (installationPlacePictureBox.Image != null)
-                {
-                    installationPlacePictureBox.Image.Dispose();
-                }
-                installationPlacePictureBox.Image = Image.FromFile(writeOffNTransfer.OPlacePhotoPath);
+                Global.LoadImageIntoPictureBox(writeOffNTransfer.OPlacePhotoPath, installationPlacePictureBox);
             }
             sellDetailsRichTextBox.Text = writeOffNTransfer.SellDetails;
             equipmentDetailRichTextBox.Text = writeOffNTransfer.EDetails;

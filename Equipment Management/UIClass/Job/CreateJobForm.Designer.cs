@@ -139,6 +139,7 @@
             this.equipmentTypeComboBox.Size = new System.Drawing.Size(429, 32);
             this.equipmentTypeComboBox.TabIndex = 9;
             this.equipmentTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.equipmentTypeComboBox_SelectedIndexChanged);
+            this.equipmentTypeComboBox.TextChanged += new System.EventHandler(this.equipmentTypeComboBox_TextChanged);
             // 
             // equipmentSelecteddataGridView
             // 

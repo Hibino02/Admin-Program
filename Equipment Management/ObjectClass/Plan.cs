@@ -96,9 +96,11 @@ WHERE p.ID = @id";
                             int estaid = Convert.ToInt32(reader["EStatusID"]);
                             string status = reader["EStatus"].ToString();
                             EquipmentStatus estatus = new EquipmentStatus(estaid, status);
-                            int basisid = Convert.ToInt32(reader["ERentID"]);
-                            string basis = reader["Basis"].ToString();
-                            RentalBasis erentalbasis = new RentalBasis(basisid, basis);
+
+                            int? basisid = reader["ERentID"] != DBNull.Value ? Convert.ToInt32(reader["ERentID"]) : (int?)null;
+                            string basis = reader["Basis"] != DBNull.Value ? reader["Basis"].ToString() : null;
+                            RentalBasis erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
+
                             string insdetail = reader["InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["OnPlan"]);
                             eqp = new Equipment(id, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
@@ -120,7 +122,8 @@ WHERE p.ID = @id";
         {
             UpdateAttribute(id.ToString());
         }
-        public Plan(Equipment eqp,PlanType ptype,PlanPeriod pperiod,int timestodo,bool planstatus, DateTime? datetodo = null)
+        public Plan(Equipment eqp,PlanType ptype,PlanPeriod pperiod,int timestodo,bool planstatus, 
+            DateTime? datetodo = null)
         {
             this.eqp = eqp;
             this.ptype = ptype;
@@ -129,7 +132,8 @@ WHERE p.ID = @id";
             this.datetodo = datetodo;
             this.planstatus = planstatus;
         }
-        public Plan(int id,Equipment eqp, PlanType ptype, PlanPeriod pperiod, int timestodo, bool planstatus, DateTime? datetodo = null)
+        public Plan(int id,Equipment eqp, PlanType ptype, PlanPeriod pperiod, int timestodo, bool planstatus, 
+            DateTime? datetodo = null)
         {
             this.id = id;
             this.eqp = eqp;
@@ -300,12 +304,14 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
                             int estaid = Convert.ToInt32(reader["EStatusID"]);
                             string status = reader["EStatus"].ToString();
                             EquipmentStatus estatus = new EquipmentStatus(estaid, status);
-                            int basisid = Convert.ToInt32(reader["ERentID"]);
-                            string basis = reader["Basis"].ToString();
-                            RentalBasis erentalbasis = new RentalBasis(basisid, basis);
+
+                            int? basisid = reader["ERentID"] != DBNull.Value ? Convert.ToInt32(reader["ERentID"]) : (int?)null;
+                            string basis = reader["Basis"] != DBNull.Value ? reader["Basis"].ToString() : null;
+                            RentalBasis erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
+
                             string insdetail = reader["InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["OnPlan"]);
-                            Equipment eqp = new Equipment(id, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                            Equipment eqp = new Equipment(eid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
                                 serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                 writeoffpath,insdetail);
 

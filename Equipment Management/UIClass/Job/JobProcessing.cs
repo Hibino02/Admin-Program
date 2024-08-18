@@ -32,16 +32,17 @@ namespace Equipment_Management.UIClass.Job
         Equipment JREq;
 
         BindingSource replaceEquipmentListBindingSource;
-        List<AllEquipmentView> replaceEquipmentList;
-        List<AllEquipmentView> equipmentSelectedList;
+
+        List<AllEquipmentForCreatedJobView> replaceEquipmentList;
+        List<AllEquipmentForCreatedJobView> equipmentSelectedList;
 
         public JobProcessing()
         {
             InitializeComponent();
             this.Size = new Size(1480, 820);
             jobToProcess = new ObjectClass.Job(Global.ID);
-            replaceEquipmentList = new List<AllEquipmentView>();
-            equipmentSelectedList = new List<AllEquipmentView>();
+            replaceEquipmentList = new List<AllEquipmentForCreatedJobView>();
+            equipmentSelectedList = new List<AllEquipmentForCreatedJobView>();
             replaceEquipmentListBindingSource = new BindingSource();
 
             //--------------------------------------------------------------------------------------------//
@@ -96,9 +97,6 @@ namespace Equipment_Management.UIClass.Job
             equipmentSelecteddataGridView.CellMouseEnter += equipmentSelecteddataGridView_CellMouseEnter;
             equipmentSelecteddataGridView.CellMouseLeave += equipmentSelecteddataGridView_CellMouseLeave;
 
-            equipmentDisplaydataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            equipmentSelecteddataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
             SetJobDetailsComponents();
             CheckJobType();
             UpdateReplaceEquipmentGridView();
@@ -131,7 +129,11 @@ namespace Equipment_Management.UIClass.Job
         //Buy rent transfer part ---------------------------------------------------------------------------------
         private void UpdateReplaceEquipmentGridView()
         {
-            replaceEquipmentList = AllEquipmentView.GetJobProcessEquipmentView();
+            if(replaceEquipmentList != null)
+            {
+                replaceEquipmentList.Clear();
+            }
+            replaceEquipmentList = AllEquipmentForCreatedJobView.GetAllEquipmentForCreatedJobView();
             replaceEquipmentListBindingSource.DataSource = replaceEquipmentList;
             equipmentDisplaydataGridView.DataSource = replaceEquipmentListBindingSource;
 
@@ -139,10 +141,10 @@ namespace Equipment_Management.UIClass.Job
         }
         private void UpdateSelectedReplaceEquipmentGridView()
         {
-            if(Global.selectedEquipmentInJob != null)
+            if(Global.AllEquipmentForCreatedJobView != null)
             {
                 // Adding the selected equipment to the selected list
-                equipmentSelectedList = new List<AllEquipmentView> { Global.selectedEquipmentInJob };
+                equipmentSelectedList = new List<AllEquipmentForCreatedJobView> { Global.AllEquipmentForCreatedJobView };
 
                 // Binding the selected list to the DataGridView
                 equipmentSelecteddataGridView.DataSource = equipmentSelectedList;
@@ -156,59 +158,27 @@ namespace Equipment_Management.UIClass.Job
             }
             if (equipmentDisplaydataGridView.Columns["Name"] != null)
             {
-                equipmentDisplaydataGridView.Columns["Name"].HeaderText = "ชื่อเรียกอุปกรณ์";
+                var customColumn = equipmentDisplaydataGridView.Columns["Name"];
+                customColumn.HeaderText = "ชื่อเรียกอุปกรณ์";
+                customColumn.Width = 300;           
             }
             if (equipmentDisplaydataGridView.Columns["Serial"] != null)
             {
-                equipmentDisplaydataGridView.Columns["Serial"].HeaderText = "ชื่อทางบัญชี";
-            }
-            if (equipmentDisplaydataGridView.Columns["EStatusID"] != null)
-            {
-                equipmentDisplaydataGridView.Columns["EStatusID"].Visible = false;
+                var customColumn = equipmentDisplaydataGridView.Columns["Serial"];
+                customColumn.HeaderText = "ชื่อทางบัญชี";
+                customColumn.Width = 150;
             }
             if (equipmentDisplaydataGridView.Columns["EStatus"] != null)
             {
-                equipmentDisplaydataGridView.Columns["EStatus"].HeaderText = "สถานะปัจจุบัน";
+                var customColumn = equipmentDisplaydataGridView.Columns["EStatus"];
+                customColumn.HeaderText = "สถานะอุปกรณ์";
+                customColumn.Width = 150;
             }
-            if (equipmentDisplaydataGridView.Columns["ETypeID"] != null)
+            if (equipmentDisplaydataGridView.Columns["EPhoto"] != null)
             {
-                equipmentDisplaydataGridView.Columns["ETypeID"].Visible = false;
-            }
-            if (equipmentDisplaydataGridView.Columns["EquipmentPhoto"] != null)
-            {
-                var photoColumn = equipmentDisplaydataGridView.Columns["EquipmentPhoto"];
-                photoColumn.HeaderText = "ภาพอุปกรณ์";
-                equipmentDisplaydataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-                photoColumn.Width = 100;
-            }
-            //No use columns
-            if (equipmentDisplaydataGridView.Columns["EDetails"] != null)
-            {
-                equipmentDisplaydataGridView.Columns["EDetails"].Visible = false;
-            }
-            if (equipmentDisplaydataGridView.Columns["InsDate"] != null)
-            {
-                equipmentDisplaydataGridView.Columns["InsDate"].Visible = false;
-            }
-            if (equipmentDisplaydataGridView.Columns["EType"] != null)
-            {
-                equipmentDisplaydataGridView.Columns["EType"].Visible = false;
-            }
-            if (equipmentDisplaydataGridView.Columns["EOwner"] != null)
-            {
-                equipmentDisplaydataGridView.Columns["EOwner"].Visible = false;
-            }
-            if (equipmentDisplaydataGridView.Columns["InsDetails"] != null)
-            {
-                equipmentDisplaydataGridView.Columns["InsDetails"].Visible = false;
-            }
-            if (equipmentDisplaydataGridView.Columns["InstallEPhoto"] != null)
-            {
-                equipmentDisplaydataGridView.Columns["InstallEPhoto"].Visible = false;
-            }
-            if (equipmentDisplaydataGridView.Columns["Replacement"] != null)
-            {
-                equipmentDisplaydataGridView.Columns["Replacement"].Visible = false;
+                var customColumn = equipmentDisplaydataGridView.Columns["EPhoto"];
+                customColumn.HeaderText = "รูปอุปกรณ์";
+                customColumn.Width = 100;
             }
         }
         private void FormatReplaceSelectedEquipmentListDataGridView()
@@ -219,59 +189,27 @@ namespace Equipment_Management.UIClass.Job
             }
             if (equipmentSelecteddataGridView.Columns["Name"] != null)
             {
-                equipmentSelecteddataGridView.Columns["Name"].HeaderText = "ชื่อเรียกอุปกรณ์";
+                var customColumn = equipmentSelecteddataGridView.Columns["Name"];
+                customColumn.HeaderText = "ชื่อเรียกอุปกรณ์";
+                customColumn.Width = 300;
             }
             if (equipmentSelecteddataGridView.Columns["Serial"] != null)
             {
-                equipmentSelecteddataGridView.Columns["Serial"].HeaderText = "ชื่อทางบัญชี";
-            }
-            if (equipmentSelecteddataGridView.Columns["EStatusID"] != null)
-            {
-                equipmentSelecteddataGridView.Columns["EStatusID"].Visible = false;
+                var customColumn = equipmentSelecteddataGridView.Columns["Serial"];
+                customColumn.HeaderText = "ชื่อทางบัญชี";
+                customColumn.Width = 150;
             }
             if (equipmentSelecteddataGridView.Columns["EStatus"] != null)
             {
-                equipmentSelecteddataGridView.Columns["EStatus"].HeaderText = "สถานะปัจจุบัน";
+                var customColumn = equipmentSelecteddataGridView.Columns["EStatus"];
+                customColumn.HeaderText = "สถานะอุปกรณ์";
+                customColumn.Width = 150;
             }
-            if (equipmentSelecteddataGridView.Columns["ETypeID"] != null)
+            if (equipmentSelecteddataGridView.Columns["EPhoto"] != null)
             {
-                equipmentSelecteddataGridView.Columns["ETypeID"].Visible = false;
-            }
-            if (equipmentSelecteddataGridView.Columns["EquipmentPhoto"] != null)
-            {
-                var photoColumn = equipmentSelecteddataGridView.Columns["EquipmentPhoto"];
-                photoColumn.HeaderText = "ภาพอุปกรณ์";
-                equipmentSelecteddataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-                photoColumn.Width = 100;
-            }
-            //No use columns
-            if (equipmentSelecteddataGridView.Columns["EDetails"] != null)
-            {
-                equipmentSelecteddataGridView.Columns["EDetails"].Visible = false;
-            }
-            if (equipmentSelecteddataGridView.Columns["InsDate"] != null)
-            {
-                equipmentSelecteddataGridView.Columns["InsDate"].Visible = false;
-            }
-            if (equipmentSelecteddataGridView.Columns["EType"] != null)
-            {
-                equipmentSelecteddataGridView.Columns["EType"].Visible = false;
-            }
-            if (equipmentSelecteddataGridView.Columns["EOwner"] != null)
-            {
-                equipmentSelecteddataGridView.Columns["EOwner"].Visible = false;
-            }
-            if (equipmentSelecteddataGridView.Columns["InsDetails"] != null)
-            {
-                equipmentSelecteddataGridView.Columns["InsDetails"].Visible = false;
-            }
-            if (equipmentSelecteddataGridView.Columns["InstallEPhoto"] != null)
-            {
-                equipmentSelecteddataGridView.Columns["InstallEPhoto"].Visible = false;
-            }
-            if (equipmentSelecteddataGridView.Columns["Replacement"] != null)
-            {
-                equipmentSelecteddataGridView.Columns["Replacement"].Visible = false;
+                var customColumn = equipmentSelecteddataGridView.Columns["EPhoto"];
+                customColumn.HeaderText = "รูปอุปกรณ์";
+                customColumn.Width = 100;
             }
         }
         //Add replacement equipment to another grid
@@ -283,7 +221,7 @@ namespace Equipment_Management.UIClass.Job
                 {
                     int selectedID = (int)equipmentDisplaydataGridView.Rows[e.RowIndex].Cells["ID"].Value;
 
-                    Global.selectedEquipmentInJob = replaceEquipmentList.FirstOrDefault(eq => eq.ID == selectedID);
+                    Global.AllEquipmentForCreatedJobView = replaceEquipmentList.FirstOrDefault(eq => eq.ID == selectedID);
 
                     // Update the selected equipment list and refresh the grid
                     UpdateSelectedReplaceEquipmentGridView();
@@ -298,7 +236,7 @@ namespace Equipment_Management.UIClass.Job
         {
             equipmentSelectedList.Clear();
             equipmentSelecteddataGridView.DataSource = null;
-            Global.selectedEquipmentInJob = null;
+            Global.AllEquipmentForCreatedJobView = null;
 
             equipmentSelecteddataGridView.Refresh();
 
@@ -404,7 +342,9 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(writeOffDocumentPath))
             {
-                Global.SaveFileToServer(writeOffDocumentPath, "WriteOffDocument");
+                Global.Directory = "WriteOffDocument";
+                Global.SaveFileToServer(writeOffDocumentPath);
+                Global.Directory = null;
                 writeOffDocumentPath = Global.TargetFilePath;
             }
         }
@@ -412,7 +352,9 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(workPermitDocumentPath))
             {
-                Global.SaveFileToServer(workPermitDocumentPath, "WorkPermitDocument");
+                Global.Directory = "WorkPermitDocument";
+                Global.SaveFileToServer(workPermitDocumentPath);
+                Global.Directory = null;
                 workPermitDocumentPath = Global.TargetFilePath;
             }
         }
@@ -420,7 +362,9 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(contractDocumentPath))
             {
-                Global.SaveFileToServer(contractDocumentPath, "ContractDocument");
+                Global.Directory = "ContractDocument";
+                Global.SaveFileToServer(contractDocumentPath);
+                Global.Directory = null;
                 contractDocumentPath = Global.TargetFilePath;
             }
         }
@@ -476,8 +420,7 @@ namespace Equipment_Management.UIClass.Job
             if (e.RowIndex >= 0)
             {
                 string columnName = equipmentDisplaydataGridView.Columns[e.ColumnIndex].Name;
-
-                if (columnName == "EquipmentPhoto")
+                if (columnName == "EPhoto")
                 {
                     string imagePath = equipmentDisplaydataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
                     if (string.IsNullOrEmpty(imagePath))
@@ -500,7 +443,7 @@ namespace Equipment_Management.UIClass.Job
             if (e.RowIndex >= 0)
             {
                 string columnName = equipmentSelecteddataGridView.Columns[e.ColumnIndex].Name;
-                if (columnName == "EquipmentPhoto")
+                if (columnName == "EPhoto")
                 {// Assuming the cell contains the image path
                     string imagePath = equipmentSelecteddataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
                     if (string.IsNullOrEmpty(imagePath))
@@ -523,14 +466,14 @@ namespace Equipment_Management.UIClass.Job
         //Check buy rent transfer part
         private bool CheckBuyRentTransferJob()
         {
-            if(Global.selectedEquipmentInJob == null)
+            if(Global.AllEquipmentForCreatedJobView == null)
             {
                 ShowCustomMessageBox("กรุณาเลือกอุปกรณ์ที่มาทดแทนของเก่า");
                 return false;
             }
             else
             {
-                JREq = new Equipment(Global.selectedEquipmentInJob.ID);
+                JREq = new Equipment(Global.AllEquipmentForCreatedJobView.ID);
             }
             if (string.IsNullOrEmpty(writeOffDocumentPath))
             {
@@ -611,6 +554,7 @@ namespace Equipment_Management.UIClass.Job
                     }
                     else
                     {
+                        Global.DeleteFileFromFtp(writeOffDocumentPath);
                         ShowCustomMessageBox("การบันทึกข้อมูลลงฐานข้อมูลล้มเหลว");
                         return;
                     }
@@ -650,6 +594,8 @@ namespace Equipment_Management.UIClass.Job
                     }
                     else
                     {
+                        Global.DeleteFileFromFtp(workPermitDocumentPath);
+                        Global.DeleteFileFromFtp(contractDocumentPath);
                         ShowCustomMessageBox("การบันทึกสถานะงานแจ้งซ่อมลงในฐานข้อมูลล้มเหลว");
                         return;
                     }
@@ -672,7 +618,7 @@ namespace Equipment_Management.UIClass.Job
         //Clear global variable when user close window
         private void JobProcessing_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Global.selectedEquipmentInJob = null;
+            Global.AllEquipmentForCreatedJobView = null;
         }
     }
 }

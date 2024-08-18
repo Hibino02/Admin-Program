@@ -19,8 +19,11 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
         private ToolTip accToolTip;
 
         string equipmentPhotoPath;
+        string oldEquipmentPhotoPath;
         string installationPlacePhotoPath;
+        string oldInstallationPlacePhotoPath;
         string acquisitionDocumentPath;
+        string oldAcquisitionDocumentPath;
 
         private CreateWindow create;
         //variable for update components
@@ -175,6 +178,9 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
                 replacementCheckBox.Enabled = false;
             }
             acquisitionDocumentPath = edit.EDocumentPath;
+            oldEquipmentPhotoPath = edit.EPhotoPath;
+            oldInstallationPlacePhotoPath = edit.OPlacePhotoPath;
+            oldAcquisitionDocumentPath = edit.EDocumentPath;
         }
 
         private void createTypeButton_Click(object sender, EventArgs e)
@@ -333,29 +339,46 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
             }
         }
        
-       
         //Save photo & documents into folder
         private void SaveEquipmentPhoto()
         {
+            if (!string.IsNullOrEmpty(oldEquipmentPhotoPath))
+            {
+                Global.DeleteFileFromFtp(oldEquipmentPhotoPath);
+            }
             if (!string.IsNullOrEmpty(equipmentPhotoPath))
             {
-                Global.SaveFileToServer(equipmentPhotoPath, "EquipmentPhoto");
+                Global.Directory = "EquipmentPhoto";
+                Global.SaveFileToServer(equipmentPhotoPath);
+                Global.Directory = null;
                 equipmentPhotoPath = Global.TargetFilePath;
             }
         }
         private void SaveInstallationPlacePhoto()
         {
+            if(!string.IsNullOrEmpty(oldInstallationPlacePhotoPath))
+            {
+                Global.DeleteFileFromFtp(oldInstallationPlacePhotoPath);
+            }
             if (!string.IsNullOrEmpty(installationPlacePhotoPath))
             {
-                Global.SaveFileToServer(installationPlacePhotoPath, "InstallationPlacePhoto");
+                Global.Directory = "InstallationPlacePhoto";
+                Global.SaveFileToServer(installationPlacePhotoPath);
+                Global.Directory = null;
                 installationPlacePhotoPath = Global.TargetFilePath;
             }
         }
         private void SaveAcquisitionDocument()
         {
+            if (!string.IsNullOrEmpty(oldAcquisitionDocumentPath))
+            {
+                Global.DeleteFileFromFtp(oldAcquisitionDocumentPath);
+            }
             if (!string.IsNullOrEmpty(acquisitionDocumentPath))
             {
-                Global.SaveFileToServer(acquisitionDocumentPath, "AcquisitionDocument");
+                Global.Directory = "AcquisitionDocument";
+                Global.SaveFileToServer(acquisitionDocumentPath);
+                Global.Directory = null;
                 acquisitionDocumentPath = Global.TargetFilePath;
             }
         }
@@ -443,6 +466,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
             edit.EDetails = equipmentDetailRichTextBox.Text;
             edit.InstallationDetails = InstallationDetailsRichTextBox.Text;
             edit.Replacement = replacementCheckBox.Checked;
+            edit.InsDate = installationDateTimePicker.Value;
             if (isComplete)
             {
                 if (!string.IsNullOrEmpty(equipmentPhotoPath))
@@ -475,6 +499,9 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
                 }
                 else
                 {
+                    Global.DeleteFileFromFtp(equipmentPhotoPath);
+                    Global.DeleteFileFromFtp(installationPlacePhotoPath);
+                    Global.DeleteFileFromFtp(acquisitionDocumentPath);
                     ShowCustomMessageBox("ขั้นตอนการอัฟเดทข้อมูลลงใน ฐานข้อมูลเกิดความผิดพลาด กรุณาติดต่อผู้ดูแล");
                 }
             }

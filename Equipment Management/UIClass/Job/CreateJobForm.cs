@@ -19,7 +19,7 @@ namespace Equipment_Management.UIClass.Job
 
         private ToolTip toolTip1;
 
-        public event EventHandler updateCreatedJobDatagridView;
+        public event EventHandler UpdateGrid;
 
         //variable for update components
         List<EquipmentStatus> equipmentStatusList;
@@ -102,9 +102,6 @@ namespace Equipment_Management.UIClass.Job
             equipmentDisplaydataGridView.CellDoubleClick += equipmentDisplaydataGridView_CellDoubleClick;
             equipmentSelecteddataGridView.CellDoubleClick += equipmentSelecteddataGridView_CellDoubleClick;
 
-            equipmentDisplaydataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            equipmentSelecteddataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
             UpdateEquipmentList();
             UpdateSelectedEquipmentList();
 
@@ -153,8 +150,6 @@ namespace Equipment_Management.UIClass.Job
             equipmentList = AllEquipmentView.GetJobEquipmentView();
             originalEquipmentList = new List<AllEquipmentView>(equipmentList);
             ApplyCurrentFilter();
-
-            FormatEquipmentListDataGridView();
         }
         //Update selected
         private void UpdateSelectedEquipmentList()
@@ -195,11 +190,14 @@ namespace Equipment_Management.UIClass.Job
             }
             if (equipmentDisplaydataGridView.Columns["Name"] != null)
             {
-                equipmentDisplaydataGridView.Columns["Name"].HeaderText = "ชื่อเรียกอุปกรณ์";
+                var customColumn = equipmentDisplaydataGridView.Columns["Name"];
+                customColumn.HeaderText = "ชื่อเรียกอุปกรณ์";
+                customColumn.Width = 200;
             }
             if (equipmentDisplaydataGridView.Columns["Serial"] != null)
             {
-                equipmentDisplaydataGridView.Columns["Serial"].HeaderText = "ชื่อทางบัญชี";
+                var customColumn = equipmentDisplaydataGridView.Columns["Serial"];
+                customColumn.HeaderText = "ชื่อทางบัญชี";
             }
             if (equipmentDisplaydataGridView.Columns["EStatusID"] != null)
             {
@@ -207,7 +205,9 @@ namespace Equipment_Management.UIClass.Job
             }
             if (equipmentDisplaydataGridView.Columns["EStatus"] != null)
             {
-                equipmentDisplaydataGridView.Columns["EStatus"].HeaderText = "สถานะปัจจุบัน";
+                var customColumn = equipmentDisplaydataGridView.Columns["EStatus"];
+                customColumn.HeaderText = "สถานะอุปกรณ์";
+                customColumn.Width = 100;
             }
             if (equipmentDisplaydataGridView.Columns["ETypeID"] != null)
             {
@@ -217,7 +217,6 @@ namespace Equipment_Management.UIClass.Job
             {
                 var photoColumn = equipmentDisplaydataGridView.Columns["EquipmentPhoto"];
                 photoColumn.HeaderText = "ไฟล์ภาพอุปกรณ์";
-                equipmentDisplaydataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                 photoColumn.Width = 100;
             }
             //No use columns
@@ -259,11 +258,14 @@ namespace Equipment_Management.UIClass.Job
             }
             if (equipmentSelecteddataGridView.Columns["Name"] != null)
             {
-                equipmentSelecteddataGridView.Columns["Name"].HeaderText = "ชื่อเรียกอุปกรณ์";
+                var customColumn = equipmentSelecteddataGridView.Columns["Name"];
+                customColumn.HeaderText = "ชื่อเรียกอุปกรณ์";
+                customColumn.Width = 200;
             }
             if (equipmentSelecteddataGridView.Columns["Serial"] != null)
             {
-                equipmentSelecteddataGridView.Columns["Serial"].HeaderText = "ชื่อทางบัญชี";
+                var customColumn = equipmentSelecteddataGridView.Columns["Serial"];
+                customColumn.HeaderText = "ชื่อทางบัญชี";
             }
             if (equipmentSelecteddataGridView.Columns["EStatusID"] != null)
             {
@@ -271,7 +273,9 @@ namespace Equipment_Management.UIClass.Job
             }
             if (equipmentSelecteddataGridView.Columns["EStatus"] != null)
             {
-                equipmentSelecteddataGridView.Columns["EStatus"].HeaderText = "สถานะปัจจุบัน";
+                var customColumn = equipmentSelecteddataGridView.Columns["EStatus"];
+                customColumn.HeaderText = "สถานะอุปกรณ์";
+                customColumn.Width = 100;
             }
             if (equipmentSelecteddataGridView.Columns["ETypeID"] != null)
             {
@@ -281,7 +285,6 @@ namespace Equipment_Management.UIClass.Job
             {
                 var photoColumn = equipmentSelecteddataGridView.Columns["EquipmentPhoto"];
                 photoColumn.HeaderText = "ไฟล์ภาพอุปกรณ์";
-                equipmentSelecteddataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                 photoColumn.Width = 100;
             }
             //No use columns
@@ -322,6 +325,43 @@ namespace Equipment_Management.UIClass.Job
             
             ApplyCurrentFilter();
         }
+        private void equipmentTypeComboBox_TextChanged(object sender, EventArgs e)
+        {
+            // Temporarily unsubscribe from the TextChanged event to avoid recursion
+            equipmentTypeComboBox.TextChanged -= equipmentTypeComboBox_TextChanged;
+
+            string typedText = equipmentTypeComboBox.Text;
+            int currentCaretPosition = equipmentTypeComboBox.SelectionStart;
+
+            // Filter items that start with the typed text
+            var matchingItems = equipmentTypeComboBox.Items.Cast<string>()
+                                         .Where(item => item.StartsWith(typedText, StringComparison.OrdinalIgnoreCase))
+                                         .ToList();
+
+            // Only suggest and highlight if the user is typing and a match is found
+            if (matchingItems.Any() && !string.IsNullOrEmpty(typedText))
+            {
+                string selectedItem = matchingItems.First();
+
+                // Update the text and highlight the matching part only if the typed text is less than the selected item
+                if (typedText.Length < selectedItem.Length && selectedItem.StartsWith(typedText, StringComparison.OrdinalIgnoreCase))
+                {
+                    equipmentTypeComboBox.Text = selectedItem;
+                    equipmentTypeComboBox.SelectionStart = currentCaretPosition;
+                    equipmentTypeComboBox.SelectionLength = selectedItem.Length - typedText.Length;
+                }
+            }
+            else
+            {
+                // If no match found or text is empty, keep the typed text
+                equipmentTypeComboBox.Text = typedText;
+                equipmentTypeComboBox.SelectionStart = currentCaretPosition;
+                equipmentTypeComboBox.SelectionLength = 0;
+            }
+
+            // Re-subscribe to the TextChanged event
+            equipmentTypeComboBox.TextChanged += equipmentTypeComboBox_TextChanged;
+        }
         private void equipmentListSearchTextBox_TextChanged(object sender, EventArgs e)
         {
             string searchText = equipmentListSearchTextBox.Text.ToLower();
@@ -352,6 +392,7 @@ namespace Equipment_Management.UIClass.Job
                 string columnName = equipmentDisplaydataGridView.Columns[e.ColumnIndex].Name;
                 if (columnName == "EquipmentPhoto")
                 {
+                    equipmentDisplaydataGridView.ShowCellToolTips = false;
                     string imagePath = equipmentDisplaydataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
                     if (string.IsNullOrEmpty(imagePath))
                     {
@@ -368,6 +409,7 @@ namespace Equipment_Management.UIClass.Job
         private void equipmentDisplaydataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
             pictureBox.Visible = false;
+            equipmentDisplaydataGridView.ShowCellToolTips = true;
         }
         
         //Methodto call custom message Box
@@ -387,7 +429,8 @@ namespace Equipment_Management.UIClass.Job
             {
                 string columnName = equipmentSelecteddataGridView.Columns[e.ColumnIndex].Name;
                 if (columnName == "EquipmentPhoto")
-                {// Assuming the cell contains the image path
+                {
+                    equipmentSelecteddataGridView.ShowCellToolTips = false;
                     string imagePath = equipmentSelecteddataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
                     if (string.IsNullOrEmpty(imagePath))
                     {
@@ -404,6 +447,7 @@ namespace Equipment_Management.UIClass.Job
         private void equipmentSelecteddataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
             selectedEquipmentpictureBox.Visible = false;
+            equipmentSelecteddataGridView.ShowCellToolTips = true;
         }
 
         //Event to add displayed equipment to selected equipment datagridview
@@ -411,17 +455,14 @@ namespace Equipment_Management.UIClass.Job
         {
             if (e.RowIndex >= 0)
             {
-                if (e.RowIndex >= 0)
-                {
-                    int selectedID = (int)equipmentDisplaydataGridView.Rows[e.RowIndex].Cells["ID"].Value;
+                int selectedID = (int)equipmentDisplaydataGridView.Rows[e.RowIndex].Cells["ID"].Value;
 
-                    Global.selectedEquipmentInJob = originalEquipmentList.FirstOrDefault(eq => eq.ID == selectedID);
-                    // Update the selected equipment list and refresh the grid
-                    UpdateSelectedEquipmentList();
-                    FormatSelectedEquipmentListDataGridView();
-                    equipmentDisplaydataGridView.Enabled = false;
-                    pictureBox.Visible = false;
-                }
+                Global.selectedEquipmentInJob = originalEquipmentList.FirstOrDefault(eq => eq.ID == selectedID);
+                // Update the selected equipment list and refresh the grid
+                UpdateSelectedEquipmentList();
+                FormatSelectedEquipmentListDataGridView();
+                equipmentDisplaydataGridView.Enabled = false;
+                pictureBox.Visible = false;
             }
         }
         //Event to remove selected equipment in datagridview
@@ -477,7 +518,9 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(repairEquipmentPhotoPath))
             {
-                Global.SaveFileToServer(repairEquipmentPhotoPath, "CreatedJobEquipmentPhoto");
+                Global.Directory = "CreatedJobEquipmentPhoto";
+                Global.SaveFileToServer(repairEquipmentPhotoPath);
+                Global.Directory = null;
                 repairEquipmentPhotoPath = Global.TargetFilePath;
             }
         }
@@ -485,7 +528,9 @@ namespace Equipment_Management.UIClass.Job
         {
             if (!string.IsNullOrEmpty(createdJobDocumentPath))
             {
-                Global.SaveFileToServer(createdJobDocumentPath, "CreatedJobDocument");
+                Global.Directory = "CreatedJobDocument";
+                Global.SaveFileToServer(createdJobDocumentPath);
+                Global.Directory = null;
                 createdJobDocumentPath = Global.TargetFilePath;
             }
         }
@@ -533,6 +578,25 @@ namespace Equipment_Management.UIClass.Job
             {
                 JEq = new Equipment(Global.selectedEquipmentInJob.ID);
             }
+            int selectedIndexJobType = repairTypeComboBox.SelectedIndex;
+            if (selectedIndexJobType >= 0 && selectedIndexJobType < jobTypeID.Count)
+            {
+                int selectedJobTypeID = jobTypeID[selectedIndexJobType];
+                selectedJobType = new JobType(selectedJobTypeID);
+            }
+            else
+            {
+                ShowCustomMessageBox("กรุณาเลือก ประเภทการซ่อม");
+                return false;
+            }
+            if (JEq.EStatusObj.ID == 6 || JEq.EStatusObj.ID == 7)
+            {
+                if (selectedJobType.ID == 1 || selectedJobType.ID == 2 || selectedJobType.ID == 5)
+                {
+                    ShowCustomMessageBox("อุปกรณ์อยู่ในแผนซ่อมบำรุง กรณีที่อุปกรณ์นี้จะถูกทดแทนด้วยของใหม่\nกรุณาสิ้นสุดแผนซ่อมบำรุงก่อนทำการแจ้งซ่อม");
+                    return false;
+                }
+            }
             int selectedIndexEStatus = currentStatusComboBox.SelectedIndex;
             if (selectedIndexEStatus >= 0 && selectedIndexEStatus < equipmentStatusID.Count)
             {
@@ -559,28 +623,8 @@ namespace Equipment_Management.UIClass.Job
                 ShowCustomMessageBox("กรุณาระบุวันที่แจ้ง");
                 return false;
             }
-            int selectedIndexJobType = repairTypeComboBox.SelectedIndex;
-            if(selectedIndexJobType >= 0 && selectedIndexJobType < jobTypeID.Count)
-            {
-                int selectedJobTypeID = jobTypeID[selectedIndexJobType];
-                selectedJobType = new JobType(selectedJobTypeID);
-
-                SaveEquipmentPhoto();
-                SaveCreatedJobDocument();
-            }
-            else
-            {
-                ShowCustomMessageBox("กรุณาเลือก ประเภทการซ่อม");
-                return false;
-            }
-            if(JEq.EStatusObj.ID == 6 || JEq.EStatusObj.ID == 7)
-            {
-                if(selectedJobType.ID == 1 || selectedJobType.ID == 2 || selectedJobType.ID == 5)
-                {
-                    ShowCustomMessageBox("อุปกรณ์อยู่ในแผนซ่อมบำรุง กรณีที่อุปกรณ์นี้จะถูกทดแทนด้วยของใหม่\nกรุณาสิ้นสุดแผนซ่อมบำรุงก่อนทำการแจ้งซ่อม");
-                    return false;
-                }
-            }
+            SaveEquipmentPhoto();
+            SaveCreatedJobDocument();
             return true;
         }
 
@@ -603,11 +647,13 @@ namespace Equipment_Management.UIClass.Job
                     }
                     ShowCustomMessageBox("บันทึกการแจ้งซ่อมเสร็จสมบูรณ์");
                     Global.selectedEquipmentInJob = null;
-                    updateCreatedJobDatagridView?.Invoke(this, EventArgs.Empty);
+                    UpdateGrid?.Invoke(this, EventArgs.Empty);
                     Close();
                 }
                 else
                 {
+                    Global.DeleteFileFromFtp(repairEquipmentPhotoPath);
+                    Global.DeleteFileFromFtp(createdJobDocumentPath);
                     ShowCustomMessageBox("ล้มเหลวในการบันทึกข้อมูลลงใน Database");
                 }
             }

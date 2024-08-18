@@ -277,15 +277,19 @@ namespace Equipment_Management.UIClass.InstallationSource
         {
             if (!string.IsNullOrEmpty(equipmentPhotoPath))
             {
-                Global.SaveFileToServer(equipmentPhotoPath, "EquipmentPhoto");
-                equipmentPhotoPath = Global.TargetFilePath;
+                Global.Directory = "EquipmentPhoto";
+                Global.SaveFileToServer(equipmentPhotoPath);
+                Global.Directory = null;
+               equipmentPhotoPath = Global.TargetFilePath;
             }
         }
         private void SaveInstallationPlacePhoto()
         {
             if (!string.IsNullOrEmpty(installationPlacePhotoPath))
             {
-                Global.SaveFileToServer(installationPlacePhotoPath, "InstallationPlacePhoto");
+                Global.Directory = "InstallationPlacePhoto";
+                Global.SaveFileToServer(installationPlacePhotoPath);
+                Global.Directory = null;
                 installationPlacePhotoPath = Global.TargetFilePath;
             }
         }
@@ -293,7 +297,9 @@ namespace Equipment_Management.UIClass.InstallationSource
         {
             if (!string.IsNullOrEmpty(acquisitionDocumentPath))
             {
-                Global.SaveFileToServer(acquisitionDocumentPath, "AcquisitionDocument");
+                Global.Directory = "AcquisitionDocument";
+                Global.SaveFileToServer(acquisitionDocumentPath);
+                Global.Directory = null;
                 acquisitionDocumentPath = Global.TargetFilePath;
             }
         }
@@ -411,6 +417,9 @@ namespace Equipment_Management.UIClass.InstallationSource
                 }
                 else
                 {
+                    Global.DeleteFileFromFtp(equipmentPhotoPath);
+                    Global.DeleteFileFromFtp(installationPlacePhotoPath);
+                    Global.DeleteFileFromFtp(acquisitionDocumentPath);
                     ShowCustomMessageBox("ขั้นตอนการสร้างข้อมูลลงใน ฐานข้อมูลเกิดความผิดพลาด กรุณาติดต่อผู้ดูแล");
                 }
             }

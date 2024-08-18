@@ -59,6 +59,59 @@ namespace Equipment_Management.ObjectClass
             this.ptype = ptype;
         }
 
+        public bool Create()
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string insert = "INSERT INTO plantype (ID, PType) VALUES (NULL, @ptype)";
+                    cmd.CommandText = insert;
+                    cmd.Parameters.AddWithValue("@ptype", ptype);
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
+        public bool Remove()
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string delete = "DELETE FROM plantype WHERE ID = @id";
+                    cmd.CommandText = delete;
+                    cmd.Parameters.AddWithValue("@id", id.ToString());
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
+
         public static List<PlanType> GetPlanTypeList()
         {
             MySqlConnection conn = null;
@@ -76,9 +129,9 @@ namespace Equipment_Management.ObjectClass
                         while (reader.Read())
                         {
                             int id = Convert.ToInt32(reader["ID"]);
-                            string acc = reader["Accquire"].ToString();
-                            PlanType acq = new PlanType(id, acc);
-                            ptList.Add(acq);
+                            string ptype = reader["PType"].ToString();
+                            PlanType pt = new PlanType(id, ptype);
+                            ptList.Add(pt);
                         }
                     }
                 }

@@ -15,17 +15,25 @@ namespace Equipment_Management.GlobalVariable
         public static int EStatusID { get; set; }
         public static Equipment equipmentGlobal { get; set; }
         public static AllEquipmentView selectedEquipmentInJob { get; set; }
+        public static AllPlanView selectedEquipmentInPlan { get; set; }
+        public static AllEquipmentForCreatedJobView AllEquipmentForCreatedJobView { get; set; }
         public static string TargetFilePath { get; set; }
         private static Timer deletionTimer;
 
         public static string user = "TEST"; // equipment-managementblc5
         public static string pass = "Meg@lomaniac001";
+        public static string Directory { get; set; }
+        private static string GetFtpServerUrl()
+        {
+            return $"ftp://192.168.1.116/TESTSERVER/{Directory}/";
+        }
+
         //Uploading photo & PDF into Server ------------------------------------------------------------------------------------------
-        public static void SaveFileToServer(string filepath, string directory)
+        public static void SaveFileToServer(string filepath)
         {
             if (!string.IsNullOrEmpty(filepath))
             {
-                string ftpServerUrl = $"ftp://192.168.1.116/TESTSERVER/{directory}/"; // change ip for local use
+                string ftpServerUrl = GetFtpServerUrl();
                 string ftpUsername = user;
                 string ftpPassword = pass;
 
@@ -115,6 +123,44 @@ namespace Equipment_Management.GlobalVariable
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
             {
                 Console.WriteLine($"Upload File Complete, status {response.StatusDescription}");
+            }
+        }
+        public static void DeleteFileFromFtp(string ftpFilePath)
+        {
+            string ftpServerUrl = GetFtpServerUrl();
+            // Construct the full URI of the file to be deleted
+            string targetUri = new Uri(new Uri(ftpServerUrl), ftpFilePath).ToString();
+
+            // Create an FtpWebRequest to delete the file
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(targetUri);
+            request.Method = WebRequestMethods.Ftp.DeleteFile;
+            request.Credentials = new NetworkCredential(user, pass);
+            request.UseBinary = true;
+            request.UsePassive = true;
+            request.KeepAlive = false;
+
+            try
+            {
+                // Get the response from the server
+                using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+                {
+                    Console.WriteLine($"Delete File Complete, status {response.StatusDescription}");
+                }
+            }
+            catch (WebException ex)
+            {
+                // Handle any errors that occur during the delete process
+                if (ex.Response != null)
+                {
+                    using (FtpWebResponse ftpResponse = (FtpWebResponse)ex.Response)
+                    {
+                        Console.WriteLine($"Error: {ftpResponse.StatusDescription}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
             }
         }
         //Reading photo into Server --------------------------------------------------------------------------------------------

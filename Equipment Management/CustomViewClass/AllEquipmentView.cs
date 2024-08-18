@@ -68,6 +68,31 @@ namespace Equipment_Management.CustomViewClass
             }
             return equipmentListView.OrderBy(e => e.EStatusID).ToList();
         }
+        public static List<AllEquipmentView> GetAllEquipmentForPlanView()
+        {
+            List<AllEquipmentView> equipmentListView = new List<AllEquipmentView>();
+            foreach (Equipment e in Equipment.GetEquipmentList())
+            {
+                if(e.EStatusObj.ID == 1 || e.EStatusObj.ID == 2)
+                {
+                    AllEquipmentView view = new AllEquipmentView
+                    {
+                        ID = e.ID,
+                        Name = e.Name,
+                        Serial = e.Serial,
+                        EDetails = e.EDetails,
+                        EStatus = e.EStatusObj.EStatus,
+                        EStatusID = e.EStatusObj.ID,
+                        InsDetails = e.InstallationDetails,
+                        ETypeID = e.ETypeObj.ID,
+                        EquipmentPhoto = e.EPhotoPath,
+                        InstallEPhoto = e.OPlacePhotoPath
+                    };
+                    equipmentListView.Add(view);
+                }
+            }
+            return equipmentListView.OrderBy(e => e.EStatusID).ToList();
+        }
         public static List<AllEquipmentView> GetJobEquipmentView()
         {
             List<AllEquipmentView> equipmentListView = new List<AllEquipmentView>();
