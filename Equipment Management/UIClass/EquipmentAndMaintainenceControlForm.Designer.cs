@@ -352,6 +352,7 @@
             this.planProcessingButton.TabIndex = 13;
             this.planProcessingButton.Text = "ดำเนินการตามแผน";
             this.planProcessingButton.UseVisualStyleBackColor = true;
+            this.planProcessingButton.Click += new System.EventHandler(this.planProcessingButton_Click);
             // 
             // currentMaintainencePlanDatagridview
             // 

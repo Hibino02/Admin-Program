@@ -224,6 +224,12 @@
     <Compile Include="UIClass\Plan\EditPlanForm.Designer.cs">
       <DependentUpon>EditPlanForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIClass\Plan\PlanProcessingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Plan\PlanProcessingForm.Designer.cs">
+      <DependentUpon>PlanProcessingForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CustomWindowComponents\CustomMessageBox.resx">
       <DependentUpon>CustomMessageBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -289,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIClass\Plan\EditPlanForm.resx">
       <DependentUpon>EditPlanForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Plan\PlanProcessingForm.resx">
+      <DependentUpon>PlanProcessingForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

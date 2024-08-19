@@ -7,6 +7,7 @@ using Equipment_Management.UIClass.CreateWindowComponent;
 using System.IO;
 using Equipment_Management.CustomWindowComponents;
 using Equipment_Management.GlobalVariable;
+using System.Linq;
 
 namespace Equipment_Management.UIClass.InstallationSource
 {
@@ -460,6 +461,44 @@ namespace Equipment_Management.UIClass.InstallationSource
         private void invoiceLinkLabel_MouseLeave(object sender, EventArgs e)
         {
             invoiceTooltip.Hide(invoiceLinkLabel);
+        }
+
+        private void choseEquipmentTypeCombobox_TextChanged(object sender, EventArgs e)
+        {
+            // Temporarily unsubscribe from the TextChanged event to avoid recursion
+            choseEquipmentTypeCombobox.TextChanged -= choseEquipmentTypeCombobox_TextChanged;
+
+            string typedText = choseEquipmentTypeCombobox.Text;
+            int currentCaretPosition = choseEquipmentTypeCombobox.SelectionStart;
+
+            // Filter items that start with the typed text
+            var matchingItems = choseEquipmentTypeCombobox.Items.Cast<string>()
+                                         .Where(item => item.StartsWith(typedText, StringComparison.OrdinalIgnoreCase))
+                                         .ToList();
+
+            // Only suggest and highlight if the user is typing and a match is found
+            if (matchingItems.Any() && !string.IsNullOrEmpty(typedText))
+            {
+                string selectedItem = matchingItems.First();
+
+                // Update the text and highlight the matching part only if the typed text is less than the selected item
+                if (typedText.Length < selectedItem.Length && selectedItem.StartsWith(typedText, StringComparison.OrdinalIgnoreCase))
+                {
+                    choseEquipmentTypeCombobox.Text = selectedItem;
+                    choseEquipmentTypeCombobox.SelectionStart = currentCaretPosition;
+                    choseEquipmentTypeCombobox.SelectionLength = selectedItem.Length - typedText.Length;
+                }
+            }
+            else
+            {
+                // If no match found or text is empty, keep the typed text
+                choseEquipmentTypeCombobox.Text = typedText;
+                choseEquipmentTypeCombobox.SelectionStart = currentCaretPosition;
+                choseEquipmentTypeCombobox.SelectionLength = 0;
+            }
+
+            // Re-subscribe to the TextChanged event
+            choseEquipmentTypeCombobox.TextChanged += choseEquipmentTypeCombobox_TextChanged;
         }
     }
 }

@@ -331,7 +331,7 @@ WHERE j.ID = @jid;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO Job (ID, JDetails, CasePhoto, Reporter, RDate, JTypeReason, Decider, DDate, Approve, AppReason, Approver, ADate, JDocument, EID, JTypeID, REID, VendName, VendDetails, RepairDetails, WorkPermit, Cost, Contract, StartDate, FinishDate, FinishPhoto, FinishDocument, Acceptor, JobStatus) VALUES (NULL, @jedtails, @casephoto, @reporter, @rdate, @jtypereason, @decider, @ddate, @approve ,@appreason ,@approver ,@adate ,@jdocument ,@eid ,@jtypeid ,@reid ,@vendname, @venddetails, @repairdetails, @workpermit, @cost, @contract, @startdate, @finishdate, @finishphoto, @finishdocument, @acceptor, @jobstatus)";
+                    string insert = "INSERT INTO job (ID, JDetails, CasePhoto, Reporter, RDate, JTypeReason, Decider, DDate, Approve, AppReason, Approver, ADate, JDocument, EID, JTypeID, REID, VendName, VendDetails, RepairDetails, WorkPermit, Cost, Contract, StartDate, FinishDate, FinishPhoto, FinishDocument, Acceptor, JobStatus) VALUES (NULL, @jedtails, @casephoto, @reporter, @rdate, @jtypereason, @decider, @ddate, @approve ,@appreason ,@approver ,@adate ,@jdocument ,@eid ,@jtypeid ,@reid ,@vendname, @venddetails, @repairdetails, @workpermit, @cost, @contract, @startdate, @finishdate, @finishphoto, @finishdocument, @acceptor, @jobstatus)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@jedtails", jdetails);
                     cmd.Parameters.AddWithValue("@casephoto", casephoto);

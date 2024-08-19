@@ -143,5 +143,32 @@ namespace Equipment_Management.CustomViewClass
             }
             return equipmentListView;
         }
+        public static List<AllEquipmentView> GetPlanProcessReplaceEquipmentView()
+        {
+            List<AllEquipmentView> List = new List<AllEquipmentView>();
+            foreach(Equipment e in Equipment.GetEquipmentList())
+            {
+                if(e.ID != GlobalVariable.Global.selectedEquipmentInPlan.EID)
+                {
+                    if (e.EStatusObj.ID == 1 || e.EStatusObj.ID == 7)
+                    {
+                        AllEquipmentView view = new AllEquipmentView
+                        {
+                            ID = e.ID,
+                            Name = e.Name,
+                            Serial = e.Serial,
+                            EStatusID = e.EStatusObj.ID,
+                            EStatus = e.EStatusObj.EStatus,
+                            EquipmentPhoto = e.EPhotoPath,
+                            InstallEPhoto = e.OPlacePhotoPath,
+                            InsDetails = e.InstallationDetails,
+                            ETypeID = e.ETypeObj.ID
+                        };
+                        List.Add(view);
+                    }
+                }
+            }
+            return List;
+        }
     }
 }

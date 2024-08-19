@@ -27,6 +27,7 @@ namespace Equipment_Management.UIClass
         private removeJobProcessing removejobprocessing;
         private CreatePlanForm createPlan;
         private EditPlanForm editPlan;
+        private PlanProcessingForm planProcessing;
 
         private PictureBox casePicturebox;
         private PictureBox planPicturebox;
@@ -573,6 +574,22 @@ namespace Equipment_Management.UIClass
                 editPlan.Owner = main;
                 editPlan.UpdateGrid += OnUpdateCreatedPlan;
                 editPlan.ShowDialog();
+            }
+        }
+        //Plan Processing
+        private void planProcessingButton_Click(object sender, EventArgs e)
+        {
+            Global.selectedEquipmentInPlan = null;
+            DataGridViewRow selectedRow = currentMaintainencePlanDatagridview.CurrentRow;
+            if(selectedRow != null)
+            {
+                AllPlanView selectedPlan = (AllPlanView)selectedRow.DataBoundItem;
+                Global.selectedEquipmentInPlan = selectedPlan;
+                planProcessing = new PlanProcessingForm();
+                planProcessing.Owner = main;
+                planProcessing.UpdateGrid += OnUpdateCreatedPlan;
+                //planProcessing.UpdateGrid += OnUpdateProcessedPlan;
+                planProcessing.ShowDialog();
             }
         }
         //Complete & Remove plan
