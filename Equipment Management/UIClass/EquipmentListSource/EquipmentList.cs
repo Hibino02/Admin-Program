@@ -10,6 +10,7 @@ using Equipment_Management.GlobalVariable;
 using Equipment_Management.CustomWindowComponents;
 using Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource;
 using Equipment_Management.UIClass.Job;
+using Library.Forms;
 
 namespace Equipment_Management.UIClass.EquipmentListSource
 {
@@ -100,8 +101,8 @@ namespace Equipment_Management.UIClass.EquipmentListSource
                     .Where(eq => eq.ETypeID == currentFilterID)
                     .ToList();
             }
-
-            equipmentListBindingSource.DataSource = equipmentFilteredList;
+            SortableBindingList<AllEquipmentView> sortableList = new SortableBindingList<AllEquipmentView>(equipmentFilteredList);
+            equipmentListBindingSource.DataSource = sortableList;
             EquipmentListDataGridView.DataSource = equipmentListBindingSource;
 
             FormatEquipmentListDataGridView();
@@ -109,78 +110,85 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         //Setting Datagridview looks
         private void FormatEquipmentListDataGridView()
         {
-            if (EquipmentListDataGridView.Columns["ID"] != null)
+            var Columns = EquipmentListDataGridView.Columns;
+            if (Columns["ID"] != null)
             {
-                EquipmentListDataGridView.Columns["ID"].Visible = false;
+                Columns["ID"].Visible = false;
+                Columns["ID"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["Name"] != null)
+            if (Columns["Name"] != null)
             {
-                var photoColumn = EquipmentListDataGridView.Columns["Name"];
-                photoColumn.HeaderText = "ชื่อเรียกอุปกรณ์";
-                photoColumn.Width = 200;
+                Columns["Name"].HeaderText = "ชื่อเรียกอุปกรณ์";
+                Columns["Name"].Width = 200;
+                Columns["Name"].SortMode = DataGridViewColumnSortMode.Automatic;
             }
-            if (EquipmentListDataGridView.Columns["Serial"] != null)
+            if (Columns["Serial"] != null)
             {
-                EquipmentListDataGridView.Columns["Serial"].HeaderText = "ชื่อทางบัญชี";
+                Columns["Serial"].HeaderText = "ชื่อทางบัญชี";
+                Columns["Serial"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["EDetails"] != null)
+            if (Columns["EDetails"] != null)
             {
-                var photoColumn = EquipmentListDataGridView.Columns["EDetails"];
-                photoColumn.HeaderText = "รายละเอียดอุปกรณ์";
-                photoColumn.Width = 170;
+                Columns["EDetails"].HeaderText = "รายละเอียดอุปกรณ์";
+                Columns["EDetails"].Width = 170;
+                Columns["EDetails"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["InsDate"] != null)
+            if (Columns["InsDate"] != null)
             {
-                EquipmentListDataGridView.Columns["InsDate"].HeaderText = "วันที่เริ่มใช้งาน";
-                EquipmentListDataGridView.Columns["InsDate"].DefaultCellStyle.Format = "MMM dd, yyy";
+                Columns["InsDate"].HeaderText = "วันที่เริ่มใช้งาน";
+                Columns["InsDate"].DefaultCellStyle.Format = "MMM dd, yyy";
+                Columns["InsDate"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["EType"] != null)
+            if (Columns["EType"] != null)
             {
-                var photoColumn = EquipmentListDataGridView.Columns["EType"];
-                photoColumn.HeaderText = "ประเภทอุปกรณ์";
-                photoColumn.Width = 250;
+                Columns["EType"].HeaderText = "ประเภทอุปกรณ์";
+                Columns["EType"].Width = 250;
+                Columns["EType"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["EOwner"] != null)
+            if (Columns["EOwner"] != null)
             {
-                var photoColumn = EquipmentListDataGridView.Columns["EOwner"];
-                photoColumn.HeaderText = "เจ้าของอุปกรณ์";
-                photoColumn.Width = 70;
+                Columns["EOwner"].HeaderText = "เจ้าของ";
+                Columns["EOwner"].Width = 70;
+                Columns["EOwner"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["EStatus"] != null)
+            if (Columns["EStatus"] != null)
             {
-                var photoColumn = EquipmentListDataGridView.Columns["EStatus"];
-                photoColumn.HeaderText = "สถานะปัจจุบัน";
-                photoColumn.Width = 100;
+                Columns["EStatus"].HeaderText = "สถานะปัจจุบัน";
+                Columns["EStatus"].Width = 100;
+                Columns["EStatus"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["InsDetails"] != null)
+            if (Columns["InsDetails"] != null)
             {
-                var photoColumn = EquipmentListDataGridView.Columns["InsDetails"];
-                photoColumn.HeaderText = "รายละเอียดจุดที่ติดตั้ง";
-                photoColumn.Width = 250;
+                Columns["InsDetails"].HeaderText = "รายละเอียดจุดที่ติดตั้ง";
+                Columns["InsDetails"].Width = 250;
+                Columns["InsDetails"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["ETypeID"] != null)
+            if (Columns["ETypeID"] != null)
             {
-                EquipmentListDataGridView.Columns["ETypeID"].Visible = false;
+                Columns["ETypeID"].Visible = false;
+                Columns["ETypeID"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["EStatusID"] != null)
+            if (Columns["EStatusID"] != null)
             {
-                EquipmentListDataGridView.Columns["EStatusID"].Visible = false;
+                Columns["EStatusID"].Visible = false;
+                Columns["EStatusID"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["InstallEPhoto"] != null)
+            if (Columns["InstallEPhoto"] != null)
             {
-                var photoColumn = EquipmentListDataGridView.Columns["InstallEPhoto"];
-                photoColumn.HeaderText = "ไฟล์ภาพจุดติดตั้งอุปกรณ์";
-                photoColumn.Width = 100;
+                Columns["InstallEPhoto"].HeaderText = "จุดติดตั้ง";
+                Columns["InstallEPhoto"].Width = 100;
+                Columns["InstallEPhoto"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["EquipmentPhoto"] != null)
+            if (Columns["EquipmentPhoto"] != null)
             {
-                var photoColumn = EquipmentListDataGridView.Columns["EquipmentPhoto"];
-                photoColumn.HeaderText = "ไฟล์ภาพอุปกรณ์";
-                photoColumn.Width = 100;
+                Columns["EquipmentPhoto"].HeaderText = "ภาพอุปกรณ์";
+                Columns["EquipmentPhoto"].Width = 100;
+                Columns["EquipmentPhoto"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            if (EquipmentListDataGridView.Columns["Replacement"] != null)
+            if (Columns["Replacement"] != null)
             {
-                EquipmentListDataGridView.Columns["Replacement"].Visible = false;
+                Columns["Replacement"].Visible = false;
+                Columns["Replacement"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
         }
 
@@ -402,6 +410,13 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         private void EquipmentListDataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
             pictureBox.Visible = false;
+        }
+        //Event to export Excell
+        private void exportToExcelbutton_Click(object sender, EventArgs e)
+        {
+            var export = new ExportExcel(EquipmentListDataGridView);
+
+            export.ExportToExcel();
         }
     }
 }

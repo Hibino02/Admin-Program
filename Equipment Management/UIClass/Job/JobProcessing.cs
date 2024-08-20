@@ -119,11 +119,11 @@ namespace Equipment_Management.UIClass.Job
         {
             if(jobToProcess.JType.ID == 3 || jobToProcess.JType.ID == 4)
             {
-                buyGroupBox.Enabled = false;
+                buyGroupBox.Visible = false;
             }
             else
             {
-                repairGroupBox.Enabled = false;
+                repairGroupBox.Visible = false;
             }
         }
         //Buy rent transfer part ---------------------------------------------------------------------------------
@@ -548,6 +548,8 @@ namespace Equipment_Management.UIClass.Job
                     jobToProcess.JobStatus = true;
                     if (jobToProcess.Change())
                     {
+                        JREq.Replacement = false;
+                        JREq.Change();
                         ShowCustomMessageBox("งานแจ้งซ่อมเสร็จสิ้น");
                         UpdateGrid?.Invoke(this, EventArgs.Empty);
                         Close();

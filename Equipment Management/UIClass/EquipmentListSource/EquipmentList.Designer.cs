@@ -37,6 +37,7 @@
             this.equipmentFilterListLabel = new System.Windows.Forms.Label();
             this.equipmentListSearchTextBox = new System.Windows.Forms.TextBox();
             this.searchEquipmentLabel = new System.Windows.Forms.Label();
+            this.exportToExcelbutton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.EquipmentListDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,7 +63,7 @@
             // 
             this.jobHistoryButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.jobHistoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.jobHistoryButton.Location = new System.Drawing.Point(1317, 14);
+            this.jobHistoryButton.Location = new System.Drawing.Point(1180, 15);
             this.jobHistoryButton.Name = "jobHistoryButton";
             this.jobHistoryButton.Size = new System.Drawing.Size(135, 50);
             this.jobHistoryButton.TabIndex = 1;
@@ -74,7 +75,7 @@
             // 
             this.removeEquipmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeEquipmentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.removeEquipmentButton.Location = new System.Drawing.Point(1176, 14);
+            this.removeEquipmentButton.Location = new System.Drawing.Point(1039, 15);
             this.removeEquipmentButton.Name = "removeEquipmentButton";
             this.removeEquipmentButton.Size = new System.Drawing.Size(135, 50);
             this.removeEquipmentButton.TabIndex = 2;
@@ -86,7 +87,7 @@
             // 
             this.writeOff_TransferButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.writeOff_TransferButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeOff_TransferButton.Location = new System.Drawing.Point(1057, 14);
+            this.writeOff_TransferButton.Location = new System.Drawing.Point(920, 15);
             this.writeOff_TransferButton.Name = "writeOff_TransferButton";
             this.writeOff_TransferButton.Size = new System.Drawing.Size(113, 50);
             this.writeOff_TransferButton.TabIndex = 3;
@@ -98,7 +99,7 @@
             // 
             this.editEquipmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.editEquipmentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editEquipmentButton.Location = new System.Drawing.Point(916, 14);
+            this.editEquipmentButton.Location = new System.Drawing.Point(779, 15);
             this.editEquipmentButton.Name = "editEquipmentButton";
             this.editEquipmentButton.Size = new System.Drawing.Size(135, 50);
             this.editEquipmentButton.TabIndex = 4;
@@ -134,7 +135,7 @@
             this.equipmentListSearchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.equipmentListSearchTextBox.Location = new System.Drawing.Point(457, 35);
             this.equipmentListSearchTextBox.Name = "equipmentListSearchTextBox";
-            this.equipmentListSearchTextBox.Size = new System.Drawing.Size(441, 29);
+            this.equipmentListSearchTextBox.Size = new System.Drawing.Size(316, 29);
             this.equipmentListSearchTextBox.TabIndex = 7;
             this.equipmentListSearchTextBox.TextChanged += new System.EventHandler(this.equipmentListSearchTextBox_TextChanged);
             // 
@@ -148,11 +149,24 @@
             this.searchEquipmentLabel.TabIndex = 8;
             this.searchEquipmentLabel.Text = "พิมพ์รายละเอียดที่เกี่ยวข้อง";
             // 
+            // exportToExcelbutton
+            // 
+            this.exportToExcelbutton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.exportToExcelbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exportToExcelbutton.Location = new System.Drawing.Point(1321, 15);
+            this.exportToExcelbutton.Name = "exportToExcelbutton";
+            this.exportToExcelbutton.Size = new System.Drawing.Size(135, 50);
+            this.exportToExcelbutton.TabIndex = 9;
+            this.exportToExcelbutton.Text = "Export To Excel";
+            this.exportToExcelbutton.UseVisualStyleBackColor = true;
+            this.exportToExcelbutton.Click += new System.EventHandler(this.exportToExcelbutton_Click);
+            // 
             // EquipmentList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1443, 781);
+            this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.Controls.Add(this.exportToExcelbutton);
             this.Controls.Add(this.searchEquipmentLabel);
             this.Controls.Add(this.equipmentListSearchTextBox);
             this.Controls.Add(this.equipmentFilterListLabel);
@@ -185,5 +199,6 @@
         private System.Windows.Forms.Label equipmentFilterListLabel;
         private System.Windows.Forms.TextBox equipmentListSearchTextBox;
         private System.Windows.Forms.Label searchEquipmentLabel;
+        private System.Windows.Forms.Button exportToExcelbutton;
     }
 }

@@ -141,7 +141,14 @@ namespace Equipment_Management.UIClass.Job
             if (eJobHistoryDataGridView.Columns["FinPhoto"] != null)
             {
                 var customColumn = eJobHistoryDataGridView.Columns["FinPhoto"];
-                customColumn.HeaderText = "รูปหลังซ่อมเสร็จ";
+                customColumn.HeaderText = "รูปหลังซ่อม";
+                customColumn.Width = 80;
+            }
+            if (eJobHistoryDataGridView.Columns["REPhoto"] != null)
+            {
+                var customColumn = eJobHistoryDataGridView.Columns["REPhoto"];
+                customColumn.HeaderText = "รูปของใหม่";
+                customColumn.Width = 80;
             }
         }
         //Event to show case photo
@@ -166,7 +173,7 @@ namespace Equipment_Management.UIClass.Job
             if (e.RowIndex >= 0)
             {
                 string columnName = eJobHistoryDataGridView.Columns[e.ColumnIndex].Name;
-                if (columnName == "FinPhoto")
+                if (columnName == "FinPhoto"|| columnName == "REPhoto")
                 {
                     string imagePath = eJobHistoryDataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
                     if (string.IsNullOrEmpty(imagePath))

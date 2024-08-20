@@ -56,6 +56,11 @@
       <HintPath>..\packages\K4os.Hash.xxHash.1.0.6\lib\net45\K4os.Hash.xxHash.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=8.0.32.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.32.1\lib\net452\MySql.Data.dll</HintPath>
       <Private>True</Private>
@@ -100,8 +105,10 @@
     <Compile Include="CustomWindowComponents\CustomMessageBox.Designer.cs">
       <DependentUpon>CustomMessageBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalVariable\ExportExcell.cs" />
     <Compile Include="GlobalVariable\Global.cs" />
     <Compile Include="GlobalVariable\ImageLoader.cs" />
+    <Compile Include="GlobalVariable\SortedBindingList.cs" />
     <Compile Include="ObjectClass\Acquisition.cs" />
     <Compile Include="ObjectClass\Equipment.cs" />
     <Compile Include="ObjectClass\EquipmentOwner.cs" />

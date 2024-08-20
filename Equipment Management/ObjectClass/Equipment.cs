@@ -112,7 +112,7 @@ WHERE e.ID = @id;";
 
                             int? basisid = reader["RentalBasisID"] != DBNull.Value ? Convert.ToInt32(reader["RentalBasisID"]) : (int?)null;
                             string basis = reader["Basis"] != DBNull.Value ? reader["Basis"].ToString() : null;
-                            RentalBasis rent = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
+                            erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
 
                             installationDetails = reader["InstallationDetails"].ToString();
                         }

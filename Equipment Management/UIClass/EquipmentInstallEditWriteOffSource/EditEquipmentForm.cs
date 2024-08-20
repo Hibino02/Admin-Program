@@ -159,7 +159,10 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
             equipmentInitialStatusComboBox.Text = edit.EStatusObj.EStatus;
             replacementCheckBox.Checked = edit.Replacement;
             priceTextBox.Text = edit.Price.ToString();
-            rentalBasisCombobox.Text = edit.ERentalBasis?.Basis??string.Empty;
+            if(edit.ERentalBasis != null && edit.ERentalBasis.ID > -1)
+            {
+                rentalBasisCombobox.Text = edit.ERentalBasis.Basis;
+            }
             installationDateTimePicker.Value = edit.InsDate;
             if(!string.IsNullOrEmpty(edit.EPhotoPath))
             {

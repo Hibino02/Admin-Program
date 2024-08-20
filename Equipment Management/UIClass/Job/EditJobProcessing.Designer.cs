@@ -44,13 +44,6 @@
             this.vendorDetailsLabel = new System.Windows.Forms.Label();
             this.reporterNameLabel = new System.Windows.Forms.Label();
             this.vendorNameTextBox = new System.Windows.Forms.TextBox();
-            this.buyGroupBox = new System.Windows.Forms.GroupBox();
-            this.writeOffLinkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.writeOffButton = new System.Windows.Forms.Button();
-            this.equipmentSelecteddataGridView = new System.Windows.Forms.DataGridView();
-            this.selectedEquipmentLabel = new System.Windows.Forms.Label();
-            this.equipmentDisplaydataGridView = new System.Windows.Forms.DataGridView();
-            this.choseEquipmentLabel = new System.Windows.Forms.Label();
             this.JobEquipmentDetailsGroupBox = new System.Windows.Forms.GroupBox();
             this.aDateLabel = new System.Windows.Forms.Label();
             this.currentELabel = new System.Windows.Forms.Label();
@@ -66,9 +59,6 @@
             this.serialLabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.repairGroupBox.SuspendLayout();
-            this.buyGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.equipmentSelecteddataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.equipmentDisplaydataGridView)).BeginInit();
             this.JobEquipmentDetailsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fixEquipmentPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -250,96 +240,6 @@
             this.vendorNameTextBox.Size = new System.Drawing.Size(430, 29);
             this.vendorNameTextBox.TabIndex = 18;
             // 
-            // buyGroupBox
-            // 
-            this.buyGroupBox.Controls.Add(this.writeOffLinkLabel1);
-            this.buyGroupBox.Controls.Add(this.writeOffButton);
-            this.buyGroupBox.Controls.Add(this.equipmentSelecteddataGridView);
-            this.buyGroupBox.Controls.Add(this.selectedEquipmentLabel);
-            this.buyGroupBox.Controls.Add(this.equipmentDisplaydataGridView);
-            this.buyGroupBox.Controls.Add(this.choseEquipmentLabel);
-            this.buyGroupBox.Enabled = false;
-            this.buyGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buyGroupBox.Location = new System.Drawing.Point(659, 0);
-            this.buyGroupBox.Name = "buyGroupBox";
-            this.buyGroupBox.Size = new System.Drawing.Size(803, 364);
-            this.buyGroupBox.TabIndex = 55;
-            this.buyGroupBox.TabStop = false;
-            this.buyGroupBox.Text = "กลุ่มงานประเภท เช่า / ซื้อใหม่ / โอนย้าย เพื่อทดแทน";
-            // 
-            // writeOffLinkLabel1
-            // 
-            this.writeOffLinkLabel1.AutoSize = true;
-            this.writeOffLinkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeOffLinkLabel1.Location = new System.Drawing.Point(470, 328);
-            this.writeOffLinkLabel1.Name = "writeOffLinkLabel1";
-            this.writeOffLinkLabel1.Size = new System.Drawing.Size(70, 20);
-            this.writeOffLinkLabel1.TabIndex = 54;
-            this.writeOffLinkLabel1.TabStop = true;
-            this.writeOffLinkLabel1.Text = "ดูไฟล์แนบ";
-            // 
-            // writeOffButton
-            // 
-            this.writeOffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeOffButton.Location = new System.Drawing.Point(546, 321);
-            this.writeOffButton.Name = "writeOffButton";
-            this.writeOffButton.Size = new System.Drawing.Size(248, 34);
-            this.writeOffButton.TabIndex = 53;
-            this.writeOffButton.Text = "แนบเอกสาร Write-Off อุปกรณ์เก่า";
-            this.writeOffButton.UseVisualStyleBackColor = true;
-            // 
-            // equipmentSelecteddataGridView
-            // 
-            this.equipmentSelecteddataGridView.AllowUserToAddRows = false;
-            this.equipmentSelecteddataGridView.AllowUserToDeleteRows = false;
-            this.equipmentSelecteddataGridView.AllowUserToResizeColumns = false;
-            this.equipmentSelecteddataGridView.AllowUserToResizeRows = false;
-            this.equipmentSelecteddataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.equipmentSelecteddataGridView.Location = new System.Drawing.Point(6, 226);
-            this.equipmentSelecteddataGridView.MultiSelect = false;
-            this.equipmentSelecteddataGridView.Name = "equipmentSelecteddataGridView";
-            this.equipmentSelecteddataGridView.ReadOnly = true;
-            this.equipmentSelecteddataGridView.RowHeadersVisible = false;
-            this.equipmentSelecteddataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.equipmentSelecteddataGridView.Size = new System.Drawing.Size(788, 87);
-            this.equipmentSelecteddataGridView.TabIndex = 45;
-            // 
-            // selectedEquipmentLabel
-            // 
-            this.selectedEquipmentLabel.AutoSize = true;
-            this.selectedEquipmentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectedEquipmentLabel.Location = new System.Drawing.Point(11, 198);
-            this.selectedEquipmentLabel.Name = "selectedEquipmentLabel";
-            this.selectedEquipmentLabel.Size = new System.Drawing.Size(357, 25);
-            this.selectedEquipmentLabel.TabIndex = 44;
-            this.selectedEquipmentLabel.Text = "ยกเลิกเครื่องมือที่ถูกเลือก โดยการดับเบิ้ลคลิก";
-            // 
-            // equipmentDisplaydataGridView
-            // 
-            this.equipmentDisplaydataGridView.AllowUserToAddRows = false;
-            this.equipmentDisplaydataGridView.AllowUserToDeleteRows = false;
-            this.equipmentDisplaydataGridView.AllowUserToResizeColumns = false;
-            this.equipmentDisplaydataGridView.AllowUserToResizeRows = false;
-            this.equipmentDisplaydataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.equipmentDisplaydataGridView.Location = new System.Drawing.Point(8, 50);
-            this.equipmentDisplaydataGridView.MultiSelect = false;
-            this.equipmentDisplaydataGridView.Name = "equipmentDisplaydataGridView";
-            this.equipmentDisplaydataGridView.ReadOnly = true;
-            this.equipmentDisplaydataGridView.RowHeadersVisible = false;
-            this.equipmentDisplaydataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.equipmentDisplaydataGridView.Size = new System.Drawing.Size(786, 117);
-            this.equipmentDisplaydataGridView.TabIndex = 2;
-            // 
-            // choseEquipmentLabel
-            // 
-            this.choseEquipmentLabel.AutoSize = true;
-            this.choseEquipmentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.choseEquipmentLabel.Location = new System.Drawing.Point(11, 22);
-            this.choseEquipmentLabel.Name = "choseEquipmentLabel";
-            this.choseEquipmentLabel.Size = new System.Drawing.Size(452, 25);
-            this.choseEquipmentLabel.TabIndex = 1;
-            this.choseEquipmentLabel.Text = "เลือกเครื่องมือ / อุปกรณ์ ที่มาทดแทน โดยการดับเบิ้ลคลิก";
-            // 
             // JobEquipmentDetailsGroupBox
             // 
             this.JobEquipmentDetailsGroupBox.Controls.Add(this.aDateLabel);
@@ -503,7 +403,6 @@
             this.Controls.Add(this.processDateTimePicker);
             this.Controls.Add(this.processDateLabel);
             this.Controls.Add(this.repairGroupBox);
-            this.Controls.Add(this.buyGroupBox);
             this.Controls.Add(this.JobEquipmentDetailsGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -513,10 +412,6 @@
             this.Text = "แก้ใขงานแจ้งซ่อมที่กำลังดำเนินการ";
             this.repairGroupBox.ResumeLayout(false);
             this.repairGroupBox.PerformLayout();
-            this.buyGroupBox.ResumeLayout(false);
-            this.buyGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.equipmentSelecteddataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.equipmentDisplaydataGridView)).EndInit();
             this.JobEquipmentDetailsGroupBox.ResumeLayout(false);
             this.JobEquipmentDetailsGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fixEquipmentPictureBox)).EndInit();
@@ -543,13 +438,6 @@
         private System.Windows.Forms.Label vendorDetailsLabel;
         private System.Windows.Forms.Label reporterNameLabel;
         private System.Windows.Forms.TextBox vendorNameTextBox;
-        private System.Windows.Forms.GroupBox buyGroupBox;
-        private System.Windows.Forms.LinkLabel writeOffLinkLabel1;
-        private System.Windows.Forms.Button writeOffButton;
-        private System.Windows.Forms.DataGridView equipmentSelecteddataGridView;
-        private System.Windows.Forms.Label selectedEquipmentLabel;
-        private System.Windows.Forms.DataGridView equipmentDisplaydataGridView;
-        private System.Windows.Forms.Label choseEquipmentLabel;
         private System.Windows.Forms.GroupBox JobEquipmentDetailsGroupBox;
         private System.Windows.Forms.Label aDateLabel;
         private System.Windows.Forms.Label currentELabel;

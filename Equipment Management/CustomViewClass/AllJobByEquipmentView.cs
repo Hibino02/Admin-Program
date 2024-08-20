@@ -18,11 +18,13 @@ namespace Equipment_Management.CustomViewClass
         public bool JobStatus { get; set; }
         public string REName { get; set; }
         public string RESerial { get; set; }
+        public string REPhoto { get; set; }
         public string FinPhoto { get; set; }
 
         public AllJobByEquipmentView() { }
         public AllJobByEquipmentView(int id,int eid,string jtype,DateTime? sdate,DateTime? fdate,string vendorname,
-            string rename, string reserial,string cost,string casephoto,string finphoto,bool jobstatus,string jdetails)
+            string rename, string reserial,string cost,string casephoto,string finphoto,bool jobstatus,string jdetails
+            ,string rephoto)
         {
             this.ID = id;
             this.EID = eid;
@@ -36,6 +38,7 @@ namespace Equipment_Management.CustomViewClass
             this.JobStatus = jobstatus;
             this.REName = rename;
             this.RESerial = reserial;
+            this.REPhoto = rephoto;
             this.FinPhoto = finphoto;
         }
 
@@ -59,6 +62,7 @@ namespace Equipment_Management.CustomViewClass
                         Cost = j.Cost.ToString("F2"),
                         CasePhoto = j.CasePhoto,
                         FinPhoto = j.FinishPhoto,
+                        REPhoto = j.REq?.EPhotoPath,
                         JDetails = j.JDetails
                     };
                     allJobByEquipmentView.Add(view);

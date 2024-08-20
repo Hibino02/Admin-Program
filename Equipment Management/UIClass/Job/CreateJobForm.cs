@@ -216,8 +216,8 @@ namespace Equipment_Management.UIClass.Job
             if (equipmentDisplaydataGridView.Columns["EquipmentPhoto"] != null)
             {
                 var photoColumn = equipmentDisplaydataGridView.Columns["EquipmentPhoto"];
-                photoColumn.HeaderText = "ไฟล์ภาพอุปกรณ์";
-                photoColumn.Width = 100;
+                photoColumn.HeaderText = "ภาพอุปกรณ์";
+                photoColumn.Width = 80;
             }
             //No use columns
             if (equipmentDisplaydataGridView.Columns["EDetails"] != null)
@@ -238,7 +238,9 @@ namespace Equipment_Management.UIClass.Job
             }
             if (equipmentDisplaydataGridView.Columns["InsDetails"] != null)
             {
-                equipmentDisplaydataGridView.Columns["InsDetails"].Visible = false;
+                var column = equipmentDisplaydataGridView.Columns["InsDetails"];
+                column.HeaderText = "ที่ปฎิบัติงาน";
+                column.Width = 150;
             }
             if (equipmentDisplaydataGridView.Columns["InstallEPhoto"] != null)
             {
@@ -284,8 +286,8 @@ namespace Equipment_Management.UIClass.Job
             if (equipmentSelecteddataGridView.Columns["EquipmentPhoto"] != null)
             {
                 var photoColumn = equipmentSelecteddataGridView.Columns["EquipmentPhoto"];
-                photoColumn.HeaderText = "ไฟล์ภาพอุปกรณ์";
-                photoColumn.Width = 100;
+                photoColumn.HeaderText = "ภาพ";
+                photoColumn.Width = 80;
             }
             //No use columns
             if (equipmentSelecteddataGridView.Columns["EDetails"] != null)
@@ -306,7 +308,9 @@ namespace Equipment_Management.UIClass.Job
             }
             if (equipmentSelecteddataGridView.Columns["InsDetails"] != null)
             {
-                equipmentSelecteddataGridView.Columns["InsDetails"].Visible = false;
+                var column = equipmentSelecteddataGridView.Columns["InsDetails"];
+                column.HeaderText = "ที่ปฎิบัติงาน";
+                column.Width = 150;
             }
             if (equipmentSelecteddataGridView.Columns["InstallEPhoto"] != null)
             {
