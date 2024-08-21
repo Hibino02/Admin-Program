@@ -51,25 +51,22 @@
             this.workPermitbutton = new System.Windows.Forms.Button();
             this.pcontractbutton = new System.Windows.Forms.Button();
             this.pworkpermitlinkLabel = new System.Windows.Forms.LinkLabel();
-            this.contractlinkLabel = new System.Windows.Forms.LinkLabel();
             this.plabel = new System.Windows.Forms.Label();
             this.pricetextBox = new System.Windows.Forms.TextBox();
             this.eReplaceSeriallabel = new System.Windows.Forms.Label();
             this.eReplaceNamelabel = new System.Windows.Forms.Label();
             this.erslabel = new System.Windows.Forms.Label();
             this.ernlabel = new System.Windows.Forms.Label();
-            this.rEOPlacepictureBox = new System.Windows.Forms.PictureBox();
-            this.rEpictureBox = new System.Windows.Forms.PictureBox();
+            this.contractPictureBox = new System.Windows.Forms.PictureBox();
             this.pRecordbutton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.rEquipmentListDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentpictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rEOPlacepictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rEpictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // startDateTimePicker
             // 
-            this.startDateTimePicker.Location = new System.Drawing.Point(948, 466);
+            this.startDateTimePicker.Location = new System.Drawing.Point(928, 5);
             this.startDateTimePicker.Name = "startDateTimePicker";
             this.startDateTimePicker.Size = new System.Drawing.Size(209, 20);
             this.startDateTimePicker.TabIndex = 32;
@@ -78,7 +75,7 @@
             // 
             this.slabel.AutoSize = true;
             this.slabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.slabel.Location = new System.Drawing.Point(772, 463);
+            this.slabel.Location = new System.Drawing.Point(752, 2);
             this.slabel.Name = "slabel";
             this.slabel.Size = new System.Drawing.Size(170, 25);
             this.slabel.TabIndex = 31;
@@ -128,7 +125,7 @@
             // 
             this.vlabel.AutoSize = true;
             this.vlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vlabel.Location = new System.Drawing.Point(771, 502);
+            this.vlabel.Location = new System.Drawing.Point(751, 41);
             this.vlabel.Name = "vlabel";
             this.vlabel.Size = new System.Drawing.Size(121, 25);
             this.vlabel.TabIndex = 38;
@@ -139,7 +136,7 @@
             this.vNameTextBox.BackColor = System.Drawing.SystemColors.Info;
             this.vNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.vNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vNameTextBox.Location = new System.Drawing.Point(898, 500);
+            this.vNameTextBox.Location = new System.Drawing.Point(878, 39);
             this.vNameTextBox.Name = "vNameTextBox";
             this.vNameTextBox.Size = new System.Drawing.Size(324, 29);
             this.vNameTextBox.TabIndex = 39;
@@ -148,7 +145,7 @@
             // 
             this.vdlabel.AutoSize = true;
             this.vdlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vdlabel.Location = new System.Drawing.Point(779, 535);
+            this.vdlabel.Location = new System.Drawing.Point(759, 74);
             this.vdlabel.Name = "vdlabel";
             this.vdlabel.Size = new System.Drawing.Size(113, 25);
             this.vdlabel.TabIndex = 40;
@@ -167,7 +164,7 @@
             // vDetailsrichTextBox
             // 
             this.vDetailsrichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vDetailsrichTextBox.Location = new System.Drawing.Point(898, 535);
+            this.vDetailsrichTextBox.Location = new System.Drawing.Point(878, 74);
             this.vDetailsrichTextBox.Name = "vDetailsrichTextBox";
             this.vDetailsrichTextBox.Size = new System.Drawing.Size(324, 91);
             this.vDetailsrichTextBox.TabIndex = 42;
@@ -250,6 +247,7 @@
             this.rEquipmentListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.rEquipmentListDataGridView.Size = new System.Drawing.Size(750, 275);
             this.rEquipmentListDataGridView.TabIndex = 49;
+            this.rEquipmentListDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.rEquipmentListDataGridView_CellDoubleClick);
             // 
             // equipmentpictureBox
             // 
@@ -270,11 +268,12 @@
             this.removeSelectedbutton.TabIndex = 51;
             this.removeSelectedbutton.Text = "ยกเลิกอุปกรณ์ที่เลือก";
             this.removeSelectedbutton.UseVisualStyleBackColor = true;
+            this.removeSelectedbutton.Click += new System.EventHandler(this.removeSelectedbutton_Click);
             // 
             // workPermitbutton
             // 
             this.workPermitbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.workPermitbutton.Location = new System.Drawing.Point(1228, 500);
+            this.workPermitbutton.Location = new System.Drawing.Point(1223, 37);
             this.workPermitbutton.Name = "workPermitbutton";
             this.workPermitbutton.Size = new System.Drawing.Size(139, 33);
             this.workPermitbutton.TabIndex = 52;
@@ -284,40 +283,29 @@
             // pcontractbutton
             // 
             this.pcontractbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pcontractbutton.Location = new System.Drawing.Point(1228, 539);
+            this.pcontractbutton.Location = new System.Drawing.Point(878, 614);
             this.pcontractbutton.Name = "pcontractbutton";
             this.pcontractbutton.Size = new System.Drawing.Size(139, 33);
             this.pcontractbutton.TabIndex = 53;
-            this.pcontractbutton.Text = "เอกสารการจ้าง";
+            this.pcontractbutton.Text = "รูปเริ่มงาน";
             this.pcontractbutton.UseVisualStyleBackColor = true;
             // 
             // pworkpermitlinkLabel
             // 
             this.pworkpermitlinkLabel.AutoSize = true;
             this.pworkpermitlinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pworkpermitlinkLabel.Location = new System.Drawing.Point(1383, 506);
+            this.pworkpermitlinkLabel.Location = new System.Drawing.Point(1378, 43);
             this.pworkpermitlinkLabel.Name = "pworkpermitlinkLabel";
             this.pworkpermitlinkLabel.Size = new System.Drawing.Size(63, 20);
             this.pworkpermitlinkLabel.TabIndex = 54;
             this.pworkpermitlinkLabel.TabStop = true;
             this.pworkpermitlinkLabel.Text = "ดูเอกสาร";
             // 
-            // contractlinkLabel
-            // 
-            this.contractlinkLabel.AutoSize = true;
-            this.contractlinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contractlinkLabel.Location = new System.Drawing.Point(1383, 547);
-            this.contractlinkLabel.Name = "contractlinkLabel";
-            this.contractlinkLabel.Size = new System.Drawing.Size(63, 20);
-            this.contractlinkLabel.TabIndex = 55;
-            this.contractlinkLabel.TabStop = true;
-            this.contractlinkLabel.Text = "ดูเอกสาร";
-            // 
             // plabel
             // 
             this.plabel.AutoSize = true;
             this.plabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.plabel.Location = new System.Drawing.Point(828, 632);
+            this.plabel.Location = new System.Drawing.Point(808, 171);
             this.plabel.Name = "plabel";
             this.plabel.Size = new System.Drawing.Size(64, 25);
             this.plabel.TabIndex = 56;
@@ -328,7 +316,7 @@
             this.pricetextBox.BackColor = System.Drawing.SystemColors.Info;
             this.pricetextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pricetextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pricetextBox.Location = new System.Drawing.Point(898, 632);
+            this.pricetextBox.Location = new System.Drawing.Point(878, 171);
             this.pricetextBox.Name = "pricetextBox";
             this.pricetextBox.Size = new System.Drawing.Size(324, 29);
             this.pricetextBox.TabIndex = 57;
@@ -337,7 +325,7 @@
             // 
             this.eReplaceSeriallabel.AutoSize = true;
             this.eReplaceSeriallabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.eReplaceSeriallabel.Location = new System.Drawing.Point(910, 41);
+            this.eReplaceSeriallabel.Location = new System.Drawing.Point(939, 705);
             this.eReplaceSeriallabel.Name = "eReplaceSeriallabel";
             this.eReplaceSeriallabel.Size = new System.Drawing.Size(13, 18);
             this.eReplaceSeriallabel.TabIndex = 61;
@@ -347,7 +335,7 @@
             // 
             this.eReplaceNamelabel.AutoSize = true;
             this.eReplaceNamelabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.eReplaceNamelabel.Location = new System.Drawing.Point(910, 6);
+            this.eReplaceNamelabel.Location = new System.Drawing.Point(939, 670);
             this.eReplaceNamelabel.Name = "eReplaceNamelabel";
             this.eReplaceNamelabel.Size = new System.Drawing.Size(13, 18);
             this.eReplaceNamelabel.TabIndex = 60;
@@ -357,7 +345,7 @@
             // 
             this.erslabel.AutoSize = true;
             this.erslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.erslabel.Location = new System.Drawing.Point(799, 36);
+            this.erslabel.Location = new System.Drawing.Point(828, 700);
             this.erslabel.Name = "erslabel";
             this.erslabel.Size = new System.Drawing.Size(116, 25);
             this.erslabel.TabIndex = 59;
@@ -367,36 +355,26 @@
             // 
             this.ernlabel.AutoSize = true;
             this.ernlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ernlabel.Location = new System.Drawing.Point(735, 3);
+            this.ernlabel.Location = new System.Drawing.Point(764, 667);
             this.ernlabel.Name = "ernlabel";
             this.ernlabel.Size = new System.Drawing.Size(180, 25);
             this.ernlabel.TabIndex = 58;
             this.ernlabel.Text = "ชื่ออุปกรณ์ที่ทดแทน :";
             // 
-            // rEOPlacepictureBox
+            // contractPictureBox
             // 
-            this.rEOPlacepictureBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.rEOPlacepictureBox.Location = new System.Drawing.Point(1102, 67);
-            this.rEOPlacepictureBox.Name = "rEOPlacepictureBox";
-            this.rEOPlacepictureBox.Size = new System.Drawing.Size(356, 294);
-            this.rEOPlacepictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.rEOPlacepictureBox.TabIndex = 63;
-            this.rEOPlacepictureBox.TabStop = false;
-            // 
-            // rEpictureBox
-            // 
-            this.rEpictureBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.rEpictureBox.Location = new System.Drawing.Point(740, 67);
-            this.rEpictureBox.Name = "rEpictureBox";
-            this.rEpictureBox.Size = new System.Drawing.Size(356, 294);
-            this.rEpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.rEpictureBox.TabIndex = 64;
-            this.rEpictureBox.TabStop = false;
+            this.contractPictureBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.contractPictureBox.Location = new System.Drawing.Point(878, 206);
+            this.contractPictureBox.Name = "contractPictureBox";
+            this.contractPictureBox.Size = new System.Drawing.Size(574, 402);
+            this.contractPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.contractPictureBox.TabIndex = 63;
+            this.contractPictureBox.TabStop = false;
             // 
             // pRecordbutton
             // 
             this.pRecordbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pRecordbutton.Location = new System.Drawing.Point(1249, 632);
+            this.pRecordbutton.Location = new System.Drawing.Point(1261, 744);
             this.pRecordbutton.Name = "pRecordbutton";
             this.pRecordbutton.Size = new System.Drawing.Size(197, 33);
             this.pRecordbutton.TabIndex = 65;
@@ -409,15 +387,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1464, 781);
             this.Controls.Add(this.pRecordbutton);
-            this.Controls.Add(this.rEpictureBox);
-            this.Controls.Add(this.rEOPlacepictureBox);
+            this.Controls.Add(this.contractPictureBox);
             this.Controls.Add(this.eReplaceSeriallabel);
             this.Controls.Add(this.eReplaceNamelabel);
             this.Controls.Add(this.erslabel);
             this.Controls.Add(this.ernlabel);
             this.Controls.Add(this.pricetextBox);
             this.Controls.Add(this.plabel);
-            this.Controls.Add(this.contractlinkLabel);
             this.Controls.Add(this.pworkpermitlinkLabel);
             this.Controls.Add(this.pcontractbutton);
             this.Controls.Add(this.workPermitbutton);
@@ -448,8 +424,7 @@
             this.Text = "ดำเนินการตามแผน";
             ((System.ComponentModel.ISupportInitialize)(this.rEquipmentListDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentpictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rEOPlacepictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rEpictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -480,15 +455,13 @@
         private System.Windows.Forms.Button workPermitbutton;
         private System.Windows.Forms.Button pcontractbutton;
         private System.Windows.Forms.LinkLabel pworkpermitlinkLabel;
-        private System.Windows.Forms.LinkLabel contractlinkLabel;
         private System.Windows.Forms.Label plabel;
         private System.Windows.Forms.TextBox pricetextBox;
         private System.Windows.Forms.Label eReplaceSeriallabel;
         private System.Windows.Forms.Label eReplaceNamelabel;
         private System.Windows.Forms.Label erslabel;
         private System.Windows.Forms.Label ernlabel;
-        private System.Windows.Forms.PictureBox rEOPlacepictureBox;
-        private System.Windows.Forms.PictureBox rEpictureBox;
+        private System.Windows.Forms.PictureBox contractPictureBox;
         private System.Windows.Forms.Button pRecordbutton;
     }
 }

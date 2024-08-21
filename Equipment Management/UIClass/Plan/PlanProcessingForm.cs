@@ -215,5 +215,26 @@ namespace Equipment_Management.UIClass.Plan
                 rEquipmentListDataGridView.DataSource = equipmentListBindingsource;
             }
         }
+        //Event to add and remove replacement equipment
+        private void rEquipmentListDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.RowIndex >= 0)
+            {
+                int selectedID = (int)rEquipmentListDataGridView.Rows[e.RowIndex].Cells["ID"].Value;
+                Global.selectedEquipmentInJob = null;
+                Global.selectedEquipmentInJob = originalEquipmentList.FirstOrDefault(eq => eq.ID == selectedID);
+
+                eReplaceNamelabel.Text = Global.selectedEquipmentInJob.Name;
+                eSeriallabel.Text = Global.selectedEquipmentInJob.Serial;
+                rEquipmentListDataGridView.Enabled = false;
+            }
+        }
+        private void removeSelectedbutton_Click(object sender, EventArgs e)
+        {
+            Global.selectedEquipmentInJob = null;
+            eReplaceNamelabel.Text = "-";
+            eSeriallabel.Text = "-";
+            rEquipmentListDataGridView.Enabled = true;
+        }
     }
 }

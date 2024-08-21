@@ -20,12 +20,12 @@ namespace Equipment_Management.GlobalVariable
         public static string TargetFilePath { get; set; }
         private static Timer deletionTimer;
 
-        public static string user = "TEST"; // equipment-managementblc5
+        public static string user = "equipment-managementblc5"; // equipment-managementblc5
         public static string pass = "Meg@lomaniac001";
         public static string Directory { get; set; }
         private static string GetFtpServerUrl()
         {
-            return $"ftp://192.168.1.116/TESTSERVER/{Directory}/";
+            return $"ftp://172.16.52.40/EquipmentManagementBLC5/{Directory}/";
         }
 
         //Uploading photo & PDF into Server ------------------------------------------------------------------------------------------

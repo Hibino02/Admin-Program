@@ -25,7 +25,8 @@ namespace Equipment_Management.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=127.0.0.1;uid=root;pwd=12345678;database=equipment-management")]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=172.16.52.40;uid=equipment-managementblc5;pwd=Meg@lomaniac001;database=equ" +
+            "ipment-managementblc5")]
         public string CONNECTION_STRING {
             get {
                 return ((string)(this["CONNECTION_STRING"]));
