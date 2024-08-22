@@ -440,6 +440,10 @@ namespace Equipment_Management.UIClass
             {
                 currentMaintainencePlanDatagridview.Columns["PPeriodID"].Visible = false;
             }
+            if (currentMaintainencePlanDatagridview.Columns["EStatusID"] != null)
+            {
+                currentMaintainencePlanDatagridview.Columns["EStatusID"].Visible = false;
+            }
         }
         //Method to filter Equipment status ID
         private List<AllJobInProcessView> FilterJobListByEStatusId(List<AllJobInProcessView> jobList, List<int> eStatusIds)
@@ -583,6 +587,7 @@ namespace Equipment_Management.UIClass
             DataGridViewRow selectedRow = currentMaintainencePlanDatagridview.CurrentRow;
             if(selectedRow != null)
             {
+                Global.selectedEquipmentInJob = null;
                 AllPlanView selectedPlan = (AllPlanView)selectedRow.DataBoundItem;
                 Global.selectedEquipmentInPlan = selectedPlan;
                 planProcessing = new PlanProcessingForm();

@@ -23,11 +23,12 @@ namespace Equipment_Management.CustomViewClass
         public string OplaceDetails { get; set; }
         public string EStatus { get; set; }
         public int PPeriodID { get; set; }
+        public int EStatusID { get; set; }
 
         public AllPlanView(){}
         public AllPlanView(int id,int eid,string ename,string eserial,string ptype,string pperiod,
             int timestodo,DateTime datetodo,bool planstatus,string ephoto,string oplacephoto, 
-            DateTime? planprocessdate,int timesdid,string oplacedetails,string estatus,int pperiodid)
+            DateTime? planprocessdate,int timesdid,string oplacedetails,string estatus,int pperiodid,int estatusid)
         {
             this.ID = id;
             this.EID = eid;
@@ -45,6 +46,7 @@ namespace Equipment_Management.CustomViewClass
             this.OplaceDetails = oplacedetails;
             this.EStatus = estatus;
             this.PPeriodID = pperiodid;
+            this.EStatusID = estatusid;
         }
 
         public static List<AllPlanView> GetCreatedPlanView()
@@ -93,7 +95,8 @@ namespace Equipment_Management.CustomViewClass
                             OplaceDetails = p.Eqp.InstallationDetails,
                             EStatus = p.Eqp.EStatusObj.EStatus,
                             PPeriodID = p.PPeriod.ID,
-                            PlanProcessDate = latestFinishDate
+                            PlanProcessDate = latestFinishDate,
+                            EStatusID = p.Eqp.EStatusObj.ID
                         };
                         list.Add(view);
                     }

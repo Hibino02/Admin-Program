@@ -358,8 +358,7 @@ namespace Equipment_Management.UIClass.InstallationSource
             }
             if (string.IsNullOrEmpty(priceTextBox.Text))
             {
-                ShowCustomMessageBox("ต้องใส่ราคาอย่างน้อย 0");
-                return false;
+                priceFromTextBox = 0;
             }
             else if (!double.TryParse(priceTextBox.Text, out priceFromTextBox))
             {

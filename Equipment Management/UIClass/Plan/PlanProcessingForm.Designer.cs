@@ -39,7 +39,7 @@
             this.vdlabel = new System.Windows.Forms.Label();
             this.eDetailslabel = new System.Windows.Forms.Label();
             this.vDetailsrichTextBox = new System.Windows.Forms.RichTextBox();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.startrichTextBox = new System.Windows.Forms.RichTextBox();
             this.searchEquipmentLabel = new System.Windows.Forms.Label();
             this.eSearchtextBox = new System.Windows.Forms.TextBox();
             this.equipmentFilterListLabel = new System.Windows.Forms.Label();
@@ -170,14 +170,14 @@
             this.vDetailsrichTextBox.TabIndex = 42;
             this.vDetailsrichTextBox.Text = "";
             // 
-            // richTextBox2
+            // startrichTextBox
             // 
-            this.richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox2.Location = new System.Drawing.Point(418, 67);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(316, 294);
-            this.richTextBox2.TabIndex = 43;
-            this.richTextBox2.Text = "";
+            this.startrichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startrichTextBox.Location = new System.Drawing.Point(418, 67);
+            this.startrichTextBox.Name = "startrichTextBox";
+            this.startrichTextBox.Size = new System.Drawing.Size(316, 294);
+            this.startrichTextBox.TabIndex = 43;
+            this.startrichTextBox.Text = "";
             // 
             // searchEquipmentLabel
             // 
@@ -279,6 +279,7 @@
             this.workPermitbutton.TabIndex = 52;
             this.workPermitbutton.Text = "Work Permit";
             this.workPermitbutton.UseVisualStyleBackColor = true;
+            this.workPermitbutton.Click += new System.EventHandler(this.workPermitbutton_Click);
             // 
             // pcontractbutton
             // 
@@ -289,6 +290,7 @@
             this.pcontractbutton.TabIndex = 53;
             this.pcontractbutton.Text = "รูปเริ่มงาน";
             this.pcontractbutton.UseVisualStyleBackColor = true;
+            this.pcontractbutton.Click += new System.EventHandler(this.pcontractbutton_Click);
             // 
             // pworkpermitlinkLabel
             // 
@@ -300,6 +302,7 @@
             this.pworkpermitlinkLabel.TabIndex = 54;
             this.pworkpermitlinkLabel.TabStop = true;
             this.pworkpermitlinkLabel.Text = "ดูเอกสาร";
+            this.pworkpermitlinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.pworkpermitlinkLabel_LinkClicked);
             // 
             // plabel
             // 
@@ -380,6 +383,7 @@
             this.pRecordbutton.TabIndex = 65;
             this.pRecordbutton.Text = "บันทึก";
             this.pRecordbutton.UseVisualStyleBackColor = true;
+            this.pRecordbutton.Click += new System.EventHandler(this.pRecordbutton_Click);
             // 
             // PlanProcessingForm
             // 
@@ -405,7 +409,7 @@
             this.Controls.Add(this.eSearchtextBox);
             this.Controls.Add(this.equipmentFilterListLabel);
             this.Controls.Add(this.equipmentTypeComboBox);
-            this.Controls.Add(this.richTextBox2);
+            this.Controls.Add(this.startrichTextBox);
             this.Controls.Add(this.vDetailsrichTextBox);
             this.Controls.Add(this.eDetailslabel);
             this.Controls.Add(this.vdlabel);
@@ -443,7 +447,7 @@
         private System.Windows.Forms.Label vdlabel;
         private System.Windows.Forms.Label eDetailslabel;
         private System.Windows.Forms.RichTextBox vDetailsrichTextBox;
-        private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.RichTextBox startrichTextBox;
         private System.Windows.Forms.Label searchEquipmentLabel;
         private System.Windows.Forms.TextBox eSearchtextBox;
         private System.Windows.Forms.Label equipmentFilterListLabel;

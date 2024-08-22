@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using Equipment_Management.CustomViewClass;
 using System.Linq;
 using Equipment_Management.GlobalVariable;
-using Equipment_Management.UIClass.CreateWindowComponent;
 using Equipment_Management.CustomWindowComponents;
 
 namespace Equipment_Management.UIClass.Plan
@@ -14,6 +13,7 @@ namespace Equipment_Management.UIClass.Plan
     public partial class PlanProcessingForm : Form
     {
         public event EventHandler UpdateGrid;
+        ObjectClass.Plan plan;
 
         List<EquipmentType> equipmentTypeList;
         List<int> equipmentTypeID = new List<int>();
@@ -25,18 +25,29 @@ namespace Equipment_Management.UIClass.Plan
 
         BindingSource equipmentListBindingsource;
 
+        string workpermitProcessPath;
+        string photoContractPath;
+        //Variable for creating planprocess
+        double cost;
+        Equipment replaceEquipment;
+        PlanProcess newPp;
+
         public PlanProcessingForm()
         {
             InitializeComponent();
             this.Size = new Size(1480, 820);
             equipmentTypeList = EquipmentType.GetEquipmentTypeList();
             equipmentList = AllEquipmentView.GetPlanProcessReplaceEquipmentView();
+            plan = new ObjectClass.Plan(Global.selectedEquipmentInPlan.ID);
 
             equipmentListBindingsource = new BindingSource();
 
             UpdateComponents();
             UpdateEquipmentOnPlan();
-            UpdateReplaceEquipmentListGridView();
+            if(plan.Eqp.EStatusObj.ID != 7)
+            {
+                UpdateReplaceEquipmentListGridView();
+            }
         }
 
         private void UpdateComponents()
@@ -235,6 +246,175 @@ namespace Equipment_Management.UIClass.Plan
             eReplaceNamelabel.Text = "-";
             eSeriallabel.Text = "-";
             rEquipmentListDataGridView.Enabled = true;
+        }
+        //Get PDF file path
+        private void workPermitbutton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = false;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    workpermitProcessPath = openFileDialog.FileName;
+                }
+            }
+        }
+        //Get Photo file path
+        private void pcontractbutton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png)|*.jpg;*.jpeg;*.png";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = false;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path from user
+                    photoContractPath = openFileDialog.FileName;
+                    //Strem photo to picturebox
+                    contractPictureBox.Image = Image.FromFile(photoContractPath);
+                }
+            }
+        }
+        //Save photo & documents into folder
+        private void SavePlanProcessWorkpermit()
+        {
+            if (!string.IsNullOrEmpty(workpermitProcessPath))
+            {
+                Global.Directory = "WorkPermitOnPlanProcessDocument";
+                Global.SaveFileToServer(workpermitProcessPath);
+                Global.Directory = null;
+                workpermitProcessPath = Global.TargetFilePath;
+            }
+        }
+        private void SavePhotoContract()
+        {
+            if (!string.IsNullOrEmpty(photoContractPath))
+            {
+                Global.Directory = "ContractPhoto";
+                Global.SaveFileToServer(photoContractPath);
+                Global.Directory = null;
+                photoContractPath = Global.TargetFilePath;
+            }
+        }
+        //Open WorkPermit
+        private void pworkpermitlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(workpermitProcessPath))
+            {
+                System.Diagnostics.Process.Start(workpermitProcessPath);
+            }
+            else
+            {
+                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+            }
+        }
+        //Call custom message box
+        private void ShowCustomMessageBox(string message)
+        {
+            using (var messageBox = new CustomMessageBox())
+            {
+                messageBox.MessageText = message;
+                var result = messageBox.ShowDialog();
+            }
+        }
+        //Check All
+        private bool CheckAllAttribute()
+        {
+            if (string.IsNullOrEmpty(vNameTextBox.Text))
+            {
+                ShowCustomMessageBox("กรุณาใส่ชื่อผู้รับเหมา");
+                return false;
+            }
+            if (string.IsNullOrEmpty(pricetextBox.Text))
+            {
+                cost = 0;
+            }
+            else if(!double.TryParse(pricetextBox.Text,out cost))
+            {
+                ShowCustomMessageBox("กรุณาใส่ราคาเป็นตัวเลขที่ถูกต้อง");
+                return false;
+            }
+            else if(cost < 0)
+            {
+                cost =0;
+            }
+            if(Global.selectedEquipmentInJob!=null)
+            {
+                replaceEquipment = new Equipment(Global.selectedEquipmentInJob.ID);
+            }
+            SavePlanProcessWorkpermit();
+            SavePhotoContract();
+            return true;
+        }
+        //Create process
+        private void pRecordbutton_Click(object sender, EventArgs e)
+        {
+            if (CheckAllAttribute())
+            {
+                newPp = new ObjectClass.PlanProcess(Global.selectedEquipmentInPlan.ID, startDateTimePicker.Value
+                    , startrichTextBox.Text, vNameTextBox.Text, vDetailsrichTextBox.Text, cost, workpermitProcessPath
+                    , photoContractPath, null, null, replaceEquipment, null);
+                if (newPp.Create())
+                {
+                    //Update equipment status
+                    Equipment eq = new Equipment(Global.selectedEquipmentInPlan.EID);
+                    EquipmentStatus es = new EquipmentStatus(8);
+                    eq.EStatusObj = es;
+                    if (eq.Change())
+                    {
+                        ShowCustomMessageBox("เปลี่ยนสถานะอุปกรณ์ในแผนเป็น : ซ่อมบำรุง(อยู่ในแผน)");
+                    }
+                    else
+                    {
+                        ShowCustomMessageBox("เปลี่ยนสถานะอุปกรณ์ในแผนล้มเหลว กรุณาติดต่อผู้ดูแล");
+                    }
+                    if(replaceEquipment!= null)
+                    {
+                        if(replaceEquipment.ID == 1)
+                        {
+                            EquipmentStatus res = new EquipmentStatus(2);
+                            replaceEquipment.EStatusObj = res;
+                            if (replaceEquipment.Change())
+                            {
+                                ShowCustomMessageBox("เปลี่ยนสถานะอุปกรณ์ทดแทนเป็น : กำลังปฎิบัติงาน");
+                            }
+                            else
+                            {
+                                ShowCustomMessageBox("เปลี่ยนสถานะอุปกรณ์ทดแทนล้มเหลว");
+                            }
+                        }
+                        else
+                        {
+                            EquipmentStatus res = new EquipmentStatus(6);
+                            replaceEquipment.EStatusObj = res;
+                            if (replaceEquipment.Change())
+                            {
+                                ShowCustomMessageBox("เปลี่ยนสถานะอุปกรณ์ทดแทนเป็น : กำลังปฎิบัติงาน(อยู่ในแผน)");
+                            }
+                            else
+                            {
+                                ShowCustomMessageBox("เปลี่ยนสถานะอุปกรณ์ทดแทนล้มเหลว");
+                            }
+                        }
+                    }
+                    ShowCustomMessageBox("แผนกำลังถูกดำเนินการ");
+                    UpdateGrid?.Invoke(this, EventArgs.Empty);
+                    Close();
+                }
+                else
+                {
+                    Global.DeleteFileFromFtp(workpermitProcessPath);
+                    Global.DeleteFileFromFtp(photoContractPath);
+                    ShowCustomMessageBox("ขั้นตอนการสร้างข้อมูลลงใน ฐานข้อมูลเกิดความผิดพลาด กรุณาติดต่อผู้ดูแล");
+                }
+            }
         }
     }
 }
