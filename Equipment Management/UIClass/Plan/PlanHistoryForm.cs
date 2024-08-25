@@ -148,5 +148,12 @@ namespace Equipment_Management.UIClass.Plan
                 planHistoryProgressForm.ShowDialog();
             }
         }
+
+        private void PlanHistoryDatagridview_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int statusID = (int)PlanHistoryDatagridview.Rows[e.RowIndex].Cells["EStatusID"].Value;
+
+            Global.SetRowColor(PlanHistoryDatagridview.Rows[e.RowIndex], statusID);
+        }
     }
 }

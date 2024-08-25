@@ -147,6 +147,7 @@
             this.jobProcessingDatagridview.TabIndex = 10;
             this.jobProcessingDatagridview.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.jobProcessingDatagridview_CellMouseEnter);
             this.jobProcessingDatagridview.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.jobProcessingDatagridview_CellMouseLeave);
+            this.jobProcessingDatagridview.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.jobProcessingDatagridview_RowPrePaint);
             // 
             // jobProcessingLabel
             // 
@@ -198,6 +199,7 @@
             this.jobCreatedDatagridview.TabIndex = 6;
             this.jobCreatedDatagridview.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.jobCreatedDatagridview_CellMouseEnter);
             this.jobCreatedDatagridview.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.jobCreatedDatagridview_CellMouseLeave);
+            this.jobCreatedDatagridview.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.jobCreatedDatagridview_RowPrePaint);
             // 
             // jobCreatedList
             // 
@@ -337,6 +339,7 @@
             this.planProcessingDatagridview.TabIndex = 13;
             this.planProcessingDatagridview.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.planProcessingDatagridview_CellMouseEnter);
             this.planProcessingDatagridview.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.planProcessingDatagridview_CellMouseLeave);
+            this.planProcessingDatagridview.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.planProcessingDatagridview_RowPrePaint);
             // 
             // planProcessingLabel
             // 
@@ -377,6 +380,7 @@
             this.currentMaintainencePlanDatagridview.TabIndex = 13;
             this.currentMaintainencePlanDatagridview.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.currentMaintainencePlanDatagridview_CellMouseEnter);
             this.currentMaintainencePlanDatagridview.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.currentMaintainencePlanDatagridview_CellMouseLeave);
+            this.currentMaintainencePlanDatagridview.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.currentMaintainencePlanDatagridview_RowPrePaint);
             // 
             // currentMaintainencePlanList
             // 

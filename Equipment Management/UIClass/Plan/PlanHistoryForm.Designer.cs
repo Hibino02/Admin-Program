@@ -49,6 +49,7 @@
             this.PlanHistoryDatagridview.Size = new System.Drawing.Size(1440, 681);
             this.PlanHistoryDatagridview.TabIndex = 14;
             this.PlanHistoryDatagridview.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PlanHistoryDatagridview_CellDoubleClick);
+            this.PlanHistoryDatagridview.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.PlanHistoryDatagridview_RowPrePaint);
             // 
             // PlanHistoryForm
             // 

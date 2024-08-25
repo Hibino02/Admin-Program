@@ -248,6 +248,7 @@
             this.rEquipmentListDataGridView.Size = new System.Drawing.Size(750, 275);
             this.rEquipmentListDataGridView.TabIndex = 49;
             this.rEquipmentListDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.rEquipmentListDataGridView_CellDoubleClick);
+            this.rEquipmentListDataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.rEquipmentListDataGridView_RowPrePaint);
             // 
             // equipmentpictureBox
             // 

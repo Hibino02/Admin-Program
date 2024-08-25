@@ -98,6 +98,7 @@
             this.equipmentDisplaydataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.equipmentDisplaydataGridView_CellDoubleClick);
             this.equipmentDisplaydataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.equipmentDisplaydataGridView_CellMouseEnter);
             this.equipmentDisplaydataGridView.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.equipmentDisplaydataGridView_CellMouseLeave);
+            this.equipmentDisplaydataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.equipmentDisplaydataGridView_RowPrePaint);
             // 
             // searchEquipmentLabel
             // 

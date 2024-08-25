@@ -587,6 +587,10 @@ namespace Equipment_Management.UIClass
             {
                 planProcessingDatagridview.Columns["FinishDocuments"].Visible = false;
             }
+            if (planProcessingDatagridview.Columns["EStatusID"] != null)
+            {
+                planProcessingDatagridview.Columns["EStatusID"].Visible = false;
+            }
         }
         //Method to filter Equipment status ID
         private List<AllJobInProcessView> FilterJobListByEStatusId(List<AllJobInProcessView> jobList, List<int> eStatusIds)
@@ -915,6 +919,31 @@ namespace Equipment_Management.UIClass
                 messageBox.MessageText = message;
                 var result = messageBox.ShowDialog();
             }
+        }
+        //Event highlighting row
+        private void jobCreatedDatagridview_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int statusID = (int)jobCreatedDatagridview.Rows[e.RowIndex].Cells["EStatusID"].Value;
+
+            Global.SetRowColor(jobCreatedDatagridview.Rows[e.RowIndex], statusID);
+        }
+        private void jobProcessingDatagridview_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int statusID = (int)jobProcessingDatagridview.Rows[e.RowIndex].Cells["EStatusID"].Value;
+
+            Global.SetRowColor(jobProcessingDatagridview.Rows[e.RowIndex], statusID);
+        }
+        private void currentMaintainencePlanDatagridview_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int statusID = (int)currentMaintainencePlanDatagridview.Rows[e.RowIndex].Cells["EStatusID"].Value;
+
+            Global.SetRowColor(currentMaintainencePlanDatagridview.Rows[e.RowIndex], statusID);
+        }
+        private void planProcessingDatagridview_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int statusID = (int)planProcessingDatagridview.Rows[e.RowIndex].Cells["EStatusID"].Value;
+
+            Global.SetRowColor(planProcessingDatagridview.Rows[e.RowIndex], statusID);
         }
     }
 }

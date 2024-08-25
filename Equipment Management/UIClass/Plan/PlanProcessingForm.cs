@@ -451,5 +451,12 @@ namespace Equipment_Management.UIClass.Plan
         {
             workpermitTooltips.Hide(pworkpermitlinkLabel);
         }
+
+        private void rEquipmentListDataGridView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int statusID = (int)rEquipmentListDataGridView.Rows[e.RowIndex].Cells["EStatusID"].Value;
+
+            Global.SetRowColor(rEquipmentListDataGridView.Rows[e.RowIndex], statusID);
+        }
     }
 }

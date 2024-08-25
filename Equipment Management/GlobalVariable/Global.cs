@@ -6,6 +6,7 @@ using System.Net;
 using System.Drawing;
 using System.Diagnostics;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace Equipment_Management.GlobalVariable
 {
@@ -19,7 +20,43 @@ namespace Equipment_Management.GlobalVariable
         public static AllPlanView selectedEquipmentInPlan { get; set; }
         public static AllProcessInPlanView selectedEquipmentInProcessedPlan { get; set; }
         public static string TargetFilePath { get; set; }
-        private static Timer deletionTimer;
+        private static System.Threading.Timer deletionTimer;
+        public static void SetRowColor(DataGridViewRow row , int statusid)
+        {
+            switch (statusid)
+            {
+                case 1:
+                    row.DefaultCellStyle.BackColor = Color.Lime;
+                        break;
+                case 2:
+                    row.DefaultCellStyle.BackColor = Color.Gold;
+                        break;
+                case 3:
+                    row.DefaultCellStyle.BackColor = Color.Tomato;
+                        break;
+                case 4:
+                    row.DefaultCellStyle.BackColor = Color.PowderBlue;
+                        break;
+                case 5:
+                    row.DefaultCellStyle.BackColor = Color.Orange;
+                        break;
+                case 6:
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                        break;
+                case 7:
+                    row.DefaultCellStyle.BackColor = Color.YellowGreen;
+                        break;
+                case 8:
+                    row.DefaultCellStyle.BackColor = Color.HotPink;
+                        break;
+                case 9:
+                    row.DefaultCellStyle.BackColor = Color.IndianRed;
+                        break;
+                case 10:
+                    row.DefaultCellStyle.BackColor = Color.LightSteelBlue;
+                        break;
+            }
+        }
 
         public static string user = "equipment-managementblc5"; // equipment-managementblc5
         public static string pass = "Meg@lomaniac001";
@@ -221,7 +258,7 @@ namespace Equipment_Management.GlobalVariable
                 process.Start();
 
                 // Start a timer to check for file deletion
-                deletionTimer = new Timer(DeleteFileIfUnlocked, pdfFilePath, 10000, Timeout.Infinite);
+                deletionTimer = new System.Threading.Timer(DeleteFileIfUnlocked, pdfFilePath, 10000, Timeout.Infinite);
             }
             catch (Exception ex)
             {

@@ -130,6 +130,7 @@
             this.EquipmentListDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.EquipmentListDataGridView_CellDoubleClick);
             this.EquipmentListDataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.EquipmentListDataGridView_CellMouseEnter);
             this.EquipmentListDataGridView.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.EquipmentListDataGridView_CellMouseLeave);
+            this.EquipmentListDataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.EquipmentListDataGridView_RowPrePaint);
             // 
             // eNlabel
             // 

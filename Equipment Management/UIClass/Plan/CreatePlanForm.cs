@@ -543,5 +543,12 @@ namespace Equipment_Management.UIClass.Plan
             }
             UpdateGrid?.Invoke(this, EventArgs.Empty);
         }
+
+        private void EquipmentListDataGridView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int statusID = (int)EquipmentListDataGridView.Rows[e.RowIndex].Cells["EStatusID"].Value;
+
+            Global.SetRowColor(EquipmentListDataGridView.Rows[e.RowIndex], statusID);
+        }
     }
 }

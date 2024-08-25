@@ -671,5 +671,12 @@ namespace Equipment_Management.UIClass.Job
         {
             Global.selectedEquipmentInJob = null;
         }
+
+        private void equipmentDisplaydataGridView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int statusID = (int)equipmentDisplaydataGridView.Rows[e.RowIndex].Cells["EStatusID"].Value;
+
+            Global.SetRowColor(equipmentDisplaydataGridView.Rows[e.RowIndex], statusID);
+        }
     }
 }

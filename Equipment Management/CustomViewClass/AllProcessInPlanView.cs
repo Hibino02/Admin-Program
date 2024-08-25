@@ -27,6 +27,7 @@ namespace Equipment_Management.CustomViewClass
         public DateTime? FinishDate { get; set; }
         public string FinishDetails { get; set; }
         public string FinishDocuments { get; set; }
+        public int EStatusID { get; set; }
 
         public AllProcessInPlanView() { }
 
@@ -60,7 +61,8 @@ namespace Equipment_Management.CustomViewClass
                             VenderName=latestProcess.PSup,
                             VenderDetails=latestProcess.PSupDetails,
                             Cost=latestProcess.Cost,
-                            WorkPermit=latestProcess.WorkPermit
+                            WorkPermit=latestProcess.WorkPermit,
+                            EStatusID = p.Eqp.EStatusObj.ID
                         };
                         list.Add(processView);
                     }
