@@ -106,9 +106,11 @@ WHERE pp.ID = @id";
                                 int estaid = Convert.ToInt32(reader["EStatusID"]);
                                 string status = reader["EStatus"].ToString();
                                 EquipmentStatus estatus = new EquipmentStatus(estaid, status);
-                                int basisid = Convert.ToInt32(reader["ERentID"]);
-                                string basis = reader["Basis"].ToString();
-                                RentalBasis erentalbasis = new RentalBasis(basisid, basis);
+
+                                int? basisid = reader["ERentID"] != DBNull.Value ? Convert.ToInt32(reader["ERentID"]) : (int?)null;
+                                string basis = reader["Basis"] != DBNull.Value ? reader["Basis"].ToString() : null;
+                                RentalBasis erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
+
                                 bool onplan = Convert.ToBoolean(reader["OnPlan"]);
                                 re = new Equipment(id1, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
                                     serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,

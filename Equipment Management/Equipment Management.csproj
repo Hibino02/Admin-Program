@@ -99,6 +99,7 @@
     <Compile Include="CustomViewClass\AllJobByEquipmentView.cs" />
     <Compile Include="CustomViewClass\AllJobInProcessView.cs" />
     <Compile Include="CustomViewClass\AllPlanView.cs" />
+    <Compile Include="CustomViewClass\AllProcessInPlanView.cs" />
     <Compile Include="CustomWindowComponents\CustomMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,6 +220,12 @@
     <Compile Include="UIClass\ModeChosenForm.Designer.cs">
       <DependentUpon>ModeChosenForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIClass\Plan\CompletePlanProcessing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Plan\CompletePlanProcessing.Designer.cs">
+      <DependentUpon>CompletePlanProcessing.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIClass\Plan\CreatePlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,11 +238,35 @@
     <Compile Include="UIClass\Plan\EditPlanForm.Designer.cs">
       <DependentUpon>EditPlanForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIClass\Plan\EditPlanProcessing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Plan\EditPlanProcessing.Designer.cs">
+      <DependentUpon>EditPlanProcessing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\Plan\PlanHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Plan\PlanHistoryForm.Designer.cs">
+      <DependentUpon>PlanHistoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\Plan\PlanHistoryProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Plan\PlanHistoryProgressForm.Designer.cs">
+      <DependentUpon>PlanHistoryProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIClass\Plan\PlanProcessingForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UIClass\Plan\PlanProcessingForm.Designer.cs">
       <DependentUpon>PlanProcessingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIClass\Plan\RemovePlanProcessingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Plan\RemovePlanProcessingForm.Designer.cs">
+      <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="CustomWindowComponents\CustomMessageBox.resx">
       <DependentUpon>CustomMessageBox.cs</DependentUpon>
@@ -297,14 +328,29 @@
     <EmbeddedResource Include="UIClass\ModeChosenForm.resx">
       <DependentUpon>ModeChosenForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Plan\CompletePlanProcessing.resx">
+      <DependentUpon>CompletePlanProcessing.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIClass\Plan\CreatePlanForm.resx">
       <DependentUpon>CreatePlanForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIClass\Plan\EditPlanForm.resx">
       <DependentUpon>EditPlanForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Plan\EditPlanProcessing.resx">
+      <DependentUpon>EditPlanProcessing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Plan\PlanHistoryForm.resx">
+      <DependentUpon>PlanHistoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Plan\PlanHistoryProgressForm.resx">
+      <DependentUpon>PlanHistoryProgressForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIClass\Plan\PlanProcessingForm.resx">
       <DependentUpon>PlanProcessingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Plan\RemovePlanProcessingForm.resx">
+      <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

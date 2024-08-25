@@ -147,6 +147,7 @@ namespace Equipment_Management.UIClass.Job
                 Global.SaveFileToServer(workPermitDocumentPath);
                 Global.Directory = null;
                 workPermitDocumentPath = Global.TargetFilePath;
+                oldWorkPermitDocumentPath = workPermitDocumentPath;
             }
         }
         private void SaveContractDocument()
@@ -161,6 +162,7 @@ namespace Equipment_Management.UIClass.Job
                 Global.SaveFileToServer(contractDocumentPath);
                 Global.Directory = null;
                 contractDocumentPath = Global.TargetFilePath;
+                oldContractDocumentPath = contractDocumentPath;
             }
         }
         

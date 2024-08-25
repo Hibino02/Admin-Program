@@ -448,12 +448,11 @@ namespace Equipment_Management.UIClass.Plan
         {
             if (CheckAllAttribute())
             {
-                int timeTodo = (int)timeToDonumericUpDown.Value;
                 //In case of old plan
                 if (CheckEquipmentHasPlan(equipmentToCreatePlan.ID))
                 {
                     oldPlan.PlanStatus = true;
-                    oldPlan.TimesToDo = timeTodo;
+                    oldPlan.TimesToDo = 0;
                     oldPlan.PType = planTypeToCreatePlan;
                     oldPlan.PPeriod = planPeriodToCreatePlan;
                     oldPlan.DateToDo = dateToDodateTimePicker.Value;
@@ -500,7 +499,7 @@ namespace Equipment_Management.UIClass.Plan
                 {
                     //In case of new plan
                     ObjectClass.Plan newP = new ObjectClass.Plan(equipmentToCreatePlan, planTypeToCreatePlan, planPeriodToCreatePlan
-                    , timeTodo, true, dateToDodateTimePicker.Value);
+                    , 0, true, dateToDodateTimePicker.Value);
                     if (newP.Create())
                     {
                         if (equipmentToCreatePlan.EStatusObj.ID == 1)

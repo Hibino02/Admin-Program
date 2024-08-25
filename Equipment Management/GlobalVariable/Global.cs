@@ -15,8 +15,9 @@ namespace Equipment_Management.GlobalVariable
         public static int EStatusID { get; set; }
         public static Equipment equipmentGlobal { get; set; }
         public static AllEquipmentView selectedEquipmentInJob { get; set; }
-        public static AllPlanView selectedEquipmentInPlan { get; set; }
         public static AllEquipmentForCreatedJobView AllEquipmentForCreatedJobView { get; set; }
+        public static AllPlanView selectedEquipmentInPlan { get; set; }
+        public static AllProcessInPlanView selectedEquipmentInProcessedPlan { get; set; }
         public static string TargetFilePath { get; set; }
         private static Timer deletionTimer;
 

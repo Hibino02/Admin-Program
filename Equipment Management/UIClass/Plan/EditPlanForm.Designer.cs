@@ -32,11 +32,9 @@
             this.createPlanPeriodbutton = new System.Windows.Forms.Button();
             this.oPlacepictureBox = new System.Windows.Forms.PictureBox();
             this.dateToDodateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.timeToDonumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.pPeriodcomboBox = new System.Windows.Forms.ComboBox();
             this.pTypecomboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.timeslabel = new System.Windows.Forms.Label();
             this.periodlabel = new System.Windows.Forms.Label();
             this.pTypelabel = new System.Windows.Forms.Label();
             this.InsPlacelabel = new System.Windows.Forms.Label();
@@ -50,7 +48,6 @@
             this.eNlabel = new System.Windows.Forms.Label();
             this.recoredPlanButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.oPlacepictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeToDonumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,24 +89,6 @@
             this.dateToDodateTimePicker.Size = new System.Drawing.Size(209, 20);
             this.dateToDodateTimePicker.TabIndex = 52;
             // 
-            // timeToDonumericUpDown
-            // 
-            this.timeToDonumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timeToDonumericUpDown.Location = new System.Drawing.Point(347, 94);
-            this.timeToDonumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.timeToDonumericUpDown.Name = "timeToDonumericUpDown";
-            this.timeToDonumericUpDown.Size = new System.Drawing.Size(55, 31);
-            this.timeToDonumericUpDown.TabIndex = 51;
-            this.timeToDonumericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // pPeriodcomboBox
             // 
             this.pPeriodcomboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -138,16 +117,6 @@
             this.label1.Size = new System.Drawing.Size(174, 25);
             this.label1.TabIndex = 48;
             this.label1.Text = "วันที่ต้องดำเนินการ :";
-            // 
-            // timeslabel
-            // 
-            this.timeslabel.AutoSize = true;
-            this.timeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timeslabel.Location = new System.Drawing.Point(27, 98);
-            this.timeslabel.Name = "timeslabel";
-            this.timeslabel.Size = new System.Drawing.Size(294, 25);
-            this.timeslabel.TabIndex = 47;
-            this.timeslabel.Text = "จำนวนครั้งในการซ่อมบำรุงต่อรอบ :";
             // 
             // periodlabel
             // 
@@ -281,11 +250,9 @@
             this.Controls.Add(this.createPlanPeriodbutton);
             this.Controls.Add(this.oPlacepictureBox);
             this.Controls.Add(this.dateToDodateTimePicker);
-            this.Controls.Add(this.timeToDonumericUpDown);
             this.Controls.Add(this.pPeriodcomboBox);
             this.Controls.Add(this.pTypecomboBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.timeslabel);
             this.Controls.Add(this.periodlabel);
             this.Controls.Add(this.pTypelabel);
             this.Controls.Add(this.InsPlacelabel);
@@ -304,7 +271,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ปรับปรุงแผนซ่อมบำรุง";
             ((System.ComponentModel.ISupportInitialize)(this.oPlacepictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeToDonumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -317,11 +283,9 @@
         private System.Windows.Forms.Button createPlanPeriodbutton;
         private System.Windows.Forms.PictureBox oPlacepictureBox;
         private System.Windows.Forms.DateTimePicker dateToDodateTimePicker;
-        private System.Windows.Forms.NumericUpDown timeToDonumericUpDown;
         private System.Windows.Forms.ComboBox pPeriodcomboBox;
         private System.Windows.Forms.ComboBox pTypecomboBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label timeslabel;
         private System.Windows.Forms.Label periodlabel;
         private System.Windows.Forms.Label pTypelabel;
         private System.Windows.Forms.Label InsPlacelabel;

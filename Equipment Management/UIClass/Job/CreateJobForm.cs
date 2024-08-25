@@ -496,8 +496,12 @@ namespace Equipment_Management.UIClass.Job
                 {
                     // Get the path from user
                     repairEquipmentPhotoPath = openFileDialog.FileName;
-                    //Strem photo to picturebox
-                    equipmentRepaiePictureBox.Image = Image.FromFile(repairEquipmentPhotoPath);
+
+                    using (var tempImage = Image.FromFile(repairEquipmentPhotoPath))
+                    {
+                        //Strem photo to picturebox
+                        equipmentRepaiePictureBox.Image = new Bitmap(tempImage);
+                    }
                 }
             }
         }

@@ -199,8 +199,11 @@ namespace Equipment_Management.UIClass.Job
                 {
                     // Get the path from user
                     finishPhotoPath = openFileDialog.FileName;
-                    //Strem photo to picturebox
-                    finishPictureBox.Image = Image.FromFile(finishPhotoPath);
+                    using (var tempImage = Image.FromFile(finishPhotoPath))
+                    {
+                        //Strem photo to picturebox
+                        finishPictureBox.Image = new Bitmap(tempImage);
+                    }
                 }
             }
         }

@@ -28,6 +28,10 @@ namespace Equipment_Management.UIClass
         private CreatePlanForm createPlan;
         private EditPlanForm editPlan;
         private PlanProcessingForm planProcessing;
+        private CompletePlanProcessing completePlanProcessing;
+        private EditPlanProcessing editPlanProcessing;
+        private RemovePlanProcessingForm removePlanProcessingForm;
+        private PlanHistoryForm planHistoryForm;
 
         private PictureBox casePicturebox;
         private PictureBox planPicturebox;
@@ -35,11 +39,13 @@ namespace Equipment_Management.UIClass
         BindingSource jobCreatedBindingSource;
         BindingSource jobProcessedBindingSource;
         BindingSource planCreatedBindingSource;
+        BindingSource planProccessedBindingSource;
 
         List<AllJobInProcessView> alljobInProcessViewList;
         List<AllJobInProcessView> jobfilteredList;
 
         List<AllPlanView> planCreatedViewList;
+        List<AllProcessInPlanView> planProceessedViewList;
 
         public event EventHandler returnMain;
 
@@ -82,6 +88,7 @@ namespace Equipment_Management.UIClass
             alljobInProcessViewList = new List<AllJobInProcessView>();
             jobfilteredList = new List<AllJobInProcessView>();
             planCreatedViewList = new List<AllPlanView>();
+            planProceessedViewList = new List<AllProcessInPlanView>();
             //Job Created DataGridView section
             jobCreatedBindingSource = new BindingSource();
             UpdateCreatedJobView();
@@ -91,6 +98,9 @@ namespace Equipment_Management.UIClass
             //Plan Created DataGridView section
             planCreatedBindingSource = new BindingSource();
             UpdateCreatedPlanView();
+            //Plan Processed DataGridView section
+            planProccessedBindingSource = new BindingSource();
+            UpdateProcessedPlanView();
         }
         //Job Event to drive Hidden Job picture box
         private void jobCreatedDatagridview_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
@@ -171,6 +181,32 @@ namespace Equipment_Management.UIClass
         {
             planPicturebox.Visible = false;
             currentMaintainencePlanDatagridview.ShowCellToolTips = true;
+        }
+        private void planProcessingDatagridview_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                string columnName = planProcessingDatagridview.Columns[e.ColumnIndex].Name;
+                if (columnName == "ContractPhoto")
+                {
+                    planProcessingDatagridview.ShowCellToolTips = false;
+
+                    string imagePath = planProcessingDatagridview[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
+                    if (string.IsNullOrEmpty(imagePath))
+                    {
+                        return;
+                    }
+
+                    Global.LoadImageIntoPictureBox(imagePath, planPicturebox);
+                    planPicturebox.Visible = true;
+                    planPicturebox.BringToFront();
+                }
+            }
+        }
+        private void planProcessingDatagridview_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            planPicturebox.Visible = false;
+            planProcessingDatagridview.ShowCellToolTips = true;
         }
 
         private void EquipmentAndMaintainenceControlForm_Load(object sender, EventArgs e)
@@ -387,25 +423,13 @@ namespace Equipment_Management.UIClass
                 customColumn.HeaderText = "รอบ";
                 customColumn.Width = 70;
             }
-            if (currentMaintainencePlanDatagridview.Columns["TimesDid"] != null)
-            {
-                var customColumn = currentMaintainencePlanDatagridview.Columns["TimesDid"];
-                customColumn.HeaderText = "จริง";
-                customColumn.Width = 30;
-            }
-            if (currentMaintainencePlanDatagridview.Columns["TimesTodo"] != null)
-            {
-                var customColumn = currentMaintainencePlanDatagridview.Columns["TimesTodo"];
-                customColumn.HeaderText = "แผน";
-                customColumn.Width = 30;
-                customColumn.HeaderCell.Style.Font = new Font("Arial", 10, FontStyle.Regular);
-            }
             if (currentMaintainencePlanDatagridview.Columns["DateTodo"] != null)
             {
                 var customColumn = currentMaintainencePlanDatagridview.Columns["DateTodo"];
-                customColumn.HeaderText = "กำหนด";
+                customColumn.HeaderText = "กำหนดการ";
                 customColumn.DefaultCellStyle.Format = "MMM dd, yyy";
                 customColumn.Width = 80;
+                customColumn.HeaderCell.Style.Font = new Font("Arial", 10, FontStyle.Regular);
             }
             if (currentMaintainencePlanDatagridview.Columns["PlanStatus"] != null)
             {
@@ -426,7 +450,7 @@ namespace Equipment_Management.UIClass
             {
                 var customColumn = currentMaintainencePlanDatagridview.Columns["OPlacePhoto"];
                 customColumn.HeaderText = "รูป";
-                customColumn.Width = 45;
+                customColumn.Width = 35;
             }
             if (currentMaintainencePlanDatagridview.Columns["OplaceDetails"] != null)
             {
@@ -443,6 +467,125 @@ namespace Equipment_Management.UIClass
             if (currentMaintainencePlanDatagridview.Columns["EStatusID"] != null)
             {
                 currentMaintainencePlanDatagridview.Columns["EStatusID"].Visible = false;
+            }
+            if (currentMaintainencePlanDatagridview.Columns["DaysRemainning"] != null)
+            {
+                var customColumn = currentMaintainencePlanDatagridview.Columns["DaysRemainning"];
+                customColumn.HeaderText = "เหลือวัน";
+                customColumn.Width = 70;
+            }
+            if (currentMaintainencePlanDatagridview.Columns["PlanStatusText"] != null)
+            {
+                currentMaintainencePlanDatagridview.Columns["PlanStatusText"].Visible = false;
+            }
+        }
+        //Update gridview Plan Proceesed
+        private void UpdateProcessedPlanView()
+        {
+            if(planProceessedViewList != null)
+            {
+                planProceessedViewList.Clear();
+            }
+            planProceessedViewList = AllProcessInPlanView.GetProcessInPlanView();
+            planProccessedBindingSource.DataSource = planProceessedViewList;
+            planProcessingDatagridview.DataSource = planProccessedBindingSource;
+
+            FormatProcessInPlanDataGridView();
+        }
+        private void FormatProcessInPlanDataGridView()
+        {
+            if(planProcessingDatagridview.Columns["ID"] != null)
+            {
+                planProcessingDatagridview.Columns["ID"].Visible = false; 
+            }
+            if(planProcessingDatagridview.Columns["PID"] != null)
+            {
+                planProcessingDatagridview.Columns["PID"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["EID"] != null)
+            {
+                planProcessingDatagridview.Columns["EID"].Visible = false;
+            }
+            if(planProcessingDatagridview.Columns["EName"] != null)
+            {
+                var customColumn = planProcessingDatagridview.Columns["EName"];
+                customColumn.HeaderText = "ชื่อเรียกอุปกรณ์";
+                customColumn.Width = 200;
+            }
+            if (planProcessingDatagridview.Columns["ESerial"] != null)
+            {
+                var customColumn = planProcessingDatagridview.Columns["ESerial"];
+                customColumn.HeaderText = "ชื่อบัญชี";
+            }
+            if (planProcessingDatagridview.Columns["PType"] != null)
+            {
+                var customColumn = planProcessingDatagridview.Columns["PType"];
+                customColumn.HeaderText = "ประเภทแผน";
+                customColumn.Width = 85;
+                customColumn.HeaderCell.Style.Font = new Font("Arial", 10, FontStyle.Regular);
+            }
+            if (planProcessingDatagridview.Columns["ProcessDate"] != null)
+            {
+                var customColumn = planProcessingDatagridview.Columns["ProcessDate"];
+                customColumn.HeaderText = "วันที่เริ่ม";
+                customColumn.DefaultCellStyle.Format = "MMM dd, yyy";
+                customColumn.Width = 80;
+            }
+            if (planProcessingDatagridview.Columns["REID"] != null)
+            {
+                planProcessingDatagridview.Columns["REID"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["ProcessDate"] != null)
+            {
+                var customColumn = planProcessingDatagridview.Columns["REName"];
+                customColumn.HeaderText = "อุปกรณ์ทดแทน";
+                customColumn.Width = 200;
+            }
+            if (planProcessingDatagridview.Columns["RESerial"] != null)
+            {
+                planProcessingDatagridview.Columns["RESerial"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["ContractPhoto"] != null)
+            {
+                var customColumn = planProcessingDatagridview.Columns["ContractPhoto"];
+                customColumn.HeaderText = "รูป";
+                customColumn.Width = 28;
+            }
+            if (planProcessingDatagridview.Columns["EPhotoPath"] != null)
+            {
+                planProcessingDatagridview.Columns["EPhotoPath"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["StartDetails"] != null)
+            {
+                planProcessingDatagridview.Columns["StartDetails"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["VenderName"] != null)
+            {
+                planProcessingDatagridview.Columns["VenderName"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["VenderDetails"] != null)
+            {
+                planProcessingDatagridview.Columns["VenderDetails"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["Cost"] != null)
+            {
+                planProcessingDatagridview.Columns["Cost"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["WorkPermit"] != null)
+            {
+                planProcessingDatagridview.Columns["WorkPermit"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["FinishDate"] != null)
+            {
+                planProcessingDatagridview.Columns["FinishDate"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["FinishDetails"] != null)
+            {
+                planProcessingDatagridview.Columns["FinishDetails"].Visible = false;
+            }
+            if (planProcessingDatagridview.Columns["FinishDocuments"] != null)
+            {
+                planProcessingDatagridview.Columns["FinishDocuments"].Visible = false;
             }
         }
         //Method to filter Equipment status ID
@@ -584,17 +727,33 @@ namespace Equipment_Management.UIClass
         private void planProcessingButton_Click(object sender, EventArgs e)
         {
             Global.selectedEquipmentInPlan = null;
+            Global.selectedEquipmentInJob = null;
             DataGridViewRow selectedRow = currentMaintainencePlanDatagridview.CurrentRow;
             if(selectedRow != null)
             {
-                Global.selectedEquipmentInJob = null;
                 AllPlanView selectedPlan = (AllPlanView)selectedRow.DataBoundItem;
                 Global.selectedEquipmentInPlan = selectedPlan;
                 planProcessing = new PlanProcessingForm();
                 planProcessing.Owner = main;
                 planProcessing.UpdateGrid += OnUpdateCreatedPlan;
-                //planProcessing.UpdateGrid += OnUpdateProcessedPlan;
+                planProcessing.UpdateGrid += OnUpdateProcessedPlan;
                 planProcessing.ShowDialog();
+            }
+        }
+        //Edit Plan Processing
+        private void editPlanProcessButton_Click(object sender, EventArgs e)
+        {
+            Global.selectedEquipmentInProcessedPlan = null;
+            Global.selectedEquipmentInJob = null;
+            DataGridViewRow selectedRow = planProcessingDatagridview.CurrentRow;
+            if(selectedRow != null)
+            {
+                AllProcessInPlanView selectedPlan = (AllProcessInPlanView)selectedRow.DataBoundItem;
+                Global.selectedEquipmentInProcessedPlan = selectedPlan;
+                editPlanProcessing = new EditPlanProcessing();
+                editPlanProcessing.Owner = main;
+                editPlanProcessing.UpdateGrid += OnUpdateProcessedPlan;
+                editPlanProcessing.ShowDialog();
             }
         }
         //Complete & Remove plan
@@ -685,6 +844,45 @@ namespace Equipment_Management.UIClass
             }
             
         }
+        //Complete Plan Processing
+        private void completeOrRomovePlanProcessButton_Click(object sender, EventArgs e)
+        {
+            Global.selectedEquipmentInProcessedPlan = null;
+            DataGridViewRow selectedRow = planProcessingDatagridview.CurrentRow;
+            if(selectedRow != null)
+            {
+                AllProcessInPlanView selectedPlan = (AllProcessInPlanView)selectedRow.DataBoundItem;
+                Global.selectedEquipmentInProcessedPlan = selectedPlan;
+                completePlanProcessing = new CompletePlanProcessing();
+                completePlanProcessing.Owner = main;
+                completePlanProcessing.UpdateGrid += OnUpdateCreatedPlan;
+                completePlanProcessing.UpdateGrid += OnUpdateProcessedPlan;
+                completePlanProcessing.ShowDialog();
+            }
+        }
+        //Remove plan processing
+        private void removePlanProcessButton_Click(object sender, EventArgs e)
+        {
+            Global.selectedEquipmentInProcessedPlan = null;
+            DataGridViewRow selectedRow = planProcessingDatagridview.CurrentRow;
+            if(selectedRow != null)
+            {
+                AllProcessInPlanView selectedPlan = (AllProcessInPlanView)selectedRow.DataBoundItem;
+                Global.selectedEquipmentInProcessedPlan = selectedPlan;
+                removePlanProcessingForm = new RemovePlanProcessingForm();
+                removePlanProcessingForm.Owner = main;
+                removePlanProcessingForm.UpdateGrid += OnUpdateCreatedPlan;
+                removePlanProcessingForm.UpdateGrid += OnUpdateProcessedPlan;
+                removePlanProcessingForm.ShowDialog();
+            }
+        }
+        //Plan History
+        private void planHistoryButton_Click(object sender, EventArgs e)
+        {
+            planHistoryForm = new Plan.PlanHistoryForm();
+            planHistoryForm.Owner = main;
+            planHistoryForm.ShowDialog();
+        }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)
         {
@@ -703,6 +901,10 @@ namespace Equipment_Management.UIClass
         private void OnUpdateCreatedPlan(object sender, EventArgs e)
         {
             UpdateCreatedPlanView();
+        }
+        private void OnUpdateProcessedPlan(object sender, EventArgs e)
+        {
+            UpdateProcessedPlanView();
         }
 
         //Methodto call custom message Box

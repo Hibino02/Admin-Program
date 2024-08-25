@@ -181,9 +181,11 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
                 replacementCheckBox.Enabled = false;
             }
             acquisitionDocumentPath = edit.EDocumentPath;
+            oldAcquisitionDocumentPath = edit.EDocumentPath;
+
             oldEquipmentPhotoPath = edit.EPhotoPath;
             oldInstallationPlacePhotoPath = edit.OPlacePhotoPath;
-            oldAcquisitionDocumentPath = edit.EDocumentPath;
+            
         }
 
         private void createTypeButton_Click(object sender, EventArgs e)
@@ -301,8 +303,12 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
                 {
                     // Get the path from user
                     equipmentPhotoPath = openFileDialog.FileName;
-                    //Strem photo to picturebox
-                    equipmentPictureBox.Image = Image.FromFile(equipmentPhotoPath);
+
+                    using (var tempImage = Image.FromFile(equipmentPhotoPath))
+                    {
+                        //Strem photo to picturebox
+                        equipmentPictureBox.Image = new Bitmap(tempImage);
+                    }
                 }
             }
         }
@@ -319,8 +325,12 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
                 {
                     // Get the path from user
                     installationPlacePhotoPath = openFileDialog.FileName;
-                    //Strem photo to picturebox
-                    installationPlacePictureBox.Image = Image.FromFile(installationPlacePhotoPath);
+
+                    using (var tempImage = Image.FromFile(installationPlacePhotoPath))
+                    {
+                        //Strem photo to picturebox
+                        installationPlacePictureBox.Image = new Bitmap(tempImage);
+                    }
                 }
             }
         }
@@ -383,6 +393,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
                 Global.SaveFileToServer(acquisitionDocumentPath);
                 Global.Directory = null;
                 acquisitionDocumentPath = Global.TargetFilePath;
+                oldAcquisitionDocumentPath = acquisitionDocumentPath;
             }
         }
 

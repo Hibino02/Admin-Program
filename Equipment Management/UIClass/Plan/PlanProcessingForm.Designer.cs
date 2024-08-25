@@ -303,6 +303,8 @@
             this.pworkpermitlinkLabel.TabStop = true;
             this.pworkpermitlinkLabel.Text = "ดูเอกสาร";
             this.pworkpermitlinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.pworkpermitlinkLabel_LinkClicked);
+            this.pworkpermitlinkLabel.MouseEnter += new System.EventHandler(this.pworkpermitlinkLabel_MouseEnter);
+            this.pworkpermitlinkLabel.MouseLeave += new System.EventHandler(this.pworkpermitlinkLabel_MouseLeave);
             // 
             // plabel
             // 

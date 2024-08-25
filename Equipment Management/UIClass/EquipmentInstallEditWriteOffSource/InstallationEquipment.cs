@@ -233,8 +233,12 @@ namespace Equipment_Management.UIClass.InstallationSource
                 {
                     // Get the path from user
                     equipmentPhotoPath = openFileDialog.FileName;
-                    //Strem photo to picturebox
-                    equipmentPictureBox.Image = Image.FromFile(equipmentPhotoPath);          
+
+                    using (var tempImage = Image.FromFile(equipmentPhotoPath))
+                    {
+                        //Strem photo to picturebox
+                        equipmentPictureBox.Image = new Bitmap(tempImage);
+                    }         
                 }
             }
         }
@@ -251,8 +255,12 @@ namespace Equipment_Management.UIClass.InstallationSource
                 {
                     // Get the path from user
                     installationPlacePhotoPath = openFileDialog.FileName;
-                    //Strem photo to picturebox
-                    installationPlacePictureBox.Image = Image.FromFile(installationPlacePhotoPath);
+
+                    using (var tempImage = Image.FromFile(installationPlacePhotoPath))
+                    {
+                        //Strem photo to picturebox
+                        installationPlacePictureBox.Image = new Bitmap(tempImage);
+                    }
                 }
             }
         }

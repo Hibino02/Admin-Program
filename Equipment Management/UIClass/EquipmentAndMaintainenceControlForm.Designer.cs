@@ -295,6 +295,7 @@
             this.removePlanProcessButton.TabIndex = 18;
             this.removePlanProcessButton.Text = "ยกเลิกการซ่อมบำรุง";
             this.removePlanProcessButton.UseVisualStyleBackColor = true;
+            this.removePlanProcessButton.Click += new System.EventHandler(this.removePlanProcessButton_Click);
             // 
             // editPlanProcessButton
             // 
@@ -303,8 +304,9 @@
             this.editPlanProcessButton.Name = "editPlanProcessButton";
             this.editPlanProcessButton.Size = new System.Drawing.Size(121, 52);
             this.editPlanProcessButton.TabIndex = 17;
-            this.editPlanProcessButton.Text = "แก้ใขการซ่อมบำรุง";
+            this.editPlanProcessButton.Text = "แก้ใขแผนที่กำลังดำเนินการ";
             this.editPlanProcessButton.UseVisualStyleBackColor = true;
+            this.editPlanProcessButton.Click += new System.EventHandler(this.editPlanProcessButton_Click);
             // 
             // completeOrRomovePlanProcessButton
             // 
@@ -313,8 +315,9 @@
             this.completeOrRomovePlanProcessButton.Name = "completeOrRomovePlanProcessButton";
             this.completeOrRomovePlanProcessButton.Size = new System.Drawing.Size(121, 52);
             this.completeOrRomovePlanProcessButton.TabIndex = 13;
-            this.completeOrRomovePlanProcessButton.Text = "เสร็จสิ้นการซ่อมบำรุง";
+            this.completeOrRomovePlanProcessButton.Text = "ตรวจรับการซ่อมบำรุง";
             this.completeOrRomovePlanProcessButton.UseVisualStyleBackColor = true;
+            this.completeOrRomovePlanProcessButton.Click += new System.EventHandler(this.completeOrRomovePlanProcessButton_Click);
             // 
             // planProcessingDatagridview
             // 
@@ -332,6 +335,8 @@
             this.planProcessingDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.planProcessingDatagridview.Size = new System.Drawing.Size(697, 203);
             this.planProcessingDatagridview.TabIndex = 13;
+            this.planProcessingDatagridview.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.planProcessingDatagridview_CellMouseEnter);
+            this.planProcessingDatagridview.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.planProcessingDatagridview_CellMouseLeave);
             // 
             // planProcessingLabel
             // 
@@ -392,6 +397,7 @@
             this.planHistoryButton.TabIndex = 16;
             this.planHistoryButton.Text = "ประวัติแผนทั้งหมด";
             this.planHistoryButton.UseVisualStyleBackColor = true;
+            this.planHistoryButton.Click += new System.EventHandler(this.planHistoryButton_Click);
             // 
             // completeOrRemovePlanButton
             // 

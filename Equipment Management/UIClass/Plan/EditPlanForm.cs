@@ -51,7 +51,6 @@ namespace Equipment_Management.UIClass.Plan
         {
             pTypecomboBox.Text = Global.selectedEquipmentInPlan.PType;
             pPeriodcomboBox.Text = Global.selectedEquipmentInPlan.PPeriod;
-            timeToDonumericUpDown.Value = Global.selectedEquipmentInPlan.TimesTodo;
             dateToDodateTimePicker.Value = Global.selectedEquipmentInPlan.DateTodo;
             if (!string.IsNullOrEmpty(Global.selectedEquipmentInPlan.EPhoto))
             {
@@ -124,7 +123,6 @@ namespace Equipment_Management.UIClass.Plan
             if (CheckAllAttribute())
             {
                 ePlan.DateToDo = dateToDodateTimePicker.Value;
-                ePlan.TimesToDo = (int)timeToDonumericUpDown.Value;
                 if (ePlan.Change())
                 {
                     ShowCustomMessageBox("ปรับปรุงแผนเสร็จสมบูรณ์");
