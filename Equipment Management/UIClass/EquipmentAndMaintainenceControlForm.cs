@@ -935,9 +935,9 @@ namespace Equipment_Management.UIClass
         }
         private void currentMaintainencePlanDatagridview_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
-            int statusID = (int)currentMaintainencePlanDatagridview.Rows[e.RowIndex].Cells["EStatusID"].Value;
+            int statusID = (int)currentMaintainencePlanDatagridview.Rows[e.RowIndex].Cells["DaysRemainning"].Value;
 
-            Global.SetRowColor(currentMaintainencePlanDatagridview.Rows[e.RowIndex], statusID);
+            Global.SetRowColorByDayRemainning(currentMaintainencePlanDatagridview.Rows[e.RowIndex], statusID);
         }
         private void planProcessingDatagridview_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {

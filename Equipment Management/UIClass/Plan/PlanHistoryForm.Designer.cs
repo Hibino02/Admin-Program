@@ -39,14 +39,14 @@
             this.PlanHistoryDatagridview.AllowUserToResizeColumns = false;
             this.PlanHistoryDatagridview.AllowUserToResizeRows = false;
             this.PlanHistoryDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.PlanHistoryDatagridview.Location = new System.Drawing.Point(12, 88);
+            this.PlanHistoryDatagridview.Location = new System.Drawing.Point(12, 12);
             this.PlanHistoryDatagridview.MultiSelect = false;
             this.PlanHistoryDatagridview.Name = "PlanHistoryDatagridview";
             this.PlanHistoryDatagridview.ReadOnly = true;
             this.PlanHistoryDatagridview.RowHeadersVisible = false;
             this.PlanHistoryDatagridview.RowTemplate.Height = 24;
             this.PlanHistoryDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PlanHistoryDatagridview.Size = new System.Drawing.Size(1440, 681);
+            this.PlanHistoryDatagridview.Size = new System.Drawing.Size(1440, 757);
             this.PlanHistoryDatagridview.TabIndex = 14;
             this.PlanHistoryDatagridview.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PlanHistoryDatagridview_CellDoubleClick);
             this.PlanHistoryDatagridview.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.PlanHistoryDatagridview_RowPrePaint);

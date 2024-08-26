@@ -57,6 +57,21 @@ namespace Equipment_Management.GlobalVariable
                         break;
             }
         }
+        public static void SetRowColorByDayRemainning(DataGridViewRow row, int days)
+        {
+            if (days <= 7)
+            {
+                row.DefaultCellStyle.BackColor = Color.DeepPink;
+            }
+            else if (days <= 180)
+            {
+                row.DefaultCellStyle.BackColor = Color.Gold;
+            }
+            else
+            {
+                row.DefaultCellStyle.BackColor = Color.GreenYellow;
+            }
+        }
 
         public static string user = "equipment-managementblc5"; // equipment-managementblc5
         public static string pass = "Meg@lomaniac001";

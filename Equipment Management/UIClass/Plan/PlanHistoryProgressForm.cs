@@ -177,6 +177,10 @@ namespace Equipment_Management.UIClass.Plan
                 column.Width = 200;
                 column.DisplayIndex = 18;
             }
+            if (planProcessDatagridview.Columns["EStatusID"] != null)
+            {
+                planProcessDatagridview.Columns["EStatusID"].Visible = false;
+            }
         }
         //Showing contents to components
         private void planProcessDatagridview_CellClick(object sender, DataGridViewCellEventArgs e)

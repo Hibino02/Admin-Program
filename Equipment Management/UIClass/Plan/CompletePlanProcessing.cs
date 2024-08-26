@@ -44,7 +44,10 @@ namespace Equipment_Management.UIClass.Plan
         {
             eNamelabel.Text = Global.selectedEquipmentInProcessedPlan.EName;
             eSeriallabel.Text = Global.selectedEquipmentInProcessedPlan.ESerial;
-            Global.LoadImageIntoPictureBox(Global.selectedEquipmentInProcessedPlan.EPhotoPath, equipmentpictureBox);
+            if (!string.IsNullOrEmpty(Global.selectedEquipmentInProcessedPlan.EPhotoPath))
+            {
+                Global.LoadImageIntoPictureBox(Global.selectedEquipmentInProcessedPlan.EPhotoPath, equipmentpictureBox);
+            }
             startrichTextBox.Text = Global.selectedEquipmentInProcessedPlan.StartDetails;
             if (!string.IsNullOrEmpty(Global.selectedEquipmentInProcessedPlan.REName))
             {
