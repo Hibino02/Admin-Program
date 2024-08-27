@@ -174,6 +174,10 @@ namespace Equipment_Management.UIClass.Plan
             {
                 rEquipmentListDataGridView.Columns["Replacement"].Visible = false;
             }
+            if (rEquipmentListDataGridView.Columns["EOwnerID"] != null)
+            {
+                rEquipmentListDataGridView.Columns["EOwnerID"].Visible = false;
+            }
         }
         //Event to filter by Equipment Type
         private void equipmentTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)

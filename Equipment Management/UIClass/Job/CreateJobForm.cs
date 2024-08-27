@@ -250,6 +250,10 @@ namespace Equipment_Management.UIClass.Job
             {
                 equipmentDisplaydataGridView.Columns["Replacement"].Visible = false;
             }
+            if (equipmentDisplaydataGridView.Columns["EOwnerID"] != null)
+            {
+                equipmentDisplaydataGridView.Columns["EOwnerID"].Visible = false;
+            }
         }
         //Format for selected
         private void FormatSelectedEquipmentListDataGridView()
@@ -319,6 +323,10 @@ namespace Equipment_Management.UIClass.Job
             if (equipmentSelecteddataGridView.Columns["Replacement"] != null)
             {
                 equipmentSelecteddataGridView.Columns["Replacement"].Visible = false;
+            }
+            if (equipmentSelecteddataGridView.Columns["EOwnerID"] != null)
+            {
+                equipmentSelecteddataGridView.Columns["EOwnerID"].Visible = false;
             }
         }
         //Searching & filter events

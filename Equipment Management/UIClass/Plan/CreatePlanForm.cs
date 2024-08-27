@@ -261,6 +261,10 @@ namespace Equipment_Management.UIClass.Plan
             {
                 EquipmentListDataGridView.Columns["Replacement"].Visible = false;
             }
+            if (EquipmentListDataGridView.Columns["EOwnerID"] != null)
+            {
+                EquipmentListDataGridView.Columns["EOwnerID"].Visible = false;
+            }
         }
         //Event to add selected Equipment 
         private void EquipmentListDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

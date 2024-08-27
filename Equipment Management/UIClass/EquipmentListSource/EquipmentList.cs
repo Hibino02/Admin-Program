@@ -23,6 +23,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         private PictureBox pictureBox;
         //Fillter algorithm variable
         private int currentFilterID = -1; // Holds the currently selected filter ID
+        private int currentFilterOwnerID = -1;
         private List<AllEquipmentView> originalEquipmentList;
         //variable to call other form
         EditEquipmentForm editForm;
@@ -32,6 +33,8 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         //variable for update components
         private List<int> equipmentTypeID = new List<int>();
         List<EquipmentType> equipmentTypeList;
+        private List<int> equipmentOwnerID = new List<int>();
+        List<EquipmentOwner> equipmentOwnerList;
 
         BindingSource equipmentListBindingSource;
         List<AllEquipmentView> equipmentList;
@@ -45,6 +48,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             equipmentList = new List<AllEquipmentView>();
             equipmentFilteredList = new List<AllEquipmentView>();
             equipmentTypeList = new List<EquipmentType>();
+            equipmentOwnerList = new List<EquipmentOwner>();
             originalEquipmentList = new List<AllEquipmentView>();
             equipmentListBindingSource = new BindingSource();
 
@@ -74,12 +78,24 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             equipmentTypeComboBox.Items.Clear();
             equipmentTypeID.Clear();
 
-            equipmentTypeComboBox.Items.Add("--------------------------------------");
+            equipmentTypeComboBox.Items.Add("---------------------------------------------------");
             equipmentTypeID.Add(-1);
             foreach (EquipmentType eqt in equipmentTypeList)
             {
                 equipmentTypeComboBox.Items.Add(eqt.EType);
                 equipmentTypeID.Add(eqt.ID);
+            }
+
+            equipmentOwnerList = EquipmentOwner.GetEquipmentOwnerList();
+            ownercomboBox.Items.Clear();
+            equipmentOwnerID.Clear();
+
+            ownercomboBox.Items.Add("--------------------------");
+            equipmentOwnerID.Add(-1);
+            foreach (EquipmentOwner owner in equipmentOwnerList)
+            {
+                ownercomboBox.Items.Add(owner.Owner);
+                equipmentOwnerID.Add(owner.ID);
             }
         }
 
@@ -91,16 +107,15 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         }
         private void ApplyCurrentFilter()
         {
-            if (currentFilterID < 0)
-            {
-                equipmentFilteredList = new List<AllEquipmentView>(originalEquipmentList);
-            }
-            else
-            {
-                equipmentFilteredList = originalEquipmentList
-                    .Where(eq => eq.ETypeID == currentFilterID)
-                    .ToList();
-            }
+            int selectedEquipmentTypeID = equipmentTypeComboBox.SelectedIndex > 0 ? equipmentTypeID[equipmentTypeComboBox.SelectedIndex] : -1;
+            int selectedOwnerID = ownercomboBox.SelectedIndex > 0 ? equipmentOwnerID[ownercomboBox.SelectedIndex] : -1;
+
+            equipmentFilteredList = originalEquipmentList
+        .Where(eq =>
+            (selectedEquipmentTypeID < 0 || eq.ETypeID == selectedEquipmentTypeID) &&
+            (selectedOwnerID < 0 || eq.EOwnerID == selectedOwnerID))
+        .ToList();
+
             SortableBindingList<AllEquipmentView> sortableList = new SortableBindingList<AllEquipmentView>(equipmentFilteredList);
             equipmentListBindingSource.DataSource = sortableList;
             EquipmentListDataGridView.DataSource = equipmentListBindingSource;
@@ -149,13 +164,13 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             {
                 Columns["EOwner"].HeaderText = "เจ้าของ";
                 Columns["EOwner"].Width = 70;
-                Columns["EOwner"].SortMode = DataGridViewColumnSortMode.NotSortable;
+                Columns["EOwner"].SortMode = DataGridViewColumnSortMode.Automatic;
             }
             if (Columns["EStatus"] != null)
             {
                 Columns["EStatus"].HeaderText = "สถานะปัจจุบัน";
                 Columns["EStatus"].Width = 100;
-                Columns["EStatus"].SortMode = DataGridViewColumnSortMode.NotSortable;
+                Columns["EStatus"].SortMode = DataGridViewColumnSortMode.Automatic;
             }
             if (Columns["InsDetails"] != null)
             {
@@ -189,6 +204,11 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             {
                 Columns["Replacement"].Visible = false;
                 Columns["Replacement"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+            if (Columns["EOwnerID"] != null)
+            {
+                Columns["EOwnerID"].Visible = false;
+                Columns["EOwnerID"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
         }
 
@@ -234,6 +254,13 @@ namespace Equipment_Management.UIClass.EquipmentListSource
         {
             int selectTypeIndex = equipmentTypeComboBox.SelectedIndex;
             currentFilterID = selectTypeIndex >= 0 ? equipmentTypeID[selectTypeIndex] : -1;
+
+            ApplyCurrentFilter();
+        }
+        private void ownercomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectOwnerIndex = ownercomboBox.SelectedIndex;
+            currentFilterOwnerID = selectOwnerIndex >= 0 ? equipmentOwnerID[selectOwnerIndex] : -1;
 
             ApplyCurrentFilter();
         }
@@ -329,7 +356,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
                 var result = messageBox.ShowDialog();
             }
         }
-
+        //Write Off & Trabsfer
         private bool CheckEquipmentStatusBeforeWriteOffNTransfer()
         {
             bool isComplete = true;
@@ -373,6 +400,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
                 }
             }       
         }
+        //Job History
         private void jobHistoryButton_Click(object sender, EventArgs e)
         {
             Global.ID = -1;
@@ -381,9 +409,12 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             {
                 Global.ID = (int)selectedRow.Cells["ID"].Value;
                 jobHistory = new JobHistory();
-                jobHistory.Owner = main;
-                jobHistory.UpdateGrid += OnUpdate;
-                jobHistory.ShowDialog();
+                if (jobHistory.isJlist)
+                {
+                    jobHistory.Owner = main;
+                    jobHistory.UpdateGrid += OnUpdate;
+                    jobHistory.ShowDialog();
+                }
             }
         }
         //Event to show equipment photo

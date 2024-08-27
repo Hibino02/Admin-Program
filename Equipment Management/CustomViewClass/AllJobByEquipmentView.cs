@@ -12,6 +12,7 @@ namespace Equipment_Management.CustomViewClass
         public DateTime? SDate { get; set; }
         public DateTime? FDate { get; set; }
         public string VendorName { get; set; }
+        public string VendorDetails { get; set; }
         public string JDetails { get; set; }
         public string Cost { get; set; }
         public string CasePhoto { get; set; }
@@ -20,27 +21,14 @@ namespace Equipment_Management.CustomViewClass
         public string RESerial { get; set; }
         public string REPhoto { get; set; }
         public string FinPhoto { get; set; }
+        public string JobDocument { get; set; }
+        public string WorkPermit { get; set; }
+        public string Contract { get; set; }
+        public string FinDocument { get; set; }
+        public string RepairDetails { get; set; }
+        
 
         public AllJobByEquipmentView() { }
-        public AllJobByEquipmentView(int id,int eid,string jtype,DateTime? sdate,DateTime? fdate,string vendorname,
-            string rename, string reserial,string cost,string casephoto,string finphoto,bool jobstatus,string jdetails
-            ,string rephoto)
-        {
-            this.ID = id;
-            this.EID = eid;
-            this.JType = jtype;
-            this.SDate = sdate;
-            this.FDate = fdate;
-            this.VendorName = vendorname;
-            this.JDetails = jdetails;
-            this.Cost = cost;
-            this.CasePhoto = casephoto;
-            this.JobStatus = jobstatus;
-            this.REName = rename;
-            this.RESerial = reserial;
-            this.REPhoto = rephoto;
-            this.FinPhoto = finphoto;
-        }
 
         public static List<AllJobByEquipmentView> GetAllJobByEquipmentView()
         {
@@ -57,13 +45,19 @@ namespace Equipment_Management.CustomViewClass
                         SDate = j.StartDate,
                         FDate = j.FinishDate,
                         VendorName = j.VendName,
+                        VendorDetails = j.VendDetails,
                         REName = j.REq?.Name,
                         RESerial = j.REq?.Serial,
                         Cost = j.Cost.ToString("F2"),
                         CasePhoto = j.CasePhoto,
                         FinPhoto = j.FinishPhoto,
                         REPhoto = j.REq?.EPhotoPath,
-                        JDetails = j.JDetails
+                        JDetails = j.JDetails,
+                        JobDocument = j.JDocument,
+                        WorkPermit = j.WorkPermit,
+                        Contract = j.Contract,
+                        FinDocument = j.FinishDocument,
+                        RepairDetails = j.RepairDetails
                     };
                     allJobByEquipmentView.Add(view);
                 }

@@ -52,6 +52,7 @@ namespace Equipment_Management.UIClass.Plan
             finDoclinkLabel.MouseEnter += finDoclinkLabel_MouseEnter;
             finDoclinkLabel.MouseLeave += finDoclinkLabel_MouseLeave;
 
+
             UpdatePlanComponents();
             UpdatePlanProcessDataGridView();
         }

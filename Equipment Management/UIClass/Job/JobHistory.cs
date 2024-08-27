@@ -5,7 +5,8 @@ using Equipment_Management.GlobalVariable;
 using System.Drawing;
 using System.Windows.Forms;
 using Equipment_Management.ObjectClass;
-using System.Linq;
+using Equipment_Management.CustomWindowComponents;
+using System.IO;
 
 namespace Equipment_Management.UIClass.Job
 {
@@ -18,52 +19,118 @@ namespace Equipment_Management.UIClass.Job
         List<AllJobByEquipmentView> allJobByEquipmentViewList;
         BindingSource joblistBindingSource;
 
-        private PictureBox finishPictureBox;
+        string jobDocument;
+        string workpermit;
+        string contract;
+        string findocument;
+
+        string casePhoto;
+        string finPhoto;
+
+        DateTime startDate;
+        DateTime finishDate;
+
+        private ToolTip jDocumentTooltips;
+        private ToolTip workpermitTooltips;
+        private ToolTip contractTooltips;
+        private ToolTip findocumentTooltips;
+
+        private PictureBox newEPicturebox;
+
+        public bool isJlist = true;
 
         public JobHistory()
         {
             InitializeComponent();
             this.Size = new Size(1480,820);
             allJobByEquipmentViewList = AllJobByEquipmentView.GetAllJobByEquipmentView();
+
+            if (CheckJoblist())
+            {
+                this.Close();
+                return;
+            }
+
             JEq = new Equipment(Global.ID);
             joblistBindingSource = new BindingSource();
 
-            //Create hidden picturebox
-            finishPictureBox = new PictureBox
+            //--------------------------------------------------------------------------------------------//
+            //jDocument tooltips
+            jDocumentTooltips = new ToolTip();
+            jDocumentTooltips.InitialDelay = 0;
+            jDocumentTooltips.ReshowDelay = 0;
+            jDocumentTooltips.AutoPopDelay = 5000;
+
+            jobDoclinkLabel.MouseEnter += jobDoclinkLabel_MouseEnter;
+            jobDoclinkLabel.MouseLeave += jobDoclinkLabel_MouseLeave;
+
+            //--------------------------------------------------------------------------------------------//
+            //workpermit tooltips
+            workpermitTooltips = new ToolTip();
+            workpermitTooltips.InitialDelay = 0;
+            workpermitTooltips.ReshowDelay = 0;
+            workpermitTooltips.AutoPopDelay = 5000;
+
+            workpermitlinkLabel.MouseEnter += workpermitlinkLabel_MouseEnter;
+            workpermitlinkLabel.MouseLeave += workpermitlinkLabel_MouseLeave;
+
+            //--------------------------------------------------------------------------------------------//
+            //contract tooltips
+            contractTooltips = new ToolTip();
+            contractTooltips.InitialDelay = 0;
+            contractTooltips.ReshowDelay = 0;
+            contractTooltips.AutoPopDelay = 5000;
+
+            contractlinkLabel.MouseEnter += contractlinkLabel_MouseEnter;
+            contractlinkLabel.MouseLeave += contractlinkLabel_MouseLeave;
+
+            //--------------------------------------------------------------------------------------------//
+            //workpermit tooltips
+            findocumentTooltips = new ToolTip();
+            findocumentTooltips.InitialDelay = 0;
+            findocumentTooltips.ReshowDelay = 0;
+            findocumentTooltips.AutoPopDelay = 5000;
+
+            finDoclinkLabel.MouseEnter += finDoclinkLabel_MouseEnter;
+            finDoclinkLabel.MouseLeave += finDoclinkLabel_MouseLeave;
+
+            //Create hidden picturebox for Job
+            newEPicturebox = new PictureBox
             {
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Visible = false,
                 BackColor = Color.Transparent,
-                Size = new Size(900, 620),
+                Size = new Size(700, 620),
                 Location = new Point(10, 10)
             };
-            this.Controls.Add(finishPictureBox);
+            this.Controls.Add(newEPicturebox);
             //Register drive event
             eJobHistoryDataGridView.CellMouseEnter += eJobHistoryDataGridView_CellMouseEnter;
             eJobHistoryDataGridView.CellMouseLeave += eJobHistoryDataGridView_CellMouseLeave;
 
             UpdateEquipmentDetails();
-            if (allJobByEquipmentViewList.Any())
+            UpdateJobGridview();
+        }
+        public bool CheckJoblist()
+        {
+            if (allJobByEquipmentViewList.Count == 0)
             {
-                UpdateJobGridview();
-
-                string imagePath = eJobHistoryDataGridView["CasePhoto", 0]?.Value?.ToString();
-                if (!string.IsNullOrEmpty(imagePath))
-                {
-                    Global.LoadImageIntoPictureBox(imagePath, casePictureBox);
-                }
+                ShowCustomMessageBox("อุปกรณ์นี้ ไม่เคยมีประวัติการแจ้งซ่อม");
+                isJlist = false;
+                return true;
             }
-            else
-            {
-                eJobHistoryDataGridView.DataSource = null;
-            }
+            return false;
         }
         private void UpdateEquipmentDetails()
         {
+            //Static components setting here
             eNameLabel.Text = JEq.Name;
             eSerialLabel.Text = JEq.Serial;
             eInstallPlacerichTextBox.Text = JEq.InstallationDetails;
-            Global.LoadImageIntoPictureBox(JEq.EPhotoPath,equipmentPictureBox);
+            if (!string.IsNullOrEmpty(JEq.EPhotoPath))
+            {
+                Global.LoadImageIntoPictureBox(JEq.EPhotoPath, equipmentPictureBox);
+            }
         }
         private void UpdateJobGridview()
         {
@@ -83,23 +150,18 @@ namespace Equipment_Management.UIClass.Job
             }
             if(eJobHistoryDataGridView.Columns["JType"] != null)
             {
-                var customColumn = eJobHistoryDataGridView.Columns["JType"];
-                customColumn.HeaderText = "ประเภทการซ่อม";
-                customColumn.Width = 130;
+                eJobHistoryDataGridView.Columns["JType"].Visible = false;
             }
             if (eJobHistoryDataGridView.Columns["SDate"] != null)
             {
-                var customColumn = eJobHistoryDataGridView.Columns["SDate"];
-                customColumn.HeaderText = "วันที่เริ่มงาน/ได้ของ";
-                customColumn.DefaultCellStyle.Format = "MMM dd, yyy";
-                customColumn.Width = 100;
+                eJobHistoryDataGridView.Columns["SDate"].Visible = false;
             }
             if (eJobHistoryDataGridView.Columns["FDate"] != null)
             {
                 var customColumn = eJobHistoryDataGridView.Columns["FDate"];
                 customColumn.HeaderText = "วันที่เสร็จงาน";
                 customColumn.DefaultCellStyle.Format = "MMM dd, yyy";
-                customColumn.Width = 90;
+                customColumn.Width = 120;
             }
             if (eJobHistoryDataGridView.Columns["VendorName"] != null)
             {
@@ -109,15 +171,11 @@ namespace Equipment_Management.UIClass.Job
             }
             if (eJobHistoryDataGridView.Columns["JDetails"] != null)
             {
-                var customColumn = eJobHistoryDataGridView.Columns["JDetails"];
-                customColumn.HeaderText = "รายละเอียดการแจ้งซ่อม";
-                customColumn.Width = 350;
+                eJobHistoryDataGridView.Columns["JDetails"].Visible = false;
             }
             if (eJobHistoryDataGridView.Columns["Cost"] != null)
             {
-                var customColumn = eJobHistoryDataGridView.Columns["Cost"];
-                customColumn.HeaderText = "ราคา / ค่าใช้จ่าย";
-                customColumn.Width = 90;
+                eJobHistoryDataGridView.Columns["Cost"].Visible = false;
             }
             if (eJobHistoryDataGridView.Columns["CasePhoto"] != null)
             {
@@ -130,67 +188,247 @@ namespace Equipment_Management.UIClass.Job
             if (eJobHistoryDataGridView.Columns["REName"] != null)
             {
                 var customColumn = eJobHistoryDataGridView.Columns["REName"];
-                customColumn.HeaderText = "ชื่อเรียกอุปกรณ์ทดแทน";
-                customColumn.Width = 200;
+                customColumn.HeaderText = "ชื่อเรียกอุปกรณ์ทดแทน (กรณีที่ซื้อใหม่)";
+                customColumn.Width = 250;
             }
             if (eJobHistoryDataGridView.Columns["RESerial"] != null)
             {
                 var customColumn = eJobHistoryDataGridView.Columns["RESerial"];
                 customColumn.HeaderText = "ชื่อทางบัญชี";
+                customColumn.Width = 100;
             }
             if (eJobHistoryDataGridView.Columns["FinPhoto"] != null)
             {
-                var customColumn = eJobHistoryDataGridView.Columns["FinPhoto"];
-                customColumn.HeaderText = "รูปหลังซ่อม";
-                customColumn.Width = 80;
+                eJobHistoryDataGridView.Columns["FinPhoto"].Visible = false;
             }
             if (eJobHistoryDataGridView.Columns["REPhoto"] != null)
             {
                 var customColumn = eJobHistoryDataGridView.Columns["REPhoto"];
                 customColumn.HeaderText = "รูปของใหม่";
-                customColumn.Width = 80;
+                customColumn.Width = 100;
+            }
+            if (eJobHistoryDataGridView.Columns["JobDocument"] != null)
+            {
+                eJobHistoryDataGridView.Columns["JobDocument"].Visible = false;
+            }
+            if (eJobHistoryDataGridView.Columns["WorkPermit"] != null)
+            {
+                eJobHistoryDataGridView.Columns["WorkPermit"].Visible = false;
+            }
+            if (eJobHistoryDataGridView.Columns["Contract"] != null)
+            {
+                eJobHistoryDataGridView.Columns["Contract"].Visible = false;
+            }
+            if (eJobHistoryDataGridView.Columns["FinDocument"] != null)
+            {
+                eJobHistoryDataGridView.Columns["FinDocument"].Visible = false;
+            }
+            if (eJobHistoryDataGridView.Columns["RepairDetails"] != null)
+            {
+                eJobHistoryDataGridView.Columns["RepairDetails"].Visible = false;
+            }
+            if (eJobHistoryDataGridView.Columns["VendorDetails"] != null)
+            {
+                var customColumn = eJobHistoryDataGridView.Columns["VendorDetails"];
+                customColumn.HeaderText = "รายละเอียดผู้รับเหมา";
+                customColumn.Width = 250;
             }
         }
-        //Event to show case photo
+        //Showing contents to components
         private void eJobHistoryDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                string imagePath = eJobHistoryDataGridView["CasePhoto", e.RowIndex]?.Value?.ToString();
-                if (!string.IsNullOrEmpty(imagePath))
+                DataGridViewRow selectedRow = eJobHistoryDataGridView.Rows[e.RowIndex];
+
+                jobDocument = selectedRow.Cells["JobDocument"].Value?.ToString();
+                workpermit = selectedRow.Cells["WorkPermit"].Value?.ToString();
+                contract = selectedRow.Cells["Contract"].Value?.ToString();
+                findocument = selectedRow.Cells["FinDocument"].Value?.ToString();
+                jTypelabel.Text = selectedRow.Cells["JType"].Value?.ToString();
+                string sDate = selectedRow.Cells["SDate"].Value?.ToString();
+                if(DateTime.TryParse(sDate, out startDate))
                 {
-                    Global.LoadImageIntoPictureBox(imagePath, casePictureBox);
+                    startDatelabel.Text = startDate.ToString("MMM dd, yyy");
                 }
                 else
                 {
-                    return;
+                    startDatelabel.Text = "-";
+                }
+                jDetailrichTextBox.Text = selectedRow.Cells["JDetails"].Value?.ToString();
+                casePhoto = selectedRow.Cells["CasePhoto"].Value?.ToString();
+                if (!string.IsNullOrEmpty(casePhoto))
+                {
+                    Global.LoadImageIntoPictureBox(casePhoto, casePictureBox);
+                }
+                costlabel.Text = selectedRow.Cells["Cost"].Value?.ToString();
+                string fDate = selectedRow.Cells["FDate"].Value?.ToString();
+                if(DateTime.TryParse(fDate, out finishDate))
+                {
+                    finDatelabel.Text = finishDate.ToString("MMM dd, yyy");
+                }
+                else
+                {
+                    finDatelabel.Text = "-";
+                }
+                repairDetailrichTextBox.Text = selectedRow.Cells["RepairDetails"].Value?.ToString();
+                finPhoto = selectedRow.Cells["FinPhoto"].Value?.ToString();
+                if (!string.IsNullOrEmpty(finPhoto))
+                {
+                    Global.LoadImageIntoPictureBox(finPhoto,finPictureBox);
                 }
             }
         }
-        //Event to show hidden picturebox
+        //Automatic selected first row
+        private void eJobHistoryDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (eJobHistoryDataGridView.Rows.Count > 0)
+            {
+                eJobHistoryDataGridView.CurrentCell = eJobHistoryDataGridView.Rows[0].Cells[4];
+                eJobHistoryDataGridView_CellClick(this,new DataGridViewCellEventArgs(0,0));
+            }
+        }
+        //Opening Documents Event
+        private void jobDoclinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(jobDocument))
+            {
+                Global.DownloadAndOpenPdf(jobDocument);
+            }
+            else
+            {
+                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+            }
+        }
+        private void workpermitlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(workpermit))
+            {
+                Global.DownloadAndOpenPdf(workpermit);
+            }
+            else
+            {
+                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+            }
+        }
+        private void contractlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(contract))
+            {
+                Global.DownloadAndOpenPdf(contract);
+            }
+            else
+            {
+                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+            }
+        }
+        private void finDoclinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(findocument))
+            {
+                Global.DownloadAndOpenPdf(findocument);
+            }
+            else
+            {
+                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+            }
+        }
+        //Call custom message box
+        private void ShowCustomMessageBox(string message)
+        {
+            using (var messageBox = new CustomMessageBox())
+            {
+                messageBox.MessageText = message;
+                var result = messageBox.ShowDialog();
+            }
+        }
+
+        private void jobDoclinkLabel_MouseEnter(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(jobDocument))
+            {
+                jDocumentTooltips.Show($"Attached File: {Path.GetFileName(jobDocument)}", jobDoclinkLabel);
+            }
+            else
+            {
+                jDocumentTooltips.Show("No file attached", jobDoclinkLabel);
+            }
+        }
+        private void jobDoclinkLabel_MouseLeave(object sender, EventArgs e)
+        {
+            jDocumentTooltips.Hide(jobDoclinkLabel);
+        }
+        private void workpermitlinkLabel_MouseEnter(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(workpermit))
+            {
+                workpermitTooltips.Show($"Attached File: {Path.GetFileName(workpermit)}", workpermitlinkLabel);
+            }
+            else
+            {
+                workpermitTooltips.Show("No file attached", workpermitlinkLabel);
+            }
+        }
+        private void workpermitlinkLabel_MouseLeave(object sender, EventArgs e)
+        {
+            workpermitTooltips.Hide(workpermitlinkLabel);
+        }
+        private void contractlinkLabel_MouseEnter(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(contract))
+            {
+                contractTooltips.Show($"Attached File: {Path.GetFileName(contract)}", contractlinkLabel);
+            }
+            else
+            {
+                contractTooltips.Show("No file attached", contractlinkLabel);
+            }
+        }
+        private void contractlinkLabel_MouseLeave(object sender, EventArgs e)
+        {
+            contractTooltips.Hide(contractlinkLabel);
+        }
+        private void finDoclinkLabel_MouseEnter(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(findocument))
+            {
+                findocumentTooltips.Show($"Attached File: {Path.GetFileName(findocument)}", finDoclinkLabel);
+            }
+            else
+            {
+                findocumentTooltips.Show("No file attached", finDoclinkLabel);
+            }
+        }
+        private void finDoclinkLabel_MouseLeave(object sender, EventArgs e)
+        {
+            findocumentTooltips.Hide(finDoclinkLabel);
+        }
+        //Event to drive picturebox
         private void eJobHistoryDataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 string columnName = eJobHistoryDataGridView.Columns[e.ColumnIndex].Name;
-                if (columnName == "FinPhoto"|| columnName == "REPhoto")
+                if (columnName == "REPhoto")
                 {
+                    eJobHistoryDataGridView.ShowCellToolTips = false;
+
                     string imagePath = eJobHistoryDataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
                     if (string.IsNullOrEmpty(imagePath))
                     {
                         return;
                     }
 
-                    Global.LoadImageIntoPictureBox(imagePath, finishPictureBox);
-                    finishPictureBox.Visible = true;
-                    finishPictureBox.BringToFront();
-
+                    Global.LoadImageIntoPictureBox(imagePath, newEPicturebox);
+                    newEPicturebox.Visible = true;
+                    newEPicturebox.BringToFront();
                 }
             }
         }
         private void eJobHistoryDataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
-            finishPictureBox.Visible = false;
+            newEPicturebox.Visible = false;
+            eJobHistoryDataGridView.ShowCellToolTips = true;
         }
     }
 }

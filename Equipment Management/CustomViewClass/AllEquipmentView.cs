@@ -21,27 +21,9 @@ namespace Equipment_Management.CustomViewClass
         public string InstallEPhoto { get; set; }
         public string EquipmentPhoto { get; set; }
         public bool Replacement { get; set; }
+        public int EOwnerID { get; set; }
 
         public AllEquipmentView() { }
-        public AllEquipmentView(int id,string name,string serial,string edetails,DateTime insdate,
-            string etype,string eowner,string estatus,string insdetails,int etypeid,int estatisid,string installephoto,
-            string equipmentphoto,bool replacement)
-        {
-            this.ID = id;
-            this.Name = name;
-            this.Serial = serial;
-            this.EDetails = edetails;
-            this.InsDate = insdate;
-            this.EType = etype;
-            this.EOwner = eowner;
-            this.EStatus = estatus;
-            this.InsDetails = insdetails;
-            this.ETypeID = etypeid;
-            this.EStatusID = estatisid;
-            this.InstallEPhoto = installephoto;
-            this.EquipmentPhoto = equipmentphoto;
-            this.Replacement = replacement;
-        }
 
         public static List<AllEquipmentView> GetAllEquipmentView()
         {
@@ -62,7 +44,8 @@ namespace Equipment_Management.CustomViewClass
                     ETypeID = e.ETypeObj.ID,
                     EStatusID = e.EStatusObj.ID,
                     InstallEPhoto = e.OPlacePhotoPath,
-                    EquipmentPhoto = e.EPhotoPath
+                    EquipmentPhoto = e.EPhotoPath,
+                    EOwnerID = e.EOwnerObj.ID
                 };
                 equipmentListView.Add(view);
             }
