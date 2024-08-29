@@ -46,10 +46,6 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             this.Size = new Size(1480, 820);
 
             equipmentList = new List<AllEquipmentView>();
-            equipmentFilteredList = new List<AllEquipmentView>();
-            equipmentTypeList = new List<EquipmentType>();
-            equipmentOwnerList = new List<EquipmentOwner>();
-            originalEquipmentList = new List<AllEquipmentView>();
             equipmentListBindingSource = new BindingSource();
 
             //Create hidden picturebox
@@ -129,7 +125,6 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             if (Columns["ID"] != null)
             {
                 Columns["ID"].Visible = false;
-                Columns["ID"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             if (Columns["Name"] != null)
             {
@@ -181,12 +176,10 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             if (Columns["ETypeID"] != null)
             {
                 Columns["ETypeID"].Visible = false;
-                Columns["ETypeID"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             if (Columns["EStatusID"] != null)
             {
                 Columns["EStatusID"].Visible = false;
-                Columns["EStatusID"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             if (Columns["InstallEPhoto"] != null)
             {
@@ -203,12 +196,14 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             if (Columns["Replacement"] != null)
             {
                 Columns["Replacement"].Visible = false;
-                Columns["Replacement"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             if (Columns["EOwnerID"] != null)
             {
                 Columns["EOwnerID"].Visible = false;
-                Columns["EOwnerID"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+            if (Columns["IsEJob"] != null)
+            {
+                Columns["IsEJob"].Visible = false;
             }
         }
 
@@ -356,7 +351,7 @@ namespace Equipment_Management.UIClass.EquipmentListSource
                 var result = messageBox.ShowDialog();
             }
         }
-        //Write Off & Trabsfer
+        //Write Off & Transfer
         private bool CheckEquipmentStatusBeforeWriteOffNTransfer()
         {
             bool isComplete = true;
@@ -455,6 +450,16 @@ namespace Equipment_Management.UIClass.EquipmentListSource
             int statusID = (int)EquipmentListDataGridView.Rows[e.RowIndex].Cells["EStatusID"].Value;
 
             Global.SetRowColor(EquipmentListDataGridView.Rows[e.RowIndex], statusID);
+
+            bool isHasJ = (bool)EquipmentListDataGridView.Rows[e.RowIndex].Cells["IsEJob"].Value;
+            if (isHasJ)
+            {
+                EquipmentListDataGridView.Rows[e.RowIndex].DefaultCellStyle.Font = new Font(EquipmentListDataGridView.Font, FontStyle.Bold);
+            }
+            else
+            {
+                EquipmentListDataGridView.Rows[e.RowIndex].DefaultCellStyle.Font = new Font(EquipmentListDataGridView.Font, FontStyle.Regular);
+            }
         }
     }
 }

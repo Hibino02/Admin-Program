@@ -261,6 +261,10 @@ namespace Equipment_Management.UIClass.Job
                 {
                     Global.LoadImageIntoPictureBox(casePhoto, casePictureBox);
                 }
+                else
+                {
+                    casePictureBox.Image = null;
+                }
                 costlabel.Text = selectedRow.Cells["Cost"].Value?.ToString();
                 string fDate = selectedRow.Cells["FDate"].Value?.ToString();
                 if(DateTime.TryParse(fDate, out finishDate))
@@ -276,6 +280,10 @@ namespace Equipment_Management.UIClass.Job
                 if (!string.IsNullOrEmpty(finPhoto))
                 {
                     Global.LoadImageIntoPictureBox(finPhoto,finPictureBox);
+                }
+                else
+                {
+                    finPictureBox.Image = null;
                 }
             }
         }

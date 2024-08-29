@@ -17,6 +17,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
         public event EventHandler UpdateGrid;
 
         private ToolTip accToolTip;
+        private ToolTip writeoffToolTip;
 
         string equipmentPhotoPath;
         string oldEquipmentPhotoPath;
@@ -24,6 +25,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
         string oldInstallationPlacePhotoPath;
         string acquisitionDocumentPath;
         string oldAcquisitionDocumentPath;
+        string writeoffTransferDocumentPath;
 
         private CreateWindow create;
         //variable for update components
@@ -77,6 +79,16 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
 
             invoiceLinkLabel.MouseEnter += invoiceLinkLabel_MouseEnter;
             invoiceLinkLabel.MouseLeave += invoiceLinkLabel_MouseLeave;
+
+            //--------------------------------------------------------------------------------------------//
+            //WriteOffToolTip
+            writeoffToolTip = new ToolTip();
+            writeoffToolTip.InitialDelay = 0;
+            writeoffToolTip.ReshowDelay = 0;
+            writeoffToolTip.AutoPopDelay = 5000;
+
+            writeOfflinkLabel.MouseEnter += writeOfflinkLabel_MouseEnter;
+            writeOfflinkLabel.MouseLeave += writeOfflinkLabel_MouseLeave;
 
             acquisitionComboBox.Enabled = false;
             UpdateComponents();
@@ -185,7 +197,8 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
 
             oldEquipmentPhotoPath = edit.EPhotoPath;
             oldInstallationPlacePhotoPath = edit.OPlacePhotoPath;
-            
+
+            writeoffTransferDocumentPath = edit.WriteOffPath;
         }
 
         private void createTypeButton_Click(object sender, EventArgs e)
@@ -556,6 +569,34 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
         private void invoiceLinkLabel_MouseLeave(object sender, EventArgs e)
         {
             accToolTip.Hide(invoiceLinkLabel);
+        }
+        //Open Write Off
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(writeoffTransferDocumentPath))
+            {
+                Global.DownloadAndOpenPdf(writeoffTransferDocumentPath);
+            }
+            else
+            {
+                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+            }
+        }
+        //Event to drive writeoff tooltip
+        private void writeOfflinkLabel_MouseEnter(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(writeoffTransferDocumentPath))
+            {
+                writeoffToolTip.Show($"Attached File: {Path.GetFileName(writeoffTransferDocumentPath)}", writeOfflinkLabel);
+            }
+            else
+            {
+                writeoffToolTip.Show("No file attached", writeOfflinkLabel);
+            }
+        }
+        private void writeOfflinkLabel_MouseLeave(object sender, EventArgs e)
+        {
+            writeoffToolTip.Hide(writeOfflinkLabel);
         }
     }
 }

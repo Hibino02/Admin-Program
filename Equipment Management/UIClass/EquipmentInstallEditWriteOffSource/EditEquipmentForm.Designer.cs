@@ -62,6 +62,7 @@
             this.createTypeButton = new System.Windows.Forms.Button();
             this.choseEquipmentTypeCombobox = new System.Windows.Forms.ComboBox();
             this.equipmentTypeLabel = new System.Windows.Forms.Label();
+            this.writeOfflinkLabel = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.installationPlacePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -69,10 +70,9 @@
             // InstallationDetailsRichTextBox
             // 
             this.InstallationDetailsRichTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.InstallationDetailsRichTextBox.Location = new System.Drawing.Point(1396, 186);
-            this.InstallationDetailsRichTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.InstallationDetailsRichTextBox.Location = new System.Drawing.Point(1047, 151);
             this.InstallationDetailsRichTextBox.Name = "InstallationDetailsRichTextBox";
-            this.InstallationDetailsRichTextBox.Size = new System.Drawing.Size(448, 110);
+            this.InstallationDetailsRichTextBox.Size = new System.Drawing.Size(337, 90);
             this.InstallationDetailsRichTextBox.TabIndex = 72;
             this.InstallationDetailsRichTextBox.Text = "";
             // 
@@ -80,10 +80,9 @@
             // 
             this.equipmentDetailsLabel.AutoSize = true;
             this.equipmentDetailsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.equipmentDetailsLabel.Location = new System.Drawing.Point(940, 154);
-            this.equipmentDetailsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.equipmentDetailsLabel.Location = new System.Drawing.Point(705, 125);
             this.equipmentDetailsLabel.Name = "equipmentDetailsLabel";
-            this.equipmentDetailsLabel.Size = new System.Drawing.Size(201, 29);
+            this.equipmentDetailsLabel.Size = new System.Drawing.Size(152, 24);
             this.equipmentDetailsLabel.TabIndex = 71;
             this.equipmentDetailsLabel.Text = "รายละเอียดอุปกรณ์ :";
             // 
@@ -93,10 +92,9 @@
             this.editEquipmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.editEquipmentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.editEquipmentButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.editEquipmentButton.Location = new System.Drawing.Point(1853, 769);
-            this.editEquipmentButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.editEquipmentButton.Location = new System.Drawing.Point(1390, 625);
             this.editEquipmentButton.Name = "editEquipmentButton";
-            this.editEquipmentButton.Size = new System.Drawing.Size(95, 183);
+            this.editEquipmentButton.Size = new System.Drawing.Size(71, 149);
             this.editEquipmentButton.TabIndex = 70;
             this.editEquipmentButton.Text = "แก้ใขรายละเอียดอุปกรณ์";
             this.editEquipmentButton.UseVisualStyleBackColor = false;
@@ -106,10 +104,9 @@
             // 
             this.invoiceLinkLabel.AutoSize = true;
             this.invoiceLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invoiceLinkLabel.Location = new System.Drawing.Point(657, 180);
-            this.invoiceLinkLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.invoiceLinkLabel.Location = new System.Drawing.Point(493, 146);
             this.invoiceLinkLabel.Name = "invoiceLinkLabel";
-            this.invoiceLinkLabel.Size = new System.Drawing.Size(72, 25);
+            this.invoiceLinkLabel.Size = new System.Drawing.Size(63, 20);
             this.invoiceLinkLabel.TabIndex = 67;
             this.invoiceLinkLabel.TabStop = true;
             this.invoiceLinkLabel.Text = "ดูเอกสาร";
@@ -120,20 +117,18 @@
             // sellDetailsRichTextBox
             // 
             this.sellDetailsRichTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.sellDetailsRichTextBox.Location = new System.Drawing.Point(937, 38);
-            this.sellDetailsRichTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.sellDetailsRichTextBox.Location = new System.Drawing.Point(703, 31);
             this.sellDetailsRichTextBox.Name = "sellDetailsRichTextBox";
-            this.sellDetailsRichTextBox.Size = new System.Drawing.Size(907, 110);
+            this.sellDetailsRichTextBox.Size = new System.Drawing.Size(681, 90);
             this.sellDetailsRichTextBox.TabIndex = 66;
             this.sellDetailsRichTextBox.Text = "";
             // 
             // installationPlacePhotoButton
             // 
             this.installationPlacePhotoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.installationPlacePhotoButton.Location = new System.Drawing.Point(1500, 305);
-            this.installationPlacePhotoButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.installationPlacePhotoButton.Location = new System.Drawing.Point(1125, 248);
             this.installationPlacePhotoButton.Name = "installationPlacePhotoButton";
-            this.installationPlacePhotoButton.Size = new System.Drawing.Size(207, 34);
+            this.installationPlacePhotoButton.Size = new System.Drawing.Size(155, 28);
             this.installationPlacePhotoButton.TabIndex = 65;
             this.installationPlacePhotoButton.Text = "แนบรูปจุดที่ติดตั้ง";
             this.installationPlacePhotoButton.UseVisualStyleBackColor = true;
@@ -142,10 +137,9 @@
             // installationPlacePictureBox
             // 
             this.installationPlacePictureBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.installationPlacePictureBox.Location = new System.Drawing.Point(937, 350);
-            this.installationPlacePictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.installationPlacePictureBox.Location = new System.Drawing.Point(703, 284);
             this.installationPlacePictureBox.Name = "installationPlacePictureBox";
-            this.installationPlacePictureBox.Size = new System.Drawing.Size(908, 604);
+            this.installationPlacePictureBox.Size = new System.Drawing.Size(681, 491);
             this.installationPlacePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.installationPlacePictureBox.TabIndex = 64;
             this.installationPlacePictureBox.TabStop = false;
@@ -154,20 +148,18 @@
             // 
             this.sellDetailsLabel.AutoSize = true;
             this.sellDetailsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sellDetailsLabel.Location = new System.Drawing.Point(932, 6);
-            this.sellDetailsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.sellDetailsLabel.Location = new System.Drawing.Point(699, 5);
             this.sellDetailsLabel.Name = "sellDetailsLabel";
-            this.sellDetailsLabel.Size = new System.Drawing.Size(435, 29);
+            this.sellDetailsLabel.Size = new System.Drawing.Size(342, 24);
             this.sellDetailsLabel.TabIndex = 63;
             this.sellDetailsLabel.Text = "รายละเอียดผู้ขาย / ให้เช่า / หน่วยงานที่ย้ายมา :";
             // 
             // equipmentDetailRichTextBox
             // 
             this.equipmentDetailRichTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.equipmentDetailRichTextBox.Location = new System.Drawing.Point(937, 187);
-            this.equipmentDetailRichTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.equipmentDetailRichTextBox.Location = new System.Drawing.Point(703, 152);
             this.equipmentDetailRichTextBox.Name = "equipmentDetailRichTextBox";
-            this.equipmentDetailRichTextBox.Size = new System.Drawing.Size(449, 110);
+            this.equipmentDetailRichTextBox.Size = new System.Drawing.Size(338, 90);
             this.equipmentDetailRichTextBox.TabIndex = 62;
             this.equipmentDetailRichTextBox.Text = "";
             // 
@@ -175,20 +167,18 @@
             // 
             this.installationPlaceLabel.AutoSize = true;
             this.installationPlaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.installationPlaceLabel.Location = new System.Drawing.Point(1399, 153);
-            this.installationPlaceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.installationPlaceLabel.Location = new System.Drawing.Point(1049, 124);
             this.installationPlaceLabel.Name = "installationPlaceLabel";
-            this.installationPlaceLabel.Size = new System.Drawing.Size(312, 29);
+            this.installationPlaceLabel.Size = new System.Drawing.Size(246, 24);
             this.installationPlaceLabel.TabIndex = 61;
             this.installationPlaceLabel.Text = "รายละเอียดจุดติดตั้ง / ปฎิบัติงาน :";
             // 
             // equipmentPhotoButton
             // 
             this.equipmentPhotoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.equipmentPhotoButton.Location = new System.Drawing.Point(593, 306);
-            this.equipmentPhotoButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.equipmentPhotoButton.Location = new System.Drawing.Point(445, 249);
             this.equipmentPhotoButton.Name = "equipmentPhotoButton";
-            this.equipmentPhotoButton.Size = new System.Drawing.Size(207, 34);
+            this.equipmentPhotoButton.Size = new System.Drawing.Size(155, 28);
             this.equipmentPhotoButton.TabIndex = 60;
             this.equipmentPhotoButton.Text = "แนบรูปอุปกรณ์";
             this.equipmentPhotoButton.UseVisualStyleBackColor = true;
@@ -197,10 +187,9 @@
             // equipmentPictureBox
             // 
             this.equipmentPictureBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.equipmentPictureBox.Location = new System.Drawing.Point(16, 350);
-            this.equipmentPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.equipmentPictureBox.Location = new System.Drawing.Point(12, 284);
             this.equipmentPictureBox.Name = "equipmentPictureBox";
-            this.equipmentPictureBox.Size = new System.Drawing.Size(908, 604);
+            this.equipmentPictureBox.Size = new System.Drawing.Size(681, 491);
             this.equipmentPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.equipmentPictureBox.TabIndex = 59;
             this.equipmentPictureBox.TabStop = false;
@@ -209,28 +198,25 @@
             // 
             this.installationDateLabel.AutoSize = true;
             this.installationDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.installationDateLabel.Location = new System.Drawing.Point(7, 306);
-            this.installationDateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.installationDateLabel.Location = new System.Drawing.Point(5, 249);
             this.installationDateLabel.Name = "installationDateLabel";
-            this.installationDateLabel.Size = new System.Drawing.Size(226, 29);
+            this.installationDateLabel.Size = new System.Drawing.Size(180, 24);
             this.installationDateLabel.TabIndex = 58;
             this.installationDateLabel.Text = "วันที่ติดตั้ง / ปฎิบัติงาน :";
             // 
             // installationDateTimePicker
             // 
-            this.installationDateTimePicker.Location = new System.Drawing.Point(255, 313);
-            this.installationDateTimePicker.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.installationDateTimePicker.Location = new System.Drawing.Point(191, 254);
             this.installationDateTimePicker.Name = "installationDateTimePicker";
-            this.installationDateTimePicker.Size = new System.Drawing.Size(265, 22);
+            this.installationDateTimePicker.Size = new System.Drawing.Size(200, 20);
             this.installationDateTimePicker.TabIndex = 57;
             // 
             // invoiceAttachmentButton
             // 
             this.invoiceAttachmentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invoiceAttachmentButton.Location = new System.Drawing.Point(428, 175);
-            this.invoiceAttachmentButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.invoiceAttachmentButton.Location = new System.Drawing.Point(321, 142);
             this.invoiceAttachmentButton.Name = "invoiceAttachmentButton";
-            this.invoiceAttachmentButton.Size = new System.Drawing.Size(207, 34);
+            this.invoiceAttachmentButton.Size = new System.Drawing.Size(155, 28);
             this.invoiceAttachmentButton.TabIndex = 56;
             this.invoiceAttachmentButton.Text = "แนบเอกสารการได้มา";
             this.invoiceAttachmentButton.UseVisualStyleBackColor = true;
@@ -239,10 +225,9 @@
             // createPeriodButton
             // 
             this.createPeriodButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createPeriodButton.Location = new System.Drawing.Point(676, 265);
-            this.createPeriodButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.createPeriodButton.Location = new System.Drawing.Point(507, 215);
             this.createPeriodButton.Name = "createPeriodButton";
-            this.createPeriodButton.Size = new System.Drawing.Size(124, 30);
+            this.createPeriodButton.Size = new System.Drawing.Size(93, 24);
             this.createPeriodButton.TabIndex = 55;
             this.createPeriodButton.Text = "สร้าง";
             this.createPeriodButton.UseVisualStyleBackColor = true;
@@ -252,29 +237,26 @@
             // 
             this.rentalBasisCombobox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rentalBasisCombobox.FormattingEnabled = true;
-            this.rentalBasisCombobox.Location = new System.Drawing.Point(423, 261);
-            this.rentalBasisCombobox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rentalBasisCombobox.Location = new System.Drawing.Point(317, 212);
             this.rentalBasisCombobox.Name = "rentalBasisCombobox";
-            this.rentalBasisCombobox.Size = new System.Drawing.Size(225, 33);
+            this.rentalBasisCombobox.Size = new System.Drawing.Size(170, 28);
             this.rentalBasisCombobox.TabIndex = 54;
             // 
             // priceTextBox
             // 
             this.priceTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.priceTextBox.Location = new System.Drawing.Point(168, 268);
-            this.priceTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.priceTextBox.Location = new System.Drawing.Point(126, 218);
             this.priceTextBox.Name = "priceTextBox";
-            this.priceTextBox.Size = new System.Drawing.Size(244, 22);
+            this.priceTextBox.Size = new System.Drawing.Size(184, 20);
             this.priceTextBox.TabIndex = 53;
             // 
             // priceLabel
             // 
             this.priceLabel.AutoSize = true;
             this.priceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.priceLabel.Location = new System.Drawing.Point(7, 262);
-            this.priceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.priceLabel.Location = new System.Drawing.Point(5, 213);
             this.priceLabel.Name = "priceLabel";
-            this.priceLabel.Size = new System.Drawing.Size(150, 29);
+            this.priceLabel.Size = new System.Drawing.Size(115, 24);
             this.priceLabel.TabIndex = 52;
             this.priceLabel.Text = "ราคาซื้อ / เช่า :";
             // 
@@ -282,10 +264,9 @@
             // 
             this.replacementCheckBox.AutoSize = true;
             this.replacementCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.replacementCheckBox.Location = new System.Drawing.Point(428, 217);
-            this.replacementCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.replacementCheckBox.Location = new System.Drawing.Point(321, 176);
             this.replacementCheckBox.Name = "replacementCheckBox";
-            this.replacementCheckBox.Size = new System.Drawing.Size(232, 33);
+            this.replacementCheckBox.Size = new System.Drawing.Size(180, 28);
             this.replacementCheckBox.TabIndex = 51;
             this.replacementCheckBox.Text = "เพื่อทดแทน กรุณาติ๊ก";
             this.replacementCheckBox.UseVisualStyleBackColor = true;
@@ -294,20 +275,18 @@
             // 
             this.equipmentInitialStatusComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.equipmentInitialStatusComboBox.FormattingEnabled = true;
-            this.equipmentInitialStatusComboBox.Location = new System.Drawing.Point(168, 220);
-            this.equipmentInitialStatusComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.equipmentInitialStatusComboBox.Location = new System.Drawing.Point(126, 179);
             this.equipmentInitialStatusComboBox.Name = "equipmentInitialStatusComboBox";
-            this.equipmentInitialStatusComboBox.Size = new System.Drawing.Size(225, 33);
+            this.equipmentInitialStatusComboBox.Size = new System.Drawing.Size(170, 28);
             this.equipmentInitialStatusComboBox.TabIndex = 50;
             // 
             // initialStatus
             // 
             this.initialStatus.AutoSize = true;
             this.initialStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.initialStatus.Location = new System.Drawing.Point(4, 220);
-            this.initialStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.initialStatus.Location = new System.Drawing.Point(3, 179);
             this.initialStatus.Name = "initialStatus";
-            this.initialStatus.Size = new System.Drawing.Size(152, 29);
+            this.initialStatus.Size = new System.Drawing.Size(117, 24);
             this.initialStatus.TabIndex = 49;
             this.initialStatus.Text = "สถานะเริ่มต้น :";
             // 
@@ -315,10 +294,9 @@
             // 
             this.acquisitionComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.acquisitionComboBox.FormattingEnabled = true;
-            this.acquisitionComboBox.Location = new System.Drawing.Point(168, 175);
-            this.acquisitionComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.acquisitionComboBox.Location = new System.Drawing.Point(126, 142);
             this.acquisitionComboBox.Name = "acquisitionComboBox";
-            this.acquisitionComboBox.Size = new System.Drawing.Size(244, 33);
+            this.acquisitionComboBox.Size = new System.Drawing.Size(184, 28);
             this.acquisitionComboBox.TabIndex = 48;
             this.acquisitionComboBox.SelectedIndexChanged += new System.EventHandler(this.acquisitionComboBox_SelectedIndexChanged);
             // 
@@ -326,20 +304,18 @@
             // 
             this.acquisitionLabel.AutoSize = true;
             this.acquisitionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.acquisitionLabel.Location = new System.Drawing.Point(45, 176);
-            this.acquisitionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.acquisitionLabel.Location = new System.Drawing.Point(34, 143);
             this.acquisitionLabel.Name = "acquisitionLabel";
-            this.acquisitionLabel.Size = new System.Drawing.Size(110, 29);
+            this.acquisitionLabel.Size = new System.Drawing.Size(85, 24);
             this.acquisitionLabel.TabIndex = 47;
             this.acquisitionLabel.Text = "การได้มา :";
             // 
             // createOwnerButton
             // 
             this.createOwnerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createOwnerButton.Location = new System.Drawing.Point(421, 133);
-            this.createOwnerButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.createOwnerButton.Location = new System.Drawing.Point(316, 108);
             this.createOwnerButton.Name = "createOwnerButton";
-            this.createOwnerButton.Size = new System.Drawing.Size(124, 30);
+            this.createOwnerButton.Size = new System.Drawing.Size(93, 24);
             this.createOwnerButton.TabIndex = 46;
             this.createOwnerButton.Text = "สร้าง";
             this.createOwnerButton.UseVisualStyleBackColor = true;
@@ -349,70 +325,63 @@
             // 
             this.equipmentOwnerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.equipmentOwnerComboBox.FormattingEnabled = true;
-            this.equipmentOwnerComboBox.Location = new System.Drawing.Point(168, 133);
-            this.equipmentOwnerComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.equipmentOwnerComboBox.Location = new System.Drawing.Point(126, 108);
             this.equipmentOwnerComboBox.Name = "equipmentOwnerComboBox";
-            this.equipmentOwnerComboBox.Size = new System.Drawing.Size(244, 33);
+            this.equipmentOwnerComboBox.Size = new System.Drawing.Size(184, 28);
             this.equipmentOwnerComboBox.TabIndex = 45;
             // 
             // ownerLabel
             // 
             this.ownerLabel.AutoSize = true;
             this.ownerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ownerLabel.Location = new System.Drawing.Point(69, 133);
-            this.ownerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ownerLabel.Location = new System.Drawing.Point(52, 108);
             this.ownerLabel.Name = "ownerLabel";
-            this.ownerLabel.Size = new System.Drawing.Size(91, 29);
+            this.ownerLabel.Size = new System.Drawing.Size(68, 24);
             this.ownerLabel.TabIndex = 44;
             this.ownerLabel.Text = "เจ้าของ :";
             // 
             // equipmentSerialTextBox
             // 
             this.equipmentSerialTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.equipmentSerialTextBox.Location = new System.Drawing.Point(168, 96);
-            this.equipmentSerialTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.equipmentSerialTextBox.Location = new System.Drawing.Point(126, 78);
             this.equipmentSerialTextBox.Name = "equipmentSerialTextBox";
-            this.equipmentSerialTextBox.Size = new System.Drawing.Size(631, 22);
+            this.equipmentSerialTextBox.Size = new System.Drawing.Size(474, 20);
             this.equipmentSerialTextBox.TabIndex = 43;
             // 
             // serialLabel
             // 
             this.serialLabel.AutoSize = true;
             this.serialLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serialLabel.Location = new System.Drawing.Point(23, 90);
-            this.serialLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.serialLabel.Location = new System.Drawing.Point(17, 73);
             this.serialLabel.Name = "serialLabel";
-            this.serialLabel.Size = new System.Drawing.Size(129, 29);
+            this.serialLabel.Size = new System.Drawing.Size(103, 24);
             this.serialLabel.TabIndex = 42;
             this.serialLabel.Text = "ชื่อทางบัญชี :";
             // 
             // equipmentNameTextBox
             // 
             this.equipmentNameTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.equipmentNameTextBox.Location = new System.Drawing.Point(168, 55);
-            this.equipmentNameTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.equipmentNameTextBox.Location = new System.Drawing.Point(126, 45);
             this.equipmentNameTextBox.Name = "equipmentNameTextBox";
-            this.equipmentNameTextBox.Size = new System.Drawing.Size(631, 22);
+            this.equipmentNameTextBox.Size = new System.Drawing.Size(474, 20);
             this.equipmentNameTextBox.TabIndex = 41;
             // 
             // equipmentNameLabel
             // 
             this.equipmentNameLabel.AutoSize = true;
             this.equipmentNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.equipmentNameLabel.Location = new System.Drawing.Point(63, 48);
-            this.equipmentNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.equipmentNameLabel.Location = new System.Drawing.Point(47, 39);
             this.equipmentNameLabel.Name = "equipmentNameLabel";
-            this.equipmentNameLabel.Size = new System.Drawing.Size(98, 29);
+            this.equipmentNameLabel.Size = new System.Drawing.Size(73, 24);
             this.equipmentNameLabel.TabIndex = 40;
             this.equipmentNameLabel.Text = "ชื่อเรียก :";
             // 
             // createTypeButton
             // 
             this.createTypeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createTypeButton.Location = new System.Drawing.Point(676, 10);
-            this.createTypeButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.createTypeButton.Location = new System.Drawing.Point(507, 8);
             this.createTypeButton.Name = "createTypeButton";
-            this.createTypeButton.Size = new System.Drawing.Size(124, 30);
+            this.createTypeButton.Size = new System.Drawing.Size(93, 24);
             this.createTypeButton.TabIndex = 39;
             this.createTypeButton.Text = "สร้าง";
             this.createTypeButton.UseVisualStyleBackColor = true;
@@ -422,28 +391,41 @@
             // 
             this.choseEquipmentTypeCombobox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.choseEquipmentTypeCombobox.FormattingEnabled = true;
-            this.choseEquipmentTypeCombobox.Location = new System.Drawing.Point(168, 11);
-            this.choseEquipmentTypeCombobox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.choseEquipmentTypeCombobox.Location = new System.Drawing.Point(126, 9);
             this.choseEquipmentTypeCombobox.Name = "choseEquipmentTypeCombobox";
-            this.choseEquipmentTypeCombobox.Size = new System.Drawing.Size(480, 33);
+            this.choseEquipmentTypeCombobox.Size = new System.Drawing.Size(361, 28);
             this.choseEquipmentTypeCombobox.TabIndex = 38;
             // 
             // equipmentTypeLabel
             // 
             this.equipmentTypeLabel.AutoSize = true;
             this.equipmentTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.equipmentTypeLabel.Location = new System.Drawing.Point(60, 11);
-            this.equipmentTypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.equipmentTypeLabel.Location = new System.Drawing.Point(45, 9);
             this.equipmentTypeLabel.Name = "equipmentTypeLabel";
-            this.equipmentTypeLabel.Size = new System.Drawing.Size(99, 29);
+            this.equipmentTypeLabel.Size = new System.Drawing.Size(76, 24);
             this.equipmentTypeLabel.TabIndex = 37;
             this.equipmentTypeLabel.Text = "ประเภท :";
             // 
+            // writeOfflinkLabel
+            // 
+            this.writeOfflinkLabel.AutoSize = true;
+            this.writeOfflinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.writeOfflinkLabel.Location = new System.Drawing.Point(705, 255);
+            this.writeOfflinkLabel.Name = "writeOfflinkLabel";
+            this.writeOfflinkLabel.Size = new System.Drawing.Size(189, 20);
+            this.writeOfflinkLabel.TabIndex = 73;
+            this.writeOfflinkLabel.TabStop = true;
+            this.writeOfflinkLabel.Text = "ดูเอกสาร Write Off / โอนย้าย";
+            this.writeOfflinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.writeOfflinkLabel.MouseEnter += new System.EventHandler(this.writeOfflinkLabel_MouseEnter);
+            this.writeOfflinkLabel.MouseLeave += new System.EventHandler(this.writeOfflinkLabel_MouseLeave);
+            // 
             // EditEquipmentForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 961);
+            this.ClientSize = new System.Drawing.Size(1443, 781);
+            this.Controls.Add(this.writeOfflinkLabel);
             this.Controls.Add(this.InstallationDetailsRichTextBox);
             this.Controls.Add(this.equipmentDetailsLabel);
             this.Controls.Add(this.editEquipmentButton);
@@ -479,7 +461,6 @@
             this.Controls.Add(this.choseEquipmentTypeCombobox);
             this.Controls.Add(this.equipmentTypeLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditEquipmentForm";
@@ -528,5 +509,6 @@
         protected System.Windows.Forms.Button createTypeButton;
         protected System.Windows.Forms.ComboBox choseEquipmentTypeCombobox;
         protected System.Windows.Forms.Label equipmentTypeLabel;
+        protected System.Windows.Forms.LinkLabel writeOfflinkLabel;
     }
 }

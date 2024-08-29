@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using Equipment_Management.GlobalVariable;
-using Equipment_Management.ObjectClass;
 using Equipment_Management.CustomViewClass;
 using System.Windows.Forms;
 using System.IO;
@@ -216,6 +215,10 @@ namespace Equipment_Management.UIClass.Plan
                 if (!string.IsNullOrEmpty(contractPhotopath))
                 {
                     Global.LoadImageIntoPictureBox(contractPhotopath, contractPhotopictureBox);
+                }
+                else
+                {
+                    contractPhotopictureBox.Image = null;
                 }
             }
         }

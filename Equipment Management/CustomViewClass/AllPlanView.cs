@@ -30,8 +30,8 @@ namespace Equipment_Management.CustomViewClass
                 return PlanStatus ? "ดำเนินการ" : "สิ้นสุด";
             }
         }
-
         public string OPlacePhoto { get; set; }
+        public int ETypeID { get; set; }
 
         public AllPlanView(){}
 
@@ -129,7 +129,8 @@ namespace Equipment_Management.CustomViewClass
                     PPeriodID = p.PPeriod.ID,
                     PlanProcessDate = latestFinishDate,
                     DaysRemainning = daysRemainning,
-                    EStatusID = p.Eqp.EStatusObj.ID
+                    EStatusID = p.Eqp.EStatusObj.ID,
+                    ETypeID = p.Eqp.ETypeObj.ID
                 };
                 list.Add(view);
             }

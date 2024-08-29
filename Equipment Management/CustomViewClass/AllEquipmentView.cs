@@ -22,14 +22,26 @@ namespace Equipment_Management.CustomViewClass
         public string EquipmentPhoto { get; set; }
         public bool Replacement { get; set; }
         public int EOwnerID { get; set; }
+        public bool IsEJob { get; set; }
 
         public AllEquipmentView() { }
 
         public static List<AllEquipmentView> GetAllEquipmentView()
         {
             List<AllEquipmentView> equipmentListView = new List<AllEquipmentView>();
+            List<Job> jlist = Job.GetJobList();
             foreach (Equipment e in Equipment.GetEquipmentList())
             {
+                bool isEJob = false;
+
+                foreach(Job j in jlist)
+                {
+                    if(e.ID == j.JEq.ID)
+                    {
+                        isEJob = true;
+                        break;
+                    }
+                }
                 AllEquipmentView view = new AllEquipmentView
                 {
                     ID = e.ID,
@@ -45,7 +57,8 @@ namespace Equipment_Management.CustomViewClass
                     EStatusID = e.EStatusObj.ID,
                     InstallEPhoto = e.OPlacePhotoPath,
                     EquipmentPhoto = e.EPhotoPath,
-                    EOwnerID = e.EOwnerObj.ID
+                    EOwnerID = e.EOwnerObj.ID,
+                    IsEJob = isEJob
                 };
                 equipmentListView.Add(view);
             }
