@@ -76,6 +76,7 @@
             this.equipmentListSearchTextBox.Name = "equipmentListSearchTextBox";
             this.equipmentListSearchTextBox.Size = new System.Drawing.Size(277, 29);
             this.equipmentListSearchTextBox.TabIndex = 17;
+            this.equipmentListSearchTextBox.TextChanged += new System.EventHandler(this.equipmentListSearchTextBox_TextChanged);
             // 
             // equipmentFilterListLabel
             // 

@@ -478,6 +478,10 @@ namespace Equipment_Management.UIClass
             {
                 currentMaintainencePlanDatagridview.Columns["PlanStatusText"].Visible = false;
             }
+            if (currentMaintainencePlanDatagridview.Columns["ETypeID"] != null)
+            {
+                currentMaintainencePlanDatagridview.Columns["ETypeID"].Visible = false;
+            }
         }
         //Update gridview Plan Proceesed
         private void UpdateProcessedPlanView()

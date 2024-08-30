@@ -269,6 +269,32 @@ namespace Equipment_Management.UIClass.Plan
             PlanHistoryDatagridview.ShowCellToolTips = true;
             oPlacePictureBox.Visible = false;
         }
-        
+        //Searching text alrorithm
+        private void equipmentListSearchTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = equipmentListSearchTextBox.Text.ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                ApplyCurrentFilter(); // Reapply the current filter if the search box is empty
+            }
+            else
+            {
+                // Filter the already filtered list based on the search text
+                var searchResults = filteredAllPlanHistoryList
+                    .Where(eq =>
+                        eq.EName.ToLower().Contains(searchText) ||
+                        eq.ESerial.ToLower().Contains(searchText) ||
+                        eq.PType.ToLower().Contains(searchText) ||
+                        eq.PPeriod.ToLower().Contains(searchText) ||
+                        eq.OplaceDetails.ToLower().Contains(searchText) ||
+                        eq.DaysRemainning.ToString().Contains(searchText) ||
+                        eq.EStatus.ToLower().Contains(searchText))
+                    .ToList();
+
+                allPlanHistoryListBindingSource.DataSource = searchResults;
+                PlanHistoryDatagridview.DataSource = allPlanHistoryListBindingSource;
+            }
+        }
     }
 }
