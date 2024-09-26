@@ -21,6 +21,7 @@ namespace Equipment_Management.UIClass
         private EquipmentList equipmentList;
         private CreateJobForm jobCreate;
         private RemoveJobForm jobRemove;
+        private EditJobForm jobEdit;
         private JobProcessing jobProcessing;
         private JobAcceptation jobAcceptation;
         private EditJobProcessing editJobProcessing;
@@ -647,6 +648,20 @@ namespace Equipment_Management.UIClass
                 jobRemove.UpdateGrid += OnUpdateCreatedPlan;
                 jobRemove.ShowDialog();
             }    
+        }
+        //Edit Job
+        private void editJobButton_Click(object sender, EventArgs e)
+        {
+            Global.ID = -1;
+            DataGridViewRow selectedRow = jobCreatedDatagridview.CurrentRow;
+            if(selectedRow != null)
+            {
+                Global.ID = (int)selectedRow.Cells["ID"].Value;
+                jobEdit = new EditJobForm();
+                jobEdit.Owner = main;
+                jobEdit.UpdateGrid += OnUpdateCreatedJob;
+                jobEdit.ShowDialog();
+            }
         }
         //Job processing
         private void jobProcessingButton_Click(object sender, EventArgs e)

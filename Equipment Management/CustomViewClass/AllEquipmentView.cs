@@ -25,6 +25,16 @@ namespace Equipment_Management.CustomViewClass
         public bool IsEJob { get; set; }
 
         public AllEquipmentView() { }
+        public AllEquipmentView(int id,string name,string serial,int estatusid,string estatus,int etypeid,string ephoto)
+        {
+            ID = id;
+            Name = name;
+            Serial = serial;
+            EStatusID = estatusid;
+            EStatus = estatus;
+            ETypeID = etypeid;
+            EquipmentPhoto = ephoto;
+        }
 
         public static List<AllEquipmentView> GetAllEquipmentView()
         {

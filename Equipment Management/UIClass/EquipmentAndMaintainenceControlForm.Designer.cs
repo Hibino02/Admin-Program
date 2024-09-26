@@ -57,6 +57,7 @@
             this.completeOrRemovePlanButton = new System.Windows.Forms.Button();
             this.editPlanButton = new System.Windows.Forms.Button();
             this.createPlanButton = new System.Windows.Forms.Button();
+            this.editJobButton = new System.Windows.Forms.Button();
             this.equipmentControlGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.jobProcessingDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.jobCreatedDatagridview)).BeginInit();
@@ -77,6 +78,7 @@
             // 
             // equipmentControlGroupBox
             // 
+            this.equipmentControlGroupBox.Controls.Add(this.editJobButton);
             this.equipmentControlGroupBox.Controls.Add(this.removeJobProcessingbutton);
             this.equipmentControlGroupBox.Controls.Add(this.editJobProcessingButton);
             this.equipmentControlGroupBox.Controls.Add(this.jobAcceptationButton);
@@ -436,6 +438,17 @@
             this.createPlanButton.UseVisualStyleBackColor = true;
             this.createPlanButton.Click += new System.EventHandler(this.createPlanButton_Click);
             // 
+            // editJobButton
+            // 
+            this.editJobButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editJobButton.Location = new System.Drawing.Point(267, 405);
+            this.editJobButton.Name = "editJobButton";
+            this.editJobButton.Size = new System.Drawing.Size(121, 52);
+            this.editJobButton.TabIndex = 14;
+            this.editJobButton.Text = "แก้ใขงานแจ้งซ่อม";
+            this.editJobButton.UseVisualStyleBackColor = true;
+            this.editJobButton.Click += new System.EventHandler(this.editJobButton_Click);
+            // 
             // EquipmentAndMaintainenceControlForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -496,5 +509,6 @@
         private System.Windows.Forms.DataGridView currentMaintainencePlanDatagridview;
         private System.Windows.Forms.Button backToMainMenuButton;
         private System.Windows.Forms.Button removeJobProcessingbutton;
+        private System.Windows.Forms.Button editJobButton;
     }
 }

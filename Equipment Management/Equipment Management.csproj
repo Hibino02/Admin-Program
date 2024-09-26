@@ -175,6 +175,12 @@
     <Compile Include="UIClass\Job\CreateJobForm.Designer.cs">
       <DependentUpon>CreateJobForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIClass\Job\EditJobForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIClass\Job\EditJobForm.Designer.cs">
+      <DependentUpon>EditJobForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIClass\Job\EditJobProcessing.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -306,6 +312,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIClass\Job\CreateJobForm.resx">
       <DependentUpon>CreateJobForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIClass\Job\EditJobForm.resx">
+      <DependentUpon>EditJobForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIClass\Job\EditJobProcessing.resx">
       <DependentUpon>EditJobProcessing.cs</DependentUpon>
