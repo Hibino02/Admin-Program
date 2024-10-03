@@ -83,6 +83,16 @@ namespace Equipment_Management.UIClass.Job
             jobDocumentToDelete = jobProcessingToRemove.JDocument;
             workpermitToDelete = jobProcessingToRemove.WorkPermit;
             contractTpDelete = jobProcessingToRemove.Contract;
+
+            // Update link label colors based on file existence
+            if (!String.IsNullOrEmpty(workpermitToDelete))
+            {
+                workPermitDocLinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
+            if (!String.IsNullOrEmpty(contractTpDelete))
+            {
+                contractLinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
         }
         private bool CheckAllAttribute()
         {

@@ -43,6 +43,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallEditWriteOffSource
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     writeOffDocumentPath = openFileDialog.FileName;
+                    documentLinkLabel.LinkColor = System.Drawing.Color.Purple;
                 }
             }
         }

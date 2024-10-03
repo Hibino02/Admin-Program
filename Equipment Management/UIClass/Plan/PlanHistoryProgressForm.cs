@@ -66,6 +66,23 @@ namespace Equipment_Management.UIClass.Plan
             {
                 Global.LoadImageIntoPictureBox(Global.selectedEquipmentInPlan.EPhoto, epictureBox);
             }
+            // Update link label colors based on file existence
+            if (!String.IsNullOrEmpty(workpermitPath))
+            {
+                workpermitlinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
+            else
+            {
+                workpermitlinkLabel.LinkColor = System.Drawing.Color.Blue;
+            }
+            if (!String.IsNullOrEmpty(finDocPath))
+            {
+                finDoclinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
+            else
+            {
+                finDoclinkLabel.LinkColor = System.Drawing.Color.Blue;
+            }
         }
         private void UpdatePlanProcessDataGridView()
         {
@@ -219,6 +236,15 @@ namespace Equipment_Management.UIClass.Plan
                 else
                 {
                     contractPhotopictureBox.Image = null;
+                }
+                // Update link label colors based on file existence
+                if (!String.IsNullOrEmpty(workpermitPath))
+                {
+                    workpermitlinkLabel.LinkColor = System.Drawing.Color.Purple;
+                }
+                if (!String.IsNullOrEmpty(finDocPath))
+                {
+                    finDoclinkLabel.LinkColor = System.Drawing.Color.Purple;
                 }
             }
         }

@@ -304,6 +304,10 @@ namespace Equipment_Management.UIClass.Job
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     writeOffDocumentPath = openFileDialog.FileName;
+                    if (!String.IsNullOrEmpty(writeOffDocumentPath))
+                    {
+                        writeOffLinkLabel1.LinkColor = System.Drawing.Color.Purple;
+                    }
                 }
             }
         }
@@ -319,6 +323,10 @@ namespace Equipment_Management.UIClass.Job
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     workPermitDocumentPath = openFileDialog.FileName;
+                    if (!String.IsNullOrEmpty(workPermitDocumentPath))
+                    {
+                        workPermitDocLinkLabel.LinkColor = System.Drawing.Color.Purple;
+                    }
                 }
             }
         }
@@ -334,6 +342,10 @@ namespace Equipment_Management.UIClass.Job
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     contractDocumentPath = openFileDialog.FileName;
+                    if (!String.IsNullOrEmpty(contractDocumentPath))
+                    {
+                        contractLinkLabel.LinkColor = System.Drawing.Color.Purple;
+                    }
                 }
             }
         }

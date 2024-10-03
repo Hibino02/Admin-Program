@@ -280,6 +280,7 @@ namespace Equipment_Management.UIClass.Plan
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     workpermitProcessPath = openFileDialog.FileName;
+                    pworkpermitlinkLabel.LinkColor = System.Drawing.Color.Purple;
                 }
             }
         }

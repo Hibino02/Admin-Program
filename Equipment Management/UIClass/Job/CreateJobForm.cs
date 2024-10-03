@@ -534,6 +534,7 @@ namespace Equipment_Management.UIClass.Job
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     createdJobDocumentPath = openFileDialog.FileName;
+                    repairDocLinkLabel.LinkColor = System.Drawing.Color.Purple;
                 }
             }
         }

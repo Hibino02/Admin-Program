@@ -68,6 +68,16 @@ namespace Equipment_Management.UIClass.Job
             oldWorkPermitDocumentPath = editjobToProcess.WorkPermit;
             contractDocumentPath = editjobToProcess.Contract;
             oldContractDocumentPath = editjobToProcess.Contract;
+
+            // Update link label colors based on file existence
+            if (!String.IsNullOrEmpty(oldWorkPermitDocumentPath))
+            {
+                workPermitDocLinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
+            if (!String.IsNullOrEmpty(oldContractDocumentPath))
+            {
+                contractLinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
         }
         //Work permit tooltips event -----------------------------------------------------------------------------
         private void workPermitDocLinkLabel_MouseEnter(object sender, EventArgs e)
@@ -114,6 +124,7 @@ namespace Equipment_Management.UIClass.Job
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     workPermitDocumentPath = openFileDialog.FileName;
+                    workPermitDocLinkLabel.LinkColor = System.Drawing.Color.Purple;
                     SaveWorkPermitDocument();
                 }
             }
@@ -130,6 +141,7 @@ namespace Equipment_Management.UIClass.Job
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     contractDocumentPath = openFileDialog.FileName;
+                    contractLinkLabel.LinkColor = System.Drawing.Color.Purple;
                     SaveContractDocument();
                 }
             }

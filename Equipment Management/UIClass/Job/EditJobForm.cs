@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Equipment_Management.CustomWindowComponents;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using Equipment_Management.GlobalVariable;
 using System.Windows.Forms;
 using Equipment_Management.ObjectClass;
@@ -110,6 +108,12 @@ namespace Equipment_Management.UIClass.Job
             reasonToAppRichTextBox.Text = editJob.AppReason;
             approveDateTimePicker.Value = editJob.ADate.Value;
             approverNameTextBox.Text = editJob.Approver;
+
+            // Update link label colors based on file existence
+            if (!String.IsNullOrEmpty(oldJobDocumentPath))
+            {
+                repairDocLinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
         }
 
         private void UpdateComponents()
@@ -302,6 +306,7 @@ namespace Equipment_Management.UIClass.Job
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     jobDocumentPath = openFileDialog.FileName;
+                    repairDocLinkLabel.LinkColor = System.Drawing.Color.Purple;
                 }
             }
         }

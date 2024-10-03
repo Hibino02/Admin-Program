@@ -245,6 +245,41 @@ namespace Equipment_Management.UIClass.Job
                 workpermit = selectedRow.Cells["WorkPermit"].Value?.ToString();
                 contract = selectedRow.Cells["Contract"].Value?.ToString();
                 findocument = selectedRow.Cells["FinDocument"].Value?.ToString();
+
+                // Update link label colors based on file existence
+                if (!String.IsNullOrEmpty(jobDocument))
+                {
+                    jobDoclinkLabel.LinkColor = System.Drawing.Color.Purple;
+                }
+                else
+                {
+                    jobDoclinkLabel.LinkColor = System.Drawing.Color.Blue;
+                }
+                if (!String.IsNullOrEmpty(workpermit))
+                {
+                    workpermitlinkLabel.LinkColor = System.Drawing.Color.Purple;
+                }
+                else
+                {
+                    workpermitlinkLabel.LinkColor = System.Drawing.Color.Blue;
+                }
+                if (!String.IsNullOrEmpty(contract))
+                {
+                    contractlinkLabel.LinkColor = System.Drawing.Color.Purple;
+                }
+                else
+                {
+                    contractlinkLabel.LinkColor = System.Drawing.Color.Blue;
+                }
+                if (!String.IsNullOrEmpty(findocument))
+                {
+                    finDoclinkLabel.LinkColor = System.Drawing.Color.Purple;
+                }
+                else
+                {
+                    finDoclinkLabel.LinkColor = System.Drawing.Color.Blue;
+                }
+
                 jTypelabel.Text = selectedRow.Cells["JType"].Value?.ToString();
                 string sDate = selectedRow.Cells["SDate"].Value?.ToString();
                 if(DateTime.TryParse(sDate, out startDate))
@@ -411,6 +446,7 @@ namespace Equipment_Management.UIClass.Job
         {
             findocumentTooltips.Hide(finDoclinkLabel);
         }
+
         //Event to drive picturebox
         private void eJobHistoryDataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {

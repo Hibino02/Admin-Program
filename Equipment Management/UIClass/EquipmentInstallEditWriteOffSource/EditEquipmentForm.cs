@@ -199,6 +199,16 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
             oldInstallationPlacePhotoPath = edit.OPlacePhotoPath;
 
             writeoffTransferDocumentPath = edit.WriteOffPath;
+
+            // Update link label colors based on file existence
+            if (!String.IsNullOrEmpty(oldAcquisitionDocumentPath))
+            {
+                invoiceLinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
+            if (!String.IsNullOrEmpty(writeoffTransferDocumentPath))
+            {
+                writeOfflinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
         }
 
         private void createTypeButton_Click(object sender, EventArgs e)
@@ -360,6 +370,7 @@ namespace Equipment_Management.UIClass.EquipmentInstallationSource
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     acquisitionDocumentPath = openFileDialog.FileName;
+                    invoiceLinkLabel.LinkColor = System.Drawing.Color.Purple;
                     SaveAcquisitionDocument();
                 }
             }

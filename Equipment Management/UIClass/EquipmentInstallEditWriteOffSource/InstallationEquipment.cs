@@ -277,6 +277,7 @@ namespace Equipment_Management.UIClass.InstallationSource
                 if(openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     acquisitionDocumentPath = openFileDialog.FileName;
+                    invoiceLinkLabel.LinkColor = System.Drawing.Color.Purple;
                 }
             }
         }

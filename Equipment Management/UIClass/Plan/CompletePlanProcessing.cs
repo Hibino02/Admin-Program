@@ -92,6 +92,7 @@ namespace Equipment_Management.UIClass.Plan
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     finDocProcessedPath = openFileDialog.FileName;
+                    finDoclinkLabel.LinkColor = System.Drawing.Color.Purple;
                 }
             }
         }

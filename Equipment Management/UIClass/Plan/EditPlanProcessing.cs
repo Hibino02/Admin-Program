@@ -104,6 +104,11 @@ namespace Equipment_Management.UIClass.Plan
             oldWorkpermitProcessPath = editPP.WorkPermit;
             oldPhotoContractPath = editPP.Contract;
 
+            // Update link label colors based on file existence
+            if (!String.IsNullOrEmpty(oldWorkpermitProcessPath))
+            {
+                pworkpermitlinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
         }
         private void UpdateReplaceEquipmentListGridView()
         {
@@ -336,6 +341,7 @@ namespace Equipment_Management.UIClass.Plan
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     workpermitProcessPath = openFileDialog.FileName;
+                    pworkpermitlinkLabel.LinkColor = System.Drawing.Color.Purple;
                     SaveWorkPermitPlanProcessingDocument();
                 }
             }

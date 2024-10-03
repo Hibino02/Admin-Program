@@ -109,6 +109,16 @@ namespace Equipment_Management.UIClass.Job
             costTextBox.Text = jobToFinish.Cost.ToString();
             workPermitDocumentPath = jobToFinish.WorkPermit;
             contractDocumentPath = jobToFinish.Contract;
+
+            // Update link label colors based on file existence
+            if (!String.IsNullOrEmpty(workPermitDocumentPath))
+            {
+                workPermitDocLinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
+            if (!String.IsNullOrEmpty(contractDocumentPath))
+            {
+                contractLinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
         }
         //Click to open attached PDF file ------------------------------------------------------------------------
         private void workPermitDocLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -161,6 +171,7 @@ namespace Equipment_Management.UIClass.Job
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     finishDocumentPath = openFileDialog.FileName;
+                    finishDocumentlinkLabel.LinkColor = System.Drawing.Color.Purple;
                 }
             }
         }
