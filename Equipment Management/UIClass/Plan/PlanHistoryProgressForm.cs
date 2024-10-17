@@ -23,6 +23,8 @@ namespace Equipment_Management.UIClass.Plan
         private ToolTip workpermitTooltips;
         private ToolTip finDocTooltips;
 
+        private PictureBox replaceEquipmentPictureBox;
+
         public PlanHistoryProgressForm()
         {
             InitializeComponent();
@@ -51,6 +53,20 @@ namespace Equipment_Management.UIClass.Plan
             finDoclinkLabel.MouseEnter += finDoclinkLabel_MouseEnter;
             finDoclinkLabel.MouseLeave += finDoclinkLabel_MouseLeave;
 
+            //--------------------------------------------------------------------------------------------//
+            //Create hidden picturebox for Plan
+            replaceEquipmentPictureBox = new PictureBox
+            {
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Visible = false,
+                BackColor = Color.Transparent,
+                Size = new Size(700, 620),
+                Location = new Point(10, 10)
+            };
+            this.Controls.Add(replaceEquipmentPictureBox);
+            //Register event for picturebox
+            planProcessDatagridview.CellMouseEnter += planProcessDatagridview_CellMouseEnter;
+            planProcessDatagridview.CellMouseLeave += planProcessDatagridview_CellMouseLeave;
 
             UpdatePlanComponents();
             UpdatePlanProcessDataGridView();
@@ -198,6 +214,13 @@ namespace Equipment_Management.UIClass.Plan
             {
                 planProcessDatagridview.Columns["EStatusID"].Visible = false;
             }
+            if (planProcessDatagridview.Columns["REPhotoPath"] != null)
+            {
+                var column = planProcessDatagridview.Columns["REPhotoPath"];
+                column.HeaderText = "รูป";
+                column.Width = 50;
+                column.DisplayIndex = 20;
+            }
         }
         //Showing contents to components
         private void planProcessDatagridview_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -324,6 +347,33 @@ namespace Equipment_Management.UIClass.Plan
                 messageBox.MessageText = message;
                 var result = messageBox.ShowDialog();
             }
+        }
+        //Event to show hidden picture box
+        private void planProcessDatagridview_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                string columnName = planProcessDatagridview.Columns[e.ColumnIndex].Name;
+                if (columnName == "REPhotoPath")
+                {
+                    planProcessDatagridview.ShowCellToolTips = false;
+
+                    string imagePath = planProcessDatagridview[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
+                    if (string.IsNullOrEmpty(imagePath))
+                    {
+                        return;
+                    }
+
+                    Global.LoadImageIntoPictureBox(imagePath, replaceEquipmentPictureBox);
+                    replaceEquipmentPictureBox.Visible = true;
+                    replaceEquipmentPictureBox.BringToFront();
+                }
+            }
+        }
+        private void planProcessDatagridview_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            replaceEquipmentPictureBox.Visible = false;
+            planProcessDatagridview.ShowCellToolTips = true;
         }
     }
 }

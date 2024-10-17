@@ -77,6 +77,8 @@
             this.planProcessDatagridview.Size = new System.Drawing.Size(960, 274);
             this.planProcessDatagridview.TabIndex = 15;
             this.planProcessDatagridview.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.planProcessDatagridview_CellClick);
+            this.planProcessDatagridview.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.planProcessDatagridview_CellMouseEnter);
+            this.planProcessDatagridview.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.planProcessDatagridview_CellMouseLeave);
             this.planProcessDatagridview.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.planProcessDatagridview_DataBindingComplete);
             // 
             // label

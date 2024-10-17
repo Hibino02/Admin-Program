@@ -17,6 +17,7 @@ namespace Equipment_Management.CustomViewClass
         public int? REID { get; set; }
         public string REName { get; set; }
         public string RESerial { get; set; }
+        public string REPhotoPath { get; set; }
         public string ContractPhoto { get; set; }
         public string EPhotoPath { get; set; }
         public string VenderName { get; set; }
@@ -92,7 +93,8 @@ namespace Equipment_Management.CustomViewClass
                         WorkPermit = pp.WorkPermit,
                         FinishDate = pp.FinishDate,
                         FinishDetails = pp.FinishDetails,
-                        FinishDocuments = pp.FinishDoc
+                        FinishDocuments = pp.FinishDoc,
+                        REPhotoPath = pp.RE?.EPhotoPath
                     };
                     list.Add(processView);
                 }

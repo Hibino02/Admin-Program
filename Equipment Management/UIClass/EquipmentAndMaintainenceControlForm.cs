@@ -596,6 +596,10 @@ namespace Equipment_Management.UIClass
             {
                 planProcessingDatagridview.Columns["EStatusID"].Visible = false;
             }
+            if (planProcessingDatagridview.Columns["REPhotoPath"] != null)
+            {
+                planProcessingDatagridview.Columns["REPhotoPath"].Visible = false;
+            }
         }
         //Method to filter Equipment status ID
         private List<AllJobInProcessView> FilterJobListByEStatusId(List<AllJobInProcessView> jobList, List<int> eStatusIds)
