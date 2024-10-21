@@ -178,6 +178,10 @@ namespace Equipment_Management.UIClass.Plan
             {
                 rEquipmentListDataGridView.Columns["EOwnerID"].Visible = false;
             }
+            if (rEquipmentListDataGridView.Columns["IsEJob"] != null)
+            {
+                rEquipmentListDataGridView.Columns["IsEJob"].Visible = false;
+            }
         }
         //Event to filter by Equipment Type
         private void equipmentTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
