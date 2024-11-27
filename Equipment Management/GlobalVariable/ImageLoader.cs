@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.IO;
 using System.Net;
-using Equipment_Management.GlobalVariable;
+using Admin_Program.GlobalVariable;
 
 public class ImageLoader
 {

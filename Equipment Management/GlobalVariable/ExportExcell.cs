@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
-namespace Equipment_Management.GlobalVariable
+namespace Admin_Program.GlobalVariable
 {
     public class ExportExcel
     {

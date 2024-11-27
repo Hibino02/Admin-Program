@@ -1,5 +1,5 @@
-﻿using Equipment_Management.ObjectClass;
-using Equipment_Management.CustomViewClass;
+﻿using Admin_Program.ObjectClass;
+using Admin_Program.CustomViewClass;
 using System.IO;
 using System;
 using System.Net;
@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Equipment_Management.GlobalVariable
+namespace Admin_Program.GlobalVariable
 {
     class Global
     {

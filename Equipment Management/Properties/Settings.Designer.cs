@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Equipment_Management.Properties {
+namespace Admin_Program.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

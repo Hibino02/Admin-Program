@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Equipment_Management
+namespace Admin_Program
 {
     static class Program
     {
