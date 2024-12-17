@@ -44,7 +44,7 @@
             this.Name = "MainBackGroundFrom";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Equipment Management";
+            this.Text = "Admin Program";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainBackGroundFrom_FormClosing);
             this.Load += new System.EventHandler(this.MainBackGroundFrom_Load);
             this.ResumeLayout(false);

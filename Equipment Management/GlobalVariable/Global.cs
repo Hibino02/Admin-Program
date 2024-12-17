@@ -80,6 +80,10 @@ namespace Admin_Program.GlobalVariable
         {
             return $"ftp://172.16.52.40/EquipmentManagementBLC5/{Directory}/";
         }
+        private static string GetFtpServerUrlforSupply()
+        {
+            return $"ftp://172.16.52.40/SupplyManagementBLC5/{Directory}/";
+        }
 
         //Uploading photo & PDF into Server ------------------------------------------------------------------------------------------
         public static void SaveFileToServer(string filepath)
@@ -87,6 +91,31 @@ namespace Admin_Program.GlobalVariable
             if (!string.IsNullOrEmpty(filepath))
             {
                 string ftpServerUrl = GetFtpServerUrl();
+                string ftpUsername = user;
+                string ftpPassword = pass;
+
+                try
+                {
+                    if (!FtpDirectoryExists(ftpServerUrl, ftpUsername, ftpPassword))
+                    {
+                        CreateFtpDirectory(ftpServerUrl, ftpUsername, ftpPassword);
+                    }
+                    UploadFileToFtp(filepath, ftpServerUrl, ftpUsername, ftpPassword);
+                    filepath = Path.Combine(ftpServerUrl, Path.GetFileName(filepath));
+                    TargetFilePath = filepath;
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show($"Failed to upload photo: {ex.Message}", "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        public static void SaveFileToServerSupply(string filepath)
+        {
+            if (!string.IsNullOrEmpty(filepath))
+            {
+                string ftpServerUrl = GetFtpServerUrlforSupply();
                 string ftpUsername = user;
                 string ftpPassword = pass;
 

@@ -5,5 +5,8 @@
     <Setting Name="CONNECTION_STRING" Type="System.String" Scope="Application">
       <Value Profile="(Default)">server=172.16.52.40;uid=equipment-managementblc5;pwd=Meg@lomaniac001;database=equipment-managementblc5</Value>
     </Setting>
+    <Setting Name="CONNECTION_STRING_SUPPLY" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">server=172.16.52.40;uid=supply-management;pwd=Meg@lomaniac001;database=supply-management</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

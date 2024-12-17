@@ -277,6 +277,49 @@
     <Compile Include="EquipmentManagement\UIClass\Plan\RemovePlanProcessingForm.Designer.cs">
       <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplyManagement\ObjectClass\DeliveryMonth.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\DeliveryPlan.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\PR.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\PRStatus.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\Quotation.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\Supplier.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\Supply.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\SupplyBalance.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\SupplyInPlan.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\SupplyInPR.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\SupplyInQuotation.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\SupplyType.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\User.cs" />
+    <Compile Include="SupplyManagement\UIClass\SupplyControlMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyControlMainForm.Designer.cs">
+      <DependentUpon>SupplyControlMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\AllSupplyListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\AllSupplyListForm.Designer.cs">
+      <DependentUpon>AllSupplyListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\CreateSupplyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\CreateSupplyForm.Designer.cs">
+      <DependentUpon>CreateSupplyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\CreateSupplyTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\CreateSupplyTypeForm.Designer.cs">
+      <DependentUpon>CreateSupplyTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\UserLogInWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\UserLogInWindow.Designer.cs">
+      <DependentUpon>UserLogInWindow.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="EquipmentManagement\CustomWindowComponents\CustomMessageBox.resx">
       <DependentUpon>CustomMessageBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -365,6 +408,21 @@
     <EmbeddedResource Include="EquipmentManagement\UIClass\Plan\RemovePlanProcessingForm.resx">
       <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplyControlMainForm.resx">
+      <DependentUpon>SupplyControlMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplyManage\AllSupplyListForm.resx">
+      <DependentUpon>AllSupplyListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplyManage\CreateSupplyForm.resx">
+      <DependentUpon>CreateSupplyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplyManage\CreateSupplyTypeForm.resx">
+      <DependentUpon>CreateSupplyTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\UserLogInWindow.resx">
+      <DependentUpon>UserLogInWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -382,9 +440,7 @@
   <ItemGroup>
     <Content Include="EqMngr_Icon-_2_ %282%29.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SupplyManagement\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

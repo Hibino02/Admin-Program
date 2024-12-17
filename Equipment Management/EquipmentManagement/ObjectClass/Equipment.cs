@@ -285,7 +285,7 @@ WHERE e.ID = @id;";
                 {
                     string delete = "DELETE FROM equipment WHERE ID = @id";
                     cmd.CommandText = delete;
-                    cmd.Parameters.AddWithValue("@id", id.ToString());
+                    cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                 }
                 return true;

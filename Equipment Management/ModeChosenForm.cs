@@ -7,6 +7,7 @@ namespace Admin_Program.UIClass
     {
         private MainBackGroundFrom _mainBackgroundForm;
         public event EventHandler OnEquipmentControlRequested;
+        public event EventHandler OnSupplyControlREquested;
 
         public ModeChosenForm(MainBackGroundFrom mainBackGroundForm)
         {
@@ -25,6 +26,13 @@ namespace Admin_Program.UIClass
         private void ModeChosenForm_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.None;
+        }
+        //Click event to call
+        private void supplyControlButton_Click(object sender, EventArgs e)
+        {
+            _mainBackgroundForm.Enabled = true;
+            OnSupplyControlREquested?.Invoke(this, EventArgs.Empty);
+            this.Close();
         }
     }
 }

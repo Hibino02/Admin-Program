@@ -32,5 +32,15 @@ namespace Admin_Program.Properties {
                 return ((string)(this["CONNECTION_STRING"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=172.16.52.40;uid=supply-management;pwd=Meg@lomaniac001;database=supply-man" +
+            "agement")]
+        public string CONNECTION_STRING_SUPPLY {
+            get {
+                return ((string)(this["CONNECTION_STRING_SUPPLY"]));
+            }
+        }
     }
 }

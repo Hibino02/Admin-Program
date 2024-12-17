@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Admin_Program.SupplyManagement.UIClass;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,6 +9,8 @@ namespace Admin_Program.UIClass
     {
         ModeChosenForm modeChosenForm;
         EquipmentAndMaintainenceControlForm equipmentForm;
+        SupplyControlMainForm supplyForm;
+        UserLogInWindow logInForm;
 
         public MainBackGroundFrom()
         {
@@ -26,11 +29,12 @@ namespace Admin_Program.UIClass
             modeChosenForm.MdiParent = this;
             modeChosenForm.Location = new Point(
         (this.ClientSize.Width - modeChosenForm.Size.Width) / 2,
-        (this.ClientSize.Height - modeChosenForm.Size.Height) / 2
-    );
+        (this.ClientSize.Height - modeChosenForm.Size.Height) / 2);
             modeChosenForm.OnEquipmentControlRequested += ShowEquipmentAndMaintainenceControlForm;
+            modeChosenForm.OnSupplyControlREquested += LogInForSupply;
             modeChosenForm.Show();
         }
+        //Call MainControlForm for Equipment
         private void ShowEquipmentAndMaintainenceControlForm(object sender, EventArgs e)
         {
             equipmentForm = new EquipmentAndMaintainenceControlForm();
@@ -38,6 +42,32 @@ namespace Admin_Program.UIClass
             equipmentForm.Dock = DockStyle.Fill;
             equipmentForm.Show();
             equipmentForm.returnMain += backToMainMenu;
+        }
+        //Call MainControlForm for Supply
+        private void ShowSupplyControlForm(object sender, EventArgs e)
+        {
+            supplyForm = new SupplyControlMainForm();
+            supplyForm.MdiParent = this;
+            supplyForm.Dock = DockStyle.Fill;
+            supplyForm.Show();
+            supplyForm.returnMain += backToMainMenu;
+        }
+        //Call user login for Supply
+        private void LogInForSupply(object sender, EventArgs e)
+        {
+            logInForm = new UserLogInWindow
+            {
+                MdiParent = this
+            };
+            // Center the child form relative to the parent
+            logInForm.StartPosition = FormStartPosition.Manual; // Set to manual positioning
+            logInForm.Location = new Point(
+                (this.ClientSize.Width - logInForm.Width) / 2,
+                (this.ClientSize.Height - logInForm.Height) / 2
+            );
+            logInForm.Show();
+            logInForm.LoginSuccessful += ShowSupplyControlForm;
+            logInForm.backToChosen += backToMainMenu;
         }
         private void backToMainMenu(object sender, EventArgs e)
         {
