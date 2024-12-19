@@ -17,41 +17,26 @@ namespace Admin_Program.EquipmentManagement.UIClass
         }
         private void logInButton_Click(object sender, EventArgs e)
         {
-            if (User.IsUserAvailable(userTextBox.Text))
+            if (User.IsLoginSuccess(userTextBox.Text,passwordTextBox.Text))
             {
-                if (User.IsPasswordCorrect(passwordTextBox.Text))
-                {
-                    LoginSuccessful?.Invoke(this, EventArgs.Empty);
-                }
-                else
-                {
-                    MessageBox.Show("รหัสผ่านผิดพลาด");
-                }
+                LoginSuccessful?.Invoke(this, EventArgs.Empty);
             }
             else
             {
-                MessageBox.Show("ไม่มี User นี้ในระบบ");
+                MessageBox.Show("ยูสเซอร์หรือพาสเวิร์ดผิดพลาด");
             }
         }
         private void passwordTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                if (User.IsUserAvailable(userTextBox.Text))
+                if (User.IsLoginSuccess(userTextBox.Text, passwordTextBox.Text))
                 {
-                    if (User.IsPasswordCorrect(passwordTextBox.Text))
-                    {
-                        LoginSuccessful?.Invoke(this, EventArgs.Empty);
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("รหัสผ่านผิดพลาด");
-                    }
+                    LoginSuccessful?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
-                    MessageBox.Show("ไม่มี User นี้ในระบบ");
+                    MessageBox.Show("ยูสเซอร์หรือพาสเวิร์ดผิดพลาด");
                 }
             }
         }

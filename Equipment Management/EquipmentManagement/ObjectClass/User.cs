@@ -66,30 +66,19 @@ namespace Admin_Program.EquipmentManagement.ObjectClass
             }
             return userList;
         }
-        public static bool IsUserAvailable(string user)
+        public static bool IsLoginSuccess(string user, string pass)
         {
             bool userA = false;
             foreach (User u in userList)
             {
-                if (user == u.UserName)
+                if (user == u.UserName && pass == u.Password)
                 {
                     userA = true;
+                    Global.warehouseID = u.warehouseID;
+                    break;
                 }
             }
             return userA;
-        }
-        public static bool IsPasswordCorrect(string pass)
-        {
-            bool passC = false;
-            foreach (User u in userList)
-            {
-                if (pass == u.Password)
-                {
-                    passC = true;
-                    Global.warehouseID = u.warehouseID;
-                }
-            }
-            return passC;
         }
     }
 }
