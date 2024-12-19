@@ -386,7 +386,7 @@ namespace Admin_Program.UIClass.Plan
         {
             if (CheckAllAttribute())
             {
-                newPp = new ObjectClass.PlanProcess(Global.selectedEquipmentInPlan.ID, startDateTimePicker.Value
+                newPp = new ObjectClass.PlanProcess(Global.warehouseID,Global.selectedEquipmentInPlan.ID, startDateTimePicker.Value
                     , startrichTextBox.Text, vNameTextBox.Text, vDetailsrichTextBox.Text, cost, workpermitProcessPath
                     , photoContractPath, null, null, replaceEquipment, null);
                 if (newPp.Create())

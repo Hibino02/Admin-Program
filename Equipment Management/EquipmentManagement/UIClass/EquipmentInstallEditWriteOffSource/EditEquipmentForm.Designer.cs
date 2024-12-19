@@ -63,6 +63,7 @@
             this.choseEquipmentTypeCombobox = new System.Windows.Forms.ComboBox();
             this.equipmentTypeLabel = new System.Windows.Forms.Label();
             this.writeOfflinkLabel = new System.Windows.Forms.LinkLabel();
+            this.manageTypeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.installationPlacePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -420,11 +421,23 @@
             this.writeOfflinkLabel.MouseEnter += new System.EventHandler(this.writeOfflinkLabel_MouseEnter);
             this.writeOfflinkLabel.MouseLeave += new System.EventHandler(this.writeOfflinkLabel_MouseLeave);
             // 
+            // manageTypeButton
+            // 
+            this.manageTypeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.manageTypeButton.Location = new System.Drawing.Point(604, 8);
+            this.manageTypeButton.Name = "manageTypeButton";
+            this.manageTypeButton.Size = new System.Drawing.Size(93, 24);
+            this.manageTypeButton.TabIndex = 74;
+            this.manageTypeButton.Text = "จัดการ";
+            this.manageTypeButton.UseVisualStyleBackColor = true;
+            this.manageTypeButton.Click += new System.EventHandler(this.manageTypeButton_Click);
+            // 
             // EditEquipmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1443, 781);
+            this.Controls.Add(this.manageTypeButton);
             this.Controls.Add(this.writeOfflinkLabel);
             this.Controls.Add(this.InstallationDetailsRichTextBox);
             this.Controls.Add(this.equipmentDetailsLabel);
@@ -510,5 +523,6 @@
         protected System.Windows.Forms.ComboBox choseEquipmentTypeCombobox;
         protected System.Windows.Forms.Label equipmentTypeLabel;
         protected System.Windows.Forms.LinkLabel writeOfflinkLabel;
+        protected System.Windows.Forms.Button manageTypeButton;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Admin_Program.ObjectClass;
+using Admin_Program.GlobalVariable;
 
 namespace Admin_Program.CustomViewClass
 {
@@ -54,7 +55,7 @@ namespace Admin_Program.CustomViewClass
                         EquipmentStatus = j.JEq.EStatusObj.EStatus,
                         EStatusID = j.JEq.EStatusObj.ID,
                         JDetails = j.JDetails,
-                        CasePhoto = j.CasePhoto
+                        CasePhoto = j.CasePhoto,
                     };
                     jobInProcessViews.Add(view);
                 }    
@@ -79,7 +80,7 @@ namespace Admin_Program.CustomViewClass
                         EStatusID = j.JEq.EStatusObj.ID,
                         JDetails = j.JDetails,
                         VendorName = j.VendName,
-                        CasePhoto = j.CasePhoto
+                        CasePhoto = j.CasePhoto,
                     };
                     jobInProcessViews.Add(view);
                 }

@@ -657,7 +657,7 @@ namespace Admin_Program.UIClass.Job
         {
             if (CheckAllAttribute())
             {
-                Admin_Program.ObjectClass.Job newJ = new Admin_Program.ObjectClass.Job(jDetailsrichTextBox.Text,
+                Admin_Program.ObjectClass.Job newJ = new Admin_Program.ObjectClass.Job(Global.warehouseID,jDetailsrichTextBox.Text,
                     repairEquipmentPhotoPath, reporterNameTextBox.Text, reportDateTimePicker.Value, decideDateTimePicker.Value,
                     approveDateTimePicker.Value, null, null, reasdonToChoserepairRichTextBox.Text, deciderNameTextBox.Text, approveCheckBox.Checked,
                     reasonToAppRichTextBox.Text, approverNameTextBox.Text, createdJobDocumentPath, null, null, null, null, 0, null, null, null, null, false,

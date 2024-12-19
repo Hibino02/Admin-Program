@@ -12,6 +12,8 @@ namespace Admin_Program.ObjectClass
         public int ID { get { return id; } }
         string pperiod;
         public string PPeriod { get { return pperiod; } set { pperiod = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING;
 
@@ -33,6 +35,7 @@ namespace Admin_Program.ObjectClass
                         {
                             id = Convert.ToInt32(reader["ID"]);
                             pperiod = reader["PPeriod"].ToString();
+                            warehouseID = Convert.ToInt32(reader["WarehouseID"]);
                         }
                     }
                 }
@@ -49,14 +52,16 @@ namespace Admin_Program.ObjectClass
         {
             UpdateAttribute(id.ToString());
         }
-        public PlanPeriod(string pperiod)
+        public PlanPeriod(string pperiod, int warehouseid)
         {
             this.pperiod = pperiod;
+            this.warehouseID = warehouseid;
         }
-        public PlanPeriod(int id, string pperiod)
+        public PlanPeriod(int id, string pperiod,int warehouseid)
         {
             this.id = id;
             this.pperiod = pperiod;
+            this.warehouseID = warehouseid;
         }
 
         public bool Create()
@@ -68,9 +73,10 @@ namespace Admin_Program.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO planperiod (ID, PPeriod) VALUES (NULL, @pperiod)";
+                    string insert = "INSERT INTO planperiod (ID, PPeriod, WarehouseID) VALUES (NULL, @pperiod, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@pperiod", pperiod);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -122,15 +128,17 @@ namespace Admin_Program.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string selectAll = "SELECT * FROM planperiod";
+                    string selectAll = "SELECT * FROM planperiod WHERE WarehouseID = @whid";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             int id = Convert.ToInt32(reader["ID"]);
                             string acc = reader["PPeriod"].ToString();
-                            PlanPeriod acq = new PlanPeriod(id, acc);
+                            int whid = Convert.ToInt32(reader["WarehouseID"]);
+                            PlanPeriod acq = new PlanPeriod(id, acc, whid);
                             ppList.Add(acq);
                         }
                     }

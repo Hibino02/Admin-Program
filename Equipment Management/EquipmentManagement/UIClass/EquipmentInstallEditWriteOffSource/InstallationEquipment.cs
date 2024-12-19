@@ -8,6 +8,7 @@ using System.IO;
 using Admin_Program.CustomWindowComponents;
 using Admin_Program.GlobalVariable;
 using System.Linq;
+using Admin_Program.EquipmentManagement.UIClass.EquipmentInstallEditWriteOffSource;
 
 namespace Admin_Program.UIClass.InstallationSource
 {
@@ -21,6 +22,7 @@ namespace Admin_Program.UIClass.InstallationSource
         private ToolTip invoiceTooltip;
 
         private CreateWindow create;
+        private EquipmentTypeManagementForm eqManage;
         //variable for update components
         List<EquipmentType> equipmentTypeList;
         List<EquipmentOwner> equipmentOwnerList;
@@ -128,7 +130,7 @@ namespace Admin_Program.UIClass.InstallationSource
                 if (create.ShowDialog() == DialogResult.OK)
                 {
                     string receiveType = create.DetailsText;
-                    EquipmentType newEqt = new EquipmentType(receiveType);
+                    EquipmentType newEqt = new EquipmentType(receiveType,Global.warehouseID);
                     if (newEqt.Create())
                     {
                         ShowCustomMessageBox("ประเภทอุปกรณ์ใหม่ : " + receiveType);
@@ -157,7 +159,7 @@ namespace Admin_Program.UIClass.InstallationSource
                 if (create.ShowDialog() == DialogResult.OK)
                 {
                     string receiveOwner = create.DetailsText;
-                    EquipmentOwner newEqo = new EquipmentOwner(receiveOwner);
+                    EquipmentOwner newEqo = new EquipmentOwner(receiveOwner,Global.warehouseID);
                     if (newEqo.Create())
                     {
                         ShowCustomMessageBox("ชื่อเจ้าของอุปกรณ์ใหม่ : " + receiveOwner);
@@ -415,7 +417,7 @@ namespace Admin_Program.UIClass.InstallationSource
         {
             if (CheckAllAttribute())
             {
-                Equipment newEq = new Equipment(equipmentNameTextBox.Text,false, installationDateTimePicker.Value, selectedEquipmentType,
+                Equipment newEq = new Equipment(Global.warehouseID,equipmentNameTextBox.Text,false, installationDateTimePicker.Value, selectedEquipmentType,
                 selectedEquipmentOwner, selectedEquipmentAcquisition, selectedEquipmentStatus, selectedRentalBasis,
                 equipmentSerialTextBox.Text, equipmentPhotoPath, installationPlacePhotoPath, equipmentDetailRichTextBox.Text,
                 replacementCheckBox.Checked, sellDetailsRichTextBox.Text, priceFromTextBox, acquisitionDocumentPath, null,InstallationDetailsRichTextBox.Text);
@@ -507,6 +509,18 @@ namespace Admin_Program.UIClass.InstallationSource
 
             // Re-subscribe to the TextChanged event
             choseEquipmentTypeCombobox.TextChanged += choseEquipmentTypeCombobox_TextChanged;
+        }
+
+        private void manageTypeButton_Click(object sender, EventArgs e)
+        {
+            eqManage = new EquipmentTypeManagementForm();
+            eqManage.Owner = main;
+            eqManage.updateEquipmentType += RefreshComponent;
+            eqManage.ShowDialog();
+        }
+        private void RefreshComponent(object sender, EventArgs e)
+        {
+            UpdateComponents();
         }
     }
 }

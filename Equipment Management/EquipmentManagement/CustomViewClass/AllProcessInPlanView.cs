@@ -36,6 +36,7 @@ namespace Admin_Program.CustomViewClass
         {
             List<AllProcessInPlanView> list = new List<AllProcessInPlanView>();
             List<PlanProcess> pplist = PlanProcess.GetPlanProcessList();
+           
             foreach (Plan p in Plan.GetPlanList())
             {
                 if (p.PlanStatus && p.Eqp.EStatusObj.ID == 8)
@@ -49,20 +50,20 @@ namespace Admin_Program.CustomViewClass
                             ID = latestProcess.ID,
                             PID = p.ID,
                             EID = p.Eqp.ID,
-                            EName=p.Eqp.Name,
-                            ESerial=p.Eqp.Serial,
-                            PType=p.PType.PType,
-                            ProcessDate=latestProcess.ProcessDate,
-                            REID=latestProcess.RE?.ID,
-                            REName=latestProcess.RE?.Name,
-                            RESerial=latestProcess.RE?.Serial,
-                            ContractPhoto=latestProcess.Contract,
-                            EPhotoPath=p.Eqp.EPhotoPath,
-                            StartDetails=latestProcess.StartDetails,
-                            VenderName=latestProcess.PSup,
-                            VenderDetails=latestProcess.PSupDetails,
-                            Cost=latestProcess.Cost,
-                            WorkPermit=latestProcess.WorkPermit,
+                            EName = p.Eqp.Name,
+                            ESerial = p.Eqp.Serial,
+                            PType = p.PType.PType,
+                            ProcessDate = latestProcess.ProcessDate,
+                            REID = latestProcess.RE?.ID,
+                            REName = latestProcess.RE?.Name,
+                            RESerial = latestProcess.RE?.Serial,
+                            ContractPhoto = latestProcess.Contract,
+                            EPhotoPath = p.Eqp.EPhotoPath,
+                            StartDetails = latestProcess.StartDetails,
+                            VenderName = latestProcess.PSup,
+                            VenderDetails = latestProcess.PSupDetails,
+                            Cost = latestProcess.Cost,
+                            WorkPermit = latestProcess.WorkPermit,
                             EStatusID = p.Eqp.EStatusObj.ID
                         };
                         list.Add(processView);
@@ -77,7 +78,7 @@ namespace Admin_Program.CustomViewClass
             List<PlanProcess> pplist = PlanProcess.GetPlanProcessList();
             foreach(PlanProcess pp in pplist)
             {
-                if(pp.PlanID == planid)
+                if (pp.PlanID == planid)
                 {
                     AllProcessInPlanView processView = new AllProcessInPlanView
                     {

@@ -62,6 +62,7 @@
             this.createEquipmentButton = new System.Windows.Forms.Button();
             this.equipmentDetailsLabel = new System.Windows.Forms.Label();
             this.InstallationDetailsRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.manageTypeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.installationPlacePictureBox)).BeginInit();
             this.SuspendLayout();
@@ -406,6 +407,17 @@
             this.InstallationDetailsRichTextBox.TabIndex = 36;
             this.InstallationDetailsRichTextBox.Text = "";
             // 
+            // manageTypeButton
+            // 
+            this.manageTypeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.manageTypeButton.Location = new System.Drawing.Point(604, 6);
+            this.manageTypeButton.Name = "manageTypeButton";
+            this.manageTypeButton.Size = new System.Drawing.Size(93, 24);
+            this.manageTypeButton.TabIndex = 75;
+            this.manageTypeButton.Text = "จัดการ";
+            this.manageTypeButton.UseVisualStyleBackColor = true;
+            this.manageTypeButton.Click += new System.EventHandler(this.manageTypeButton_Click);
+            // 
             // InstallationEquipment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -413,6 +425,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1443, 781);
+            this.Controls.Add(this.manageTypeButton);
             this.Controls.Add(this.InstallationDetailsRichTextBox);
             this.Controls.Add(this.equipmentDetailsLabel);
             this.Controls.Add(this.createEquipmentButton);
@@ -496,5 +509,6 @@
         protected System.Windows.Forms.Button createEquipmentButton;
         protected System.Windows.Forms.Label equipmentDetailsLabel;
         protected System.Windows.Forms.RichTextBox InstallationDetailsRichTextBox;
+        protected System.Windows.Forms.Button manageTypeButton;
     }
 }

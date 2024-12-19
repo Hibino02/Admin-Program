@@ -44,9 +44,9 @@ namespace Admin_Program.CustomViewClass
             {
                 bool isEJob = false;
 
-                foreach(Job j in jlist)
+                foreach (Job j in jlist)
                 {
-                    if(e.ID == j.JEq.ID)
+                    if (e.ID == j.JEq.ID)
                     {
                         isEJob = true;
                         break;
@@ -71,7 +71,7 @@ namespace Admin_Program.CustomViewClass
                     IsEJob = isEJob
                 };
                 equipmentListView.Add(view);
-            }
+            }    
             return equipmentListView.OrderBy(e => e.EStatusID).ToList();
         }
         public static List<AllEquipmentView> GetAllEquipmentForPlanView()
@@ -79,7 +79,7 @@ namespace Admin_Program.CustomViewClass
             List<AllEquipmentView> equipmentListView = new List<AllEquipmentView>();
             foreach (Equipment e in Equipment.GetEquipmentList())
             {
-                if(e.EStatusObj.ID == 1 || e.EStatusObj.ID == 2)
+                if (e.EStatusObj.ID == 1 || e.EStatusObj.ID == 2)
                 {
                     AllEquipmentView view = new AllEquipmentView
                     {
@@ -105,7 +105,7 @@ namespace Admin_Program.CustomViewClass
             foreach (Equipment e in Equipment.GetEquipmentList())
             {
                 if (e.EStatusObj.ID == 1 || e.EStatusObj.ID == 2 || e.EStatusObj.ID == 3 ||
-            e.EStatusObj.ID == 6 || e.EStatusObj.ID == 7)
+               e.EStatusObj.ID == 6 || e.EStatusObj.ID == 7)
                 {
                     AllEquipmentView view = new AllEquipmentView
                     {
@@ -119,7 +119,6 @@ namespace Admin_Program.CustomViewClass
                     };
                     equipmentListView.Add(view);
                 }
-                
             }
             return equipmentListView;
         }
@@ -130,7 +129,7 @@ namespace Admin_Program.CustomViewClass
             {
                 if (e.Replacement)
                 {
-                    if(e.EStatusObj.ID == 1 || e.EStatusObj.ID == 2 || e.EStatusObj.ID == 6
+                    if (e.EStatusObj.ID == 1 || e.EStatusObj.ID == 2 || e.EStatusObj.ID == 6
                    || e.EStatusObj.ID == 7)
                     {
                         AllEquipmentView view = new AllEquipmentView
@@ -144,7 +143,7 @@ namespace Admin_Program.CustomViewClass
                             EquipmentPhoto = e.EPhotoPath
                         };
                         equipmentListView.Add(view);
-                    }     
+                    }
                 }
             }
             return equipmentListView;
@@ -155,7 +154,7 @@ namespace Admin_Program.CustomViewClass
             foreach(Equipment e in Equipment.GetEquipmentList())
             {
                 //This logic for not showing same equipment in replace gridview
-                if(e.ID != GlobalVariable.Global.selectedEquipmentInPlan.EID)
+                if (e.ID != GlobalVariable.Global.selectedEquipmentInPlan.EID)
                 {
                     if (e.EStatusObj.ID == 1 || e.EStatusObj.ID == 7)
                     {

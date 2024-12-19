@@ -22,6 +22,8 @@ namespace Admin_Program.ObjectClass
         public DateTime? DateToDo { get { return datetodo; }set { datetodo = value; } }
         bool planstatus;
         public bool PlanStatus { get { return planstatus; }set { planstatus = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING;
 
@@ -36,15 +38,17 @@ namespace Admin_Program.ObjectClass
                 {
                     string select = @"SELECT
 p.ID, p.TimesToDo, p.DateToDo, p.PlanStatus,
-p.PTypeID, pt.PType,
-p.PPeriodID, pp.PPeriod,
-p.EID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
+p.PTypeID, pt.PType, pt.WarehouseID AS PTWHID,
+p.PPeriodID, pp.PPeriod, pp.WarehouseID AS PPWHID,
+p.EID, p.WarehouseID,
+e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
 e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.InsDetails,
-e.WriteOff, e.ETypeID, et.EType, 
-e.EOwnerID, eo.Owner,
+e.WriteOff, e.ETypeID, et.EType, et.WarehouseID AS ETWHID,
+e.EOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
 e.EAcqID, ea.Accquire,
 e.EStatusID, es.EStatus,
-e.ERentID, er.Basis
+e.ERentID, er.Basis,
+e.WarehouseID
 FROM plan p
 LEFT JOIN plantype pt ON p.PTypeID = pt.ID
 LEFT JOIN planperiod pp ON p.PPeriodID = pp.ID
@@ -67,10 +71,13 @@ WHERE p.ID = @id";
                             planstatus = Convert.ToBoolean(reader["PlanStatus"]);
                             int ptypeid = Convert.ToInt32(reader["PTypeID"]);
                             string ptype = reader["PType"].ToString();
-                            this.ptype = new PlanType(ptypeid, ptype);
+                            int ptwhid = Convert.ToInt32(reader["PTWHID"]);
+                            this.ptype = new PlanType(ptypeid, ptype, ptwhid);
                             int pperiodid = Convert.ToInt32(reader["PPeriodID"]);
                             string pperiod = reader["PPeriod"].ToString();
-                            this.pperiod = new PlanPeriod(pperiodid, pperiod);
+                            int ppwhid = Convert.ToInt32(reader["PPWHID"]);
+                            this.pperiod = new PlanPeriod(pperiodid, pperiod, ppwhid);
+                            this.warehouseID = Convert.ToInt32(reader["WarehouseID"]);
                             //Equipment on this plan
                             int id = Convert.ToInt32(reader["EID"]);
                             string name = reader["Name"].ToString();
@@ -86,10 +93,12 @@ WHERE p.ID = @id";
                             string writeoffpath = reader["WriteOff"].ToString();
                             int etypeid = Convert.ToInt32(reader["ETypeID"]);
                             string type = reader["EType"].ToString();
-                            EquipmentType etype = new EquipmentType(etypeid, type);
+                            int etwhid = Convert.ToInt32(reader["ETWHID"]);
+                            EquipmentType etype = new EquipmentType(etypeid, type, etwhid);
                             int eownerid = Convert.ToInt32(reader["EOwnerID"]);
                             string owner = reader["Owner"].ToString();
-                            EquipmentOwner eowner = new EquipmentOwner(eownerid, owner);
+                            int eowhid = Convert.ToInt32(reader["EOWHID"]);
+                            EquipmentOwner eowner = new EquipmentOwner(eownerid, owner, eowhid);
                             int acqid = Convert.ToInt32(reader["EAcqID"]);
                             string acq = reader["Accquire"].ToString();
                             Acquisition acquisition = new Acquisition(acqid, acq);
@@ -103,7 +112,8 @@ WHERE p.ID = @id";
 
                             string insdetail = reader["InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["OnPlan"]);
-                            eqp = new Equipment(id, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                            int ewhid = Convert.ToInt32(reader["WarehouseID"]);
+                            eqp = new Equipment(id, ewhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
                                 serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                 writeoffpath,insdetail);
                         }
@@ -122,9 +132,10 @@ WHERE p.ID = @id";
         {
             UpdateAttribute(id.ToString());
         }
-        public Plan(Equipment eqp,PlanType ptype,PlanPeriod pperiod,int timestodo,bool planstatus, 
+        public Plan(int warehouseid,Equipment eqp,PlanType ptype,PlanPeriod pperiod,int timestodo,bool planstatus, 
             DateTime? datetodo = null)
         {
+            this.warehouseID = warehouseid;
             this.eqp = eqp;
             this.ptype = ptype;
             this.pperiod = pperiod;
@@ -132,10 +143,11 @@ WHERE p.ID = @id";
             this.datetodo = datetodo;
             this.planstatus = planstatus;
         }
-        public Plan(int id,Equipment eqp, PlanType ptype, PlanPeriod pperiod, int timestodo, bool planstatus, 
+        public Plan(int id,int warehouseid,Equipment eqp, PlanType ptype, PlanPeriod pperiod, int timestodo, bool planstatus, 
             DateTime? datetodo = null)
         {
             this.id = id;
+            this.warehouseID = warehouseid;
             this.eqp = eqp;
             this.ptype = ptype;
             this.pperiod = pperiod;
@@ -153,7 +165,7 @@ WHERE p.ID = @id";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO plan (ID, EID, PTypeID, PPeriodID, TimesToDo, DateToDo, PlanStatus) VALUES (NULL, @eid, @ptypeid, @pperiodid, @timestodo, @datetodo, @planstatus)";
+                    string insert = "INSERT INTO plan (ID, EID, PTypeID, PPeriodID, TimesToDo, DateToDo, PlanStatus, WarehouseID) VALUES (NULL, @eid, @ptypeid, @pperiodid, @timestodo, @datetodo, @planstatus, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@eid", eqp.ID);
                     cmd.Parameters.AddWithValue("@ptypeid", ptype.ID);
@@ -161,6 +173,7 @@ WHERE p.ID = @id";
                     cmd.Parameters.AddWithValue("@timestodo", timestodo);
                     cmd.Parameters.AddWithValue("@datetodo", datetodo);
                     cmd.Parameters.AddWithValue("@planstatus", planstatus);
+                    cmd.Parameters.AddWithValue("@whid",warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -184,7 +197,7 @@ WHERE p.ID = @id";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "UPDATE plan SET EID = @eid, PTypeID = @ptypeid, PPeriodID = @pperiodid, TimesToDo = @timestodo, DateToDo = @datetodo, PlanStatus = @planstatus WHERE ID = @id";
+                    string insert = "UPDATE plan SET EID = @eid, PTypeID = @ptypeid, PPeriodID = @pperiodid, TimesToDo = @timestodo, DateToDo = @datetodo, PlanStatus = @planstatus, WarehouseID = @whid WHERE ID = @id";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@eid", eqp.ID);
                     cmd.Parameters.AddWithValue("@ptypeid", ptype.ID);
@@ -192,6 +205,7 @@ WHERE p.ID = @id";
                     cmd.Parameters.AddWithValue("@timestodo", timestodo);
                     cmd.Parameters.AddWithValue("@datetodo", datetodo);
                     cmd.Parameters.AddWithValue("@planstatus", planstatus);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                 }
@@ -246,15 +260,17 @@ WHERE p.ID = @id";
                 {
                     string selectAll = @"SELECT
 p.ID, p.TimesToDo, p.DateToDo, p.PlanStatus,
-p.PTypeID, pt.PType,
-p.PPeriodID, pp.PPeriod,
-p.EID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
+p.PTypeID, pt.PType, pt.WarehouseID AS PTWHID,
+p.PPeriodID, pp.PPeriod, pp.WarehouseID AS PPWHID,
+p.EID, p.WarehouseID,
+e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
 e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.InsDetails,
-e.WriteOff, e.ETypeID, et.EType, 
-e.EOwnerID, eo.Owner,
+e.WriteOff, e.ETypeID, et.EType, et.WarehouseID AS ETWHID,
+e.EOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
 e.EAcqID, ea.Accquire,
 e.EStatusID, es.EStatus,
-e.ERentID, er.Basis
+e.ERentID, er.Basis,
+e.WarehouseID AS EQMWharehouseID
 FROM plan p
 LEFT JOIN plantype pt ON p.PTypeID = pt.ID
 LEFT JOIN planperiod pp ON p.PPeriodID = pp.ID
@@ -263,8 +279,10 @@ LEFT JOIN equipmenttype et ON e.ETypeID = et.ID
 LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
-LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
+LEFT JOIN rentalbasis er ON e.ERentID = e.ID
+WHERE p.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -275,10 +293,13 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
                             bool planstatus = Convert.ToBoolean(reader["PlanStatus"]);
                             int ptypeid = Convert.ToInt32(reader["PTypeID"]);
                             string ptype = reader["PType"].ToString();
-                            PlanType ptype1 = new PlanType(ptypeid, ptype);
+                            int ptwhid = Convert.ToInt32(reader["PTWHID"]);
+                            PlanType ptype1 = new PlanType(ptypeid, ptype, ptwhid);
                             int pperiodid = Convert.ToInt32(reader["PPeriodID"]);
                             string pperiod = reader["PPeriod"].ToString();
-                            PlanPeriod pperiod1 = new PlanPeriod(pperiodid, pperiod);
+                            int ppwhid = Convert.ToInt32(reader["PPWHID"]);
+                            PlanPeriod pperiod1 = new PlanPeriod(pperiodid, pperiod, ppwhid);
+                            int warehouseid = Convert.ToInt32(reader["WarehouseID"]);
                             //Equipment on this plan
                             int eid = Convert.ToInt32(reader["EID"]);
                             string name = reader["Name"].ToString();
@@ -294,10 +315,12 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
                             string writeoffpath = reader["WriteOff"].ToString();
                             int etypeid = Convert.ToInt32(reader["ETypeID"]);
                             string type = reader["EType"].ToString();
-                            EquipmentType etype = new EquipmentType(etypeid, type);
+                            int etwhid = Convert.ToInt32(reader["ETWHID"]);
+                            EquipmentType etype = new EquipmentType(etypeid, type, etwhid);
                             int eownerid = Convert.ToInt32(reader["EOwnerID"]);
                             string owner = reader["Owner"].ToString();
-                            EquipmentOwner eowner = new EquipmentOwner(eownerid, owner);
+                            int eowhid = Convert.ToInt32(reader["EOWHID"]);
+                            EquipmentOwner eowner = new EquipmentOwner(eownerid, owner, eowhid);
                             int acqid = Convert.ToInt32(reader["EAcqID"]);
                             string acq = reader["Accquire"].ToString();
                             Acquisition acquisition = new Acquisition(acqid, acq);
@@ -311,11 +334,12 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
 
                             string insdetail = reader["InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["OnPlan"]);
-                            Equipment eqp = new Equipment(eid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                            int eqwhid = Convert.ToInt32(reader["EQMWharehouseID"]);
+                            Equipment eqp = new Equipment(eid, eqwhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
                                 serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                 writeoffpath,insdetail);
 
-                            Plan p = new Plan(id,eqp,ptype1,pperiod1,timestodo,planstatus, datetodo);
+                            Plan p = new Plan(id,warehouseid,eqp,ptype1,pperiod1,timestodo,planstatus, datetodo);
                             planList.Add(p);
                         }
                     }

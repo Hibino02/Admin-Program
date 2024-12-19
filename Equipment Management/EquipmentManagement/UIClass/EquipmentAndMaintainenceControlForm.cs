@@ -914,6 +914,7 @@ namespace Admin_Program.UIClass
         private void backToMainMenuButton_Click(object sender, EventArgs e)
         {
             returnMain?.Invoke(this, EventArgs.Empty);
+            Global.warehouseID = 0;
             Close();
         }
 

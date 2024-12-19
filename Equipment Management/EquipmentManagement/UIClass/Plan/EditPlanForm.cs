@@ -85,7 +85,7 @@ namespace Admin_Program.UIClass.Plan
                 if (create.ShowDialog() == DialogResult.OK)
                 {
                     string receiveType = create.DetailsText;
-                    PlanPeriod newPpr = new PlanPeriod(receiveType);
+                    PlanPeriod newPpr = new PlanPeriod(receiveType,Global.warehouseID);
                     if (newPpr.Create())
                     {
                         ShowCustomMessageBox("รอบของแผนใหม่ : " + receiveType);

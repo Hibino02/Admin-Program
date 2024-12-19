@@ -64,6 +64,8 @@ namespace Admin_Program.ObjectClass
         public Equipment JEq { get { return jeq; } set { jeq = value; } }
         Equipment req;
         public Equipment REq { get { return req; } set { req = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING;
 
@@ -84,24 +86,27 @@ namespace Admin_Program.ObjectClass
     j.WorkPermit, j.Cost, j.Contract, j.StartDate, j.FinishDate,
     j.FinishPhoto, j.FinishDocument, j.Acceptor, j.JobStatus,
     j.JTypeID, jt.Type,
+    j.WarehouseID AS JWHID,
     j.EID, e1.Name AS E1_Name, e1.Serial AS E1_Serial, e1.EPhoto AS E1_EPhoto, e1.OnPlan AS E1_onPlan, 
     e1.OPlacePhoto AS E1_OPlacePhoto, e1.EDetails AS E1_EDetails, e1.Replacement AS E1_Replacement, 
     e1.SellDetails AS E1_SellDetails, e1.Price AS E1_Price, e1.InsDetails AS E1_InsDetails,
     e1.EDocument AS E1_EDocument, e1.InsDate AS E1_InsDate, e1.WriteOff AS E1_WriteOff,
-    e1.ETypeID AS E1_ETypeID, et1.EType AS E1_EType,
-    e1.EOwnerID AS E1_EOwnerID, eo1.Owner AS E1_Owner,
+    e1.ETypeID AS E1_ETypeID, et1.EType AS E1_EType, et1.WarehouseID AS ET1WHID,
+    e1.EOwnerID AS E1_EOwnerID, eo1.Owner AS E1_Owner, eo1.WarehouseID AS EO1WHID,
     e1.EAcqID AS E1_AcqID, ea1.Accquire AS E1_Accquire,
     e1.EStatusID AS E1_EStatusID, es1.EStatus AS E1_EStatus,
     e1.ERentID AS E1_ERentID, er1.Basis AS E1_Basis,
+    e1.WarehouseID AS EquipmentWHID1,
     j.REID, e2.Name AS E2_Name, e2.Serial AS E2_Serial, e2.EPhoto AS E2_EPhoto, e2.OnPlan AS E2_onPlan,
     e2.OPlacePhoto AS E2_OPlacePhoto, e2.EDetails AS E2_EDetails, e2.Replacement AS E2_Replacement, 
     e2.SellDetails AS E2_SellDetails, e2.Price AS E2_Price, e2.InsDetails AS E2_InsDetails,
     e2.EDocument AS E2_EDocument, e2.InsDate AS E2_InsDate, e2.WriteOff AS E2_WriteOff,
-    e2.ETypeID AS E2_ETypeID, et2.EType AS E2_EType,
-    e2.EOwnerID AS E2_EOwnerID, eo2.Owner AS E2_Owner,
+    e2.ETypeID AS E2_ETypeID, et2.EType AS E2_EType, et2.WarehouseID AS ET2WHID,
+    e2.EOwnerID AS E2_EOwnerID, eo2.Owner AS E2_Owner, eo2.WarehouseID AS EO2WHID,
     e2.EAcqID AS E2_AcqID, ea2.Accquire AS E2_Accquire,
     e2.EStatusID AS E2_EStatusID, es2.EStatus AS E2_EStatus,
-    e2.ERentID AS E2_ERentID, er2.Basis AS E2_Basis
+    e2.ERentID AS E2_ERentID, er2.Basis AS E2_Basis,
+    e2.WarehouseID AS EquipmentWHID2
 FROM 
     job j
 LEFT JOIN equipment e1 ON j.EID = e1.ID
@@ -152,6 +157,7 @@ WHERE j.ID = @jid;";
                             int jtid = Convert.ToInt32(reader["JTypeID"]);
                             string jt = reader["Type"].ToString();
                             jtype = new JobType(jtid, jt);
+                            warehouseID = Convert.ToInt32(reader["JWHID"]);
 
                             //Equipment create in job
                             int eid = Convert.ToInt32(reader["EID"]);
@@ -168,10 +174,12 @@ WHERE j.ID = @jid;";
                             string writeoffpath = reader["E1_WriteOff"].ToString();
                             int etypeid = Convert.ToInt32(reader["E1_ETypeID"]);
                             string type = reader["E1_EType"].ToString();
-                            EquipmentType etypeobj = new EquipmentType(etypeid, type);
+                            int et1whid = Convert.ToInt32(reader["ET1WHID"]);
+                            EquipmentType etypeobj = new EquipmentType(etypeid, type, et1whid);
                             int eownerid = Convert.ToInt32(reader["E1_EOwnerID"]);
                             string owner = reader["E1_Owner"].ToString();
-                            EquipmentOwner eownerobj = new EquipmentOwner(eownerid, owner);
+                            int eo1whid = Convert.ToInt32(reader["EO1WHID"]);
+                            EquipmentOwner eownerobj = new EquipmentOwner(eownerid, owner, eo1whid);
                             int acqid = Convert.ToInt32(reader["E1_AcqID"]);
                             string acq = reader["E1_Accquire"].ToString();
                             Acquisition acquisitionobj = new Acquisition(acqid, acq);
@@ -185,7 +193,8 @@ WHERE j.ID = @jid;";
 
                             string insdetail = reader["E1_InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["E1_onPlan"]);
-                            jeq = new Equipment(eid, name,onplan, insdate, etypeobj, eownerobj, acquisitionobj, estatusobj,
+                            int e1whid = Convert.ToInt32(reader["EquipmentWHID1"]);
+                            jeq = new Equipment(eid, e1whid, name,onplan, insdate, etypeobj, eownerobj, acquisitionobj, estatusobj,
                                 rent, serial, ephotopath, oplacephotopath, edetails, replacement, selldetails,
                                 price, edocumentpath, writeoffpath,insdetail);
 
@@ -207,10 +216,12 @@ WHERE j.ID = @jid;";
                                 string writeoffpath1 = reader["E2_WriteOff"].ToString();
                                 int etypeid1 = Convert.ToInt32(reader["E2_ETypeID"]);
                                 string type1 = reader["E2_EType"].ToString();
-                                EquipmentType etypeobj1 = new EquipmentType(etypeid, type);
+                                int et2whid = Convert.ToInt32(reader["ET2WHID"]);
+                                EquipmentType etypeobj1 = new EquipmentType(etypeid, type, et2whid);
                                 int eownerid1 = Convert.ToInt32(reader["E2_EOwnerID"]);
                                 string owner1 = reader["E2_Owner"].ToString();
-                                EquipmentOwner eownerobj1 = new EquipmentOwner(eownerid, owner);
+                                int eo2whid = Convert.ToInt32(reader["EO2WHID"]);
+                                EquipmentOwner eownerobj1 = new EquipmentOwner(eownerid, owner, eo2whid);
                                 int acqid1 = Convert.ToInt32(reader["E2_AcqID"]);
                                 string acq1 = reader["E2_Accquire"].ToString();
                                 Acquisition acquisitionobj1 = new Acquisition(acqid, acq);
@@ -224,7 +235,8 @@ WHERE j.ID = @jid;";
 
                                 string insdetail1 = reader["E2_InsDetails"].ToString();
                                 bool onplan1 = Convert.ToBoolean(reader["E2_onPlan"]);
-                                req = new Equipment(eid1, name1,onplan1, insdate1, etypeobj1, eownerobj1, acquisitionobj1, estatusobj1,
+                                int whid = Convert.ToInt32(reader["EquipmentWHID2"]);
+                                req = new Equipment(eid1, whid, name1,onplan1, insdate1, etypeobj1, eownerobj1, acquisitionobj1, estatusobj1,
                                     rent1, serial1, ephotopath1, oplacephotopath1, edetails1, replacement1, selldetails1,
                                     price1, edocumentpath1, writeoffpath1,insdetail1);
                             }
@@ -248,7 +260,7 @@ WHERE j.ID = @jid;";
         {
             UpdateAttribute(id.ToString());
         }
-        public Job(string jdetails, string casephoto, string reporter, DateTime? rdate = null,
+        public Job(int warehouseid,string jdetails, string casephoto, string reporter, DateTime? rdate = null,
             DateTime? ddate = null, DateTime? adate = null, DateTime? startdate = null, DateTime? finishdate = null,
             string jtypereason = null, string decider = null, bool approve = true, string appreason = null,
             string approver = null, string jdocument = null, string vendname = null, string venddetails = null,
@@ -256,6 +268,7 @@ WHERE j.ID = @jid;";
             string finishphoto = null, string finishdocument = null, string acceptor = null, bool jobstatus = false,
             JobType jtype = null, Equipment jeq = null, Equipment req = null)
         {
+            this.warehouseID = warehouseid;
             this.jdetails = jdetails;
             this.casephoto = casephoto;
             this.reporter = reporter;
@@ -284,7 +297,7 @@ WHERE j.ID = @jid;";
             this.jeq = jeq;
             this.req = req;
         }
-        public Job(int id, string jdetails, string casephoto, string reporter, DateTime? rdate = null,
+        public Job(int id,int warehouseid, string jdetails, string casephoto, string reporter, DateTime? rdate = null,
             DateTime? ddate = null, DateTime? adate = null, DateTime? startdate = null, DateTime? finishdate = null,
             string jtypereason = null, string decider = null, bool approve = true, string appreason = null,
             string approver = null, string jdocument = null, string vendname = null, string venddetails = null,
@@ -293,6 +306,7 @@ WHERE j.ID = @jid;";
             JobType jtype = null, Equipment jeq = null, Equipment req = null)
         {
             this.id = id;
+            this.warehouseID = warehouseid;
             this.jdetails = jdetails;
             this.casephoto = casephoto;
             this.reporter = reporter;
@@ -331,7 +345,7 @@ WHERE j.ID = @jid;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO job (ID, JDetails, CasePhoto, Reporter, RDate, JTypeReason, Decider, DDate, Approve, AppReason, Approver, ADate, JDocument, EID, JTypeID, REID, VendName, VendDetails, RepairDetails, WorkPermit, Cost, Contract, StartDate, FinishDate, FinishPhoto, FinishDocument, Acceptor, JobStatus) VALUES (NULL, @jedtails, @casephoto, @reporter, @rdate, @jtypereason, @decider, @ddate, @approve ,@appreason ,@approver ,@adate ,@jdocument ,@eid ,@jtypeid ,@reid ,@vendname, @venddetails, @repairdetails, @workpermit, @cost, @contract, @startdate, @finishdate, @finishphoto, @finishdocument, @acceptor, @jobstatus)";
+                    string insert = "INSERT INTO job (ID, JDetails, CasePhoto, Reporter, RDate, JTypeReason, Decider, DDate, Approve, AppReason, Approver, ADate, JDocument, EID, JTypeID, REID, VendName, VendDetails, RepairDetails, WorkPermit, Cost, Contract, StartDate, FinishDate, FinishPhoto, FinishDocument, Acceptor, JobStatus, WarehouseID) VALUES (NULL, @jedtails, @casephoto, @reporter, @rdate, @jtypereason, @decider, @ddate, @approve ,@appreason ,@approver ,@adate ,@jdocument ,@eid ,@jtypeid ,@reid ,@vendname, @venddetails, @repairdetails, @workpermit, @cost, @contract, @startdate, @finishdate, @finishphoto, @finishdocument, @acceptor, @jobstatus, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@jedtails", jdetails);
                     cmd.Parameters.AddWithValue("@casephoto", casephoto);
@@ -369,6 +383,7 @@ WHERE j.ID = @jid;";
                     cmd.Parameters.AddWithValue("@finishdocument", finishdocument);
                     cmd.Parameters.AddWithValue("@acceptor", acceptor);
                     cmd.Parameters.AddWithValue("@jobstatus", jobstatus);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -392,7 +407,7 @@ WHERE j.ID = @jid;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "UPDATE job SET JDetails = @jedtails, CasePhoto = @casephoto, Reporter = @reporter, RDate = @rdate, JTypeReason = @jtypereason, Decider = @decider, DDate = @ddate, Approve = @approve, AppReason = @appreason, Approver = @approver, ADate = @adate, JDocument = @jdocument, EID = @eid, JTypeID = @jtypeid, REID = @reid, VendName = @vendname, VendDetails = @venddetails, RepairDetails = @repairdetails, WorkPermit = @workpermit, Cost = @cost, Contract = @contract, StartDate = @startdate, FinishDate = @finishdate, FinishPhoto = @finishphoto, FinishDocument = @finishdocument, Acceptor = @acceptor, JobStatus = @jobstatus WHERE ID = @id";
+                    string insert = "UPDATE job SET JDetails = @jedtails, CasePhoto = @casephoto, Reporter = @reporter, RDate = @rdate, JTypeReason = @jtypereason, Decider = @decider, DDate = @ddate, Approve = @approve, AppReason = @appreason, Approver = @approver, ADate = @adate, JDocument = @jdocument, EID = @eid, JTypeID = @jtypeid, REID = @reid, VendName = @vendname, VendDetails = @venddetails, RepairDetails = @repairdetails, WorkPermit = @workpermit, Cost = @cost, Contract = @contract, StartDate = @startdate, FinishDate = @finishdate, FinishPhoto = @finishphoto, FinishDocument = @finishdocument, Acceptor = @acceptor, JobStatus = @jobstatus, WarehouseID = @whid WHERE ID = @id";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@jedtails", jdetails);
                     cmd.Parameters.AddWithValue("@casephoto", casephoto);
@@ -430,6 +445,7 @@ WHERE j.ID = @jid;";
                     cmd.Parameters.AddWithValue("@finishdocument", finishdocument);
                     cmd.Parameters.AddWithValue("@acceptor", acceptor);
                     cmd.Parameters.AddWithValue("@jobstatus", jobstatus);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                 }
@@ -488,26 +504,28 @@ WHERE j.ID = @jid;";
     j.Approver, j.ADate, j.JDocument,
     j.VendName, j.VendDetails, j.RepairDetails,
     j.WorkPermit, j.Cost, j.Contract, j.StartDate, j.FinishDate,
-    j.FinishPhoto, j.FinishDocument, j.Acceptor, j.JobStatus,
+    j.FinishPhoto, j.FinishDocument, j.Acceptor, j.JobStatus, j.WarehouseID AS JWHID,
     j.JTypeID, jt.Type,
     j.EID, e1.Name AS E1_Name, e1.Serial AS E1_Serial, e1.EPhoto AS E1_EPhoto, e1.OnPlan AS E1_onPlan,
     e1.OPlacePhoto AS E1_OPlacePhoto, e1.EDetails AS E1_EDetails, e1.Replacement AS E1_Replacement, 
     e1.SellDetails AS E1_SellDetails, e1.Price AS E1_Price, e1.InsDetails AS E1_InsDetails,
     e1.EDocument AS E1_EDocument, e1.InsDate AS E1_InsDate, e1.WriteOff AS E1_WriteOff,
-    e1.ETypeID AS E1_ETypeID, et1.EType AS E1_EType,
-    e1.EOwnerID AS E1_EOwnerID, eo1.Owner AS E1_Owner,
+    e1.ETypeID AS E1_ETypeID, et1.EType AS E1_EType, et1.WarehouseID AS ET1WHID,
+    e1.EOwnerID AS E1_EOwnerID, eo1.Owner AS E1_Owner, eo1.WarehouseID AS EO1WHID,
     e1.EAcqID AS E1_AcqID, ea1.Accquire AS E1_Accquire,
     e1.EStatusID AS E1_EStatusID, es1.EStatus AS E1_EStatus,
     e1.ERentID AS E1_ERentID, er1.Basis AS E1_Basis,
+    e1.WarehouseID AS EquipmentWHID1,
     j.REID, e2.Name AS E2_Name, e2.Serial AS E2_Serial, e2.EPhoto AS E2_EPhoto, e2.OnPlan AS E2_onPlan, 
     e2.OPlacePhoto AS E2_OPlacePhoto, e2.EDetails AS E2_EDetails, e2.Replacement AS E2_Replacement, 
     e2.SellDetails AS E2_SellDetails, e2.Price AS E2_Price, e2.InsDetails AS E2_InsDetails,
     e2.EDocument AS E2_EDocument, e2.InsDate AS E2_InsDate, e2.WriteOff AS E2_WriteOff,
-    e2.ETypeID AS E2_ETypeID, et2.EType AS E2_EType,
-    e2.EOwnerID AS E2_EOwnerID, eo2.Owner AS E2_Owner,
+    e2.ETypeID AS E2_ETypeID, et2.EType AS E2_EType, et2.WarehouseID AS ET2WHID,
+    e2.EOwnerID AS E2_EOwnerID, eo2.Owner AS E2_Owner, eo2.WarehouseID AS EO2WHID,
     e2.EAcqID AS E2_AcqID, ea2.Accquire AS E2_Accquire,
     e2.EStatusID AS E2_EStatusID, es2.EStatus AS E2_EStatus,
-    e2.ERentID AS E2_ERentID, er2.Basis AS E2_Basis
+    e2.ERentID AS E2_ERentID, er2.Basis AS E2_Basis,
+    e2.WarehouseID AS EquipmentWHID2
 FROM 
     job j
 LEFT JOIN equipment e1 ON j.EID = e1.ID
@@ -522,8 +540,10 @@ LEFT JOIN equipmentstatus es1 ON e1.EStatusID = es1.ID
 LEFT JOIN equipmentstatus es2 ON e2.EStatusID = es2.ID
 LEFT JOIN rentalbasis er1 ON e1.ERentID = er1.ID
 LEFT JOIN rentalbasis er2 ON e2.ERentID = er2.ID
-LEFT JOIN jobtype jt ON j.JTypeID = jt.ID";
+LEFT JOIN jobtype jt ON j.JTypeID = jt.ID
+WHERE j.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -556,6 +576,7 @@ LEFT JOIN jobtype jt ON j.JTypeID = jt.ID";
                             int jtid = Convert.ToInt32(reader["JTypeID"]);
                             string jt = reader["Type"].ToString();
                             JobType jtype = new JobType(jtid, jt);
+                            int warehouseID = Convert.ToInt32(reader["JWHID"]);
 
                             //Equipment create in job
                             int eid = Convert.ToInt32(reader["EID"]);
@@ -572,10 +593,12 @@ LEFT JOIN jobtype jt ON j.JTypeID = jt.ID";
                             string writeoffpath = reader["E1_WriteOff"].ToString();
                             int etypeid = Convert.ToInt32(reader["E1_ETypeID"]);
                             string type = reader["E1_EType"].ToString();
-                            EquipmentType etypeobj = new EquipmentType(etypeid, type);
+                            int et1whid = Convert.ToInt32(reader["ET1WHID"]);
+                            EquipmentType etypeobj = new EquipmentType(etypeid, type, et1whid);
                             int eownerid = Convert.ToInt32(reader["E1_EOwnerID"]);
                             string owner = reader["E1_Owner"].ToString();
-                            EquipmentOwner eownerobj = new EquipmentOwner(eownerid, owner);
+                            int eo1whid = Convert.ToInt32(reader["EO1WHID"]);
+                            EquipmentOwner eownerobj = new EquipmentOwner(eownerid, owner, eo1whid);
                             int acqid = Convert.ToInt32(reader["E1_AcqID"]);
                             string acq = reader["E1_Accquire"].ToString();
                             Acquisition acquisitionobj = new Acquisition(acqid, acq);
@@ -589,7 +612,8 @@ LEFT JOIN jobtype jt ON j.JTypeID = jt.ID";
 
                             string insdetail = reader["E1_InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["E1_onPlan"]);
-                            Equipment jeq = new Equipment(eid, name,onplan, insdate, etypeobj, eownerobj, acquisitionobj, estatusobj,
+                            int e1whid = Convert.ToInt32(reader["EquipmentWHID1"]);
+                            Equipment jeq = new Equipment(eid,e1whid, name,onplan, insdate, etypeobj, eownerobj, acquisitionobj, estatusobj,
                                 rent, serial, ephotopath, oplacephotopath, edetails, replacement, selldetails,
                                 price, edocumentpath, writeoffpath,insdetail);
 
@@ -612,10 +636,12 @@ LEFT JOIN jobtype jt ON j.JTypeID = jt.ID";
                                 string writeoffpath1 = reader["E2_WriteOff"].ToString();
                                 int etypeid1 = Convert.ToInt32(reader["E2_ETypeID"]);
                                 string type1 = reader["E2_EType"].ToString();
-                                EquipmentType etypeobj1 = new EquipmentType(etypeid, type);
+                                int et2whid = Convert.ToInt32(reader["ET2WHID"]);
+                                EquipmentType etypeobj1 = new EquipmentType(etypeid, type, et2whid);
                                 int eownerid1 = Convert.ToInt32(reader["E2_EOwnerID"]);
                                 string owner1 = reader["E2_Owner"].ToString();
-                                EquipmentOwner eownerobj1 = new EquipmentOwner(eownerid, owner);
+                                int eo2whid = Convert.ToInt32(reader["EO2WHID"]);
+                                EquipmentOwner eownerobj1 = new EquipmentOwner(eownerid, owner, eo2whid);
                                 int acqid1 = Convert.ToInt32(reader["E2_AcqID"]);
                                 string acq1 = reader["E2_Accquire"].ToString();
                                 Acquisition acquisitionobj1 = new Acquisition(acqid, acq);
@@ -629,7 +655,8 @@ LEFT JOIN jobtype jt ON j.JTypeID = jt.ID";
 
                                 string insdetail1 = reader["E2_InsDetails"].ToString();
                                 bool onplan1 = Convert.ToBoolean(reader["E2_onPlan"]);
-                                req = new Equipment(eid1, name1,onplan1, insdate1, etypeobj1, eownerobj1, acquisitionobj1, estatusobj1,
+                                int e2whid = Convert.ToInt32(reader["EquipmentWHID2"]);
+                                req = new Equipment(eid1,e2whid, name1,onplan1, insdate1, etypeobj1, eownerobj1, acquisitionobj1, estatusobj1,
                                     rent1, serial1, ephotopath1, oplacephotopath1, edetails1, replacement1, selldetails1,
                                     price1, edocumentpath1, writeoffpath1,insdetail1);
                             }
@@ -637,7 +664,7 @@ LEFT JOIN jobtype jt ON j.JTypeID = jt.ID";
                             {
                                 req = null;
                             }
-                            Job j = new Job(id, jdetails, casephoto, reporter, rdate, ddate, adate, startdate, finishdate,
+                            Job j = new Job(id,warehouseID, jdetails, casephoto, reporter, rdate, ddate, adate, startdate, finishdate,
                                 jtypereason, decider, approve, appreason, approver, jdocument, vendname, venddetails,
                                 repairdetails, workpermit, cost, contract, finishphoto, finishdocument, acceptor, jobstatus,
                                 jtype, jeq, req);

@@ -11,6 +11,7 @@ namespace Admin_Program.UIClass
         EquipmentAndMaintainenceControlForm equipmentForm;
         SupplyControlMainForm supplyForm;
         UserLogInWindow logInForm;
+        Admin_Program.EquipmentManagement.UIClass.UserLogInWindow logInEquipmentForm;
 
         public MainBackGroundFrom()
         {
@@ -30,7 +31,7 @@ namespace Admin_Program.UIClass
             modeChosenForm.Location = new Point(
         (this.ClientSize.Width - modeChosenForm.Size.Width) / 2,
         (this.ClientSize.Height - modeChosenForm.Size.Height) / 2);
-            modeChosenForm.OnEquipmentControlRequested += ShowEquipmentAndMaintainenceControlForm;
+            modeChosenForm.OnEquipmentControlRequested += LogInForEquipment;
             modeChosenForm.OnSupplyControlREquested += LogInForSupply;
             modeChosenForm.Show();
         }
@@ -68,6 +69,23 @@ namespace Admin_Program.UIClass
             logInForm.Show();
             logInForm.LoginSuccessful += ShowSupplyControlForm;
             logInForm.backToChosen += backToMainMenu;
+        }
+        //Call user login for Equipment
+        private void LogInForEquipment(object sender, EventArgs e)
+        {
+            logInEquipmentForm = new EquipmentManagement.UIClass.UserLogInWindow
+            {
+                MdiParent = this
+            };
+            // Center the child form relative to the parent
+            logInEquipmentForm.StartPosition = FormStartPosition.Manual;
+            logInEquipmentForm.Location = new Point(
+                (this.ClientSize.Width - logInEquipmentForm.Width) / 2,
+                (this.ClientSize.Height - logInEquipmentForm.Height) / 2
+            );
+            logInEquipmentForm.Show();
+            logInEquipmentForm.LoginSuccessful += ShowEquipmentAndMaintainenceControlForm;
+            logInEquipmentForm.backToChosen += backToMainMenu;
         }
         private void backToMainMenu(object sender, EventArgs e)
         {

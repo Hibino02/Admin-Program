@@ -22,11 +22,6 @@ namespace Admin_Program.UIClass
             OnEquipmentControlRequested?.Invoke(this, EventArgs.Empty);
             this.Close();
         }
-
-        private void ModeChosenForm_Load(object sender, EventArgs e)
-        {
-            this.FormBorderStyle = FormBorderStyle.None;
-        }
         //Click event to call
         private void supplyControlButton_Click(object sender, EventArgs e)
         {
@@ -34,5 +29,10 @@ namespace Admin_Program.UIClass
             OnSupplyControlREquested?.Invoke(this, EventArgs.Empty);
             this.Close();
         }
+
+        private void ModeChosenForm_Load(object sender, EventArgs e)
+        {
+            this.FormBorderStyle = FormBorderStyle.None;
+        }  
     }
 }

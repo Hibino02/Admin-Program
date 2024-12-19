@@ -12,6 +12,8 @@ namespace Admin_Program.ObjectClass
         public int ID { get { return id; } }
         string etype;
         public string EType {get { return etype; }set { etype = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING;
 
@@ -33,6 +35,7 @@ namespace Admin_Program.ObjectClass
                         {
                             id = Convert.ToInt32(reader["ID"]);
                             etype = reader["EType"].ToString();
+                            warehouseID = Convert.ToInt32(reader["WarehouseID"]);
                         }
                     }
                 }
@@ -49,14 +52,16 @@ namespace Admin_Program.ObjectClass
         {
             UpdateAttribute(id.ToString());
         }
-        public EquipmentType(string etype)
+        public EquipmentType(string etype, int warehouseID)
         {
             this.etype = etype;
+            this.warehouseID = warehouseID;
         }
-        public EquipmentType(int id, string etype)
+        public EquipmentType(int id, string etype, int warehouseID)
         {
             this.id = id;
             this.etype = etype;
+            this.warehouseID = warehouseID;
         }
 
         public bool Create()
@@ -68,9 +73,10 @@ namespace Admin_Program.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO equipmenttype (ID, EType) VALUES (NULL, @etype)";
+                    string insert = "INSERT INTO equipmenttype (ID, EType, WarehouseID) VALUES (NULL, @etype, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@etype", etype);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -122,15 +128,17 @@ namespace Admin_Program.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string selectAll = "SELECT * FROM equipmenttype";
+                    string selectAll = "SELECT * FROM equipmenttype WHERE WarehouseID = @whid";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             int id = Convert.ToInt32(reader["ID"]);
                             string etype = reader["EType"].ToString();
-                            EquipmentType eqt = new EquipmentType(id, etype);
+                            int whid = Convert.ToInt32(reader["WarehouseID"]);
+                            EquipmentType eqt = new EquipmentType(id, etype, whid);
                             eqtList.Add(eqt);
                         }
                     }

@@ -28,7 +28,7 @@ namespace Admin_Program.CustomViewClass
             {
                 if (e.Replacement)
                 {
-                    if(e.EStatusObj.ID == 1 || e.EStatusObj.ID == 2 || e.EStatusObj.ID == 6
+                    if (e.EStatusObj.ID == 1 || e.EStatusObj.ID == 2 || e.EStatusObj.ID == 6
                    || e.EStatusObj.ID == 7)
                     {
                         AllEquipmentForCreatedJobView view = new AllEquipmentForCreatedJobView
@@ -41,7 +41,7 @@ namespace Admin_Program.CustomViewClass
                         };
                         list.Add(view);
                     }
-                }
+                } 
             }
             return list;
         }

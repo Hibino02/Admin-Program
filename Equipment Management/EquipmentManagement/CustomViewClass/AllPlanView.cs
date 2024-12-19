@@ -39,11 +39,12 @@ namespace Admin_Program.CustomViewClass
         {
             List<AllPlanView> list = new List<AllPlanView>();
             List<PlanProcess> pplist = PlanProcess.GetPlanProcessList();
-            foreach (Plan p  in Plan.GetPlanList())
+
+            foreach (Plan p in Plan.GetPlanList())
             {
                 if (p.PlanStatus)
                 {
-                    if(p.Eqp.EStatusObj.ID == 6 || p.Eqp.EStatusObj.ID == 7)
+                    if (p.Eqp.EStatusObj.ID == 6 || p.Eqp.EStatusObj.ID == 7)
                     {
                         DateTime? latestFinishDate = null;
 
@@ -51,7 +52,7 @@ namespace Admin_Program.CustomViewClass
                         {
                             foreach (PlanProcess pp in pplist)
                             {
-                                if(pp.PlanID == p.ID)
+                                if (pp.PlanID == p.ID)
                                 {
                                     if (!latestFinishDate.HasValue || (pp.FinishDate.HasValue && pp.FinishDate.Value >
                                         latestFinishDate.Value))
@@ -92,6 +93,7 @@ namespace Admin_Program.CustomViewClass
         {
             List<AllPlanView> list = new List<AllPlanView>();
             List<PlanProcess> pplist = PlanProcess.GetPlanProcessList();
+            
             foreach (Plan p in Plan.GetPlanList())
             {
                 DateTime? latestFinishDate = null;

@@ -46,6 +46,8 @@ namespace Admin_Program.ObjectClass
         public string InstallationDetails { get { return installationDetails; }set { installationDetails = value; } }
         bool onplan;
         public bool OnPlan { get { return onplan; }set { onplan = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING;
 
@@ -64,13 +66,14 @@ e.EPhoto AS EquipmentPhoto, e.OPlacePhoto AS OperationPlacePhoto,
 e.EDetails AS EquipmentDetails, e.Replacement AS ForReplace,
 e.SellDetails AS SellerDetails, e.Price AS EquipmentPrice,
 e.EDocument AS EquipmentDocumentPath, e.InsDate AS InstallationDate, e.OnPlan AS onPlan,
-e.ETypeID AS EquipmentTypeID, et.EType,
-e.EOwnerID AS EquipmentOwnerID, eo.Owner,
+e.ETypeID AS EquipmentTypeID, et.EType, et.WarehouseID AS ETWHID,
+e.EOwnerID AS EquipmentOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
 e.EAcqID AS AcquisitionID, ea.Accquire,
 e.EStatusID AS EquipmentStatusID, es.EStatus,
 e.ERentID AS RentalBasisID, er.Basis,
 e.WriteOff AS WriteOffDocument,
-e.InsDetails AS InstallationDetails
+e.InsDetails AS InstallationDetails,
+e.WarehouseID
 FROM equipment e
 LEFT JOIN equipmenttype et ON e.ETypeID = et.ID
 LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
@@ -99,10 +102,12 @@ WHERE e.ID = @id;";
                             writeoffpath = reader["WriteOffDocument"].ToString();
                             int etypeid = Convert.ToInt32(reader["EquipmentTypeID"]);
                             string type = reader["EType"].ToString();
-                            etypeobj = new EquipmentType(etypeid,type);
+                            int etwhid = Convert.ToInt32(reader["ETWHID"]);
+                            etypeobj = new EquipmentType(etypeid,type,etwhid);
                             int eownerid = Convert.ToInt32(reader["EquipmentOwnerID"]);
                             string owner = reader["Owner"].ToString();
-                            eownerobj = new EquipmentOwner(eownerid,owner);
+                            int eowhid = Convert.ToInt32(reader["EOWHID"]);
+                            eownerobj = new EquipmentOwner(eownerid,owner, eowhid);
                             int acqid = Convert.ToInt32(reader["AcquisitionID"]);
                             string acq = reader["Accquire"].ToString();
                             acquisitionobj = new Acquisition(acqid,acq);
@@ -115,6 +120,7 @@ WHERE e.ID = @id;";
                             erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
 
                             installationDetails = reader["InstallationDetails"].ToString();
+                            warehouseID = Convert.ToInt32(reader["WarehouseID"]);
                         }
                     }
                 }
@@ -131,11 +137,12 @@ WHERE e.ID = @id;";
         {
             UpdateAttribute(id.ToString());
         }
-        public Equipment(string name,bool onplan, DateTime insdate, EquipmentType etype, EquipmentOwner eowner, Acquisition acc, 
+        public Equipment(int warehouseID,string name,bool onplan, DateTime insdate, EquipmentType etype, EquipmentOwner eowner, Acquisition acc, 
             EquipmentStatus esta, RentalBasis rent, string serial = null, string ephoto = null, string oplacephoto = null,
             string edetail = null, bool replacement = false, string selldetails = null, double price = 0.0, string edoc = null,
             string write = null,string insdetails = null)
         {
+            this.warehouseID = warehouseID;
             this.name = name;
             this.onplan = onplan;
             this.serial = serial;
@@ -155,12 +162,13 @@ WHERE e.ID = @id;";
             this.writeoffpath = write;
             this.installationDetails = insdetails;
         }
-        public Equipment(int id ,string name,bool onplan, DateTime insdate, EquipmentType etype, EquipmentOwner eowner, Acquisition acc,
+        public Equipment(int id ,int warehouseID, string name,bool onplan, DateTime insdate, EquipmentType etype, EquipmentOwner eowner, Acquisition acc,
             EquipmentStatus esta, RentalBasis rent, string serial = null, string ephoto = null, string oplacephoto = null,
             string edetail = null, bool replacement = false, string selldetails = null, double price = 0.0, string edoc = null,
             string write = null, string insdetails = null)
         {
             this.id = id;
+            this.warehouseID = warehouseID;
             this.name = name;
             this.onplan = onplan;
             this.serial = serial;
@@ -190,7 +198,7 @@ WHERE e.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO equipment (ID, Name, Serial, EPhoto, OPlacePhoto, EDetails, Replacement, SellDetails, Price, EDocument, InsDate, ETypeID, EOwnerID, EAcqID, EStatusID, ERentID, WriteOff, InsDetails, OnPlan) VALUES (NULL, @name, @serial, @ephoto, @oplacephoto, @edetails, @replacement, @selldetails, @price ,@edocument ,@insdate ,@etypeid ,@eownerid ,@eacqid ,@estatusid ,@erentid ,@writeoff, @insdetails, @onplan)";
+                    string insert = "INSERT INTO equipment (ID, Name, Serial, EPhoto, OPlacePhoto, EDetails, Replacement, SellDetails, Price, EDocument, InsDate, ETypeID, EOwnerID, EAcqID, EStatusID, ERentID, WriteOff, InsDetails, OnPlan, WarehouseID) VALUES (NULL, @name, @serial, @ephoto, @oplacephoto, @edetails, @replacement, @selldetails, @price ,@edocument ,@insdate ,@etypeid ,@eownerid ,@eacqid ,@estatusid ,@erentid ,@writeoff, @insdetails, @onplan, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@serial", serial);
@@ -213,6 +221,7 @@ WHERE e.ID = @id;";
                     cmd.Parameters.AddWithValue("@writeoff", writeoffpath);
                     cmd.Parameters.AddWithValue("@insdetails", installationDetails);
                     cmd.Parameters.AddWithValue("@onplan", onplan);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -236,7 +245,7 @@ WHERE e.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string update = "UPDATE equipment SET Name = @name, Serial = @serial, EPhoto = @ephoto, OPlacePhoto = @oplacephoto, EDetails = @edetails, Replacement = @replacement, SellDetails = @selldetails, Price = @price, EDocument = @edocument, InsDate = @insdate, ETypeID = @etypeid, EOwnerID = @eownerid, EAcqID = @eacqid, EStatusID = @estatusid, ERentID = @erentid, WriteOff = @writeoff, InsDetails = @insdetails, OnPlan = @onplan WHERE ID = @id";
+                    string update = "UPDATE equipment SET Name = @name, Serial = @serial, EPhoto = @ephoto, OPlacePhoto = @oplacephoto, EDetails = @edetails, Replacement = @replacement, SellDetails = @selldetails, Price = @price, EDocument = @edocument, InsDate = @insdate, ETypeID = @etypeid, EOwnerID = @eownerid, EAcqID = @eacqid, EStatusID = @estatusid, ERentID = @erentid, WriteOff = @writeoff, InsDetails = @insdetails, OnPlan = @onplan, WarehouseID = @whid WHERE ID = @id";
                     cmd.CommandText = update;
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@serial", serial);
@@ -260,6 +269,7 @@ WHERE e.ID = @id;";
                     cmd.Parameters.AddWithValue("@insdetails", installationDetails);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@onplan", onplan);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -317,20 +327,23 @@ e.EPhoto AS EquipmentPhoto, e.OPlacePhoto AS OperationPlacePhoto,
 e.EDetails AS EquipmentDetails, e.Replacement AS ForReplace,
 e.SellDetails AS SellerDetails, e.Price AS EquipmentPrice,
 e.EDocument AS EquipmentDocumentPath, e.InsDate AS InstallationDate, e.OnPlan AS onPlan,
-e.ETypeID AS EquipmentTypeID, et.EType,
-e.EOwnerID AS EquipmentOwnerID, eo.Owner,
+e.ETypeID AS EquipmentTypeID, et.EType, et.WarehouseID AS ETWHID,
+e.EOwnerID AS EquipmentOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
 e.EAcqID AS AcquisitionID, ea.Accquire,
 e.EStatusID AS EquipmentStatusID, es.EStatus,
 e.ERentID AS RentalBasisID, er.Basis,
 e.WriteOff AS WriteOffDocument,
-e.InsDetails AS InstallationDetails
+e.InsDetails AS InstallationDetails,
+e.WarehouseID
 FROM equipment e
 LEFT JOIN equipmenttype et ON e.ETypeID = et.ID
 LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
-LEFT JOIN rentalbasis er ON e.ERentID = er.ID;";
+LEFT JOIN rentalbasis er ON e.ERentID = er.ID
+WHERE e.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -340,10 +353,12 @@ LEFT JOIN rentalbasis er ON e.ERentID = er.ID;";
                             DateTime insdate = Convert.ToDateTime(reader["InstallationDate"]);
                             int etypeid = Convert.ToInt32(reader["EquipmentTypeID"]);
                             string type = reader["EType"].ToString();
-                            EquipmentType etype = new EquipmentType(etypeid, type);
+                            int etwhid = Convert.ToInt32(reader["ETWHID"]);
+                            EquipmentType etype = new EquipmentType(etypeid, type, etwhid);
                             int eownerid = Convert.ToInt32(reader["EquipmentOwnerID"]);
                             string owner = reader["Owner"].ToString();
-                            EquipmentOwner eowner = new EquipmentOwner(eownerid, owner);
+                            int eowhid = Convert.ToInt32(reader["EOWHID"]);
+                            EquipmentOwner eowner = new EquipmentOwner(eownerid, owner, eowhid);
                             int acqid = Convert.ToInt32(reader["AcquisitionID"]);
                             string acq = reader["Accquire"].ToString();
                             Acquisition acc = new Acquisition(acqid, acq);
@@ -366,7 +381,8 @@ LEFT JOIN rentalbasis er ON e.ERentID = er.ID;";
                             string write = reader["WriteOffDocument"].ToString();
                             string ins = reader["InstallationDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["onPlan"]);
-                            Equipment eq = new Equipment(id, name,onplan, insdate, etype, eowner, acc, esta, rent, serial, ephoto,
+                            int warehouseID = Convert.ToInt32(reader["WarehouseID"]);
+                            Equipment eq = new Equipment(id, warehouseID, name,onplan, insdate, etype, eowner, acc, esta, rent, serial, ephoto,
                                 oplacephoto, edetail, replacement, selldetails, price, edoc, write,ins);
                             eqList.Add(eq);
                         }

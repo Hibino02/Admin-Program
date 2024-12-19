@@ -7,6 +7,7 @@ using Admin_Program.UIClass.CreateWindowComponent;
 using Admin_Program.GlobalVariable;
 using System.IO;
 using Admin_Program.CustomWindowComponents;
+using Admin_Program.EquipmentManagement.UIClass.EquipmentInstallEditWriteOffSource;
 
 namespace Admin_Program.UIClass.EquipmentInstallationSource
 {
@@ -28,6 +29,7 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
         string writeoffTransferDocumentPath;
 
         private CreateWindow create;
+        private EquipmentTypeManagementForm eqManage;
         //variable for update components
         List<EquipmentType> equipmentTypeList;
         List<EquipmentOwner> equipmentOwnerList;
@@ -221,7 +223,7 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
                 if (create.ShowDialog() == DialogResult.OK)
                 {
                     string receiveType = create.DetailsText;
-                    EquipmentType newEqt = new EquipmentType(receiveType);
+                    EquipmentType newEqt = new EquipmentType(receiveType,Global.warehouseID);
                     if (newEqt.Create())
                     {
                         ShowCustomMessageBox("ประเภทอุปกรณ์ใหม่ : " + receiveType);
@@ -250,7 +252,7 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
                 if (create.ShowDialog() == DialogResult.OK)
                 {
                     string receiveOwner = create.DetailsText;
-                    EquipmentOwner newEqo = new EquipmentOwner(receiveOwner);
+                    EquipmentOwner newEqo = new EquipmentOwner(receiveOwner,Global.warehouseID);
                     if (newEqo.Create())
                     {
                         ShowCustomMessageBox("ชื่อเจ้าของอุปกรณ์ใหม่ : " + receiveOwner);
@@ -608,6 +610,19 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
         private void writeOfflinkLabel_MouseLeave(object sender, EventArgs e)
         {
             writeoffToolTip.Hide(writeOfflinkLabel);
+        }
+        //Call Equipment type manage window
+        private void manageTypeButton_Click(object sender, EventArgs e)
+        {
+            eqManage = new EquipmentTypeManagementForm();
+            eqManage.Owner = main;
+            eqManage.updateEquipmentType += RefreshComponent;
+            eqManage.ShowDialog();
+        }
+        //Refresh components after delete
+        private void RefreshComponent(object sender, EventArgs e)
+        {
+            UpdateComponents();
         }
     }
 }

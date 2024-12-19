@@ -12,6 +12,8 @@ namespace Admin_Program.ObjectClass
         public int ID { get { return id; } }
         string ptype;
         public string PType { get { return ptype; }set { ptype = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING;
 
@@ -33,6 +35,7 @@ namespace Admin_Program.ObjectClass
                         {
                             id = Convert.ToInt32(reader["ID"]);
                             ptype = reader["PType"].ToString();
+                            warehouseID = Convert.ToInt32(reader["WarehouseID"]);
                         }
                     }
                 }
@@ -49,14 +52,16 @@ namespace Admin_Program.ObjectClass
         {
             UpdateAttribute(id.ToString());
         }
-        public PlanType(string ptype)
+        public PlanType(string ptype,int warehouseID)
         {
             this.ptype = ptype;
+            this.warehouseID = warehouseID;
         }
-        public PlanType(int id, string ptype)
+        public PlanType(int id, string ptype, int warehouseID)
         {
             this.id = id;
             this.ptype = ptype;
+            this.warehouseID = warehouseID;
         }
 
         public bool Create()
@@ -68,9 +73,10 @@ namespace Admin_Program.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO plantype (ID, PType) VALUES (NULL, @ptype)";
+                    string insert = "INSERT INTO plantype (ID, PType, WarehouseID) VALUES (NULL, @ptype, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@ptype", ptype);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -122,15 +128,17 @@ namespace Admin_Program.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string selectAll = "SELECT * FROM plantype";
+                    string selectAll = "SELECT * FROM plantype WHERE WarehouseID = @whid";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             int id = Convert.ToInt32(reader["ID"]);
                             string ptype = reader["PType"].ToString();
-                            PlanType pt = new PlanType(id, ptype);
+                            int warehouseID = Convert.ToInt32(reader["WarehouseID"]);
+                            PlanType pt = new PlanType(id, ptype, warehouseID);
                             ptList.Add(pt);
                         }
                     }

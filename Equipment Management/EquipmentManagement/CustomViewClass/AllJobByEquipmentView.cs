@@ -35,7 +35,7 @@ namespace Admin_Program.CustomViewClass
             List<AllJobByEquipmentView> allJobByEquipmentView = new List<AllJobByEquipmentView>();
             foreach(ObjectClass.Job j in ObjectClass.Job.GetJobList())
             {
-                if(j.JEq.ID == Global.ID && j.JobStatus == true)
+                if (j.JEq.ID == Global.ID && j.JobStatus == true)
                 {
                     AllJobByEquipmentView view = new AllJobByEquipmentView
                     {

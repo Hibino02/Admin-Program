@@ -12,6 +12,7 @@ namespace Admin_Program.GlobalVariable
 {
     class Global
     {
+        public static int warehouseID { get; set; }
         public static int ID { get; set; }
         public static int EStatusID { get; set; }
         public static Equipment equipmentGlobal { get; set; }

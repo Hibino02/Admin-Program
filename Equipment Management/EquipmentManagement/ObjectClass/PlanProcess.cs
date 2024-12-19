@@ -34,6 +34,8 @@ namespace Admin_Program.ObjectClass
         public string FinishDetails { get { return finishdetails; }set { finishdetails = value; } }
         string finishdoc;
         public string FinishDoc { get { return finishdoc; }set { finishdoc = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING;
 
@@ -48,10 +50,10 @@ namespace Admin_Program.ObjectClass
                 {
                     string select = @"SELECT
 pp.ID, pp.ProcessDate, pp.StartDetails, pp.PSup, pp.PSupDetails, pp.Cost,
-pp.WorkPermit, pp.Contract, pp.FinishDate, pp.FinishDetails, pp.FinishDoc,
-pp.PlanID, pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
-e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.WriteOff, e.ETypeID, et.EType, 
-e.EOwnerID, eo.Owner, e.EAcqID, ea.Accquire, e.EStatusID, es.EStatus, e.ERentID, er.Basis
+pp.WorkPermit, pp.Contract, pp.FinishDate, pp.FinishDetails, pp.FinishDoc, pp.WarehouseID AS PPWHID,
+pp.PlanID, pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, e.WarehouseID AS EWHID,
+e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.WriteOff, e.ETypeID, et.EType, et.WarehouseID AS ETWHID,
+e.EOwnerID, eo.Owner, eo.WarehouseID AS EOWHID, e.EAcqID, ea.Accquire, e.EStatusID, es.EStatus, e.ERentID, er.Basis
 FROM planprocess pp
 LEFT JOIN equipment e ON pp.REID = e.ID
 LEFT JOIN equipmenttype et ON e.ETypeID = et.ID
@@ -78,7 +80,8 @@ WHERE pp.ID = @id";
                             finishdetails = reader["FinishDetails"].ToString();
                             finishdoc = reader["FinishDoc"].ToString();
                             startdetails = reader["StartDetails"].ToString();
-                            //Replace equipment forthis process
+                            warehouseID = Convert.ToInt32(reader["PPWHID"]);
+                            //Replace equipment for this process
                             int? track = reader["REID"] != DBNull.Value ? Convert.ToInt32(reader["REID"]) : (int?)null;
                             if (track.HasValue)
                             {
@@ -96,10 +99,12 @@ WHERE pp.ID = @id";
                                 string writeoffpath = reader["WriteOff"].ToString();
                                 int etypeid = Convert.ToInt32(reader["ETypeID"]);
                                 string type = reader["EType"].ToString();
-                                EquipmentType etype = new EquipmentType(etypeid, type);
+                                int etwhid = Convert.ToInt32(reader["ETWHID"]);
+                                EquipmentType etype = new EquipmentType(etypeid, type, etwhid);
                                 int eownerid = Convert.ToInt32(reader["EOwnerID"]);
                                 string owner = reader["Owner"].ToString();
-                                EquipmentOwner eowner = new EquipmentOwner(eownerid, owner);
+                                int eowhid = Convert.ToInt32(reader["EOWHID"]);
+                                EquipmentOwner eowner = new EquipmentOwner(eownerid, owner, eowhid);
                                 int acqid = Convert.ToInt32(reader["EAcqID"]);
                                 string acq = reader["Accquire"].ToString();
                                 Acquisition acquisition = new Acquisition(acqid, acq);
@@ -112,7 +117,8 @@ WHERE pp.ID = @id";
                                 RentalBasis erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
 
                                 bool onplan = Convert.ToBoolean(reader["OnPlan"]);
-                                re = new Equipment(id1, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                                int ewhid = Convert.ToInt32(reader["EWHID"]);
+                                re = new Equipment(id1, ewhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
                                     serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                     writeoffpath);
                             }
@@ -136,11 +142,12 @@ WHERE pp.ID = @id";
         {
             UpdateAttribute(id.ToString());
         }
-        public PlanProcess(int id,int planid,DateTime processdate,string startdetails,string psup,string psupdetails,
+        public PlanProcess(int id,int whid,int planid,DateTime processdate,string startdetails,string psup,string psupdetails,
             double cost,string workpermit,string contract,string finishdetails,string finishdoc,Equipment re = null,
             DateTime? finishdate = null)
         {
             this.id = id;
+            this.warehouseID = whid;
             this.planid = planid;
             this.processdate = processdate;
             this.startdetails = startdetails;
@@ -154,10 +161,11 @@ WHERE pp.ID = @id";
             this.re = re;
             this.finishdate = finishdate;
         }
-        public PlanProcess(int planid, DateTime processdate, string startdetails, string psup, string psupdetails,
+        public PlanProcess(int whid,int planid, DateTime processdate, string startdetails, string psup, string psupdetails,
             double cost, string workpermit, string contract, string finishdetails, string finishdoc, Equipment re = null,
             DateTime? finishdate = null)
         {
+            this.warehouseID = whid;
             this.planid = planid;
             this.processdate = processdate;
             this.startdetails = startdetails;
@@ -181,7 +189,7 @@ WHERE pp.ID = @id";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO planprocess (ID, PlanID, ProcessDate, PSup, PSupDetails, Cost, WorkPermit, Contract, REID, FinishDate, FinishDetails, FinishDoc, StartDetails) VALUES (NULL, @planid, @processdate, @psup, @psupdetails, @cost, @workpermit, @contract, @reid ,@finishdate ,@finishdetails ,@finishdoc ,@startdetails)";
+                    string insert = "INSERT INTO planprocess (ID, PlanID, ProcessDate, PSup, PSupDetails, Cost, WorkPermit, Contract, REID, FinishDate, FinishDetails, FinishDoc, StartDetails, WarehouseID) VALUES (NULL, @planid, @processdate, @psup, @psupdetails, @cost, @workpermit, @contract, @reid ,@finishdate ,@finishdetails ,@finishdoc ,@startdetails ,@whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@planid", planid);
                     cmd.Parameters.AddWithValue("@processdate", processdate);
@@ -204,6 +212,7 @@ WHERE pp.ID = @id";
                     cmd.Parameters.AddWithValue("@finishdetails", finishdetails);
                     cmd.Parameters.AddWithValue("@finishdoc", finishdoc);
                     cmd.Parameters.AddWithValue("@startdetails", startdetails);
+                    cmd.Parameters.AddWithValue("@whid",warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -227,7 +236,7 @@ WHERE pp.ID = @id";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "UPDATE planprocess SET PlanID = @planid, ProcessDate = @processdate, PSup = @psup, PSupDetails = @psupdetails, Cost = @cost, WorkPermit = @workpermit, Contract = @contract, REID = @reid, FinishDate = @finishdate, FinishDetails = @finishdetails, FinishDoc = @finishdoc, StartDetails = @startdetails WHERE ID = @id";
+                    string insert = "UPDATE planprocess SET PlanID = @planid, ProcessDate = @processdate, PSup = @psup, PSupDetails = @psupdetails, Cost = @cost, WorkPermit = @workpermit, Contract = @contract, REID = @reid, FinishDate = @finishdate, FinishDetails = @finishdetails, FinishDoc = @finishdoc, StartDetails = @startdetails, WarehouseID = @whid WHERE ID = @id";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@planid", planid);
                     cmd.Parameters.AddWithValue("@processdate", processdate);
@@ -250,6 +259,7 @@ WHERE pp.ID = @id";
                     cmd.Parameters.AddWithValue("@finishdetails", finishdetails);
                     cmd.Parameters.AddWithValue("@finishdoc", finishdoc);
                     cmd.Parameters.AddWithValue("@startdetails", startdetails);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                 }
@@ -304,23 +314,20 @@ WHERE pp.ID = @id";
                 {
                     string selectAll = @"SELECT
 pp.ID, pp.ProcessDate, pp.StartDetails, pp.PSup, pp.PSupDetails, pp.Cost,
-pp.WorkPermit, pp.Contract, pp.FinishDate, pp.FinishDetails, pp.FinishDoc,
-pp.PlanID, 
-pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
-e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate,
-e.WriteOff, e.ETypeID, et.EType, 
-e.EOwnerID, eo.Owner,
-e.EAcqID, ea.Accquire,
-e.EStatusID, es.EStatus,
-e.ERentID, er.Basis
+pp.WorkPermit, pp.Contract, pp.FinishDate, pp.FinishDetails, pp.FinishDoc, pp.WarehouseID AS PPWHID,
+pp.PlanID, pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, e.WarehouseID AS EWHID,
+e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.WriteOff, e.ETypeID, et.EType, et.WarehouseID AS ETWHID,
+e.EOwnerID, eo.Owner, eo.WarehouseID AS EOWHID, e.EAcqID, ea.Accquire, e.EStatusID, es.EStatus, e.ERentID, er.Basis
 FROM planprocess pp
 LEFT JOIN equipment e ON pp.REID = e.ID
 LEFT JOIN equipmenttype et ON e.ETypeID = et.ID
 LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
-LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
+LEFT JOIN rentalbasis er ON e.ERentID = er.ID
+WHERE WherehouseID = @whid;";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -337,7 +344,7 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
                             string finishdetails = reader["FinishDetails"].ToString();
                             string finishdoc = reader["FinishDoc"].ToString();
                             string startdetails = reader["StartDetails"].ToString();
-
+                            int ppwhid = Convert.ToInt32(reader["PPWHID"]);
 
                             //Replace equipment for this process
                             int? track = reader["REID"] != DBNull.Value ? Convert.ToInt32(reader["REID"]) : (int?)null;
@@ -358,10 +365,12 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
                                 string writeoffpath = reader["WriteOff"].ToString();
                                 int etypeid = Convert.ToInt32(reader["ETypeID"]);
                                 string type = reader["EType"].ToString();
-                                EquipmentType etype = new EquipmentType(etypeid, type);
+                                int etwhid = Convert.ToInt32(reader["ETWHID"]);
+                                EquipmentType etype = new EquipmentType(etypeid, type, etwhid);
                                 int eownerid = Convert.ToInt32(reader["EOwnerID"]);
                                 string owner = reader["Owner"].ToString();
-                                EquipmentOwner eowner = new EquipmentOwner(eownerid, owner);
+                                int eowhid = Convert.ToInt32(reader["EOWHID"]);
+                                EquipmentOwner eowner = new EquipmentOwner(eownerid, owner, eowhid);
                                 int acqid = Convert.ToInt32(reader["EAcqID"]);
                                 string acq = reader["Accquire"].ToString();
                                 Acquisition acquisition = new Acquisition(acqid, acq);
@@ -374,7 +383,8 @@ LEFT JOIN rentalbasis er ON e.ERentID = e.ID";
                                 RentalBasis erentalbasis = basisid.HasValue? new RentalBasis(basisid.Value, basis):null;
 
                                 bool onplan = Convert.ToBoolean(reader["OnPlan"]);
-                                re = new Equipment(reid, name, onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                                int ewhid = Convert.ToInt32(reader["EWHID"]);
+                                re = new Equipment(reid, ewhid, name, onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
                                     serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                     writeoffpath);
                             }

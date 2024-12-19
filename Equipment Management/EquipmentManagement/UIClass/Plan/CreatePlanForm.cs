@@ -345,7 +345,7 @@ namespace Admin_Program.UIClass.Plan
                 if(create.ShowDialog() == DialogResult.OK)
                 {
                     string receiveType = create.DetailsText;
-                    PlanType newPt = new PlanType(receiveType);
+                    PlanType newPt = new PlanType(receiveType,Global.warehouseID);
                     if (newPt.Create())
                     {
                         ShowCustomMessageBox("ประเภทแผนใหม่ : " + receiveType);
@@ -375,7 +375,7 @@ namespace Admin_Program.UIClass.Plan
                 if (create.ShowDialog() == DialogResult.OK)
                 {
                     string receiveType = create.DetailsText;
-                    PlanPeriod newPpr = new PlanPeriod(receiveType);
+                    PlanPeriod newPpr = new PlanPeriod(receiveType,Global.warehouseID);
                     if (newPpr.Create())
                     {
                         ShowCustomMessageBox("รอบของแผนใหม่ : " + receiveType);
@@ -506,7 +506,7 @@ namespace Admin_Program.UIClass.Plan
                 else
                 {
                     //In case of new plan
-                    ObjectClass.Plan newP = new ObjectClass.Plan(equipmentToCreatePlan, planTypeToCreatePlan, planPeriodToCreatePlan
+                    ObjectClass.Plan newP = new ObjectClass.Plan(Global.warehouseID,equipmentToCreatePlan, planTypeToCreatePlan, planPeriodToCreatePlan
                     , 0, true, dateToDodateTimePicker.Value);
                     if (newP.Create())
                     {
