@@ -10,6 +10,7 @@ using Admin_Program.UIClass.EquipmentListSource;
 using Admin_Program.UIClass.Job;
 using Admin_Program.GlobalVariable;
 using Admin_Program.UIClass.Plan;
+using System.Linq;
 
 namespace Admin_Program.UIClass
 {
@@ -968,6 +969,26 @@ namespace Admin_Program.UIClass
             int statusID = (int)planProcessingDatagridview.Rows[e.RowIndex].Cells["EStatusID"].Value;
 
             Global.SetRowColor(planProcessingDatagridview.Rows[e.RowIndex], statusID);
+        }
+        //Searching plan
+        private void equipmentListSearchTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = PlanSearchTextBox.Text.ToLower();
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                var searchResults = planCreatedViewList
+                    .Where(pl =>
+                        pl.EName.ToLower().Contains(searchText) ||
+                        pl.ESerial.ToLower().Contains(searchText)
+                    ).ToList();
+
+                planCreatedBindingSource.DataSource = searchResults;
+                currentMaintainencePlanDatagridview.DataSource = planCreatedBindingSource;
+            }
+            else
+            {
+                UpdateCreatedPlanView();
+            }
         }
     }
 }

@@ -30,6 +30,7 @@
         {
             this.equipmentControlLabel = new System.Windows.Forms.Label();
             this.equipmentControlGroupBox = new System.Windows.Forms.GroupBox();
+            this.editJobButton = new System.Windows.Forms.Button();
             this.removeJobProcessingbutton = new System.Windows.Forms.Button();
             this.editJobProcessingButton = new System.Windows.Forms.Button();
             this.jobAcceptationButton = new System.Windows.Forms.Button();
@@ -57,7 +58,8 @@
             this.completeOrRemovePlanButton = new System.Windows.Forms.Button();
             this.editPlanButton = new System.Windows.Forms.Button();
             this.createPlanButton = new System.Windows.Forms.Button();
-            this.editJobButton = new System.Windows.Forms.Button();
+            this.PlanSearchTextBox = new System.Windows.Forms.TextBox();
+            this.PlanSearchLabel = new System.Windows.Forms.Label();
             this.equipmentControlGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.jobProcessingDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.jobCreatedDatagridview)).BeginInit();
@@ -97,6 +99,17 @@
             this.equipmentControlGroupBox.Size = new System.Drawing.Size(708, 769);
             this.equipmentControlGroupBox.TabIndex = 1;
             this.equipmentControlGroupBox.TabStop = false;
+            // 
+            // editJobButton
+            // 
+            this.editJobButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editJobButton.Location = new System.Drawing.Point(267, 405);
+            this.editJobButton.Name = "editJobButton";
+            this.editJobButton.Size = new System.Drawing.Size(121, 52);
+            this.editJobButton.TabIndex = 14;
+            this.editJobButton.Text = "แก้ใขงานแจ้งซ่อม";
+            this.editJobButton.UseVisualStyleBackColor = true;
+            this.editJobButton.Click += new System.EventHandler(this.editJobButton_Click);
             // 
             // removeJobProcessingbutton
             // 
@@ -258,6 +271,8 @@
             // 
             // maintainancePlanGroupBox
             // 
+            this.maintainancePlanGroupBox.Controls.Add(this.PlanSearchLabel);
+            this.maintainancePlanGroupBox.Controls.Add(this.PlanSearchTextBox);
             this.maintainancePlanGroupBox.Controls.Add(this.backToMainMenuButton);
             this.maintainancePlanGroupBox.Controls.Add(this.removePlanProcessButton);
             this.maintainancePlanGroupBox.Controls.Add(this.editPlanProcessButton);
@@ -438,16 +453,25 @@
             this.createPlanButton.UseVisualStyleBackColor = true;
             this.createPlanButton.Click += new System.EventHandler(this.createPlanButton_Click);
             // 
-            // editJobButton
+            // PlanSearchTextBox
             // 
-            this.editJobButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editJobButton.Location = new System.Drawing.Point(267, 405);
-            this.editJobButton.Name = "editJobButton";
-            this.editJobButton.Size = new System.Drawing.Size(121, 52);
-            this.editJobButton.TabIndex = 14;
-            this.editJobButton.Text = "แก้ใขงานแจ้งซ่อม";
-            this.editJobButton.UseVisualStyleBackColor = true;
-            this.editJobButton.Click += new System.EventHandler(this.editJobButton_Click);
+            this.PlanSearchTextBox.BackColor = System.Drawing.SystemColors.Info;
+            this.PlanSearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PlanSearchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PlanSearchTextBox.Location = new System.Drawing.Point(425, 102);
+            this.PlanSearchTextBox.Name = "PlanSearchTextBox";
+            this.PlanSearchTextBox.Size = new System.Drawing.Size(277, 29);
+            this.PlanSearchTextBox.TabIndex = 8;
+            this.PlanSearchTextBox.TextChanged += new System.EventHandler(this.equipmentListSearchTextBox_TextChanged);
+            // 
+            // PlanSearchLabel
+            // 
+            this.PlanSearchLabel.AutoSize = true;
+            this.PlanSearchLabel.Location = new System.Drawing.Point(422, 86);
+            this.PlanSearchLabel.Name = "PlanSearchLabel";
+            this.PlanSearchLabel.Size = new System.Drawing.Size(63, 13);
+            this.PlanSearchLabel.TabIndex = 20;
+            this.PlanSearchLabel.Text = "ค้นหาแผน :";
             // 
             // EquipmentAndMaintainenceControlForm
             // 
@@ -510,5 +534,7 @@
         private System.Windows.Forms.Button backToMainMenuButton;
         private System.Windows.Forms.Button removeJobProcessingbutton;
         private System.Windows.Forms.Button editJobButton;
+        private System.Windows.Forms.Label PlanSearchLabel;
+        private System.Windows.Forms.TextBox PlanSearchTextBox;
     }
 }

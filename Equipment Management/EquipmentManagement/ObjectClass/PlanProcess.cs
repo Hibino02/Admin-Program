@@ -325,7 +325,7 @@ LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
 LEFT JOIN rentalbasis er ON e.ERentID = er.ID
-WHERE WherehouseID = @whid;";
+WHERE pp.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
                     cmd.Parameters.AddWithValue("whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
@@ -393,7 +393,7 @@ WHERE WherehouseID = @whid;";
                                 re = null;
                             }
 
-                            PlanProcess pp = new PlanProcess(id,planid,processdate,startdetails,psup,psupdetails,
+                            PlanProcess pp = new PlanProcess(id, ppwhid, planid,processdate,startdetails,psup,psupdetails,
                                 cost,workpermit,contract,finishdetails,finishdoc,re,finishdate);
                             planProcessList.Add(pp);
                         }
