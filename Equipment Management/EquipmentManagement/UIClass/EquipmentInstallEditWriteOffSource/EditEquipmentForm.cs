@@ -521,6 +521,7 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
                 }
                 if (!string.IsNullOrEmpty(acquisitionDocumentPath))
                 {
+                    SaveAcquisitionDocument();
                     edit.EDocumentPath = acquisitionDocumentPath;
                 }         
             }

@@ -54,6 +54,8 @@
             this.SupplyInventoryDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.SupplyInventoryDatagridview.Size = new System.Drawing.Size(1310, 730);
             this.SupplyInventoryDatagridview.TabIndex = 8;
+            this.SupplyInventoryDatagridview.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.SupplyInventoryDatagridview_CellMouseEnter);
+            this.SupplyInventoryDatagridview.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.SupplyInventoryDatagridview_CellMouseLeave);
             // 
             // CreateSupplyButton
             // 
@@ -75,6 +77,7 @@
             this.EditSupplyButton.TabIndex = 16;
             this.EditSupplyButton.Text = "แก้ใข";
             this.EditSupplyButton.UseVisualStyleBackColor = true;
+            this.EditSupplyButton.Click += new System.EventHandler(this.EditSupplyButton_Click);
             // 
             // RemoveSupplyButton
             // 
@@ -85,6 +88,7 @@
             this.RemoveSupplyButton.TabIndex = 17;
             this.RemoveSupplyButton.Text = "ลบ";
             this.RemoveSupplyButton.UseVisualStyleBackColor = true;
+            this.RemoveSupplyButton.Click += new System.EventHandler(this.RemoveSupplyButton_Click);
             // 
             // supplyTypeComboBox
             // 
@@ -93,6 +97,7 @@
             this.supplyTypeComboBox.Name = "supplyTypeComboBox";
             this.supplyTypeComboBox.Size = new System.Drawing.Size(337, 21);
             this.supplyTypeComboBox.TabIndex = 20;
+            this.supplyTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.supplyTypeComboBox_SelectedIndexChanged);
             // 
             // searchSupplyTextBox
             // 
@@ -100,6 +105,7 @@
             this.searchSupplyTextBox.Name = "searchSupplyTextBox";
             this.searchSupplyTextBox.Size = new System.Drawing.Size(258, 20);
             this.searchSupplyTextBox.TabIndex = 19;
+            this.searchSupplyTextBox.TextChanged += new System.EventHandler(this.searchSupplyTextBox_TextChanged);
             // 
             // SearchLabel
             // 

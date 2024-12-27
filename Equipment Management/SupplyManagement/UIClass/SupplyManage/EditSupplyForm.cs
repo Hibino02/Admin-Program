@@ -8,13 +8,14 @@ using System.Windows.Forms;
 
 namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
 {
-    public partial class CreateSupplyForm : Form
+    public partial class EditSupplyForm : Form
     {
         MainBackGroundFrom main;
+        public event EventHandler UpdateGrid;
 
+        Supply supply;
         CreateSupplyTypeForm createSupplyType;
         SupplyTypeManageForm supplyTypeManageForm;
-
         //variable for track primarykey from combobox
         private List<int> supplyTypeID = new List<int>();
         //variable for update components
@@ -22,14 +23,17 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
         //variable for create selected object after choseen combobox
         SupplyType selecedSupplyType;
 
+        string oldSupplyPhoto;
         string supplyPhoto;
 
-        public CreateSupplyForm()
+        public EditSupplyForm()
         {
             InitializeComponent();
             this.Size = new Size(1480, 820);
+            supply = new Supply(Global.ID);
 
             UpdateComponents();
+            ShowSelectedSupplyToForm();
         }
 
         private void UpdateComponents()
@@ -43,6 +47,22 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 supplyTypeComboBox.Items.Add(spt.TypeName);
                 supplyTypeID.Add(spt.ID);
             }
+        }
+        //Method to show current supply
+        private void ShowSelectedSupplyToForm()
+        {
+            supplyNameTextBox.Text = supply.SupplyName;
+            supplyUnitTextBox.Text = supply.SupplyUnit;
+            supplyTypeComboBox.Text = supply.SupplyType.TypeName;
+            decimal moqForNumeric = (decimal)supply.MOQ;
+            moqnumericUpDown.Value = moqForNumeric;
+            IsActiveCheckBox.Checked = supply.IsActive;
+            if (!string.IsNullOrEmpty(supply.SupplyPhoto))
+            {
+                PhotoURLtextBox.Text = supply.SupplyPhoto;
+                Global.LoadImageIntoPictureBox(supply.SupplyPhoto,supplyPictureBox);
+            }
+            oldSupplyPhoto = supply.SupplyPhoto;
         }
         //Create supply type
         private void CreateSupplyTypeButton_Click(object sender, EventArgs e)
@@ -60,7 +80,11 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
             supplyTypeManageForm.updateSupplyType += SupplyTypeCreationSuccess;
             supplyTypeManageForm.ShowDialog();
         }
-        //Get photo from user click
+        private void SupplyTypeCreationSuccess(object sender, EventArgs e)
+        {
+            UpdateComponents();
+        }
+        //Attach supply photo
         private void AttachPhotoButton_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -70,21 +94,27 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 openFileDialog.FilterIndex = 1;
                 openFileDialog.RestoreDirectory = false;
 
-                if(openFileDialog.ShowDialog() == DialogResult.OK)
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
+                    // Get the path from user
                     supplyPhoto = openFileDialog.FileName;
-                    PhotoURLtextBox.Text = supplyPhoto;
+                    PhotoURLtextBox.Text = openFileDialog.FileName;
 
                     using (var tempImage = Image.FromFile(supplyPhoto))
                     {
+                        //Strem photo to picturebox
                         supplyPictureBox.Image = new Bitmap(tempImage);
                     }
                 }
             }
         }
-        //Save photo into folder
+        //Save photo & documents into folder
         private void SaveSupplyPhoto()
         {
+            if (!string.IsNullOrEmpty(oldSupplyPhoto))
+            {
+                Global.DeleteFileFromFtpSupply(oldSupplyPhoto);
+            }
             if (!string.IsNullOrEmpty(supplyPhoto))
             {
                 Global.Directory = "SupplyPhoto";
@@ -93,62 +123,64 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 supplyPhoto = Global.TargetFilePath;
             }
         }
-        //Event handler to call method
-        private void SupplyTypeCreationSuccess(object sender, EventArgs e)
-        {
-            UpdateComponents();
-        }
-        //Checking
+
         private bool CheckAllAttribute()
         {
+            bool isComplete = true;
             int selectTypeIndex = supplyTypeComboBox.SelectedIndex;
-            if (selectTypeIndex >= 0 && selectTypeIndex < supplyTypeID.Count)
+            if(selectTypeIndex >= 0 && selectTypeIndex < supplyTypeID.Count)
             {
                 int selectedTypeID = supplyTypeID[selectTypeIndex];
                 selecedSupplyType = new SupplyType(selectedTypeID);
+                supply.SupplyType = selecedSupplyType;
             }
             else
             {
-                MessageBox.Show("กรุณาเลือกประเภทวัสดุ");
-                return false;
-            }
-            if (supplyNameTextBox.TextLength > 50)
-            {
-                MessageBox.Show("จำนวนตัวอักษรเกิน 50 ตัว");
-                return false;
+                MessageBox.Show("กรุณาเลือก ประเภท ของวัสดุ");
+                isComplete = false;
             }
             if (string.IsNullOrEmpty(supplyNameTextBox.Text))
             {
-                MessageBox.Show("กรุณาใส่ชื่อวัสดุ");
-                return false;
+                MessageBox.Show("กรุณาระบุ ชื่อ ของวัสดุ");
+                isComplete = false;
             }
             if (string.IsNullOrEmpty(supplyUnitTextBox.Text))
             {
-                MessageBox.Show("กรุณาใส่หน่วยวัสดุ");
-                return false;
-            }     
-            SaveSupplyPhoto();
-            return true;
+                MessageBox.Show("กรุณาระบุ หน่วย ของวัสดุ");
+                isComplete = false;
+            }
+            int moq = (int)moqnumericUpDown.Value;
+            supply.MOQ = moq;
+            supply.IsActive = IsActiveCheckBox.Checked;
+            supply.SupplyName = supplyNameTextBox.Text;
+            supply.SupplyUnit = supplyUnitTextBox.Text;
+            if (isComplete)
+            {
+                if (!string.IsNullOrEmpty(supplyPhoto))
+                {
+                    SaveSupplyPhoto();
+                    supply.SupplyPhoto = supplyPhoto;
+                }
+            }
+            return isComplete;
         }
-        //Create button event
-        private void createButton_Click(object sender, EventArgs e)
+
+        private void editButton_Click(object sender, EventArgs e)
         {
             if (CheckAllAttribute())
             {
-                int moq = (int)moqnumericUpDown.Value;
-                Supply newSp = new Supply(supplyNameTextBox.Text, supplyUnitTextBox.Text, moq, 
-                    IsActiveCheckBox.Checked, selecedSupplyType,Global.warehouseID,supplyPhoto);
-                if (newSp.Create())
+                if (supply.Change())
                 {
-                    MessageBox.Show("ซัพพลายถูกสร้างเรียบร้อย");
+                    MessageBox.Show("วัสดุถูกแก้ใขเรียบร้อย");
+                    UpdateGrid?.Invoke(this, EventArgs.Empty);
                     Close();
                 }
                 else
                 {
                     Global.DeleteFileFromFtpSupply(supplyPhoto);
-                    MessageBox.Show("ขั้นตอนการสร้างข้อมูลลงใน ฐานข้อมูลเกิดความผิดพลาด กรุณาติดต่อผู้ดูแล");
+                    MessageBox.Show("ขั้นตอนการอัฟเดทข้อมูลลงใน ฐานข้อมูลเกิดความผิดพลาด กรุณาติดต่อผู้ดูแล");
                 }
-            }
+            } 
         }
     }
 }

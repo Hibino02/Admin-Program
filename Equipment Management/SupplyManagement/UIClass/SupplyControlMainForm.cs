@@ -1,4 +1,5 @@
-﻿using Admin_Program.SupplyManagement.UIClass.SupplyManage;
+﻿using Admin_Program.SupplyManagement.UIClass.SupplierManage;
+using Admin_Program.SupplyManagement.UIClass.SupplyManage;
 using Admin_Program.UIClass;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Admin_Program.SupplyManagement.UIClass
         MainBackGroundFrom main;
 
         private AllSupplyListForm allSupplyList;
+        private AllSupplierListForm allSupplierList;
 
         public event EventHandler returnMain;
 
@@ -24,7 +26,7 @@ namespace Admin_Program.SupplyManagement.UIClass
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.Manual;
-            this.Size = new Size(1450, 780);
+            this.Size = new Size(1450, 760);
         }
 
         //Supply Manage
@@ -34,12 +36,18 @@ namespace Admin_Program.SupplyManagement.UIClass
             allSupplyList.Owner = main;
             allSupplyList.ShowDialog();
         }
+        //Supplier Manage
+        private void manageSupplierButton_Click(object sender, EventArgs e)
+        {
+            allSupplierList = new AllSupplierListForm();
+            allSupplierList.Owner = main;
+            allSupplierList.ShowDialog();
+        }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)
         {
             returnMain?.Invoke(this, EventArgs.Empty);
             Close();
         }
-
     }
 }

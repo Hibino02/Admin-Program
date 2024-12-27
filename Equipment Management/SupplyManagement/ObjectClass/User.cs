@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using Admin_Program.GlobalVariable;
 
 namespace Admin_Program.SupplyManagement.ObjectClass
 {
@@ -14,7 +15,9 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public string UserName { get { return username; } }
         string password;
         public string Password { get { return password; } }
-        private static List<User> userlist = new List<User>();
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; } }
+        private static List<User> userList = new List<User>();
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -22,11 +25,12 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         {
             User.GetAllUserList();
         }
-        private User(int id,string username, string password)
+        private User(int id,string username, string password, int warehouseid)
         {
             this.id = id;
             this.username = username;
             this.password = password;
+            this.warehouseID = warehouseid;
         }
 
         private static List<User> GetAllUserList()
@@ -47,8 +51,9 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                             int id = Convert.ToInt32(reader["ID"]);
                             string username = reader["UserName"].ToString();
                             string password = reader["Password"].ToString();
-                            User u = new User(id, username, password);
-                            userlist.Add(u);
+                            int whid = Convert.ToInt32(reader["WarehouseID"]);
+                            User u = new User(id, username, password, whid);
+                            userList.Add(u);
                         }
                     }
                 }
@@ -59,31 +64,23 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 if (conn != null && conn.State != ConnectionState.Closed)
                     conn.Close();
             }
-            return userlist;
+            return userList;
         }
-        public static bool IsUserAvailable(string user)
+        public static bool IsLoginSuccess(string user, string pass)
         {
             bool userA = false;
-            foreach(User u in userlist)
+            foreach (User u in userList)
             {
-                if(user == u.UserName)
+                if (user == u.UserName && pass == u.Password)
                 {
                     userA = true;
+                    Global.warehouseID = u.warehouseID;
+                    Global.userName = null;
+                    Global.userName = u.UserName;
+                    break;
                 }
             }
             return userA;
-        }
-        public static bool IsPasswordCorrect(string pass)
-        {
-            bool passC = false;
-            foreach(User u in userlist)
-            {
-                if(pass == u.Password)
-                {
-                    passC = true;
-                }
-            }
-            return passC;
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public int ID { get { return id; } }
         string typename;
         public string TypeName { get { return typename; } set { typename = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -33,6 +35,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                         {
                             id = Convert.ToInt32(reader["ID"]);
                             typename = reader["TypeName"].ToString();
+                            warehouseID = Convert.ToInt32(reader["WarehouseID"]);
                         }
                     }
                 }
@@ -49,14 +52,16 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         {
             UpdateAttribute(id.ToString());
         }
-        public SupplyType(int id, string typename)
+        public SupplyType(int id, string typename, int whid)
         {
             this.id = id;
             this.typename = typename;
+            this.warehouseID = whid;
         }
-        public SupplyType(string typename)
+        public SupplyType(string typename, int whid)
         {
             this.typename = typename;
+            this.warehouseID = whid;
         }
 
         public bool Create()
@@ -68,9 +73,10 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO SupplyType (ID, TypeName) VALUES (NULL, @typename)";
+                    string insert = "INSERT INTO SupplyType (ID, TypeName, WarehouseID) VALUES (NULL, @typename, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@typename", typename);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -149,15 +155,17 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string selectAll = "SELECT * FROM SupplyType";
+                    string selectAll = "SELECT * FROM SupplyType WHERE WarehouseID = @whid";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using(var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             int id = Convert.ToInt32(reader["ID"]);
                             string typename = reader["TypeName"].ToString();
-                            SupplyType st = new SupplyType(id,typename);
+                            int whid = Convert.ToInt32(reader["WarehouseID"]);
+                            SupplyType st = new SupplyType(id,typename,whid);
                             stList.Add(st);
                         }
                     }

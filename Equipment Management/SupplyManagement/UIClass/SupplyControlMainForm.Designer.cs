@@ -29,34 +29,34 @@
         private void InitializeComponent()
         {
             this.SupplyInventoryGroupBox = new System.Windows.Forms.GroupBox();
-            this.SupplyRequestGroupBox = new System.Windows.Forms.GroupBox();
-            this.SupplyInventoryLabel = new System.Windows.Forms.Label();
-            this.SearchLabel = new System.Windows.Forms.Label();
-            this.searchSupplyInventoryTextBox = new System.Windows.Forms.TextBox();
-            this.supplyTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.supplyInventoryDatagridviewLabel = new System.Windows.Forms.Label();
-            this.SupplyInventoryDatagridview = new System.Windows.Forms.DataGridView();
-            this.updateSupplyButton = new System.Windows.Forms.Button();
-            this.editSupplyButton = new System.Windows.Forms.Button();
-            this.explainLabel1 = new System.Windows.Forms.Label();
-            this.explainLabel2 = new System.Windows.Forms.Label();
             this.supplyPlanButton = new System.Windows.Forms.Button();
-            this.requestSupplyLabel = new System.Windows.Forms.Label();
-            this.searchSupplylabel = new System.Windows.Forms.Label();
-            this.searchSupplyRequestTextBox = new System.Windows.Forms.TextBox();
-            this.supplyRequestDataGridView = new System.Windows.Forms.DataGridView();
-            this.supplyRequestLabel = new System.Windows.Forms.Label();
-            this.openPRButton = new System.Windows.Forms.Button();
-            this.manageQuotationButton = new System.Windows.Forms.Button();
-            this.editPRButton = new System.Windows.Forms.Button();
-            this.manageSupplierButton = new System.Windows.Forms.Button();
-            this.removePRButton = new System.Windows.Forms.Button();
-            this.manageSupplyButton = new System.Windows.Forms.Button();
-            this.CompletePRButton = new System.Windows.Forms.Button();
+            this.explainLabel2 = new System.Windows.Forms.Label();
+            this.explainLabel1 = new System.Windows.Forms.Label();
+            this.editSupplyButton = new System.Windows.Forms.Button();
+            this.updateSupplyButton = new System.Windows.Forms.Button();
+            this.SupplyInventoryDatagridview = new System.Windows.Forms.DataGridView();
+            this.supplyInventoryDatagridviewLabel = new System.Windows.Forms.Label();
+            this.supplyTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.searchSupplyInventoryTextBox = new System.Windows.Forms.TextBox();
+            this.SearchLabel = new System.Windows.Forms.Label();
+            this.SupplyInventoryLabel = new System.Windows.Forms.Label();
+            this.SupplyRequestGroupBox = new System.Windows.Forms.GroupBox();
             this.backToMainMenuButton = new System.Windows.Forms.Button();
+            this.CompletePRButton = new System.Windows.Forms.Button();
+            this.manageSupplyButton = new System.Windows.Forms.Button();
+            this.removePRButton = new System.Windows.Forms.Button();
+            this.manageSupplierButton = new System.Windows.Forms.Button();
+            this.editPRButton = new System.Windows.Forms.Button();
+            this.manageQuotationButton = new System.Windows.Forms.Button();
+            this.openPRButton = new System.Windows.Forms.Button();
+            this.supplyRequestLabel = new System.Windows.Forms.Label();
+            this.supplyRequestDataGridView = new System.Windows.Forms.DataGridView();
+            this.searchSupplyRequestTextBox = new System.Windows.Forms.TextBox();
+            this.searchSupplylabel = new System.Windows.Forms.Label();
+            this.requestSupplyLabel = new System.Windows.Forms.Label();
             this.SupplyInventoryGroupBox.SuspendLayout();
-            this.SupplyRequestGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SupplyInventoryDatagridview)).BeginInit();
+            this.SupplyRequestGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyRequestDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,6 +79,116 @@
             this.SupplyInventoryGroupBox.TabIndex = 0;
             this.SupplyInventoryGroupBox.TabStop = false;
             // 
+            // supplyPlanButton
+            // 
+            this.supplyPlanButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.supplyPlanButton.Location = new System.Drawing.Point(577, 659);
+            this.supplyPlanButton.Name = "supplyPlanButton";
+            this.supplyPlanButton.Size = new System.Drawing.Size(124, 52);
+            this.supplyPlanButton.TabIndex = 12;
+            this.supplyPlanButton.Text = "แผนการส่งวัสดุ";
+            this.supplyPlanButton.UseVisualStyleBackColor = true;
+            // 
+            // explainLabel2
+            // 
+            this.explainLabel2.AutoSize = true;
+            this.explainLabel2.Location = new System.Drawing.Point(9, 742);
+            this.explainLabel2.Name = "explainLabel2";
+            this.explainLabel2.Size = new System.Drawing.Size(218, 13);
+            this.explainLabel2.TabIndex = 11;
+            this.explainLabel2.Text = "* แก้ใข หมายถึงแก้ใขรายละเอียดกรณีที่ใส่ผิด";
+            // 
+            // explainLabel1
+            // 
+            this.explainLabel1.AutoSize = true;
+            this.explainLabel1.Location = new System.Drawing.Point(9, 722);
+            this.explainLabel1.Name = "explainLabel1";
+            this.explainLabel1.Size = new System.Drawing.Size(229, 13);
+            this.explainLabel1.TabIndex = 10;
+            this.explainLabel1.Text = "* อัฟเดทหมายถึง อัฟเดทยอดปัจจุบัณ ณ เวลานั้น";
+            // 
+            // editSupplyButton
+            // 
+            this.editSupplyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editSupplyButton.Location = new System.Drawing.Point(87, 659);
+            this.editSupplyButton.Name = "editSupplyButton";
+            this.editSupplyButton.Size = new System.Drawing.Size(75, 52);
+            this.editSupplyButton.TabIndex = 9;
+            this.editSupplyButton.Text = "แก้ใข";
+            this.editSupplyButton.UseVisualStyleBackColor = true;
+            // 
+            // updateSupplyButton
+            // 
+            this.updateSupplyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateSupplyButton.Location = new System.Drawing.Point(6, 659);
+            this.updateSupplyButton.Name = "updateSupplyButton";
+            this.updateSupplyButton.Size = new System.Drawing.Size(75, 52);
+            this.updateSupplyButton.TabIndex = 8;
+            this.updateSupplyButton.Text = "อัฟเดท";
+            this.updateSupplyButton.UseVisualStyleBackColor = true;
+            // 
+            // SupplyInventoryDatagridview
+            // 
+            this.SupplyInventoryDatagridview.AllowUserToAddRows = false;
+            this.SupplyInventoryDatagridview.AllowUserToDeleteRows = false;
+            this.SupplyInventoryDatagridview.AllowUserToResizeColumns = false;
+            this.SupplyInventoryDatagridview.AllowUserToResizeRows = false;
+            this.SupplyInventoryDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SupplyInventoryDatagridview.Location = new System.Drawing.Point(6, 111);
+            this.SupplyInventoryDatagridview.MultiSelect = false;
+            this.SupplyInventoryDatagridview.Name = "SupplyInventoryDatagridview";
+            this.SupplyInventoryDatagridview.ReadOnly = true;
+            this.SupplyInventoryDatagridview.RowHeadersVisible = false;
+            this.SupplyInventoryDatagridview.RowTemplate.Height = 24;
+            this.SupplyInventoryDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.SupplyInventoryDatagridview.Size = new System.Drawing.Size(696, 542);
+            this.SupplyInventoryDatagridview.TabIndex = 7;
+            // 
+            // supplyInventoryDatagridviewLabel
+            // 
+            this.supplyInventoryDatagridviewLabel.AutoSize = true;
+            this.supplyInventoryDatagridviewLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.supplyInventoryDatagridviewLabel.Location = new System.Drawing.Point(9, 90);
+            this.supplyInventoryDatagridviewLabel.Name = "supplyInventoryDatagridviewLabel";
+            this.supplyInventoryDatagridviewLabel.Size = new System.Drawing.Size(172, 18);
+            this.supplyInventoryDatagridviewLabel.TabIndex = 6;
+            this.supplyInventoryDatagridviewLabel.Text = "รายการวัสดุสิ้นเปลือง ปัจจุบัณ";
+            // 
+            // supplyTypeComboBox
+            // 
+            this.supplyTypeComboBox.FormattingEnabled = true;
+            this.supplyTypeComboBox.Location = new System.Drawing.Point(364, 58);
+            this.supplyTypeComboBox.Name = "supplyTypeComboBox";
+            this.supplyTypeComboBox.Size = new System.Drawing.Size(337, 21);
+            this.supplyTypeComboBox.TabIndex = 4;
+            // 
+            // searchSupplyInventoryTextBox
+            // 
+            this.searchSupplyInventoryTextBox.Location = new System.Drawing.Point(100, 58);
+            this.searchSupplyInventoryTextBox.Name = "searchSupplyInventoryTextBox";
+            this.searchSupplyInventoryTextBox.Size = new System.Drawing.Size(258, 20);
+            this.searchSupplyInventoryTextBox.TabIndex = 3;
+            // 
+            // SearchLabel
+            // 
+            this.SearchLabel.AutoSize = true;
+            this.SearchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.SearchLabel.Location = new System.Drawing.Point(6, 56);
+            this.SearchLabel.Name = "SearchLabel";
+            this.SearchLabel.Size = new System.Drawing.Size(88, 20);
+            this.SearchLabel.TabIndex = 2;
+            this.SearchLabel.Text = "ค้นหารายการ";
+            // 
+            // SupplyInventoryLabel
+            // 
+            this.SupplyInventoryLabel.AutoSize = true;
+            this.SupplyInventoryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SupplyInventoryLabel.Location = new System.Drawing.Point(6, 12);
+            this.SupplyInventoryLabel.Name = "SupplyInventoryLabel";
+            this.SupplyInventoryLabel.Size = new System.Drawing.Size(250, 31);
+            this.SupplyInventoryLabel.TabIndex = 1;
+            this.SupplyInventoryLabel.Text = "วัสดุสิ้นเปลือง คงเหลือ";
+            // 
             // SupplyRequestGroupBox
             // 
             this.SupplyRequestGroupBox.Controls.Add(this.backToMainMenuButton);
@@ -100,142 +210,99 @@
             this.SupplyRequestGroupBox.TabIndex = 1;
             this.SupplyRequestGroupBox.TabStop = false;
             // 
-            // SupplyInventoryLabel
+            // backToMainMenuButton
             // 
-            this.SupplyInventoryLabel.AutoSize = true;
-            this.SupplyInventoryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SupplyInventoryLabel.Location = new System.Drawing.Point(6, 12);
-            this.SupplyInventoryLabel.Name = "SupplyInventoryLabel";
-            this.SupplyInventoryLabel.Size = new System.Drawing.Size(250, 31);
-            this.SupplyInventoryLabel.TabIndex = 1;
-            this.SupplyInventoryLabel.Text = "วัสดุสิ้นเปลือง คงเหลือ";
+            this.backToMainMenuButton.BackColor = System.Drawing.SystemColors.Info;
+            this.backToMainMenuButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.backToMainMenuButton.Location = new System.Drawing.Point(580, 714);
+            this.backToMainMenuButton.Name = "backToMainMenuButton";
+            this.backToMainMenuButton.Size = new System.Drawing.Size(121, 52);
+            this.backToMainMenuButton.TabIndex = 21;
+            this.backToMainMenuButton.Text = "กลับสู่หน้าหลัก";
+            this.backToMainMenuButton.UseVisualStyleBackColor = false;
+            this.backToMainMenuButton.Click += new System.EventHandler(this.backToMainMenuButton_Click);
             // 
-            // SearchLabel
+            // CompletePRButton
             // 
-            this.SearchLabel.AutoSize = true;
-            this.SearchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.SearchLabel.Location = new System.Drawing.Point(6, 56);
-            this.SearchLabel.Name = "SearchLabel";
-            this.SearchLabel.Size = new System.Drawing.Size(88, 20);
-            this.SearchLabel.TabIndex = 2;
-            this.SearchLabel.Text = "ค้นหารายการ";
+            this.CompletePRButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CompletePRButton.Location = new System.Drawing.Point(577, 659);
+            this.CompletePRButton.Name = "CompletePRButton";
+            this.CompletePRButton.Size = new System.Drawing.Size(124, 52);
+            this.CompletePRButton.TabIndex = 20;
+            this.CompletePRButton.Text = "ตรวจรับสินค้า";
+            this.CompletePRButton.UseVisualStyleBackColor = true;
             // 
-            // searchSupplyInventoryTextBox
+            // manageSupplyButton
             // 
-            this.searchSupplyInventoryTextBox.Location = new System.Drawing.Point(100, 58);
-            this.searchSupplyInventoryTextBox.Name = "searchSupplyInventoryTextBox";
-            this.searchSupplyInventoryTextBox.Size = new System.Drawing.Size(258, 20);
-            this.searchSupplyInventoryTextBox.TabIndex = 3;
+            this.manageSupplyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.manageSupplyButton.Location = new System.Drawing.Point(265, 713);
+            this.manageSupplyButton.Name = "manageSupplyButton";
+            this.manageSupplyButton.Size = new System.Drawing.Size(124, 52);
+            this.manageSupplyButton.TabIndex = 19;
+            this.manageSupplyButton.Text = "จัดการรายการวัสดุ";
+            this.manageSupplyButton.UseVisualStyleBackColor = true;
+            this.manageSupplyButton.Click += new System.EventHandler(this.manageSupplyButton_Click);
             // 
-            // supplyTypeComboBox
+            // removePRButton
             // 
-            this.supplyTypeComboBox.FormattingEnabled = true;
-            this.supplyTypeComboBox.Location = new System.Drawing.Point(364, 58);
-            this.supplyTypeComboBox.Name = "supplyTypeComboBox";
-            this.supplyTypeComboBox.Size = new System.Drawing.Size(337, 21);
-            this.supplyTypeComboBox.TabIndex = 4;
+            this.removePRButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.removePRButton.Location = new System.Drawing.Point(265, 659);
+            this.removePRButton.Name = "removePRButton";
+            this.removePRButton.Size = new System.Drawing.Size(124, 52);
+            this.removePRButton.TabIndex = 18;
+            this.removePRButton.Text = "ลบคำขอซื้อ";
+            this.removePRButton.UseVisualStyleBackColor = true;
             // 
-            // supplyInventoryDatagridviewLabel
+            // manageSupplierButton
             // 
-            this.supplyInventoryDatagridviewLabel.AutoSize = true;
-            this.supplyInventoryDatagridviewLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.supplyInventoryDatagridviewLabel.Location = new System.Drawing.Point(9, 90);
-            this.supplyInventoryDatagridviewLabel.Name = "supplyInventoryDatagridviewLabel";
-            this.supplyInventoryDatagridviewLabel.Size = new System.Drawing.Size(172, 18);
-            this.supplyInventoryDatagridviewLabel.TabIndex = 6;
-            this.supplyInventoryDatagridviewLabel.Text = "รายการวัสดุสิ้นเปลือง ปัจจุบัณ";
+            this.manageSupplierButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.manageSupplierButton.Location = new System.Drawing.Point(135, 713);
+            this.manageSupplierButton.Name = "manageSupplierButton";
+            this.manageSupplierButton.Size = new System.Drawing.Size(124, 52);
+            this.manageSupplierButton.TabIndex = 17;
+            this.manageSupplierButton.Text = "จัดการซัพพลายเออร์";
+            this.manageSupplierButton.UseVisualStyleBackColor = true;
+            this.manageSupplierButton.Click += new System.EventHandler(this.manageSupplierButton_Click);
             // 
-            // SupplyInventoryDatagridview
+            // editPRButton
             // 
-            this.SupplyInventoryDatagridview.AllowUserToAddRows = false;
-            this.SupplyInventoryDatagridview.AllowUserToDeleteRows = false;
-            this.SupplyInventoryDatagridview.AllowUserToResizeColumns = false;
-            this.SupplyInventoryDatagridview.AllowUserToResizeRows = false;
-            this.SupplyInventoryDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SupplyInventoryDatagridview.Location = new System.Drawing.Point(6, 111);
-            this.SupplyInventoryDatagridview.MultiSelect = false;
-            this.SupplyInventoryDatagridview.Name = "SupplyInventoryDatagridview";
-            this.SupplyInventoryDatagridview.ReadOnly = true;
-            this.SupplyInventoryDatagridview.RowHeadersVisible = false;
-            this.SupplyInventoryDatagridview.RowTemplate.Height = 24;
-            this.SupplyInventoryDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.SupplyInventoryDatagridview.Size = new System.Drawing.Size(696, 542);
-            this.SupplyInventoryDatagridview.TabIndex = 7;
+            this.editPRButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editPRButton.Location = new System.Drawing.Point(135, 659);
+            this.editPRButton.Name = "editPRButton";
+            this.editPRButton.Size = new System.Drawing.Size(124, 52);
+            this.editPRButton.TabIndex = 16;
+            this.editPRButton.Text = "แก้ใขคำขอซื้อ";
+            this.editPRButton.UseVisualStyleBackColor = true;
             // 
-            // updateSupplyButton
+            // manageQuotationButton
             // 
-            this.updateSupplyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.updateSupplyButton.Location = new System.Drawing.Point(6, 659);
-            this.updateSupplyButton.Name = "updateSupplyButton";
-            this.updateSupplyButton.Size = new System.Drawing.Size(75, 52);
-            this.updateSupplyButton.TabIndex = 8;
-            this.updateSupplyButton.Text = "อัฟเดท";
-            this.updateSupplyButton.UseVisualStyleBackColor = true;
+            this.manageQuotationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.manageQuotationButton.Location = new System.Drawing.Point(5, 713);
+            this.manageQuotationButton.Name = "manageQuotationButton";
+            this.manageQuotationButton.Size = new System.Drawing.Size(124, 52);
+            this.manageQuotationButton.TabIndex = 15;
+            this.manageQuotationButton.Text = "จัดการใบเสนอราคา";
+            this.manageQuotationButton.UseVisualStyleBackColor = true;
             // 
-            // editSupplyButton
+            // openPRButton
             // 
-            this.editSupplyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editSupplyButton.Location = new System.Drawing.Point(87, 659);
-            this.editSupplyButton.Name = "editSupplyButton";
-            this.editSupplyButton.Size = new System.Drawing.Size(75, 52);
-            this.editSupplyButton.TabIndex = 9;
-            this.editSupplyButton.Text = "แก้ใข";
-            this.editSupplyButton.UseVisualStyleBackColor = true;
+            this.openPRButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openPRButton.Location = new System.Drawing.Point(5, 659);
+            this.openPRButton.Name = "openPRButton";
+            this.openPRButton.Size = new System.Drawing.Size(124, 52);
+            this.openPRButton.TabIndex = 14;
+            this.openPRButton.Text = "เปิดคำขอซื้อ";
+            this.openPRButton.UseVisualStyleBackColor = true;
             // 
-            // explainLabel1
+            // supplyRequestLabel
             // 
-            this.explainLabel1.AutoSize = true;
-            this.explainLabel1.Location = new System.Drawing.Point(9, 722);
-            this.explainLabel1.Name = "explainLabel1";
-            this.explainLabel1.Size = new System.Drawing.Size(229, 13);
-            this.explainLabel1.TabIndex = 10;
-            this.explainLabel1.Text = "* อัฟเดทหมายถึง อัฟเดทยอดปัจจุบัณ ณ เวลานั้น";
-            // 
-            // explainLabel2
-            // 
-            this.explainLabel2.AutoSize = true;
-            this.explainLabel2.Location = new System.Drawing.Point(9, 742);
-            this.explainLabel2.Name = "explainLabel2";
-            this.explainLabel2.Size = new System.Drawing.Size(218, 13);
-            this.explainLabel2.TabIndex = 11;
-            this.explainLabel2.Text = "* แก้ใข หมายถึงแก้ใขรายละเอียดกรณีที่ใส่ผิด";
-            // 
-            // supplyPlanButton
-            // 
-            this.supplyPlanButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.supplyPlanButton.Location = new System.Drawing.Point(577, 659);
-            this.supplyPlanButton.Name = "supplyPlanButton";
-            this.supplyPlanButton.Size = new System.Drawing.Size(124, 52);
-            this.supplyPlanButton.TabIndex = 12;
-            this.supplyPlanButton.Text = "แผนการส่งวัสดุ";
-            this.supplyPlanButton.UseVisualStyleBackColor = true;
-            // 
-            // requestSupplyLabel
-            // 
-            this.requestSupplyLabel.AutoSize = true;
-            this.requestSupplyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.requestSupplyLabel.Location = new System.Drawing.Point(6, 12);
-            this.requestSupplyLabel.Name = "requestSupplyLabel";
-            this.requestSupplyLabel.Size = new System.Drawing.Size(258, 31);
-            this.requestSupplyLabel.TabIndex = 13;
-            this.requestSupplyLabel.Text = "คำขอซื้อ วัสดุสิ้นเปลือง";
-            // 
-            // searchSupplylabel
-            // 
-            this.searchSupplylabel.AutoSize = true;
-            this.searchSupplylabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.searchSupplylabel.Location = new System.Drawing.Point(8, 59);
-            this.searchSupplylabel.Name = "searchSupplylabel";
-            this.searchSupplylabel.Size = new System.Drawing.Size(88, 20);
-            this.searchSupplylabel.TabIndex = 13;
-            this.searchSupplylabel.Text = "ค้นหารายการ";
-            // 
-            // searchSupplyRequestTextBox
-            // 
-            this.searchSupplyRequestTextBox.Location = new System.Drawing.Point(102, 61);
-            this.searchSupplyRequestTextBox.Name = "searchSupplyRequestTextBox";
-            this.searchSupplyRequestTextBox.Size = new System.Drawing.Size(258, 20);
-            this.searchSupplyRequestTextBox.TabIndex = 13;
+            this.supplyRequestLabel.AutoSize = true;
+            this.supplyRequestLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.supplyRequestLabel.Location = new System.Drawing.Point(6, 90);
+            this.supplyRequestLabel.Name = "supplyRequestLabel";
+            this.supplyRequestLabel.Size = new System.Drawing.Size(145, 18);
+            this.supplyRequestLabel.TabIndex = 13;
+            this.supplyRequestLabel.Text = "รายการคำขอซื้อ ปัจจุบัณ";
             // 
             // supplyRequestDataGridView
             // 
@@ -254,98 +321,32 @@
             this.supplyRequestDataGridView.Size = new System.Drawing.Size(696, 542);
             this.supplyRequestDataGridView.TabIndex = 13;
             // 
-            // supplyRequestLabel
+            // searchSupplyRequestTextBox
             // 
-            this.supplyRequestLabel.AutoSize = true;
-            this.supplyRequestLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.supplyRequestLabel.Location = new System.Drawing.Point(6, 90);
-            this.supplyRequestLabel.Name = "supplyRequestLabel";
-            this.supplyRequestLabel.Size = new System.Drawing.Size(145, 18);
-            this.supplyRequestLabel.TabIndex = 13;
-            this.supplyRequestLabel.Text = "รายการคำขอซื้อ ปัจจุบัณ";
+            this.searchSupplyRequestTextBox.Location = new System.Drawing.Point(102, 61);
+            this.searchSupplyRequestTextBox.Name = "searchSupplyRequestTextBox";
+            this.searchSupplyRequestTextBox.Size = new System.Drawing.Size(258, 20);
+            this.searchSupplyRequestTextBox.TabIndex = 13;
             // 
-            // openPRButton
+            // searchSupplylabel
             // 
-            this.openPRButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.openPRButton.Location = new System.Drawing.Point(5, 659);
-            this.openPRButton.Name = "openPRButton";
-            this.openPRButton.Size = new System.Drawing.Size(124, 52);
-            this.openPRButton.TabIndex = 14;
-            this.openPRButton.Text = "เปิดคำขอซื้อ";
-            this.openPRButton.UseVisualStyleBackColor = true;
+            this.searchSupplylabel.AutoSize = true;
+            this.searchSupplylabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.searchSupplylabel.Location = new System.Drawing.Point(8, 59);
+            this.searchSupplylabel.Name = "searchSupplylabel";
+            this.searchSupplylabel.Size = new System.Drawing.Size(88, 20);
+            this.searchSupplylabel.TabIndex = 13;
+            this.searchSupplylabel.Text = "ค้นหารายการ";
             // 
-            // manageQuotationButton
+            // requestSupplyLabel
             // 
-            this.manageQuotationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.manageQuotationButton.Location = new System.Drawing.Point(5, 713);
-            this.manageQuotationButton.Name = "manageQuotationButton";
-            this.manageQuotationButton.Size = new System.Drawing.Size(124, 52);
-            this.manageQuotationButton.TabIndex = 15;
-            this.manageQuotationButton.Text = "จัดการใบเสนอราคา";
-            this.manageQuotationButton.UseVisualStyleBackColor = true;
-            // 
-            // editPRButton
-            // 
-            this.editPRButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editPRButton.Location = new System.Drawing.Point(135, 659);
-            this.editPRButton.Name = "editPRButton";
-            this.editPRButton.Size = new System.Drawing.Size(124, 52);
-            this.editPRButton.TabIndex = 16;
-            this.editPRButton.Text = "แก้ใขคำขอซื้อ";
-            this.editPRButton.UseVisualStyleBackColor = true;
-            // 
-            // manageSupplierButton
-            // 
-            this.manageSupplierButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.manageSupplierButton.Location = new System.Drawing.Point(135, 713);
-            this.manageSupplierButton.Name = "manageSupplierButton";
-            this.manageSupplierButton.Size = new System.Drawing.Size(124, 52);
-            this.manageSupplierButton.TabIndex = 17;
-            this.manageSupplierButton.Text = "จัดการซัพพลายเออร์";
-            this.manageSupplierButton.UseVisualStyleBackColor = true;
-            // 
-            // removePRButton
-            // 
-            this.removePRButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.removePRButton.Location = new System.Drawing.Point(265, 659);
-            this.removePRButton.Name = "removePRButton";
-            this.removePRButton.Size = new System.Drawing.Size(124, 52);
-            this.removePRButton.TabIndex = 18;
-            this.removePRButton.Text = "ลบคำขอซื้อ";
-            this.removePRButton.UseVisualStyleBackColor = true;
-            // 
-            // manageSupplyButton
-            // 
-            this.manageSupplyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.manageSupplyButton.Location = new System.Drawing.Point(265, 713);
-            this.manageSupplyButton.Name = "manageSupplyButton";
-            this.manageSupplyButton.Size = new System.Drawing.Size(124, 52);
-            this.manageSupplyButton.TabIndex = 19;
-            this.manageSupplyButton.Text = "จัดการรายการวัสดุ";
-            this.manageSupplyButton.UseVisualStyleBackColor = true;
-            this.manageSupplyButton.Click += new System.EventHandler(this.manageSupplyButton_Click);
-            // 
-            // CompletePRButton
-            // 
-            this.CompletePRButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CompletePRButton.Location = new System.Drawing.Point(577, 659);
-            this.CompletePRButton.Name = "CompletePRButton";
-            this.CompletePRButton.Size = new System.Drawing.Size(124, 52);
-            this.CompletePRButton.TabIndex = 20;
-            this.CompletePRButton.Text = "ตรวจรับสินค้า";
-            this.CompletePRButton.UseVisualStyleBackColor = true;
-            // 
-            // backToMainMenuButton
-            // 
-            this.backToMainMenuButton.BackColor = System.Drawing.SystemColors.Info;
-            this.backToMainMenuButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.backToMainMenuButton.Location = new System.Drawing.Point(580, 714);
-            this.backToMainMenuButton.Name = "backToMainMenuButton";
-            this.backToMainMenuButton.Size = new System.Drawing.Size(121, 52);
-            this.backToMainMenuButton.TabIndex = 21;
-            this.backToMainMenuButton.Text = "กลับสู่หน้าหลัก";
-            this.backToMainMenuButton.UseVisualStyleBackColor = false;
-            this.backToMainMenuButton.Click += new System.EventHandler(this.backToMainMenuButton_Click);
+            this.requestSupplyLabel.AutoSize = true;
+            this.requestSupplyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.requestSupplyLabel.Location = new System.Drawing.Point(6, 12);
+            this.requestSupplyLabel.Name = "requestSupplyLabel";
+            this.requestSupplyLabel.Size = new System.Drawing.Size(258, 31);
+            this.requestSupplyLabel.TabIndex = 13;
+            this.requestSupplyLabel.Text = "คำขอซื้อ วัสดุสิ้นเปลือง";
             // 
             // SupplyControlMainForm
             // 
@@ -361,9 +362,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.SupplyInventoryGroupBox.ResumeLayout(false);
             this.SupplyInventoryGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SupplyInventoryDatagridview)).EndInit();
             this.SupplyRequestGroupBox.ResumeLayout(false);
             this.SupplyRequestGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SupplyInventoryDatagridview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyRequestDataGridView)).EndInit();
             this.ResumeLayout(false);
 

@@ -16,7 +16,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
         //Create action
         private void createSupplyTypeButton_Click(object sender, EventArgs e)
         {
-            SupplyType st = new SupplyType(supplyTypeNametextBox.Text);
+            SupplyType st = new SupplyType(supplyTypeNametextBox.Text,GlobalVariable.Global.warehouseID);
             if (st.Create())
             {
                 MessageBox.Show("สร้างประเภทซัพพลายใหม่แล้ว");
@@ -25,7 +25,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
             }
             else
             {
-                MessageBox.Show("สร้างประเภทล้มเหลว ชื่อประเภทซ้ำ");
+                MessageBox.Show("สร้างประเภทล้มเหลว");
             }
         }
     }

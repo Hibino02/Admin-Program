@@ -22,6 +22,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public bool HasValidDate { get { return hasvaliddate; }set { hasvaliddate = value; } }
         string quotationpdf;
         public string QuotationPDF { get { return quotationpdf; }set { quotationpdf = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -35,8 +37,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 using (var cmd = conn.CreateCommand())
                 {
                     string select = @"SELECT
-q.ID AS QuotationID, q.SupplierID, s.SupplierName, s.SupplierAddress, q.QuotationNumber, q.IssueDate, q.ValidDate,
-q.HasValidDate, q.QuotationPDF
+q.ID AS QuotationID, q.SupplierID, s.SupplierName, s.SupplierAddress, s.WarehouseID AS SWHID, q.QuotationNumber, q.IssueDate, q.ValidDate,
+q.HasValidDate, q.QuotationPDF, q.WarehouseID
 FROM Quotation q
 LEFT JOIN Supplier s ON q.SupplierID = s.ID
 WHERE q.ID = @id;";
@@ -51,13 +53,15 @@ WHERE q.ID = @id;";
                             int sid = Convert.ToInt32(reader["SupplierID"]);
                             string sname = reader["SupplierName"].ToString();
                             string saddress = reader["SupplierAddress"].ToString();
-                            Supplier s = new Supplier(sid, sname, saddress);
+                            int swhid = Convert.ToInt32(reader["SWHID"]);
+                            Supplier s = new Supplier(sid, sname, saddress, swhid);
 
                             quotationnumber = reader["QuotationNumber"].ToString();
                             issuedate = Convert.ToDateTime(reader["IssueDate"]);
                             validdate = reader["ValidDate"] != DBNull.Value ? Convert.ToDateTime(reader["ValidDate"]) : (DateTime?)null;
                             hasvaliddate = Convert.ToBoolean(reader["HasValidDate"]);
                             quotationpdf = reader["QuotationPDF"].ToString();
+                            warehouseID = Convert.ToInt32(reader["WarehouseID"]);
                         }
                     }
                 }
@@ -74,10 +78,11 @@ WHERE q.ID = @id;";
         {
             UpdateAttribute(id.ToString());
         }
-        public Quotation(int id, Supplier supplier, string qnumber, DateTime issuedate, bool hasvdate, string qpdf
+        public Quotation(int id,int whid, Supplier supplier, string qnumber, DateTime issuedate, bool hasvdate, string qpdf
             , DateTime? vdate = null)
         {
             this.id = id;
+            this.warehouseID = whid;
             this.supplier = supplier;
             this.quotationnumber = qnumber;
             this.issuedate = issuedate;
@@ -85,9 +90,10 @@ WHERE q.ID = @id;";
             this.quotationpdf = qpdf;
             this.validdate = vdate;
         }
-        public Quotation(Supplier supplier, string qnumber, DateTime issuedate, bool hasvdate, string qpdf
+        public Quotation(int whid,Supplier supplier, string qnumber, DateTime issuedate, bool hasvdate, string qpdf
             , DateTime? vdate = null)
         {
+            this.warehouseID = whid;
             this.supplier = supplier;
             this.quotationnumber = qnumber;
             this.issuedate = issuedate;
@@ -105,7 +111,7 @@ WHERE q.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO Quotation (ID, SupplierID, QuotationNumber, IssueDate, ValidDate, HasValidDate, QuotationPDF) VALUES (NULL, @supplierid, @quotationnumber, @issuedate, @validdate, @hasvaliddate, @quotationpdf)";
+                    string insert = "INSERT INTO Quotation (ID, SupplierID, QuotationNumber, IssueDate, ValidDate, HasValidDate, QuotationPDF, WarehouseID) VALUES (NULL, @supplierid, @quotationnumber, @issuedate, @validdate, @hasvaliddate, @quotationpdf, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@supplierid", supplier.ID);
                     cmd.Parameters.AddWithValue("@quotationnumber", quotationnumber);
@@ -120,6 +126,7 @@ WHERE q.ID = @id;";
                     }
                     cmd.Parameters.AddWithValue("@hasvaliddate", hasvaliddate);
                     cmd.Parameters.AddWithValue("@quotationpdf", quotationpdf);
+                    cmd.Parameters.AddWithValue("@whid",warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -211,11 +218,13 @@ WHERE q.ID = @id;";
                 using (var cmd = conn.CreateCommand())
                 {
                     string selectAll = @"SELECT
-q.ID AS QuotationID, q.SupplierID, s.SupplierName, s.SupplierAddress, q.QuotationNumber, q.IssueDate, q.ValidDate,
-q.HasValidDate, q.QuotationPDF
+q.ID AS QuotationID, q.SupplierID, s.SupplierName, s.SupplierAddress, s.WarehouseID AS SWHID, q.QuotationNumber, q.IssueDate, q.ValidDate,
+q.HasValidDate, q.QuotationPDF, q.WarehouseID
 FROM Quotation q
-LEFT JOIN Supplier s ON q.SupplierID = s.ID;";
+LEFT JOIN Supplier s ON q.SupplierID = s.ID
+WHERE q.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -225,15 +234,17 @@ LEFT JOIN Supplier s ON q.SupplierID = s.ID;";
                             int sid = Convert.ToInt32(reader["SupplierID"]);
                             string sname = reader["SupplierName"].ToString();
                             string saddress = reader["SupplierAddress"].ToString();
-                            Supplier s = new Supplier(sid, sname, saddress);
+                            int whid = Convert.ToInt32(reader["SWHID"]);
+                            Supplier s = new Supplier(sid, sname, saddress, whid);
 
                             string qnum = reader["QuotationNumber"].ToString();
                             DateTime issuedate = Convert.ToDateTime(reader["IssueDate"]);
                             DateTime? vdate = reader["ValidDate"] != DBNull.Value ? Convert.ToDateTime(reader["ValidDate"]) : (DateTime?)null;
                             bool hasvdate = Convert.ToBoolean(reader["HasValidDate"]);
                             string qpdf = reader["QuotationPDF"].ToString();
+                            int warehouseid = Convert.ToInt32(reader["WarehouseID"]);
 
-                            Quotation q = new Quotation(id, s, qnum, issuedate, hasvdate, qpdf, vdate);
+                            Quotation q = new Quotation(id, warehouseid, s, qnum, issuedate, hasvdate, qpdf, vdate);
                             qList.Add(q);
                         }
                     }

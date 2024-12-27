@@ -53,9 +53,9 @@ WHERE siq.ID = @id;";
 
                             int stypeid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stypename = reader["TypeName"].ToString();
-                            SupplyType stype = new SupplyType(stypeid,stypename);
+                            SupplyType stype = new SupplyType(stypeid,stypename,GlobalVariable.Global.warehouseID);
 
-                            supply = new Supply(supid,sname,sunit,moq,isactive,stype,sphoto);
+                            supply = new Supply(supid,sname,sunit,moq,isactive,stype,GlobalVariable.Global.warehouseID,sphoto);
 
                             price = Convert.ToSingle(reader["Price"]);
                         }
@@ -173,7 +173,7 @@ WHERE siq.ID = @id;";
             }
         }
 
-        public static List<SupplyInQuotation> GetAllSupplyInQuotationList()
+        public static List<SupplyInQuotation> GetAllSupplyInQuotationList(int quotationID)
         {
             MySqlConnection conn = null;
             List<SupplyInQuotation> sinList = new List<SupplyInQuotation>();
@@ -188,8 +188,10 @@ siq.ID, siq.QuotationID, siq.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsAc
 st.TypeName, siq.Price
 FROM SupplyInQuotation siq
 LEFT JOIN Supply s ON siq.SupplyID = s.ID
-LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID;";
+LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
+WHERE siq.QuotationID = @quotationID";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@quotationID", quotationID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -206,9 +208,9 @@ LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID;";
 
                             int stid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stname = reader["TypeName"].ToString();
-                            SupplyType st = new SupplyType(stid, stname);
+                            SupplyType st = new SupplyType(stid, stname,GlobalVariable.Global.warehouseID);
 
-                            Supply s = new Supply(sid,sname,sunit,moq,isactive,st,sphoto);
+                            Supply s = new Supply(sid,sname,sunit,moq,isactive,st,GlobalVariable.Global.warehouseID,sphoto);
 
                             float price = Convert.ToSingle(reader["Price"]);
                             SupplyInQuotation siq = new SupplyInQuotation(id,qid,s,price);

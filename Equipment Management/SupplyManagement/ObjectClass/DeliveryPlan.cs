@@ -14,6 +14,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public string PlanName { get { return planname; } set { planname = value; } }
         DeliveryMonth _month;
         public DeliveryMonth _Month { get { return _month; } set { _month = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -42,6 +44,7 @@ WHERE dp.ID = @id;";
                             int mid = Convert.ToInt32(reader["MonthID"]);
                             string mname = reader["MonthName"].ToString();
                             _month = new DeliveryMonth(mid, mname);
+                            warehouseID = GlobalVariable.Global.warehouseID;
                         }
                     }
                 }
@@ -58,14 +61,16 @@ WHERE dp.ID = @id;";
         {
             UpdateAttribute(id.ToString());
         }
-        public DeliveryPlan(int id, string planname, DeliveryMonth dm)
+        public DeliveryPlan(int id,int whid, string planname, DeliveryMonth dm)
         {
             this.id = id;
+            this.warehouseID = whid;
             this.planname = planname;
             this._month = dm;
         }
-        public DeliveryPlan(string planname, DeliveryMonth dm)
+        public DeliveryPlan(int whid,string planname, DeliveryMonth dm)
         {
+            this.warehouseID = whid;
             this.planname = planname;
             this._month = dm;
         }
@@ -79,10 +84,11 @@ WHERE dp.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO DeliveryPlan (ID, PlanName, MonthID) VALUES (NULL, @planname, @monthid)";
+                    string insert = "INSERT INTO DeliveryPlan (ID, PlanName, MonthID, WarehouseID) VALUES (NULL, @planname, @monthid, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@planname", planname);
                     cmd.Parameters.AddWithValue("@monthid", _month.ID);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -165,8 +171,10 @@ WHERE dp.ID = @id;";
                     string selectAll = @"SELECT
 dp.ID AS DeliveryPlanID, dp.PlanName, dp.MonthID, m.MonthName
 FROM DeliveryPlan dp
-LEFT JOIN Month m ON dp.MonthID = m.ID;";
+LEFT JOIN Month m ON dp.MonthID = m.ID
+WHERE dp.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using(var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -177,7 +185,7 @@ LEFT JOIN Month m ON dp.MonthID = m.ID;";
                             string mname = reader["MonthName"].ToString();
                             DeliveryMonth dm = new DeliveryMonth(mid,mname);
 
-                            DeliveryPlan dp = new DeliveryPlan(id,planname,dm);
+                            DeliveryPlan dp = new DeliveryPlan(id,GlobalVariable.Global.warehouseID,planname,dm);
                             dpList.Add(dp);
                         }
                     }

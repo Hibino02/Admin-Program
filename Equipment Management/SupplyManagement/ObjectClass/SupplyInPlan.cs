@@ -56,8 +56,8 @@ WHERE sip.ID = @id;";
 
                             int stypeid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stypename = reader["TypeName"].ToString();
-                            SupplyType stype = new SupplyType(stypeid,stypename);
-                            supply = new Supply(supid,sname,sunit,moq,isactive,stype,sphoto);
+                            SupplyType stype = new SupplyType(stypeid,stypename,GlobalVariable.Global.warehouseID);
+                            supply = new Supply(supid,sname,sunit,moq,isactive,stype,GlobalVariable.Global.warehouseID,sphoto);
 
                             reqw1 = Convert.ToInt32(reader["ReqW1"]);
                             reqw2 = Convert.ToInt32(reader["ReqW2"]);
@@ -185,7 +185,7 @@ WHERE sip.ID = @id;";
             }
         }
 
-        public static List<SupplyInPlan> GetAllSupplyInPlanList()
+        public static List<SupplyInPlan> GetAllSupplyInPlanList(int supplyID)
         {
             MySqlConnection conn = null;
             List<SupplyInPlan> sipList = new List<SupplyInPlan>();
@@ -200,8 +200,10 @@ sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPho
 st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4
 FROM SupplyInPlan sip
 LEFT JOIN Supply s ON sip.SupplyID = s.ID
-LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID";
+LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
+WHERE sip.SupplyID = @sid;";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@sid", supplyID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -217,8 +219,8 @@ LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID";
 
                             int stypeid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stypename = reader["TypeName"].ToString();
-                            SupplyType stype = new SupplyType(stypeid, stypename);
-                            Supply supply = new Supply(supid, sname, sunit, moq, isactive, stype, sphoto);
+                            SupplyType stype = new SupplyType(stypeid, stypename,GlobalVariable.Global.warehouseID);
+                            Supply supply = new Supply(supid, sname, sunit, moq, isactive, stype,GlobalVariable.Global.warehouseID, sphoto);
 
                             int reqw1 = Convert.ToInt32(reader["ReqW1"]);
                             int reqw2 = Convert.ToInt32(reader["ReqW2"]);

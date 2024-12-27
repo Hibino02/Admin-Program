@@ -53,9 +53,9 @@ WHERE sb.ID = @id;";
 
                             int stid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stname = reader["TypeName"].ToString();
-                            SupplyType st = new SupplyType(stid,stname);
+                            SupplyType st = new SupplyType(stid,stname,GlobalVariable.Global.warehouseID);
 
-                            Supply s = new Supply(sid,sname,sunit,moq,isactive,st,sphoto);
+                            supply = new Supply(sid,sname,sunit,moq,isactive,st,GlobalVariable.Global.warehouseID,sphoto);
 
                             balance = Convert.ToInt32(reader["Balance"]);
                             updatedate = Convert.ToDateTime(reader["UpdateDate"]);
@@ -86,7 +86,6 @@ WHERE sb.ID = @id;";
         }
         public SupplyBalance(Supply supply, int balance, DateTime updatedate, string updater)
         {
-            this.id = id;
             this.supply = supply;
             this.balance = balance;
             this.updatedate = updatedate;
@@ -179,7 +178,7 @@ WHERE sb.ID = @id;";
             }
         }
 
-        public static List<SupplyBalance> GetAllSupplyBalanceList()
+        public static List<SupplyBalance> GetAllSupplyBalanceList(int supplyID)
         {
             MySqlConnection conn = null;
             List<SupplyBalance> sbList = new List<SupplyBalance>();
@@ -194,8 +193,10 @@ sb.ID AS SupplyBalanceID, sb.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsAc
 s.SupplyTypeID, st.TypeName, sb.Balance, sb.UpdateDate, sb.Updater
 FROM SupplyBalance sb
 LEFT JOIN Supply s ON sb.SupplyID = s.ID
-LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID;";
+LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
+WHERE sb.SupplyID = @sid;";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@sid", supplyID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -211,9 +212,9 @@ LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID;";
 
                             int stid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stn = reader["TypeName"].ToString();
-                            SupplyType st = new SupplyType(stid,stn);
+                            SupplyType st = new SupplyType(stid,stn,GlobalVariable.Global.warehouseID);
 
-                            Supply s = new Supply(sid, sname, sunit, moq, isactive, st, sphoto);
+                            Supply s = new Supply(sid, sname, sunit, moq, isactive, st, GlobalVariable.Global.warehouseID, sphoto);
 
                             int b = Convert.ToInt32(reader["Balance"]);
                             DateTime ud = Convert.ToDateTime(reader["UpdateDate"]);

@@ -13,6 +13,7 @@ namespace Admin_Program.GlobalVariable
     class Global
     {
         public static int warehouseID { get; set; }
+        public static string userName { get; set; }
         public static int ID { get; set; }
         public static int EStatusID { get; set; }
         public static Equipment equipmentGlobal { get; set; }
@@ -101,8 +102,9 @@ namespace Admin_Program.GlobalVariable
                     {
                         CreateFtpDirectory(ftpServerUrl, ftpUsername, ftpPassword);
                     }
-                    UploadFileToFtp(filepath, ftpServerUrl, ftpUsername, ftpPassword);
-                    filepath = Path.Combine(ftpServerUrl, Path.GetFileName(filepath));
+                    string newFileName = $"{DateTime.Now:yyyyMMddHHmmssfff}{Path.GetExtension(filepath)}";
+                    UploadFileToFtp(filepath, ftpServerUrl, ftpUsername, ftpPassword, newFileName);
+                    filepath = Path.Combine(ftpServerUrl, newFileName);
                     TargetFilePath = filepath;
                 }
                 catch (Exception ex)
@@ -111,7 +113,6 @@ namespace Admin_Program.GlobalVariable
                 }
             }
         }
-
         public static void SaveFileToServerSupply(string filepath)
         {
             if (!string.IsNullOrEmpty(filepath))
@@ -126,8 +127,9 @@ namespace Admin_Program.GlobalVariable
                     {
                         CreateFtpDirectory(ftpServerUrl, ftpUsername, ftpPassword);
                     }
-                    UploadFileToFtp(filepath, ftpServerUrl, ftpUsername, ftpPassword);
-                    filepath = Path.Combine(ftpServerUrl, Path.GetFileName(filepath));
+                    string newFileName = $"{DateTime.Now:yyyyMMddHHmmssfff}{Path.GetExtension(filepath)}";
+                    UploadFileToFtp(filepath, ftpServerUrl, ftpUsername, ftpPassword, newFileName);
+                    filepath = Path.Combine(ftpServerUrl, newFileName);
                     TargetFilePath = filepath;
                 }
                 catch (Exception ex)
@@ -180,10 +182,10 @@ namespace Admin_Program.GlobalVariable
                 }
             }
         }
-        private static void UploadFileToFtp(string sourceFilePath, string ftpServerUrl, string username, string password)
+        private static void UploadFileToFtp(string sourceFilePath, string ftpServerUrl, string username, string password, string newFileName)
         {
             FileInfo fileInfo = new FileInfo(sourceFilePath);
-            string targetUri = new Uri(new Uri(ftpServerUrl), fileInfo.Name).ToString();
+            string targetUri = new Uri(new Uri(ftpServerUrl), newFileName).ToString();
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(targetUri);
             request.Method = WebRequestMethods.Ftp.UploadFile;
@@ -211,6 +213,45 @@ namespace Admin_Program.GlobalVariable
         public static void DeleteFileFromFtp(string ftpFilePath)
         {
             string ftpServerUrl = GetFtpServerUrl();
+            // Construct the full URI of the file to be deleted
+            string targetUri = new Uri(new Uri(ftpServerUrl), ftpFilePath).ToString();
+
+            // Create an FtpWebRequest to delete the file
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(targetUri);
+            request.Method = WebRequestMethods.Ftp.DeleteFile;
+            request.Credentials = new NetworkCredential(user, pass);
+            request.UseBinary = true;
+            request.UsePassive = true;
+            request.KeepAlive = false;
+
+            try
+            {
+                // Get the response from the server
+                using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+                {
+                    Console.WriteLine($"Delete File Complete, status {response.StatusDescription}");
+                }
+            }
+            catch (WebException ex)
+            {
+                // Handle any errors that occur during the delete process
+                if (ex.Response != null)
+                {
+                    using (FtpWebResponse ftpResponse = (FtpWebResponse)ex.Response)
+                    {
+                        Console.WriteLine($"Error: {ftpResponse.StatusDescription}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+        }
+
+        public static void DeleteFileFromFtpSupply(string ftpFilePath)
+        {
+            string ftpServerUrl = GetFtpServerUrlforSupply();
             // Construct the full URI of the file to be deleted
             string targetUri = new Uri(new Uri(ftpServerUrl), ftpFilePath).ToString();
 

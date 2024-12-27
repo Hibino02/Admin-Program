@@ -14,6 +14,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public string Name { get { return name; } set { name = value; } }
         string address;
         public string Address { get { return address; } set { address = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -36,6 +38,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                             id = Convert.ToInt32(reader["ID"]);
                             name = reader["SupplierName"].ToString();
                             address = reader["SupplierAddress"].ToString();
+                            warehouseID = Convert.ToInt32(reader["WarehouseID"]);
                         }
                     }
                 }
@@ -52,16 +55,18 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         {
             UpdateAttribute(id.ToString());
         }
-        public Supplier(int id, string name, string address)
+        public Supplier(int id, string name, string address,int whid)
         {
             this.id = id;
             this.name = name;
             this.address = address;
+            this.warehouseID = whid;
         }
-        public Supplier(string name, string address)
+        public Supplier(string name, string address,int whid)
         {
             this.name = name;
             this.address = address;
+            this.warehouseID = whid;
         }
 
         public bool Create()
@@ -73,10 +78,11 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO Supplier (ID, SupplierName, SupplierAddress) VALUES (NULL, @name, @address)";
+                    string insert = "INSERT INTO Supplier (ID, SupplierName, SupplierAddress, WarehouseID) VALUES (NULL, @name, @address, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@address", address);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -131,6 +137,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                     string delete = "DELETE FROM Supplier WHERE ID = @id";
                     cmd.CommandText = delete;
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
                 }
                 return true;
             }
@@ -150,8 +157,9 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string selectAll = "SELECT * FROM Supplier";
+                    string selectAll = "SELECT * FROM Supplier WHERE WarehouseID = @whid";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using(var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -159,7 +167,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                             int id = Convert.ToInt32(reader["ID"]);
                             string name = reader["SupplierName"].ToString();
                             string address = reader["SupplierAddress"].ToString();
-                            Supplier s = new Supplier(id, name, address);
+                            int whid = Convert.ToInt32(reader["WarehouseID"]);
+                            Supplier s = new Supplier(id, name, address, whid);
                             supplierList.Add(s);
                         }
                     }

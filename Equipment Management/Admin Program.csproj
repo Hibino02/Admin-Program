@@ -290,6 +290,9 @@
     <Compile Include="EquipmentManagement\UIClass\Plan\RemovePlanProcessingForm.Designer.cs">
       <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplyManagement\CustomViewClass\AllQuotationListDataGridView.cs" />
+    <Compile Include="SupplyManagement\CustomViewClass\AllSupplierListDataDridView.cs" />
+    <Compile Include="SupplyManagement\CustomViewClass\AllSupplyListDataGridView.cs" />
     <Compile Include="SupplyManagement\ObjectClass\DeliveryMonth.cs" />
     <Compile Include="SupplyManagement\ObjectClass\DeliveryPlan.cs" />
     <Compile Include="SupplyManagement\ObjectClass\PR.cs" />
@@ -303,6 +306,36 @@
     <Compile Include="SupplyManagement\ObjectClass\SupplyInQuotation.cs" />
     <Compile Include="SupplyManagement\ObjectClass\SupplyType.cs" />
     <Compile Include="SupplyManagement\ObjectClass\User.cs" />
+    <Compile Include="SupplyManagement\UIClass\QuotationManage\AllQuotationListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\QuotationManage\AllQuotationListForm.Designer.cs">
+      <DependentUpon>AllQuotationListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\QuotationManage\CreateQuotationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\QuotationManage\CreateQuotationForm.Designer.cs">
+      <DependentUpon>CreateQuotationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplierManage\AllSupplierListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplierManage\AllSupplierListForm.Designer.cs">
+      <DependentUpon>AllSupplierListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplierManage\CreateSupplierForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplierManage\CreateSupplierForm.Designer.cs">
+      <DependentUpon>CreateSupplierForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplierManage\EditSupplierForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplierManage\EditSupplierForm.Designer.cs">
+      <DependentUpon>EditSupplierForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SupplyManagement\UIClass\SupplyControlMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -326,6 +359,24 @@
     </Compile>
     <Compile Include="SupplyManagement\UIClass\SupplyManage\CreateSupplyTypeForm.Designer.cs">
       <DependentUpon>CreateSupplyTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\EditSupplyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\EditSupplyForm.Designer.cs">
+      <DependentUpon>EditSupplyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\EditSupplyTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\EditSupplyTypeForm.Designer.cs">
+      <DependentUpon>EditSupplyTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\SupplyTypeManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyManage\SupplyTypeManageForm.Designer.cs">
+      <DependentUpon>SupplyTypeManageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SupplyManagement\UIClass\UserLogInWindow.cs">
       <SubType>Form</SubType>
@@ -427,6 +478,21 @@
     <EmbeddedResource Include="EquipmentManagement\UIClass\Plan\RemovePlanProcessingForm.resx">
       <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\QuotationManage\AllQuotationListForm.resx">
+      <DependentUpon>AllQuotationListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\QuotationManage\CreateQuotationForm.resx">
+      <DependentUpon>CreateQuotationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplierManage\AllSupplierListForm.resx">
+      <DependentUpon>AllSupplierListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplierManage\CreateSupplierForm.resx">
+      <DependentUpon>CreateSupplierForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplierManage\EditSupplierForm.resx">
+      <DependentUpon>EditSupplierForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\SupplyControlMainForm.resx">
       <DependentUpon>SupplyControlMainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -438,6 +504,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\SupplyManage\CreateSupplyTypeForm.resx">
       <DependentUpon>CreateSupplyTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplyManage\EditSupplyForm.resx">
+      <DependentUpon>EditSupplyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplyManage\EditSupplyTypeForm.resx">
+      <DependentUpon>EditSupplyTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplyManage\SupplyTypeManageForm.resx">
+      <DependentUpon>SupplyTypeManageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\UserLogInWindow.resx">
       <DependentUpon>UserLogInWindow.cs</DependentUpon>

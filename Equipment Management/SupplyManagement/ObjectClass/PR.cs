@@ -44,6 +44,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public DateTime? ArrivalDate { get { return arrivaldate; }set { arrivaldate = value; } }
         string invoicepdf;
         public string InvoicePDF { get { return invoicepdf; }set { invoicepdf = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -82,31 +84,31 @@ WHERE pr.ID = @id;";
                             int prsid = Convert.ToInt32(reader["PRSupplierID"]);
                             string prsname = reader["PRSupplierName"].ToString();
                             string prsaddress = reader["PRSupplierAddress"].ToString();
-                            supplier = new Supplier(prsid,prsname,prsaddress);
+                            supplier = new Supplier(prsid,prsname,prsaddress,GlobalVariable.Global.warehouseID);
                             //Quotation 1
                             int q1id = Convert.ToInt32(reader["QuotationID1"]);
                             int q1sid = Convert.ToInt32(reader["Q1SupplierID"]);
                             string q1sname = reader["Q1SupplierName"].ToString();
                             string q1saddress = reader["Q1SupplierAddress"].ToString();
-                            Supplier q1s = new Supplier(q1sid,q1sname,q1saddress);
+                            Supplier q1s = new Supplier(q1sid,q1sname,q1saddress,GlobalVariable.Global.warehouseID);
                             string q1num = reader["Q1Number"].ToString();
                             DateTime q1isdate = Convert.ToDateTime(reader["Q1IsuDate"]);
                             DateTime? q1vdate = reader["Q1VDate"] != DBNull.Value ? Convert.ToDateTime(reader["Q1VDate"]) : (DateTime?)null;
                             bool q1hasvdate = Convert.ToBoolean(reader["Q1HasVDate"]);
                             string q1pdf = reader["Q1PDF"].ToString();
-                            quotation1 = new Quotation(q1id,q1s,q1num,q1isdate,q1hasvdate,q1pdf,q1vdate);
+                            quotation1 = new Quotation(q1id,GlobalVariable.Global.warehouseID,q1s,q1num,q1isdate,q1hasvdate,q1pdf,q1vdate);
                             //Quotation 2
                             int q2id = Convert.ToInt32(reader["QuotationID2"]);
                             int q2sid = Convert.ToInt32(reader["Q2SupplierID"]);
                             string q2sname = reader["Q2SupplierName"].ToString();
                             string q2saddress = reader["Q2SupplierAddress"].ToString();
-                            Supplier q2s = new Supplier(q1sid, q1sname, q1saddress);
+                            Supplier q2s = new Supplier(q1sid, q1sname, q1saddress,GlobalVariable.Global.warehouseID);
                             string q2num = reader["Q2Number"].ToString();
                             DateTime q2isdate = Convert.ToDateTime(reader["Q2IsuDate"]);
                             DateTime? q2vdate = reader["Q2VDate"] != DBNull.Value ? Convert.ToDateTime(reader["Q2VDate"]) : (DateTime?)null;
                             bool q2hasvdate = Convert.ToBoolean(reader["Q2HasVDate"]);
                             string q2pdf = reader["Q2PDF"].ToString();
-                            quotation2 = new Quotation(q2id, q2s, q2num, q2isdate, q2hasvdate, q2pdf, q2vdate);
+                            quotation2 = new Quotation(q2id,GlobalVariable.Global.warehouseID, q2s, q2num, q2isdate, q2hasvdate, q2pdf, q2vdate);
 
                             requester = reader["Requester"].ToString();
                             prtitle = reader["PRTitle"].ToString();
@@ -125,6 +127,7 @@ WHERE pr.ID = @id;";
                             contactperson = reader["ContactPerson"].ToString();
                             arrivaldate = reader["ArrivalDate"] != DBNull.Value ? Convert.ToDateTime(reader["ArrivalDate"]) : (DateTime?)null;
                             invoicepdf = reader["InvoicePDF"].ToString();
+                            warehouseID = GlobalVariable.Global.warehouseID;
                         }
                     }
                 }
@@ -141,11 +144,12 @@ WHERE pr.ID = @id;";
         {
             UpdateAttribute(id.ToString());
         }
-        public PR(int id,Supplier prs,Quotation q1,Quotation q2,string requester,string prtitle,bool iscostofsale
+        public PR(int id,int whid,Supplier prs,Quotation q1,Quotation q2,string requester,string prtitle,bool iscostofsale
             ,bool iscompanyasset,bool ismaintainance,bool isrental,bool isother,string otherreason,string adddetails
             ,PRStatus prstatus,DateTime deliverydate,string contactperson,string invpdf,DateTime? arrivaldate = null)
         {
             this.id = id;
+            this.warehouseID = whid;
             this.supplier = prs;
             this.quotation1 = q1;
             this.quotation2 = q2;
@@ -164,10 +168,11 @@ WHERE pr.ID = @id;";
             this.invoicepdf = invpdf;
             this.arrivaldate = arrivaldate;
         }
-        public PR(Supplier prs, Quotation q1, Quotation q2, string requester, string prtitle, bool iscostofsale
+        public PR(int whid,Supplier prs, Quotation q1, Quotation q2, string requester, string prtitle, bool iscostofsale
             , bool iscompanyasset, bool ismaintainance, bool isrental, bool isother, string otherreason, string adddetails
             , PRStatus prstatus, DateTime deliverydate, string contactperson, string invpdf, DateTime? arrivaldate = null)
         {
+            this.warehouseID = whid;
             this.supplier = prs;
             this.quotation1 = q1;
             this.quotation2 = q2;
@@ -196,7 +201,7 @@ WHERE pr.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO PR (ID, SupplierID, QuotationID1, QuotationID2, Requester, PRTitle, IsCostOfSale, IsCompanyAsset, IsMaintainance, IsRental, IsOther, OtherReason, AddDetails, PRStatusID, DeliveryDate, ContactPerson, Arrivaldate, InvoicePDF) VALUES (NULL, @supid, @q1, @q2, @requester, @prtitle, @iscostofsale, @iscompanyasset, @ismaintainance, @isrental, @isother, @otherreason, @adddetails, @prstatusid, @deliverydate, @contactperson, @arrivaldate, @invoicepdf)";
+                    string insert = "INSERT INTO PR (ID, SupplierID, QuotationID1, QuotationID2, Requester, PRTitle, IsCostOfSale, IsCompanyAsset, IsMaintainance, IsRental, IsOther, OtherReason, AddDetails, PRStatusID, DeliveryDate, ContactPerson, Arrivaldate, InvoicePDF, WarehouseID) VALUES (NULL, @supid, @q1, @q2, @requester, @prtitle, @iscostofsale, @iscompanyasset, @ismaintainance, @isrental, @isother, @otherreason, @adddetails, @prstatusid, @deliverydate, @contactperson, @arrivaldate, @invoicepdf, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@supid",supplier.ID);
                     cmd.Parameters.AddWithValue("@q1", quotation1.ID);
@@ -213,6 +218,7 @@ WHERE pr.ID = @id;";
                     cmd.Parameters.AddWithValue("@prstatusid", prstatus.ID);
                     cmd.Parameters.AddWithValue("@deliverydate", deliverydate);
                     cmd.Parameters.AddWithValue("@contactperson", contactperson);
+                    cmd.Parameters.AddWithValue("@whid", warehouseID);
                     if(arrivaldate == null)
                     {
                         cmd.Parameters.AddWithValue("@arrivaldate", DBNull.Value);
@@ -335,8 +341,10 @@ LEFT JOIN Quotation q1 ON pr.QuotationID1 = q1.ID
 LEFT JOIN Supplier s1 ON q1.SupplierID = s1.ID
 LEFT JOIN Quotation q2 ON pr.QuotationID2 = q2.ID
 LEFT JOIN Supplier s2 ON q2.SupplierID = s2.ID
-LEFT JOIN PRStatus sta ON pr.PRStatusID = sta.ID;";
+LEFT JOIN PRStatus sta ON pr.PRStatusID = sta.ID
+WHERE pr.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -346,31 +354,31 @@ LEFT JOIN PRStatus sta ON pr.PRStatusID = sta.ID;";
                             int prsid = Convert.ToInt32(reader["PRSupplierID"]);
                             string prsname = reader["PRSupplierName"].ToString();
                             string prsaddress = reader["PRSupplierAddress"].ToString();
-                            Supplier supplier = new Supplier(prsid, prsname, prsaddress);
+                            Supplier supplier = new Supplier(prsid, prsname, prsaddress, GlobalVariable.Global.warehouseID);
                             //Quotation 1
                             int q1id = Convert.ToInt32(reader["QuotationID1"]);
                             int q1sid = Convert.ToInt32(reader["Q1SupplierID"]);
                             string q1sname = reader["Q1SupplierName"].ToString();
                             string q1saddress = reader["Q1SupplierAddress"].ToString();
-                            Supplier q1s = new Supplier(q1sid, q1sname, q1saddress);
+                            Supplier q1s = new Supplier(q1sid, q1sname, q1saddress,GlobalVariable.Global.warehouseID);
                             string q1num = reader["Q1Number"].ToString();
                             DateTime q1isdate = Convert.ToDateTime(reader["Q1IsuDate"]);
                             DateTime? q1vdate = reader["Q1VDate"] != DBNull.Value ? Convert.ToDateTime(reader["Q1VDate"]) : (DateTime?)null;
                             bool q1hasvdate = Convert.ToBoolean(reader["Q1HasVDate"]);
                             string q1pdf = reader["Q1PDF"].ToString();
-                            Quotation quotation1 = new Quotation(q1id, q1s, q1num, q1isdate, q1hasvdate, q1pdf, q1vdate);
+                            Quotation quotation1 = new Quotation(q1id, GlobalVariable.Global.warehouseID, q1s, q1num, q1isdate, q1hasvdate, q1pdf, q1vdate);
                             //Quotation 2
                             int q2id = Convert.ToInt32(reader["QuotationID2"]);
                             int q2sid = Convert.ToInt32(reader["Q2SupplierID"]);
                             string q2sname = reader["Q2SupplierName"].ToString();
                             string q2saddress = reader["Q2SupplierAddress"].ToString();
-                            Supplier q2s = new Supplier(q1sid, q1sname, q1saddress);
+                            Supplier q2s = new Supplier(q1sid, q1sname, q1saddress,GlobalVariable.Global.warehouseID);
                             string q2num = reader["Q2Number"].ToString();
                             DateTime q2isdate = Convert.ToDateTime(reader["Q2IsuDate"]);
                             DateTime? q2vdate = reader["Q2VDate"] != DBNull.Value ? Convert.ToDateTime(reader["Q2VDate"]) : (DateTime?)null;
                             bool q2hasvdate = Convert.ToBoolean(reader["Q2HasVDate"]);
                             string q2pdf = reader["Q2PDF"].ToString();
-                            Quotation quotation2 = new Quotation(q2id, q2s, q2num, q2isdate, q2hasvdate, q2pdf, q2vdate);
+                            Quotation quotation2 = new Quotation(q2id,GlobalVariable.Global.warehouseID, q2s, q2num, q2isdate, q2hasvdate, q2pdf, q2vdate);
 
                             string requester = reader["Requester"].ToString();
                             string prtitle = reader["PRTitle"].ToString();
@@ -390,7 +398,7 @@ LEFT JOIN PRStatus sta ON pr.PRStatusID = sta.ID;";
                             DateTime? arrivaldate = reader["ArrivalDate"] != DBNull.Value ? Convert.ToDateTime(reader["ArrivalDate"]) : (DateTime?)null;
                             string invoicepdf = reader["InvoicePDF"].ToString();
 
-                            PR pr = new PR(id, supplier, quotation1, quotation2, requester, prtitle, iscostofsale, iscompanyasset, ismaintainance, isrental, isother, otherreason, adddetails, prstatus, deliverydate, contactperson, invoicepdf, arrivaldate);
+                            PR pr = new PR(id,GlobalVariable.Global.warehouseID, supplier, quotation1, quotation2, requester, prtitle, iscostofsale, iscompanyasset, ismaintainance, isrental, isother, otherreason, adddetails, prstatus, deliverydate, contactperson, invoicepdf, arrivaldate);
                             prList.Add(pr);
                         }
                     }
