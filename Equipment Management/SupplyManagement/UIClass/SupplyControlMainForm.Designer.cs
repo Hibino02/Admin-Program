@@ -283,6 +283,7 @@
             this.manageQuotationButton.TabIndex = 15;
             this.manageQuotationButton.Text = "จัดการใบเสนอราคา";
             this.manageQuotationButton.UseVisualStyleBackColor = true;
+            this.manageQuotationButton.Click += new System.EventHandler(this.manageQuotationButton_Click);
             // 
             // openPRButton
             // 

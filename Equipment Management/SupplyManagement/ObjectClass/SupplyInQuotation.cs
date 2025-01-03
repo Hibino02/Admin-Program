@@ -173,7 +173,7 @@ WHERE siq.ID = @id;";
             }
         }
 
-        public static List<SupplyInQuotation> GetAllSupplyInQuotationList(int quotationID)
+        public static List<SupplyInQuotation> GetAllSupplyInQuotationList()
         {
             MySqlConnection conn = null;
             List<SupplyInQuotation> sinList = new List<SupplyInQuotation>();
@@ -184,14 +184,14 @@ WHERE siq.ID = @id;";
                 using (var cmd = conn.CreateCommand())
                 {
                     string selectAll = @"SELECT
-siq.ID, siq.QuotationID, siq.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
+siq.ID, siq.WarehouseID, siq.QuotationID, siq.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
 st.TypeName, siq.Price
 FROM SupplyInQuotation siq
 LEFT JOIN Supply s ON siq.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
-WHERE siq.QuotationID = @quotationID";
+WHERE siq.WarehouseID = @warehouseID";
                     cmd.CommandText = selectAll;
-                    cmd.Parameters.AddWithValue("@quotationID", quotationID);
+                    cmd.Parameters.AddWithValue("@warehouseID", GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())

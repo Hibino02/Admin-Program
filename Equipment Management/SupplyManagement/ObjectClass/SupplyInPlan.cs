@@ -196,14 +196,14 @@ WHERE sip.ID = @id;";
                 using (var cmd= conn.CreateCommand())
                 {
                     string selectAll = @"SELECT
-sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
+sip.ID, sip.WarehouseID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
 st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4
 FROM SupplyInPlan sip
 LEFT JOIN Supply s ON sip.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
-WHERE sip.SupplyID = @sid;";
+WHERE sip.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
-                    cmd.Parameters.AddWithValue("@sid", supplyID);
+                    cmd.Parameters.AddWithValue("@whid", GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())

@@ -32,7 +32,7 @@
             this.supplierComboBox = new System.Windows.Forms.ComboBox();
             this.CreateSupplierButton = new System.Windows.Forms.Button();
             this.supplierAddressLabel = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.supplierAddressrichTextBox = new System.Windows.Forms.RichTextBox();
             this.quotationNumberlabel = new System.Windows.Forms.Label();
             this.supplyNameTextBox = new System.Windows.Forms.TextBox();
             this.issueDatelabel = new System.Windows.Forms.Label();
@@ -54,6 +54,7 @@
             this.supplyInQuotationlabel = new System.Windows.Forms.Label();
             this.supplyInQuotationdataGridView = new System.Windows.Forms.DataGridView();
             this.removeSupplybutton = new System.Windows.Forms.Button();
+            this.editSupplierButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.supplyDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInQuotationdataGridView)).BeginInit();
             this.SuspendLayout();
@@ -76,6 +77,7 @@
             this.supplierComboBox.Name = "supplierComboBox";
             this.supplierComboBox.Size = new System.Drawing.Size(486, 26);
             this.supplierComboBox.TabIndex = 31;
+            this.supplierComboBox.SelectedIndexChanged += new System.EventHandler(this.supplierComboBox_SelectedIndexChanged);
             // 
             // CreateSupplierButton
             // 
@@ -96,14 +98,14 @@
             this.supplierAddressLabel.TabIndex = 33;
             this.supplierAddressLabel.Text = "ที่อยู่ซัพพลายเออร์ :";
             // 
-            // richTextBox1
+            // supplierAddressrichTextBox
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(133, 43);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(486, 96);
-            this.richTextBox1.TabIndex = 34;
-            this.richTextBox1.Text = "";
+            this.supplierAddressrichTextBox.Location = new System.Drawing.Point(133, 43);
+            this.supplierAddressrichTextBox.Name = "supplierAddressrichTextBox";
+            this.supplierAddressrichTextBox.ReadOnly = true;
+            this.supplierAddressrichTextBox.Size = new System.Drawing.Size(486, 96);
+            this.supplierAddressrichTextBox.TabIndex = 34;
+            this.supplierAddressrichTextBox.Text = "";
             // 
             // quotationNumberlabel
             // 
@@ -230,6 +232,7 @@
             this.supplySearchtextBox.Name = "supplySearchtextBox";
             this.supplySearchtextBox.Size = new System.Drawing.Size(190, 26);
             this.supplySearchtextBox.TabIndex = 47;
+            this.supplySearchtextBox.TextChanged += new System.EventHandler(this.supplySearchtextBox_TextChanged);
             // 
             // supplyTypelabel
             // 
@@ -249,6 +252,7 @@
             this.supplyTypecomboBox.Name = "supplyTypecomboBox";
             this.supplyTypecomboBox.Size = new System.Drawing.Size(256, 26);
             this.supplyTypecomboBox.TabIndex = 49;
+            this.supplyTypecomboBox.SelectedIndexChanged += new System.EventHandler(this.supplyTypecomboBox_SelectedIndexChanged);
             // 
             // supplyPricelabel
             // 
@@ -277,6 +281,7 @@
             this.addSupplybutton.TabIndex = 52;
             this.addSupplybutton.Text = "เพิ่ม";
             this.addSupplybutton.UseVisualStyleBackColor = true;
+            this.addSupplybutton.Click += new System.EventHandler(this.addSupplybutton_Click);
             // 
             // supplyInQuotationlabel
             // 
@@ -314,12 +319,22 @@
             this.removeSupplybutton.Text = "ลบ";
             this.removeSupplybutton.UseVisualStyleBackColor = true;
             // 
+            // editSupplierButton
+            // 
+            this.editSupplierButton.Location = new System.Drawing.Point(625, 43);
+            this.editSupplierButton.Name = "editSupplierButton";
+            this.editSupplierButton.Size = new System.Drawing.Size(138, 31);
+            this.editSupplierButton.TabIndex = 56;
+            this.editSupplierButton.Text = "แก้ใขซัพพลายเออร์";
+            this.editSupplierButton.UseVisualStyleBackColor = true;
+            // 
             // CreateQuotationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.Controls.Add(this.editSupplierButton);
             this.Controls.Add(this.removeSupplybutton);
             this.Controls.Add(this.supplyInQuotationdataGridView);
             this.Controls.Add(this.supplyInQuotationlabel);
@@ -341,7 +356,7 @@
             this.Controls.Add(this.issueDatelabel);
             this.Controls.Add(this.supplyNameTextBox);
             this.Controls.Add(this.quotationNumberlabel);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.supplierAddressrichTextBox);
             this.Controls.Add(this.supplierAddressLabel);
             this.Controls.Add(this.CreateSupplierButton);
             this.Controls.Add(this.supplierComboBox);
@@ -365,7 +380,7 @@
         private System.Windows.Forms.ComboBox supplierComboBox;
         private System.Windows.Forms.Button CreateSupplierButton;
         private System.Windows.Forms.Label supplierAddressLabel;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox supplierAddressrichTextBox;
         private System.Windows.Forms.Label quotationNumberlabel;
         private System.Windows.Forms.TextBox supplyNameTextBox;
         private System.Windows.Forms.Label issueDatelabel;
@@ -387,5 +402,6 @@
         private System.Windows.Forms.Label supplyInQuotationlabel;
         private System.Windows.Forms.DataGridView supplyInQuotationdataGridView;
         private System.Windows.Forms.Button removeSupplybutton;
+        private System.Windows.Forms.Button editSupplierButton;
     }
 }

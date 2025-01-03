@@ -9,10 +9,15 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
     {
         public int ID { get; set; }
         public int SupplierID { get; set; }
-        public string SupplierName { get; set; }
         public string QuotationNumber { get; set; }
+        public string SupplierName { get; set; }
         public DateTime IssueDate { get; set; }
         public DateTime? ValidDate { get; set; }
+        public string QuotationPDF { get; set; }
+
+        public string ValidDateDisplay => ValidDate.HasValue
+            ? ValidDate.Value.ToString("MMM dd, yyyy")
+            : "จนกว่าจะแจ้งให้ทราบ";
 
         public AllQuotationListDataGridView() { }
 
@@ -29,7 +34,8 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
                     SupplierName = q.Supplier.Name,
                     QuotationNumber = q.QuotationNumber,
                     IssueDate = q.IssueDate,
-                    ValidDate = q.ValidDate
+                    ValidDate = q.ValidDate,
+                    QuotationPDF = q.QuotationPDF
                 };
                 qViewList.Add(view);
             }

@@ -1,5 +1,6 @@
 ﻿using Admin_Program.SupplyManagement.UIClass.SupplierManage;
 using Admin_Program.SupplyManagement.UIClass.SupplyManage;
+using Admin_Program.SupplyManagement.UIClass.QuotationManage;
 using Admin_Program.UIClass;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Admin_Program.SupplyManagement.UIClass
 
         private AllSupplyListForm allSupplyList;
         private AllSupplierListForm allSupplierList;
+        private AllQuotationListForm allQuotationList;
 
         public event EventHandler returnMain;
 
@@ -42,6 +44,13 @@ namespace Admin_Program.SupplyManagement.UIClass
             allSupplierList = new AllSupplierListForm();
             allSupplierList.Owner = main;
             allSupplierList.ShowDialog();
+        }
+        //Quotation Manage
+        private void manageQuotationButton_Click(object sender, EventArgs e)
+        {
+            allQuotationList = new AllQuotationListForm();
+            allQuotationList.Owner = main;
+            allQuotationList.ShowDialog();
         }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)

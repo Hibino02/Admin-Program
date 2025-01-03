@@ -35,7 +35,11 @@
             this.EditButton = new System.Windows.Forms.Button();
             this.CreateButton = new System.Windows.Forms.Button();
             this.quotationDatagridview = new System.Windows.Forms.DataGridView();
+            this.supplyInQuotationdataGridView = new System.Windows.Forms.DataGridView();
+            this.supplyInQuotationlabel = new System.Windows.Forms.Label();
+            this.quotationPDFlinkLabel = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.quotationDatagridview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.supplyInQuotationdataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // supplierComboBox
@@ -45,6 +49,7 @@
             this.supplierComboBox.Name = "supplierComboBox";
             this.supplierComboBox.Size = new System.Drawing.Size(337, 21);
             this.supplierComboBox.TabIndex = 27;
+            this.supplierComboBox.SelectedIndexChanged += new System.EventHandler(this.supplierComboBox_SelectedIndexChanged);
             // 
             // searchQuotationTextBox
             // 
@@ -52,6 +57,7 @@
             this.searchQuotationTextBox.Name = "searchQuotationTextBox";
             this.searchQuotationTextBox.Size = new System.Drawing.Size(258, 20);
             this.searchQuotationTextBox.TabIndex = 26;
+            this.searchQuotationTextBox.TextChanged += new System.EventHandler(this.searchQuotationTextBox_TextChanged);
             // 
             // SearchLabel
             // 
@@ -92,6 +98,7 @@
             this.CreateButton.TabIndex = 22;
             this.CreateButton.Text = "สร้าง";
             this.CreateButton.UseVisualStyleBackColor = true;
+            this.CreateButton.Click += new System.EventHandler(this.CreateButton_Click);
             // 
             // quotationDatagridview
             // 
@@ -107,8 +114,49 @@
             this.quotationDatagridview.RowHeadersVisible = false;
             this.quotationDatagridview.RowTemplate.Height = 24;
             this.quotationDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.quotationDatagridview.Size = new System.Drawing.Size(1310, 730);
+            this.quotationDatagridview.Size = new System.Drawing.Size(800, 730);
             this.quotationDatagridview.TabIndex = 21;
+            this.quotationDatagridview.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.quotationDatagridview_CellClick);
+            this.quotationDatagridview.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.quotationDatagridview_DataBindingComplete);
+            // 
+            // supplyInQuotationdataGridView
+            // 
+            this.supplyInQuotationdataGridView.AllowUserToAddRows = false;
+            this.supplyInQuotationdataGridView.AllowUserToDeleteRows = false;
+            this.supplyInQuotationdataGridView.AllowUserToResizeColumns = false;
+            this.supplyInQuotationdataGridView.AllowUserToResizeRows = false;
+            this.supplyInQuotationdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.supplyInQuotationdataGridView.Location = new System.Drawing.Point(820, 40);
+            this.supplyInQuotationdataGridView.MultiSelect = false;
+            this.supplyInQuotationdataGridView.Name = "supplyInQuotationdataGridView";
+            this.supplyInQuotationdataGridView.ReadOnly = true;
+            this.supplyInQuotationdataGridView.RowHeadersVisible = false;
+            this.supplyInQuotationdataGridView.RowTemplate.Height = 24;
+            this.supplyInQuotationdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.supplyInQuotationdataGridView.Size = new System.Drawing.Size(504, 729);
+            this.supplyInQuotationdataGridView.TabIndex = 28;
+            this.supplyInQuotationdataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyInQuotationdataGridView_CellMouseEnter);
+            this.supplyInQuotationdataGridView.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyInQuotationdataGridView_CellMouseLeave);
+            // 
+            // supplyInQuotationlabel
+            // 
+            this.supplyInQuotationlabel.AutoSize = true;
+            this.supplyInQuotationlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.supplyInQuotationlabel.Location = new System.Drawing.Point(816, 14);
+            this.supplyInQuotationlabel.Name = "supplyInQuotationlabel";
+            this.supplyInQuotationlabel.Size = new System.Drawing.Size(192, 20);
+            this.supplyInQuotationlabel.TabIndex = 29;
+            this.supplyInQuotationlabel.Text = "รายการวัสดุในโควเทชั่นที่เลือก";
+            // 
+            // quotationPDFlinkLabel
+            // 
+            this.quotationPDFlinkLabel.AutoSize = true;
+            this.quotationPDFlinkLabel.Location = new System.Drawing.Point(1199, 19);
+            this.quotationPDFlinkLabel.Name = "quotationPDFlinkLabel";
+            this.quotationPDFlinkLabel.Size = new System.Drawing.Size(125, 13);
+            this.quotationPDFlinkLabel.TabIndex = 30;
+            this.quotationPDFlinkLabel.TabStop = true;
+            this.quotationPDFlinkLabel.Text = "ดูเอกสารโควเทชั่นที่เลือก";
             // 
             // AllQuotationListForm
             // 
@@ -116,6 +164,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.Controls.Add(this.quotationPDFlinkLabel);
+            this.Controls.Add(this.supplyInQuotationlabel);
+            this.Controls.Add(this.supplyInQuotationdataGridView);
             this.Controls.Add(this.supplierComboBox);
             this.Controls.Add(this.searchQuotationTextBox);
             this.Controls.Add(this.SearchLabel);
@@ -130,6 +181,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "รายการใบเสนอราคาทั้งหมด";
             ((System.ComponentModel.ISupportInitialize)(this.quotationDatagridview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.supplyInQuotationdataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -144,5 +196,8 @@
         private System.Windows.Forms.Button EditButton;
         private System.Windows.Forms.Button CreateButton;
         private System.Windows.Forms.DataGridView quotationDatagridview;
+        private System.Windows.Forms.DataGridView supplyInQuotationdataGridView;
+        private System.Windows.Forms.Label supplyInQuotationlabel;
+        private System.Windows.Forms.LinkLabel quotationPDFlinkLabel;
     }
 }

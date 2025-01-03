@@ -178,7 +178,7 @@ WHERE sb.ID = @id;";
             }
         }
 
-        public static List<SupplyBalance> GetAllSupplyBalanceList(int supplyID)
+        public static List<SupplyBalance> GetAllSupplyBalanceList()
         {
             MySqlConnection conn = null;
             List<SupplyBalance> sbList = new List<SupplyBalance>();
@@ -189,14 +189,14 @@ WHERE sb.ID = @id;";
                 using (var cmd = conn.CreateCommand())
                 {
                     string selectAll = @"SELECT
-sb.ID AS SupplyBalanceID, sb.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto,
+sb.ID AS SupplyBalanceID, sb.WarehouseID, sb.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto,
 s.SupplyTypeID, st.TypeName, sb.Balance, sb.UpdateDate, sb.Updater
 FROM SupplyBalance sb
 LEFT JOIN Supply s ON sb.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
-WHERE sb.SupplyID = @sid;";
+WHERE sb.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
-                    cmd.Parameters.AddWithValue("@sid", supplyID);
+                    cmd.Parameters.AddWithValue("@whid", GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
