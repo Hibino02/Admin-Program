@@ -319,6 +319,12 @@
     <Compile Include="SupplyManagement\UIClass\QuotationManage\CreateQuotationForm.Designer.cs">
       <DependentUpon>CreateQuotationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplyManagement\UIClass\QuotationManage\EditQuotationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\QuotationManage\EditQuotationForm.Designer.cs">
+      <DependentUpon>EditQuotationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SupplyManagement\UIClass\SupplierManage\AllSupplierListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -484,6 +490,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\QuotationManage\CreateQuotationForm.resx">
       <DependentUpon>CreateQuotationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\QuotationManage\EditQuotationForm.resx">
+      <DependentUpon>EditQuotationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\SupplierManage\AllSupplierListForm.resx">
       <DependentUpon>AllSupplierListForm.cs</DependentUpon>

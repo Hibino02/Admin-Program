@@ -16,8 +16,8 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
     {
         MainBackGroundFrom main;
         CreateQuotationForm createQuotation;
+        EditQuotationForm editQuotation;
 
-        private ToolTip quotationPDFTooltips;
         private string quotationPDF;
 
         private PictureBox supplyInQuotationPictureBox;
@@ -30,6 +30,8 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
 
         BindingSource supplyInQuotationBindingSource;
         List<AllSupplyInQuotationListDataGridView> supplyInQuotationViewList = new List<AllSupplyInQuotationListDataGridView>();
+
+        List<AllSupplyInQuotationListDataGridView> filteredList = new List<AllSupplyInQuotationListDataGridView>();
         //Filter algorithm variable
         private List<AllQuotationListDataGridView> originalList;
         List<AllQuotationListDataGridView> quotationFilteredList;
@@ -46,13 +48,6 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
 
             quotationBindingSource = new BindingSource();
             supplyInQuotationBindingSource = new BindingSource();
-
-            //--------------------------------------------------------------------------------//
-            //quotationPDF Tooltips
-            quotationPDFTooltips = new ToolTip();
-            quotationPDFTooltips.InitialDelay = 0;
-            quotationPDFTooltips.ReshowDelay = 0;
-            quotationPDFTooltips.AutoPopDelay = 5000;
 
             //Create hidden picturebox
             supplyInQuotationPictureBox = new PictureBox
@@ -103,7 +98,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
         private void UpdateSupplyInQuotationList(int qid)
         {
             // Filter or fetch data for the selected quotation ID
-            List<AllSupplyInQuotationListDataGridView> filteredList = supplyInQuotationViewList
+            filteredList = supplyInQuotationViewList
                 .Where(s => s.QuotationID == qid) // Filter by QuotationID
                 .ToList();
 
@@ -140,7 +135,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
             }
             if (Columns["QuotationNumber"] != null)
             {
-                Columns["QuotationNumber"].HeaderText = "เลขที่โควเทชั่น";
+                Columns["QuotationNumber"].HeaderText = "เลขที่ใบเสนอราคา";
                 Columns["QuotationNumber"].Width = 200;
                 Columns["QuotationNumber"].SortMode = DataGridViewColumnSortMode.Automatic;
             }
@@ -253,6 +248,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
                 DataGridViewRow selectedRow = quotationDatagridview.Rows[e.RowIndex];
 
                 int quotationID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+                quotationPDF = selectedRow.Cells["QuotationPDF"].Value.ToString();
                 UpdateSupplyInQuotationList(quotationID);
 
                 // Update link label colors based on file existence
@@ -260,6 +256,22 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
                 {
                     quotationPDFlinkLabel.LinkColor = System.Drawing.Color.Purple;
                 }
+                else
+                {
+                    quotationPDFlinkLabel.LinkColor = System.Drawing.Color.Blue;
+                }
+            }
+        }
+        //Open Quotation PDF
+        private void quotationPDFlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(quotationPDF))
+            {
+                Global.DownloadAndOpenPdf(quotationPDF);
+            }
+            else
+            {
+                MessageBox.Show("ไม่มีไฟล์บันทึก");
             }
         }
         //Event to show supply picturebox
@@ -293,6 +305,49 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
             createQuotation.Owner = main;
             createQuotation.ShowDialog();
             UpdateQuotationList();
+            supplyInQuotationViewList = AllSupplyInQuotationListDataGridView.allSupplyInQuotation();
+        }
+        //Edit quotation
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            Global.ID = -1;
+            DataGridViewRow selectedRow = quotationDatagridview.CurrentRow;
+            if(selectedRow != null)
+            {
+                Global.ID = (int)selectedRow.Cells["ID"].Value;
+                editQuotation = new EditQuotationForm();
+                editQuotation.Owner = main;
+                editQuotation.ShowDialog();
+                UpdateQuotationList();
+                supplyInQuotationViewList = AllSupplyInQuotationListDataGridView.allSupplyInQuotation();
+            }
+        }
+        //Remove quotation and supply
+        private void RemoveButton_Click(object sender, EventArgs e)
+        {
+            Global.ID = -1;
+            DataGridViewRow selectedRow = quotationDatagridview.CurrentRow;
+            if(selectedRow != null)
+            {
+                DialogResult result = MessageBox.Show("คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้", "ยืนยันการลบ", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(result == DialogResult.Yes)
+                {
+                    int id = (int)selectedRow.Cells["ID"].Value;
+                    Quotation q = new Quotation(id);
+                    if (SupplyInQuotation.Remove(id))
+                    {
+                        MessageBox.Show("ลบรายการวัสดุทั้งหมด ในใบเสนอราคา");
+                        if (!string.IsNullOrEmpty(q.QuotationPDF))
+                        {
+                            Global.DeleteFileFromFtpSupply(q.QuotationPDF);
+                        }
+                        q.Remove();
+                        MessageBox.Show("ลบใบเสนอราคา สมบูรณ์");
+                        UpdateQuotationList();
+                        supplyInQuotationViewList = AllSupplyInQuotationListDataGridView.allSupplyInQuotation();
+                    }          
+                }
+            }
         }
     }
 }

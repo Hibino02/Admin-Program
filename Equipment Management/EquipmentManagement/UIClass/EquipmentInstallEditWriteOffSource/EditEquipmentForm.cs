@@ -373,7 +373,6 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
                 {
                     acquisitionDocumentPath = openFileDialog.FileName;
                     invoiceLinkLabel.LinkColor = System.Drawing.Color.Purple;
-                    SaveAcquisitionDocument();
                 }
             }
         }
@@ -509,17 +508,17 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
             edit.InsDate = installationDateTimePicker.Value;
             if (isComplete)
             {
-                if (!string.IsNullOrEmpty(equipmentPhotoPath))
+                if (equipmentPhotoPath != oldEquipmentPhotoPath)
                 {
                     SaveEquipmentPhoto();
                     edit.EPhotoPath = equipmentPhotoPath;
                 }
-                if (!string.IsNullOrEmpty(installationPlacePhotoPath))
+                if (installationPlacePhotoPath != oldInstallationPlacePhotoPath)
                 {
                     SaveInstallationPlacePhoto();
                     edit.OPlacePhotoPath = installationPlacePhotoPath;
                 }
-                if (!string.IsNullOrEmpty(acquisitionDocumentPath))
+                if (acquisitionDocumentPath != oldAcquisitionDocumentPath)
                 {
                     SaveAcquisitionDocument();
                     edit.EDocumentPath = acquisitionDocumentPath;

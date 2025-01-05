@@ -54,7 +54,7 @@ WHERE q.ID = @id;";
                             string sname = reader["SupplierName"].ToString();
                             string saddress = reader["SupplierAddress"].ToString();
                             int swhid = Convert.ToInt32(reader["SWHID"]);
-                            Supplier s = new Supplier(sid, sname, saddress, swhid);
+                            supplier = new Supplier(sid, sname, saddress, swhid);
 
                             quotationnumber = reader["QuotationNumber"].ToString();
                             issuedate = Convert.ToDateTime(reader["IssueDate"]);
@@ -105,12 +105,18 @@ WHERE q.ID = @id;";
         public bool Create()
         {
             MySqlConnection conn = null;
+            MySqlTransaction transaction = null;
             try
             {
                 conn = new MySqlConnection(connstr);
                 conn.Open();
+
+                transaction = conn.BeginTransaction();
+
                 using (var cmd = conn.CreateCommand())
                 {
+                    cmd.Transaction = transaction;
+
                     string insert = "INSERT INTO Quotation (ID, SupplierID, QuotationNumber, IssueDate, ValidDate, HasValidDate, QuotationPDF, WarehouseID) VALUES (NULL, @supplierid, @quotationnumber, @issuedate, @validdate, @hasvaliddate, @quotationpdf, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@supplierid", supplier.ID);
@@ -128,11 +134,29 @@ WHERE q.ID = @id;";
                     cmd.Parameters.AddWithValue("@quotationpdf", quotationpdf);
                     cmd.Parameters.AddWithValue("@whid",warehouseID);
                     cmd.ExecuteNonQuery();
+
+                    //Retrieve last inserted ID in this transaction
+                    cmd.CommandText = "SELECT LAST_INSERT_ID();";
+                    object result = cmd.ExecuteScalar();
+                    if(result != null)
+                    {
+                        GlobalVariable.Global.ID = -1;
+                        GlobalVariable.Global.ID = Convert.ToInt32(result);
+                    }
+                    // Commit the transaction
+                    transaction.Commit();
                 }
                 return true;
             }
             catch (MySqlException e)
             {
+                // Rollback the transaction in case of error
+                if (transaction != null)
+                {
+                    transaction.Rollback();
+                }
+                // Log the error
+                Console.WriteLine("MySQL Error: " + e.Message);
                 return false;
             }
             finally

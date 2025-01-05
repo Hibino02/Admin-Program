@@ -313,9 +313,12 @@ namespace Admin_Program.UIClass.Job
         //Save PDF file to folder --------------------------------------------------------------------------------
         private void SaveJobDocument()
         {
-            if (!string.IsNullOrEmpty(jobDocumentPath))
+            if (!string.IsNullOrEmpty(oldJobDocumentPath))
             {
                 Global.DeleteFileFromFtp(oldJobDocumentPath);
+            }
+            if (!string.IsNullOrEmpty(jobDocumentPath))
+            {
                 Global.Directory = "CreatedJobDocument";
                 Global.SaveFileToServer(jobDocumentPath);
                 Global.Directory = null;
@@ -349,9 +352,12 @@ namespace Admin_Program.UIClass.Job
         //Save photo into folder
         private void SaveEquipmentPhoto()
         {
-            if (!string.IsNullOrEmpty(repairEquipmentPhotoPath))
+            if (!string.IsNullOrEmpty(oldRepairEquipmentPhotoPath))
             {
                 Global.DeleteFileFromFtp(oldRepairEquipmentPhotoPath);
+            }
+            if(!string.IsNullOrEmpty(repairEquipmentPhotoPath))
+            {
                 Global.Directory = "CreatedJobEquipmentPhoto";
                 Global.SaveFileToServer(repairEquipmentPhotoPath);
                 Global.Directory = null;
@@ -417,8 +423,15 @@ namespace Admin_Program.UIClass.Job
                 ShowCustomMessageBox("กรุณาระบุชื่อผู้แจ้ง");
                 return false;
             }
-            SaveEquipmentPhoto();
-            SaveJobDocument();
+            if(oldJobDocumentPath != jobDocumentPath)
+            {
+                SaveJobDocument();
+            }
+            if(oldRepairEquipmentPhotoPath != repairEquipmentPhotoPath)
+            {
+                SaveEquipmentPhoto();
+            }  
+            
             editJob.Reporter = reporterNameTextBox.Text;
             editJob.RDate = reportDateTimePicker.Value;
             editJob.JTypeReason = reasdonToChoserepairRichTextBox.Text;

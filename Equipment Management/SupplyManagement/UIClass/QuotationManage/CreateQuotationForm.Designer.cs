@@ -34,14 +34,14 @@
             this.supplierAddressLabel = new System.Windows.Forms.Label();
             this.supplierAddressrichTextBox = new System.Windows.Forms.RichTextBox();
             this.quotationNumberlabel = new System.Windows.Forms.Label();
-            this.supplyNameTextBox = new System.Windows.Forms.TextBox();
+            this.quotationNumberTextBox = new System.Windows.Forms.TextBox();
             this.issueDatelabel = new System.Windows.Forms.Label();
             this.validDatelabel = new System.Windows.Forms.Label();
             this.issuedateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.validdateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.hasValidDatecheckBox = new System.Windows.Forms.CheckBox();
             this.attachQuotationButton = new System.Windows.Forms.Button();
-            this.PhotoURLtextBox = new System.Windows.Forms.TextBox();
+            this.pdfURLtextBox = new System.Windows.Forms.TextBox();
             this.quotationlinkLabel = new System.Windows.Forms.LinkLabel();
             this.supplyListlabel = new System.Windows.Forms.Label();
             this.supplyDatagridview = new System.Windows.Forms.DataGridView();
@@ -54,7 +54,7 @@
             this.supplyInQuotationlabel = new System.Windows.Forms.Label();
             this.supplyInQuotationdataGridView = new System.Windows.Forms.DataGridView();
             this.removeSupplybutton = new System.Windows.Forms.Button();
-            this.editSupplierButton = new System.Windows.Forms.Button();
+            this.createQuotationbutton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.supplyDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInQuotationdataGridView)).BeginInit();
             this.SuspendLayout();
@@ -85,8 +85,9 @@
             this.CreateSupplierButton.Name = "CreateSupplierButton";
             this.CreateSupplierButton.Size = new System.Drawing.Size(138, 31);
             this.CreateSupplierButton.TabIndex = 32;
-            this.CreateSupplierButton.Text = "สร้างซัพพลายเออร์";
+            this.CreateSupplierButton.Text = "จัดการซัพพลายเออร์";
             this.CreateSupplierButton.UseVisualStyleBackColor = true;
+            this.CreateSupplierButton.Click += new System.EventHandler(this.CreateSupplierButton_Click);
             // 
             // supplierAddressLabel
             // 
@@ -117,13 +118,13 @@
             this.quotationNumberlabel.TabIndex = 35;
             this.quotationNumberlabel.Text = "เลขที่ใบเสนอราคา :";
             // 
-            // supplyNameTextBox
+            // quotationNumberTextBox
             // 
-            this.supplyNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.supplyNameTextBox.Location = new System.Drawing.Point(133, 148);
-            this.supplyNameTextBox.Name = "supplyNameTextBox";
-            this.supplyNameTextBox.Size = new System.Drawing.Size(153, 26);
-            this.supplyNameTextBox.TabIndex = 36;
+            this.quotationNumberTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.quotationNumberTextBox.Location = new System.Drawing.Point(133, 148);
+            this.quotationNumberTextBox.Name = "quotationNumberTextBox";
+            this.quotationNumberTextBox.Size = new System.Drawing.Size(153, 26);
+            this.quotationNumberTextBox.TabIndex = 36;
             // 
             // issueDatelabel
             // 
@@ -168,6 +169,7 @@
             this.hasValidDatecheckBox.TabIndex = 41;
             this.hasValidDatecheckBox.Text = "จนกว่าจะแจ้งให้ทราบ";
             this.hasValidDatecheckBox.UseVisualStyleBackColor = true;
+            this.hasValidDatecheckBox.CheckedChanged += new System.EventHandler(this.hasValidDatecheckBox_CheckedChanged);
             // 
             // attachQuotationButton
             // 
@@ -177,16 +179,17 @@
             this.attachQuotationButton.TabIndex = 42;
             this.attachQuotationButton.Text = "แนบใบเสนอราคา";
             this.attachQuotationButton.UseVisualStyleBackColor = true;
+            this.attachQuotationButton.Click += new System.EventHandler(this.attachQuotationButton_Click);
             // 
-            // PhotoURLtextBox
+            // pdfURLtextBox
             // 
-            this.PhotoURLtextBox.Enabled = false;
-            this.PhotoURLtextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.PhotoURLtextBox.Location = new System.Drawing.Point(162, 228);
-            this.PhotoURLtextBox.Name = "PhotoURLtextBox";
-            this.PhotoURLtextBox.ReadOnly = true;
-            this.PhotoURLtextBox.Size = new System.Drawing.Size(394, 26);
-            this.PhotoURLtextBox.TabIndex = 43;
+            this.pdfURLtextBox.Enabled = false;
+            this.pdfURLtextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.pdfURLtextBox.Location = new System.Drawing.Point(162, 228);
+            this.pdfURLtextBox.Name = "pdfURLtextBox";
+            this.pdfURLtextBox.ReadOnly = true;
+            this.pdfURLtextBox.Size = new System.Drawing.Size(394, 26);
+            this.pdfURLtextBox.TabIndex = 43;
             // 
             // quotationlinkLabel
             // 
@@ -197,6 +200,7 @@
             this.quotationlinkLabel.TabIndex = 44;
             this.quotationlinkLabel.TabStop = true;
             this.quotationlinkLabel.Text = "ดูไฟล์แนบ";
+            this.quotationlinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.quotationlinkLabel_LinkClicked);
             // 
             // supplyListlabel
             // 
@@ -222,6 +226,7 @@
             this.supplyDatagridview.RowHeadersVisible = false;
             this.supplyDatagridview.RowTemplate.Height = 24;
             this.supplyDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.supplyDatagridview.ShowCellToolTips = false;
             this.supplyDatagridview.Size = new System.Drawing.Size(607, 437);
             this.supplyDatagridview.TabIndex = 46;
             // 
@@ -272,6 +277,7 @@
             this.supplyPricetextBox.Name = "supplyPricetextBox";
             this.supplyPricetextBox.Size = new System.Drawing.Size(178, 26);
             this.supplyPricetextBox.TabIndex = 51;
+            this.supplyPricetextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.supplyPricetextBox_KeyPress);
             // 
             // addSupplybutton
             // 
@@ -307,8 +313,10 @@
             this.supplyInQuotationdataGridView.RowHeadersVisible = false;
             this.supplyInQuotationdataGridView.RowTemplate.Height = 24;
             this.supplyInQuotationdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.supplyInQuotationdataGridView.ShowCellToolTips = false;
             this.supplyInQuotationdataGridView.Size = new System.Drawing.Size(816, 437);
             this.supplyInQuotationdataGridView.TabIndex = 54;
+            this.supplyInQuotationdataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.supplyInQuotationdataGridView_DataBindingComplete);
             // 
             // removeSupplybutton
             // 
@@ -318,15 +326,19 @@
             this.removeSupplybutton.TabIndex = 55;
             this.removeSupplybutton.Text = "ลบ";
             this.removeSupplybutton.UseVisualStyleBackColor = true;
+            this.removeSupplybutton.Click += new System.EventHandler(this.removeSupplybutton_Click);
             // 
-            // editSupplierButton
+            // createQuotationbutton
             // 
-            this.editSupplierButton.Location = new System.Drawing.Point(625, 43);
-            this.editSupplierButton.Name = "editSupplierButton";
-            this.editSupplierButton.Size = new System.Drawing.Size(138, 31);
-            this.editSupplierButton.TabIndex = 56;
-            this.editSupplierButton.Text = "แก้ใขซัพพลายเออร์";
-            this.editSupplierButton.UseVisualStyleBackColor = true;
+            this.createQuotationbutton.BackColor = System.Drawing.SystemColors.Info;
+            this.createQuotationbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.createQuotationbutton.Location = new System.Drawing.Point(1314, 214);
+            this.createQuotationbutton.Name = "createQuotationbutton";
+            this.createQuotationbutton.Size = new System.Drawing.Size(138, 72);
+            this.createQuotationbutton.TabIndex = 56;
+            this.createQuotationbutton.Text = "สร้าง";
+            this.createQuotationbutton.UseVisualStyleBackColor = false;
+            this.createQuotationbutton.Click += new System.EventHandler(this.createQuotationbutton_Click);
             // 
             // CreateQuotationForm
             // 
@@ -334,7 +346,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 781);
-            this.Controls.Add(this.editSupplierButton);
+            this.Controls.Add(this.createQuotationbutton);
             this.Controls.Add(this.removeSupplybutton);
             this.Controls.Add(this.supplyInQuotationdataGridView);
             this.Controls.Add(this.supplyInQuotationlabel);
@@ -347,14 +359,14 @@
             this.Controls.Add(this.supplyDatagridview);
             this.Controls.Add(this.supplyListlabel);
             this.Controls.Add(this.quotationlinkLabel);
-            this.Controls.Add(this.PhotoURLtextBox);
+            this.Controls.Add(this.pdfURLtextBox);
             this.Controls.Add(this.attachQuotationButton);
             this.Controls.Add(this.hasValidDatecheckBox);
             this.Controls.Add(this.validdateTimePicker);
             this.Controls.Add(this.issuedateTimePicker);
             this.Controls.Add(this.validDatelabel);
             this.Controls.Add(this.issueDatelabel);
-            this.Controls.Add(this.supplyNameTextBox);
+            this.Controls.Add(this.quotationNumberTextBox);
             this.Controls.Add(this.quotationNumberlabel);
             this.Controls.Add(this.supplierAddressrichTextBox);
             this.Controls.Add(this.supplierAddressLabel);
@@ -382,14 +394,14 @@
         private System.Windows.Forms.Label supplierAddressLabel;
         private System.Windows.Forms.RichTextBox supplierAddressrichTextBox;
         private System.Windows.Forms.Label quotationNumberlabel;
-        private System.Windows.Forms.TextBox supplyNameTextBox;
+        private System.Windows.Forms.TextBox quotationNumberTextBox;
         private System.Windows.Forms.Label issueDatelabel;
         private System.Windows.Forms.Label validDatelabel;
         private System.Windows.Forms.DateTimePicker issuedateTimePicker;
         private System.Windows.Forms.DateTimePicker validdateTimePicker;
         private System.Windows.Forms.CheckBox hasValidDatecheckBox;
         private System.Windows.Forms.Button attachQuotationButton;
-        private System.Windows.Forms.TextBox PhotoURLtextBox;
+        private System.Windows.Forms.TextBox pdfURLtextBox;
         private System.Windows.Forms.LinkLabel quotationlinkLabel;
         private System.Windows.Forms.Label supplyListlabel;
         private System.Windows.Forms.DataGridView supplyDatagridview;
@@ -402,6 +414,6 @@
         private System.Windows.Forms.Label supplyInQuotationlabel;
         private System.Windows.Forms.DataGridView supplyInQuotationdataGridView;
         private System.Windows.Forms.Button removeSupplybutton;
-        private System.Windows.Forms.Button editSupplierButton;
+        private System.Windows.Forms.Button createQuotationbutton;
     }
 }

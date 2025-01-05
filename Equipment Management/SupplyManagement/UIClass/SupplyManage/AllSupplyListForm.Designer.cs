@@ -52,6 +52,7 @@
             this.SupplyInventoryDatagridview.RowHeadersVisible = false;
             this.SupplyInventoryDatagridview.RowTemplate.Height = 24;
             this.SupplyInventoryDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.SupplyInventoryDatagridview.ShowCellToolTips = false;
             this.SupplyInventoryDatagridview.Size = new System.Drawing.Size(1310, 730);
             this.SupplyInventoryDatagridview.TabIndex = 8;
             this.SupplyInventoryDatagridview.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.SupplyInventoryDatagridview_CellMouseEnter);

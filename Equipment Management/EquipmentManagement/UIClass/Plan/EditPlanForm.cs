@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using Admin_Program.ObjectClass;
 using System.Windows.Forms;
-using Admin_Program.CustomViewClass;
 using Admin_Program.GlobalVariable;
 using Admin_Program.UIClass.CreateWindowComponent;
 using Admin_Program.CustomWindowComponents;
@@ -19,7 +18,6 @@ namespace Admin_Program.UIClass.Plan
 
         List<PlanPeriod> planPeriodList;
 
-        AllEquipmentView equipmentToEdit;
         PlanPeriod planPeriodToCreatePlan;
         ObjectClass.Plan ePlan;
 

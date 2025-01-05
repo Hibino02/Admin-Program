@@ -125,7 +125,6 @@ namespace Admin_Program.UIClass.Job
                 {
                     workPermitDocumentPath = openFileDialog.FileName;
                     workPermitDocLinkLabel.LinkColor = System.Drawing.Color.Purple;
-                    SaveWorkPermitDocument();
                 }
             }
         }
@@ -142,7 +141,6 @@ namespace Admin_Program.UIClass.Job
                 {
                     contractDocumentPath = openFileDialog.FileName;
                     contractLinkLabel.LinkColor = System.Drawing.Color.Purple;
-                    SaveContractDocument();
                 }
             }
         }
@@ -159,7 +157,6 @@ namespace Admin_Program.UIClass.Job
                 Global.SaveFileToServer(workPermitDocumentPath);
                 Global.Directory = null;
                 workPermitDocumentPath = Global.TargetFilePath;
-                oldWorkPermitDocumentPath = workPermitDocumentPath;
             }
         }
         private void SaveContractDocument()
@@ -174,7 +171,6 @@ namespace Admin_Program.UIClass.Job
                 Global.SaveFileToServer(contractDocumentPath);
                 Global.Directory = null;
                 contractDocumentPath = Global.TargetFilePath;
-                oldContractDocumentPath = contractDocumentPath;
             }
         }
         
@@ -228,6 +224,14 @@ namespace Admin_Program.UIClass.Job
             else if (costFromtextBox < 0)
             {
                 costFromtextBox = 0;
+            }
+            if(oldContractDocumentPath != contractDocumentPath)
+            {
+                SaveContractDocument();
+            }
+            if (oldWorkPermitDocumentPath != workPermitDocumentPath)
+            {
+                SaveWorkPermitDocument();
             }
             return true;
         }

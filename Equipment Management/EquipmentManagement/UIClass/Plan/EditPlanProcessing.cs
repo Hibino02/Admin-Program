@@ -342,7 +342,6 @@ namespace Admin_Program.UIClass.Plan
                 {
                     workpermitProcessPath = openFileDialog.FileName;
                     pworkpermitlinkLabel.LinkColor = System.Drawing.Color.Purple;
-                    SaveWorkPermitPlanProcessingDocument();
                 }
             }
         }
@@ -381,7 +380,6 @@ namespace Admin_Program.UIClass.Plan
                 Global.SaveFileToServer(workpermitProcessPath);
                 Global.Directory = null;
                 workpermitProcessPath = Global.TargetFilePath;
-                oldWorkpermitProcessPath = workpermitProcessPath;
             }
         }
         private void SaveContractPhoto()
@@ -435,13 +433,14 @@ namespace Admin_Program.UIClass.Plan
             {
                 cost = 0;
             }
-            if (!string.IsNullOrEmpty(photoContractPath))
+            if (oldPhotoContractPath != photoContractPath)
             {
                 SaveContractPhoto();
                 editPP.Contract = photoContractPath;
             }
-            if (!string.IsNullOrEmpty(workpermitProcessPath))
+            if (oldWorkpermitProcessPath != workpermitProcessPath)
             {
+                SaveWorkPermitPlanProcessingDocument();
                 editPP.WorkPermit = workpermitProcessPath;
             }
             return true;

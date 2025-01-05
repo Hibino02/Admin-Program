@@ -97,11 +97,12 @@ WHERE siq.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO SupplyInQuotation (ID, QuotationID, SupplyID, Price) VALUES (NULL, @qid, @sid, @price)";
+                    string insert = "INSERT INTO SupplyInQuotation (ID, QuotationID, SupplyID, Price, WarehouseID) VALUES (NULL, @qid, @sid, @price, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@qid", quotationid);
                     cmd.Parameters.AddWithValue("@sid", supply.ID);
                     cmd.Parameters.AddWithValue("@price", price);
+                    cmd.Parameters.AddWithValue("@whid", GlobalVariable.Global.warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -146,7 +147,7 @@ WHERE siq.ID = @id;";
                     conn.Close();
             }
         }
-        public bool Remove()
+        public static bool Remove(int qid)
         {
             MySqlConnection conn = null;
             try
@@ -155,9 +156,9 @@ WHERE siq.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string delete = "DELETE FROM SupplyInQuotation WHERE ID = @id";
+                    string delete = "DELETE FROM SupplyInQuotation WHERE QuotationID = @id";
                     cmd.CommandText = delete;
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@id", qid);
                     cmd.ExecuteNonQuery();
                 }
                 return true;

@@ -11,13 +11,10 @@ using System.Windows.Forms;
 
 namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
 {
-    public partial class CreateQuotationForm : Form
+    public partial class EditQuotationForm : Form
     {
         MainBackGroundFrom main;
         AllSupplierListForm manageSupplier;
-        //Attribute for create Quotation
-        Supplier supplier;
-        DateTime? validDate;
 
         List<Supplier> supplierList;
         private List<int> supplierIDList = new List<int>();
@@ -28,27 +25,34 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
         private PictureBox supplyPictureBox;
         private PictureBox selectedSupplyPictureBox;
 
-        string quotationPDF;
+        Quotation editQuotation;
+        Supplier supplier;
+        DateTime? validDate;
         //Supply
         BindingSource supplyBindingSource;
         List<AllSupplyListDataGridView> supplyViewList;
         //Selected supply
         BindingSource selectedSupplyBindingSource;
-        List<AllSupplyInQuotationListDataGridView> selectedSupplyViewList;
+        List<AllSupplyInQuotationListDataGridView> selectedSupplyViewList = new List<AllSupplyInQuotationListDataGridView>();
+        List<AllSupplyInQuotationListDataGridView> oldselectedSupplyViewList = new List<AllSupplyInQuotationListDataGridView>();
         //Filter algorithm
         List<AllSupplyListDataGridView> originalSupplyViewList;
         List<AllSupplyListDataGridView> supplyTypeFilteredList;
         int currentSupplyTypeFilterID = -1;
 
-        public CreateQuotationForm()
+        string oldQuotationPDF;
+        string QuotationPDF;
+
+        public EditQuotationForm()
         {
             InitializeComponent();
             this.Size = new Size(1480, 820);
 
+            editQuotation = new Quotation(Global.ID);
             supplyViewList = new List<AllSupplyListDataGridView>();
             supplyBindingSource = new BindingSource();
 
-            selectedSupplyViewList = new List<AllSupplyInQuotationListDataGridView>();
+            selectedSupplyViewList = AllSupplyInQuotationListDataGridView.allSupplyInQuotation();
             selectedSupplyBindingSource = new BindingSource();
 
             //Create hidden picturebox
@@ -76,10 +80,10 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
             supplyInQuotationdataGridView.CellMouseEnter += supplyInQuotationdataGridView_CellMouseEnter;
             supplyInQuotationdataGridView.CellMouseLeave += supplyInQuotationdataGridView_CellMouseLeave;
 
-            hasValidDatecheckBox.CheckedChanged += hasValidDatecheckBox_CheckedChanged;
-
             UpdateComponents();
             UpdateSupplyList();
+            SetCurrentQuotation();
+            UpdateSelectedSupplyList();
         }
 
         private void UpdateComponents()
@@ -88,7 +92,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
             supplierList.Sort((x, y) => x.Name.CompareTo(y.Name));
             supplierComboBox.Items.Clear();
             supplierIDList.Clear();
-            foreach(Supplier s in supplierList)
+            foreach (Supplier s in supplierList)
             {
                 supplierComboBox.Items.Add(s.Name);
                 supplierIDList.Add(s.ID);
@@ -106,7 +110,82 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
                 supplyTypeIDList.Add(st.ID);
             }
         }
-        //Event to update supplier address refer to supplier combobox
+        private void SetCurrentQuotation()
+        {
+            supplierComboBox.Text = editQuotation.Supplier.Name;
+            supplierAddressrichTextBox.Text = editQuotation.Supplier.Address;
+            quotationNumberTextBox.Text = editQuotation.QuotationNumber;
+            issuedateTimePicker.Value = editQuotation.IssueDate;
+            if(editQuotation.HasValidDate)
+            {
+                hasValidDatecheckBox.Checked = false;
+                validdateTimePicker.Value = editQuotation.ValidDate.Value;
+                
+            }
+            else
+            {
+                hasValidDatecheckBox.Checked = true;
+                validdateTimePicker.Enabled = false;
+            }
+            if (!string.IsNullOrEmpty(editQuotation.QuotationPDF))
+            {
+                pdfURLtextBox.Text = editQuotation.QuotationPDF;
+                quotationlinkLabel.LinkColor = System.Drawing.Color.Purple;
+            }
+            QuotationPDF = editQuotation.QuotationPDF;
+            oldQuotationPDF = editQuotation.QuotationPDF;
+            UpdateSupplyInQuotationList(editQuotation.ID);
+        }
+        //Get PDF from user
+        private void attachQuotationButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = false;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    QuotationPDF = openFileDialog.FileName;
+                    quotationlinkLabel.LinkColor = System.Drawing.Color.Purple;
+                    pdfURLtextBox.Text = QuotationPDF;
+                }
+            }
+        }
+        //Save photo & documents into folder
+        private void SaveQuotationPDF()
+        {
+            if (!string.IsNullOrEmpty(oldQuotationPDF))
+            {
+                Global.DeleteFileFromFtpSupply(oldQuotationPDF);
+            }
+            if (!string.IsNullOrEmpty(QuotationPDF))
+            {
+                Global.Directory = "QuotationPDF";
+                Global.SaveFileToServerSupply(QuotationPDF);
+                Global.Directory = null;
+                QuotationPDF = Global.TargetFilePath;
+            }
+        }
+        //Event to open QuotationPDF
+        private void quotationlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(QuotationPDF))
+            {
+                Global.DownloadAndOpenPdf(QuotationPDF);
+            }
+        }
+        //Manage Supplier
+        private void CreateSupplierButton_Click(object sender, EventArgs e)
+        {
+            manageSupplier = new AllSupplierListForm();
+            manageSupplier.Owner = main;
+            manageSupplier.ShowDialog();
+            UpdateComponents();
+        }
+        //Evett to update supplier refer to supplier combo box
         private void supplierComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (supplierComboBox.SelectedIndex >= 0)
@@ -152,7 +231,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
         }
         private void FormatSupplyDataGridView()
         {
-            if(supplyDatagridview.Columns["ID"] != null)
+            if (supplyDatagridview.Columns["ID"] != null)
             {
                 supplyDatagridview.Columns["ID"].Visible = false;
             }
@@ -218,6 +297,16 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
             }
         }
         //Selected supply mechanic
+        private void UpdateSupplyInQuotationList(int qid)
+        {
+            // Filter or fetch data for the selected quotation ID
+            List<AllSupplyInQuotationListDataGridView> filteredList = selectedSupplyViewList
+                .Where(s => s.QuotationID == qid) // Filter by QuotationID
+                .ToList();
+
+            selectedSupplyViewList = filteredList;
+            oldselectedSupplyViewList = filteredList;
+        }
         private void UpdateSelectedSupplyList()
         {
             supplyInQuotationdataGridView.DataSource = null;
@@ -265,14 +354,6 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
                 customColumn.Width = 50;
             }
         }
-        //Automatically select first row
-        private void supplyInQuotationdataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            if (supplyInQuotationdataGridView.Rows.Count > 0)
-            {
-                supplyInQuotationdataGridView.CurrentCell = supplyInQuotationdataGridView.Rows[0].Cells[3];
-            }
-        }
         //Event to add suppy to Quotation
         private void addSupplybutton_Click(object sender, EventArgs e)
         {
@@ -304,7 +385,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
         }
         private void supplyPricetextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if(e.KeyChar == (char)Keys.Enter)
+            if (e.KeyChar == (char)Keys.Enter)
             {
                 DataGridViewRow selectedRow = supplyDatagridview.CurrentRow;
 
@@ -354,149 +435,13 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
                 UpdateSelectedSupplyList();
             }
         }
-        //Event to close & open valid date
-        private void hasValidDatecheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (hasValidDatecheckBox.Checked)
-            {
-                validdateTimePicker.Enabled = false;
-            }
-            else
-            {
-                validdateTimePicker.Enabled = true;
-            }
-        }
-        //Create supplier
-        private void CreateSupplierButton_Click(object sender, EventArgs e)
-        {
-            manageSupplier = new AllSupplierListForm();
-            manageSupplier.Owner = main;
-            manageSupplier.ShowDialog();
-            UpdateComponents();
-        }
-        //Event to get pdf
-        private void attachQuotationButton_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
-                openFileDialog.FilterIndex = 1;
-                openFileDialog.RestoreDirectory = false;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    quotationPDF = openFileDialog.FileName;
-                    quotationlinkLabel.LinkColor = System.Drawing.Color.Purple;
-                    pdfURLtextBox.Text = quotationPDF;
-                }
-            }
-        }
-        //Save photo & documents into server
-        private void SaveQuotationPDF()
-        {
-            if (!string.IsNullOrEmpty(quotationPDF))
-            {
-                Global.Directory = "QuotationPDF";
-                Global.SaveFileToServerSupply(quotationPDF);
-                Global.Directory = null;
-                quotationPDF = Global.TargetFilePath;
-            }
-        }
-        //Checking
-        private bool CheckAttributeForCreateQuotation()
-        {
-            int selectSupplierIndex = supplierComboBox.SelectedIndex;
-            if(selectSupplierIndex >= 0 && selectSupplierIndex < supplierIDList.Count)
-            {
-                int selectedSupplierID = supplierIDList[selectSupplierIndex];
-                supplier = new Supplier(selectedSupplierID);
-            }
-            else
-            {
-                MessageBox.Show("กรุณาเลือก ซัพพลายเออร์");
-                return false;
-            }
-            if (string.IsNullOrEmpty(quotationNumberTextBox.Text))
-            {
-                MessageBox.Show("กรุณาระบุ เลขที่ใบเสนอราคา");
-                return false;
-            }
-            if(validdateTimePicker.Enabled == false)
-            {
-                validDate = null;
-            }
-            else
-            {
-                validDate = validdateTimePicker.Value;
-            }
-            if (!string.IsNullOrEmpty(quotationPDF))
-            {
-                SaveQuotationPDF();
-            }
-            return true;
-        }
-        private bool CheckAttributeForSupplyInQuotation()
-        {
-            if(selectedSupplyViewList.Count == 0)
-            {
-                MessageBox.Show("กรุณาเลือกวัสดุ อย่างน้อย 1 รายการ");
-                return false;
-            }
-            return true;
-        }
-        //Create Quotation
-        private void createQuotationbutton_Click(object sender, EventArgs e)
-        {
-            if (CheckAttributeForCreateQuotation() && CheckAttributeForSupplyInQuotation())
-            {
-                Quotation newQ = new Quotation(Global.warehouseID,supplier,quotationNumberTextBox.Text,issuedateTimePicker.Value
-                    ,validdateTimePicker.Enabled,quotationPDF, validDate);
-                if (newQ.Create())
-                {
-                    foreach (AllSupplyInQuotationListDataGridView siqView in selectedSupplyViewList)
-                    {
-                        Supply s = new Supply(siqView.SupplyID);
-                        if (!s.IsActive)
-                        {
-                            s.IsActive = true;
-                            MessageBox.Show("เปลี่ยนสถานะ วัสดุเป็นกำลังใช้งาน");
-                        }
-                        SupplyInQuotation siq = new SupplyInQuotation(Global.ID, s, siqView.Price);
-                        if (!siq.Create())
-                        {
-                            MessageBox.Show("การสร้างซัพพลาย รายการ : " + siq.Supply + " ไอดี : " + siq.ID + " ล้มเหลว");
-                        }
-                    }
-                    MessageBox.Show("สร้างใบเสนอราคา สมบูรณ์");
-                    Close();
-                }
-                else
-                {
-                    MessageBox.Show("สร้างใบเสนอราคา ล้มเหลว");
-                    Global.DeleteFileFromFtpSupply(quotationPDF);
-                }
-            }
-        }
-        //Open Quotation PDF
-        private void quotationlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(quotationPDF))
-            {
-                System.Diagnostics.Process.Start(quotationPDF);
-            }
-            else
-            {
-                MessageBox.Show("ไม่มีไฟล์บันทึก");
-            }
-        }
         //Event to show Hidden PictureBox
         private void supplyDatagridview_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.RowIndex >= 0)
+            if (e.RowIndex >= 0)
             {
                 string columnName = supplyDatagridview.Columns[e.ColumnIndex].Name;
-                if(columnName == "SupplyPhoto")
+                if (columnName == "SupplyPhoto")
                 {
                     string imagePath = supplyDatagridview[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
                     if (string.IsNullOrEmpty(imagePath))
@@ -516,10 +461,10 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
         }
         private void supplyInQuotationdataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.RowIndex >= 0)
+            if (e.RowIndex >= 0)
             {
                 string columnName = supplyInQuotationdataGridView.Columns[e.ColumnIndex].Name;
-                if(columnName == "SupplyPhoto")
+                if (columnName == "SupplyPhoto")
                 {
                     string imagePath = supplyInQuotationdataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
                     if (string.IsNullOrEmpty(imagePath))
@@ -536,6 +481,112 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
         private void supplyInQuotationdataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
             selectedSupplyPictureBox.Visible = false;
+        }
+        //Event to close & open valid date
+        private void hasValidDatecheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (hasValidDatecheckBox.Checked)
+            {
+                validdateTimePicker.Enabled = false;
+            }
+            else
+            {
+                validdateTimePicker.Enabled = true;
+            }
+        }
+        //Checking
+        private bool CheckAttributeForQuotation()
+        {
+            bool isComplete = true;
+            int selectSupplierIndex = supplierComboBox.SelectedIndex;
+            int selectedSupplierID = supplierIDList[selectSupplierIndex];
+            if (selectedSupplierID != editQuotation.Supplier.ID)
+            {
+                supplier = new Supplier(selectedSupplierID);
+                editQuotation.Supplier = supplier;
+                MessageBox.Show("เปลี่ยนแปลง ซัพพลายเออร์");
+            }
+            if (string.IsNullOrEmpty(quotationNumberTextBox.Text))
+            {
+                MessageBox.Show("กรุณาระบุ เลขที่ใบเสนอราคา");
+                isComplete = false;
+            }
+            else
+            {
+                if (quotationNumberTextBox.Text != editQuotation.QuotationNumber)
+                {
+                    editQuotation.QuotationNumber = quotationNumberTextBox.Text;
+                    MessageBox.Show("เลขที่ใบเสนอราคา มีการเปลี่ยนแปลง");
+                }
+            }
+            if (validdateTimePicker.Enabled == false)
+            {
+                validDate = null;
+                editQuotation.ValidDate = validDate;
+                editQuotation.HasValidDate = false;
+            }
+            else
+            {
+                validDate = validdateTimePicker.Value;
+                editQuotation.ValidDate = validDate;
+                editQuotation.HasValidDate = true;
+            }
+            if(issuedateTimePicker.Value.Date != editQuotation.IssueDate.Date)
+            {
+                editQuotation.IssueDate = issuedateTimePicker.Value;
+            }
+            if (isComplete)
+            {
+                if (QuotationPDF != oldQuotationPDF)
+                {
+                    SaveQuotationPDF();
+                    editQuotation.QuotationPDF = QuotationPDF;
+                }
+            }
+            return isComplete;
+        }
+        private bool CheckAttributeForSupplyInQuotation()
+        {
+            if (selectedSupplyViewList.Count == 0)
+            {
+                MessageBox.Show("กรุณาเลือกวัสดุ อย่างน้อย 1 รายการ");
+                return false;
+            }
+            return true;
+        }
+        //Edit Quotation
+        private void editQuotationbutton_Click(object sender, EventArgs e)
+        {
+            if(CheckAttributeForQuotation() && CheckAttributeForSupplyInQuotation())
+            {
+                if (editQuotation.Change())
+                {
+                    //Clearing supply
+                    SupplyInQuotation.Remove(editQuotation.ID);
+
+                    foreach(AllSupplyInQuotationListDataGridView sqiView in selectedSupplyViewList)
+                    {
+                        Supply s = new Supply(sqiView.SupplyID);
+                        if (!s.IsActive)
+                        {
+                            s.IsActive = true;
+                            MessageBox.Show("เปลี่ยนสถานะ วัสดุเป็นกำลังใช้งาน");
+                        }
+                        SupplyInQuotation siq = new SupplyInQuotation(editQuotation.ID, s, sqiView.Price);
+                        if (!siq.Create())
+                        {
+                            MessageBox.Show("การสร้างซัพพลาย รายการ : " + siq.Supply + " ไอดี : " + siq.ID + " ล้มเหลว");
+                        }
+                    }
+                    MessageBox.Show("แก้ใขใบเสนอราคา สมบูรณ์");
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("แก้ใขใบเสนอราคา ล้มเหลว");
+                    Global.DeleteFileFromFtpSupply(QuotationPDF);
+                }
+            }
         }
     }
 }

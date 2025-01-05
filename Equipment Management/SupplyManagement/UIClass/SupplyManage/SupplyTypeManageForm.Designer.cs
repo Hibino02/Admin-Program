@@ -64,6 +64,7 @@
             this.SupplyTypeDataGridView.RowHeadersVisible = false;
             this.SupplyTypeDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.SupplyTypeDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.SupplyTypeDataGridView.ShowCellToolTips = false;
             this.SupplyTypeDataGridView.Size = new System.Drawing.Size(735, 562);
             this.SupplyTypeDataGridView.TabIndex = 7;
             // 

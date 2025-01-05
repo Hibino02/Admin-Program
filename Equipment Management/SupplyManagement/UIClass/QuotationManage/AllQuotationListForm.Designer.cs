@@ -78,6 +78,7 @@
             this.RemoveButton.TabIndex = 24;
             this.RemoveButton.Text = "ลบ";
             this.RemoveButton.UseVisualStyleBackColor = true;
+            this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
             // 
             // EditButton
             // 
@@ -88,6 +89,7 @@
             this.EditButton.TabIndex = 23;
             this.EditButton.Text = "แก้ใข";
             this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
             // CreateButton
             // 
@@ -114,6 +116,7 @@
             this.quotationDatagridview.RowHeadersVisible = false;
             this.quotationDatagridview.RowTemplate.Height = 24;
             this.quotationDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.quotationDatagridview.ShowCellToolTips = false;
             this.quotationDatagridview.Size = new System.Drawing.Size(800, 730);
             this.quotationDatagridview.TabIndex = 21;
             this.quotationDatagridview.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.quotationDatagridview_CellClick);
@@ -133,6 +136,7 @@
             this.supplyInQuotationdataGridView.RowHeadersVisible = false;
             this.supplyInQuotationdataGridView.RowTemplate.Height = 24;
             this.supplyInQuotationdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.supplyInQuotationdataGridView.ShowCellToolTips = false;
             this.supplyInQuotationdataGridView.Size = new System.Drawing.Size(504, 729);
             this.supplyInQuotationdataGridView.TabIndex = 28;
             this.supplyInQuotationdataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyInQuotationdataGridView_CellMouseEnter);
@@ -144,19 +148,20 @@
             this.supplyInQuotationlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.supplyInQuotationlabel.Location = new System.Drawing.Point(816, 14);
             this.supplyInQuotationlabel.Name = "supplyInQuotationlabel";
-            this.supplyInQuotationlabel.Size = new System.Drawing.Size(192, 20);
+            this.supplyInQuotationlabel.Size = new System.Drawing.Size(212, 20);
             this.supplyInQuotationlabel.TabIndex = 29;
-            this.supplyInQuotationlabel.Text = "รายการวัสดุในโควเทชั่นที่เลือก";
+            this.supplyInQuotationlabel.Text = "รายการวัสดุในใบเสนอราคาที่เลือก";
             // 
             // quotationPDFlinkLabel
             // 
             this.quotationPDFlinkLabel.AutoSize = true;
-            this.quotationPDFlinkLabel.Location = new System.Drawing.Point(1199, 19);
+            this.quotationPDFlinkLabel.Location = new System.Drawing.Point(1183, 16);
             this.quotationPDFlinkLabel.Name = "quotationPDFlinkLabel";
-            this.quotationPDFlinkLabel.Size = new System.Drawing.Size(125, 13);
+            this.quotationPDFlinkLabel.Size = new System.Drawing.Size(141, 13);
             this.quotationPDFlinkLabel.TabIndex = 30;
             this.quotationPDFlinkLabel.TabStop = true;
-            this.quotationPDFlinkLabel.Text = "ดูเอกสารโควเทชั่นที่เลือก";
+            this.quotationPDFlinkLabel.Text = "ดูเอกสารใบเสนอราคาที่เลือก";
+            this.quotationPDFlinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.quotationPDFlinkLabel_LinkClicked);
             // 
             // AllQuotationListForm
             // 
