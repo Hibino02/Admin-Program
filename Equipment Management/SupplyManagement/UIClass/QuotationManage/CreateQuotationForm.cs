@@ -430,6 +430,11 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
             {
                 validDate = validdateTimePicker.Value;
             }
+            if (string.IsNullOrEmpty(quotationPDF))
+            {
+                MessageBox.Show("กรุณาแนบไฟล์ ใบเสนอราคาอ้างอิง");
+                return false;
+            }
             if (!string.IsNullOrEmpty(quotationPDF))
             {
                 SaveQuotationPDF();

@@ -535,6 +535,11 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
             {
                 editQuotation.IssueDate = issuedateTimePicker.Value;
             }
+            if (string.IsNullOrEmpty(QuotationPDF))
+            {
+                MessageBox.Show("กรุณาแนบไฟล์ ใบเสนอราคาอ้างอิง");
+                isComplete = false;
+            }
             if (isComplete)
             {
                 if (QuotationPDF != oldQuotationPDF)

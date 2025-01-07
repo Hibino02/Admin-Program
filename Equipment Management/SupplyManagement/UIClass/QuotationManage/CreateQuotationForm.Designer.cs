@@ -228,6 +228,7 @@
             this.supplyDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.supplyDatagridview.ShowCellToolTips = false;
             this.supplyDatagridview.Size = new System.Drawing.Size(607, 437);
+            this.supplyDatagridview.StandardTab = true;
             this.supplyDatagridview.TabIndex = 46;
             // 
             // supplySearchtextBox
@@ -276,7 +277,7 @@
             this.supplyPricetextBox.Location = new System.Drawing.Point(318, 741);
             this.supplyPricetextBox.Name = "supplyPricetextBox";
             this.supplyPricetextBox.Size = new System.Drawing.Size(178, 26);
-            this.supplyPricetextBox.TabIndex = 51;
+            this.supplyPricetextBox.TabIndex = 47;
             this.supplyPricetextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.supplyPricetextBox_KeyPress);
             // 
             // addSupplybutton

@@ -184,6 +184,7 @@
             this.supplyDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.supplyDatagridview.ShowCellToolTips = false;
             this.supplyDatagridview.Size = new System.Drawing.Size(607, 437);
+            this.supplyDatagridview.StandardTab = true;
             this.supplyDatagridview.TabIndex = 73;
             // 
             // supplyListlabel
