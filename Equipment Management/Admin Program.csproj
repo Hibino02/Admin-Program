@@ -307,6 +307,12 @@
     <Compile Include="SupplyManagement\ObjectClass\SupplyInQuotation.cs" />
     <Compile Include="SupplyManagement\ObjectClass\SupplyType.cs" />
     <Compile Include="SupplyManagement\ObjectClass\User.cs" />
+    <Compile Include="SupplyManagement\UIClass\PRManage\CreatePRForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\PRManage\CreatePRForm.Designer.cs">
+      <DependentUpon>CreatePRForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SupplyManagement\UIClass\QuotationManage\AllQuotationListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -484,6 +490,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EquipmentManagement\UIClass\Plan\RemovePlanProcessingForm.resx">
       <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\PRManage\CreatePRForm.resx">
+      <DependentUpon>CreatePRForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\QuotationManage\AllQuotationListForm.resx">
       <DependentUpon>AllQuotationListForm.cs</DependentUpon>

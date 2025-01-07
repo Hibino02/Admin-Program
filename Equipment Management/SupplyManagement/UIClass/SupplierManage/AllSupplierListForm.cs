@@ -8,7 +8,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Admin_Program.SupplyManagement.CustomViewClass;
-using Library.Forms;
 
 namespace Admin_Program.SupplyManagement.UIClass.SupplierManage
 {

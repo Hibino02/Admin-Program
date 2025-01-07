@@ -3,14 +3,9 @@ using Admin_Program.SupplyManagement.UIClass.SupplyManage;
 using Admin_Program.SupplyManagement.UIClass.QuotationManage;
 using Admin_Program.UIClass;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Admin_Program.SupplyManagement.UIClass.PRManage;
 
 namespace Admin_Program.SupplyManagement.UIClass
 {
@@ -21,6 +16,7 @@ namespace Admin_Program.SupplyManagement.UIClass
         private AllSupplyListForm allSupplyList;
         private AllSupplierListForm allSupplierList;
         private AllQuotationListForm allQuotationList;
+        private CreatePRForm createPR;
 
         public event EventHandler returnMain;
 
@@ -51,6 +47,13 @@ namespace Admin_Program.SupplyManagement.UIClass
             allQuotationList = new AllQuotationListForm();
             allQuotationList.Owner = main;
             allQuotationList.ShowDialog();
+        }
+        //Create PR
+        private void openPRButton_Click(object sender, EventArgs e)
+        {
+            createPR = new CreatePRForm();
+            createPR.Owner = main;
+            createPR.ShowDialog();
         }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)

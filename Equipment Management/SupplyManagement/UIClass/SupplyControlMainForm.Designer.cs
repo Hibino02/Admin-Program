@@ -294,6 +294,7 @@
             this.openPRButton.TabIndex = 14;
             this.openPRButton.Text = "เปิดคำขอซื้อ";
             this.openPRButton.UseVisualStyleBackColor = true;
+            this.openPRButton.Click += new System.EventHandler(this.openPRButton_Click);
             // 
             // supplyRequestLabel
             // 

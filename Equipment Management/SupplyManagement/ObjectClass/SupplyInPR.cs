@@ -20,6 +20,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public int Quantity { get { return quantity; } set { quantity = value; } }
         float amount;
         public float Amount { get { return amount; } set { amount = value; } }
+        string quotaionPDF;
+        public string QuotationPDF { get { return quotaionPDF; } set { quotaionPDF = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -34,7 +36,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 {
                     string select = @"SELECT
 sipr.ID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
-st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount
+st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount, sipr.QuotationPDF
 FROM SupplyInPR sipr
 LEFT JOIN Supply s ON sipr.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -64,6 +66,7 @@ WHERE sipr.ID = @id;";
                             price = Convert.ToSingle(reader["Price"]);
                             quantity = Convert.ToInt32(reader["Quantity"]);
                             amount = Convert.ToSingle(reader["Amount"]);
+                            quotaionPDF = reader["QuotationPDF"].ToString();
                         }
                     }
                 }
@@ -80,7 +83,7 @@ WHERE sipr.ID = @id;";
         {
             UpdateAttribute(id.ToString());
         }
-        public SupplyInPR(int id, int prid, Supply supply, float price, int quantity, float amount)
+        public SupplyInPR(int id, int prid, Supply supply, float price, int quantity, float amount, string quotationpdf)
         {
             this.id = id;
             this.prid = prid;
@@ -88,14 +91,16 @@ WHERE sipr.ID = @id;";
             this.price = price;
             this.quantity = quantity;
             this.amount = amount;
+            this.quotaionPDF = quotationpdf;
         }
-        public SupplyInPR(int prid, Supply supply, float price, int quantity, float amount)
+        public SupplyInPR(int prid, Supply supply, float price, int quantity, float amount, string quotationpdf)
         {
             this.prid = prid;
             this.supply = supply;
             this.price = price;
             this.quantity = quantity;
             this.amount = amount;
+            this.quotaionPDF = quotationpdf;
         }
 
         public bool Create()
@@ -198,7 +203,7 @@ WHERE sipr.ID = @id;";
                 {
                     string selectAll = @"SELECT
 sipr.ID, sipr.WarehouseID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
-st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount
+st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount, sipr.QuotationPDF
 FROM SupplyInPR sipr
 LEFT JOIN Supply s ON sipr.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -228,8 +233,9 @@ WHERE sipr.WarehouseID = @whid;";
                             float price = Convert.ToSingle(reader["Price"]);
                             int quantity = Convert.ToInt32(reader["Quantity"]);
                             float amount = Convert.ToSingle(reader["Amount"]);
+                            string qPDF = reader[""].ToString();
 
-                            SupplyInPR sipr = new SupplyInPR(id,prid,supply,price,quantity,amount);
+                            SupplyInPR sipr = new SupplyInPR(id,prid,supply,price,quantity,amount, qPDF);
 
                             siprList.Add(sipr);
                         }
