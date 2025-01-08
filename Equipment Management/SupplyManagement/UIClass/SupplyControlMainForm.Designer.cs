@@ -46,7 +46,6 @@
             this.manageSupplyButton = new System.Windows.Forms.Button();
             this.removePRButton = new System.Windows.Forms.Button();
             this.manageSupplierButton = new System.Windows.Forms.Button();
-            this.editPRButton = new System.Windows.Forms.Button();
             this.manageQuotationButton = new System.Windows.Forms.Button();
             this.openPRButton = new System.Windows.Forms.Button();
             this.supplyRequestLabel = new System.Windows.Forms.Label();
@@ -196,7 +195,6 @@
             this.SupplyRequestGroupBox.Controls.Add(this.manageSupplyButton);
             this.SupplyRequestGroupBox.Controls.Add(this.removePRButton);
             this.SupplyRequestGroupBox.Controls.Add(this.manageSupplierButton);
-            this.SupplyRequestGroupBox.Controls.Add(this.editPRButton);
             this.SupplyRequestGroupBox.Controls.Add(this.manageQuotationButton);
             this.SupplyRequestGroupBox.Controls.Add(this.openPRButton);
             this.SupplyRequestGroupBox.Controls.Add(this.supplyRequestLabel);
@@ -246,7 +244,7 @@
             // removePRButton
             // 
             this.removePRButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.removePRButton.Location = new System.Drawing.Point(265, 659);
+            this.removePRButton.Location = new System.Drawing.Point(135, 659);
             this.removePRButton.Name = "removePRButton";
             this.removePRButton.Size = new System.Drawing.Size(124, 52);
             this.removePRButton.TabIndex = 18;
@@ -263,16 +261,6 @@
             this.manageSupplierButton.Text = "จัดการซัพพลายเออร์";
             this.manageSupplierButton.UseVisualStyleBackColor = true;
             this.manageSupplierButton.Click += new System.EventHandler(this.manageSupplierButton_Click);
-            // 
-            // editPRButton
-            // 
-            this.editPRButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editPRButton.Location = new System.Drawing.Point(135, 659);
-            this.editPRButton.Name = "editPRButton";
-            this.editPRButton.Size = new System.Drawing.Size(124, 52);
-            this.editPRButton.TabIndex = 16;
-            this.editPRButton.Text = "แก้ใขคำขอซื้อ";
-            this.editPRButton.UseVisualStyleBackColor = true;
             // 
             // manageQuotationButton
             // 
@@ -398,7 +386,6 @@
         private System.Windows.Forms.Button manageSupplyButton;
         private System.Windows.Forms.Button removePRButton;
         private System.Windows.Forms.Button manageSupplierButton;
-        private System.Windows.Forms.Button editPRButton;
         private System.Windows.Forms.Button backToMainMenuButton;
     }
 }

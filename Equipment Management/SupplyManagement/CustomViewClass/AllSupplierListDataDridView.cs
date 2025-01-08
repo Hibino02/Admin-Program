@@ -28,5 +28,35 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
             }
             return sViewList.OrderBy(s => s.SupplierName).ToList();
         }
+        public static List<AllSupplierListDataDridView> AllSupplierFilteredByValidQuotation()
+        {
+            List<AllSupplierListDataDridView> sViewList = new List<AllSupplierListDataDridView>();
+            List<AllQuotationListDataGridView> qFilteredByValid = AllQuotationListDataGridView.AllQuotationFilteredByValidDate();
+            List<Supplier> sList = Supplier.GetAllSupplierList();
+
+            HashSet<int> addedSupplierIDs = new HashSet<int>();
+            foreach (Supplier s in sList)
+            {
+                // Check if the supplier is already in the addedSupplierIDs set
+                if (!addedSupplierIDs.Contains(s.ID))
+                {
+                    // Check if the supplier exists in the filtered quotation list
+                    if (qFilteredByValid.Any(q => q.SupplierID == s.ID))
+                    {
+                        AllSupplierListDataDridView view = new AllSupplierListDataDridView
+                        {
+                            ID = s.ID,
+                            SupplierName = s.Name,
+                            SupplierAddress = s.Address
+                        };
+                        sViewList.Add(view);
+
+                        // Add the supplier ID to the set to skip duplicates
+                        addedSupplierIDs.Add(s.ID);
+                    }
+                }
+            }
+            return sViewList.OrderBy(s => s.SupplierName).ToList();
+        }
     }
 }

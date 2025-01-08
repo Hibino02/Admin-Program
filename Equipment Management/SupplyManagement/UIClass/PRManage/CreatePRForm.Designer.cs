@@ -61,14 +61,14 @@
             this.removeFromSupplyInPRbutton = new System.Windows.Forms.Button();
             this.selectedSupplyInQuotationdataGridView = new System.Windows.Forms.DataGridView();
             this.selectedSupplyInQuotationlabel = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.currentSelectedQuotationdataGridView = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.quotationDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInQuotationdataGridView)).BeginInit();
             this.supplyInPRgroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInPRdataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedSupplyInQuotationdataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.currentSelectedQuotationdataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // prCreatorNamelabel
@@ -327,6 +327,7 @@
             this.quotationPDFlinkLabel.TabIndex = 31;
             this.quotationPDFlinkLabel.TabStop = true;
             this.quotationPDFlinkLabel.Text = "ดูเอกสารใบเสนอราคา";
+            this.quotationPDFlinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.quotationPDFlinkLabel_LinkClicked);
             // 
             // supplyInPRgroupBox
             // 
@@ -427,23 +428,23 @@
             this.selectedSupplyInQuotationlabel.TabIndex = 34;
             this.selectedSupplyInQuotationlabel.Text = "รายการวัสดุจากใบเสนอราคาที่เลือก :";
             // 
-            // dataGridView1
+            // currentSelectedQuotationdataGridView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(567, 224);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.ShowCellToolTips = false;
-            this.dataGridView1.Size = new System.Drawing.Size(368, 154);
-            this.dataGridView1.TabIndex = 35;
+            this.currentSelectedQuotationdataGridView.AllowUserToAddRows = false;
+            this.currentSelectedQuotationdataGridView.AllowUserToDeleteRows = false;
+            this.currentSelectedQuotationdataGridView.AllowUserToResizeColumns = false;
+            this.currentSelectedQuotationdataGridView.AllowUserToResizeRows = false;
+            this.currentSelectedQuotationdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.currentSelectedQuotationdataGridView.Location = new System.Drawing.Point(567, 224);
+            this.currentSelectedQuotationdataGridView.MultiSelect = false;
+            this.currentSelectedQuotationdataGridView.Name = "currentSelectedQuotationdataGridView";
+            this.currentSelectedQuotationdataGridView.ReadOnly = true;
+            this.currentSelectedQuotationdataGridView.RowHeadersVisible = false;
+            this.currentSelectedQuotationdataGridView.RowTemplate.Height = 24;
+            this.currentSelectedQuotationdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.currentSelectedQuotationdataGridView.ShowCellToolTips = false;
+            this.currentSelectedQuotationdataGridView.Size = new System.Drawing.Size(368, 154);
+            this.currentSelectedQuotationdataGridView.TabIndex = 35;
             // 
             // label1
             // 
@@ -462,7 +463,7 @@
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 781);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.currentSelectedQuotationdataGridView);
             this.Controls.Add(this.selectedSupplyInQuotationlabel);
             this.Controls.Add(this.supplyInPRgroupBox);
             this.Controls.Add(this.quotationPDFlinkLabel);
@@ -502,7 +503,7 @@
             this.supplyInPRgroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInPRdataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedSupplyInQuotationdataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.currentSelectedQuotationdataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -543,7 +544,7 @@
         private System.Windows.Forms.TextBox quantitytextBox;
         private System.Windows.Forms.Label supplyQuantitylabel;
         private System.Windows.Forms.Label selectedSupplyInQuotationlabel;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView currentSelectedQuotationdataGridView;
         private System.Windows.Forms.Label label1;
     }
 }

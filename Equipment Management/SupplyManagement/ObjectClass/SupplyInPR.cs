@@ -20,8 +20,10 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public int Quantity { get { return quantity; } set { quantity = value; } }
         float amount;
         public float Amount { get { return amount; } set { amount = value; } }
-        string quotaionPDF;
-        public string QuotationPDF { get { return quotaionPDF; } set { quotaionPDF = value; } }
+        string quotationPDF;
+        public string QuotationPDF { get { return quotationPDF; } set { quotationPDF = value; } }
+        string quotationNumber;
+        public string QuotationNumber { get { return quotationNumber; } set { quotationNumber = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -36,7 +38,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 {
                     string select = @"SELECT
 sipr.ID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
-st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount, sipr.QuotationPDF
+st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount, sipr.QuotationPDF, sipr.QuotationNumber
 FROM SupplyInPR sipr
 LEFT JOIN Supply s ON sipr.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -66,7 +68,8 @@ WHERE sipr.ID = @id;";
                             price = Convert.ToSingle(reader["Price"]);
                             quantity = Convert.ToInt32(reader["Quantity"]);
                             amount = Convert.ToSingle(reader["Amount"]);
-                            quotaionPDF = reader["QuotationPDF"].ToString();
+                            quotationPDF = reader["QuotationPDF"].ToString();
+                            quotationNumber = reader["QuotationNumber"].ToString();
                         }
                     }
                 }
@@ -83,7 +86,7 @@ WHERE sipr.ID = @id;";
         {
             UpdateAttribute(id.ToString());
         }
-        public SupplyInPR(int id, int prid, Supply supply, float price, int quantity, float amount, string quotationpdf)
+        public SupplyInPR(int id, int prid, Supply supply, float price, int quantity, float amount, string quotationpdf, string quotationnum)
         {
             this.id = id;
             this.prid = prid;
@@ -91,16 +94,18 @@ WHERE sipr.ID = @id;";
             this.price = price;
             this.quantity = quantity;
             this.amount = amount;
-            this.quotaionPDF = quotationpdf;
+            this.quotationPDF = quotationpdf;
+            this.quotationNumber = quotationnum;
         }
-        public SupplyInPR(int prid, Supply supply, float price, int quantity, float amount, string quotationpdf)
+        public SupplyInPR(int prid, Supply supply, float price, int quantity, float amount, string quotationpdf, string quotationnum)
         {
             this.prid = prid;
             this.supply = supply;
             this.price = price;
             this.quantity = quantity;
             this.amount = amount;
-            this.quotaionPDF = quotationpdf;
+            this.quotationPDF = quotationpdf;
+            this.quotationNumber = quotationnum;
         }
 
         public bool Create()
@@ -112,13 +117,16 @@ WHERE sipr.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO SupplyInPR (ID, PRID, SupplyID, Price, Quantity, Amount) VALUES (NULL, @prid, @sid, @price, @quantity, @amount)";
+                    string insert = "INSERT INTO SupplyInPR (ID, PRID, SupplyID, Price, Quantity, Amount, WarehouseID, QuotationPDF, QuotationNumber) VALUES (NULL, @prid, @sid, @price, @quantity, @amount, @whid, @qpdf, @qnum)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@prid", prid);
                     cmd.Parameters.AddWithValue("@sid", supply.ID);
                     cmd.Parameters.AddWithValue("@price", price);
                     cmd.Parameters.AddWithValue("@quantity", quantity);
                     cmd.Parameters.AddWithValue("@amount", amount);
+                    cmd.Parameters.AddWithValue("@whid", GlobalVariable.Global.warehouseID);
+                    cmd.Parameters.AddWithValue("@qpdf", quotationPDF);
+                    cmd.Parameters.AddWithValue("@qnum", quotationNumber);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -142,11 +150,8 @@ WHERE sipr.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string update = "UPDATE SupplyInPR SET PRID = @prid, SupplyID = @sid, Price = @price, Quantity = @quantity, Amount = @amount WHERE ID = @id";
+                    string update = "UPDATE SupplyInPR SET Quantity = @quantity, Amount = @amount WHERE ID = @id";
                     cmd.CommandText = update;
-                    cmd.Parameters.AddWithValue("@prid", prid);
-                    cmd.Parameters.AddWithValue("@sid", supply.ID);
-                    cmd.Parameters.AddWithValue("@price", price);
                     cmd.Parameters.AddWithValue("@quantity", quantity);
                     cmd.Parameters.AddWithValue("@amount", amount);
                     cmd.Parameters.AddWithValue("@id", id);
@@ -164,7 +169,7 @@ WHERE sipr.ID = @id;";
                     conn.Close();
             }
         }
-        public bool Remove()
+        public bool Remove(int prid)
         {
             MySqlConnection conn = null;
             try
@@ -173,9 +178,9 @@ WHERE sipr.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string delete = "DELETE FROM SupplyInPR WHERE ID = @id";
+                    string delete = "DELETE FROM SupplyInPR WHERE PRID = @pridid";
                     cmd.CommandText = delete;
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@pridid", prid);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -202,8 +207,8 @@ WHERE sipr.ID = @id;";
                 using (var cmd = conn.CreateCommand())
                 {
                     string selectAll = @"SELECT
-sipr.ID, sipr.WarehouseID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
-st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount, sipr.QuotationPDF
+sipr.ID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
+st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount, sipr.QuotationPDF, sipr.QuotationNumber
 FROM SupplyInPR sipr
 LEFT JOIN Supply s ON sipr.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -233,9 +238,10 @@ WHERE sipr.WarehouseID = @whid;";
                             float price = Convert.ToSingle(reader["Price"]);
                             int quantity = Convert.ToInt32(reader["Quantity"]);
                             float amount = Convert.ToSingle(reader["Amount"]);
-                            string qPDF = reader[""].ToString();
+                            string qPDF = reader["QuotationPDF"].ToString();
+                            string qNum = reader["QuotationNumber"].ToString();
 
-                            SupplyInPR sipr = new SupplyInPR(id,prid,supply,price,quantity,amount, qPDF);
+                            SupplyInPR sipr = new SupplyInPR(id,prid,supply,price,quantity,amount,qPDF,qNum);
 
                             siprList.Add(sipr);
                         }
