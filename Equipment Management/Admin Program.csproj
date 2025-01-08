@@ -292,6 +292,7 @@
     </Compile>
     <Compile Include="SupplyManagement\CustomViewClass\AllQuotationListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllSupplierListDataDridView.cs" />
+    <Compile Include="SupplyManagement\CustomViewClass\AllSupplyInPRListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllSupplyInQuotationListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllSupplyListDataGridView.cs" />
     <Compile Include="SupplyManagement\ObjectClass\DeliveryMonth.cs" />

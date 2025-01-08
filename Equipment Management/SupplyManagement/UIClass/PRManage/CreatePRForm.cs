@@ -30,6 +30,11 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         //Variable for Current Quotation Selected Datagridview
         List<AllQuotationListDataGridView> currentSelectedQuotationList;
         BindingSource currentSelectedQuotationBindingSource;
+        //Variable for pre-SupplyInPR
+        List<SupplyInQuotation> supplyInQuotation;
+        List<SupplyInQuotation> preSupplyInPRList;
+        BindingSource preSupplyInPRBindingSource;
+        int quotationIDforQuery;
 
         public CreatePRForm()
         {
@@ -38,9 +43,11 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             otherReasontextBox.Enabled = false;
 
             supplierList = new List<AllSupplierListDataDridView>();
+            preSupplyInPRList = new List<SupplyInQuotation>();
             quotationBindingSource = new BindingSource();
             currentSelectedQuotationBindingSource = new BindingSource();
             supplyInQuotationBindingSource = new BindingSource();
+            preSupplyInPRBindingSource = new BindingSource();
 
             UpdateComponents();
         }
@@ -232,9 +239,10 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         //Event to addSelectedQuotation to PR
         private void addQuotationbutton_Click(object sender, EventArgs e)
         {
-            if (quotationFilteredList != null)
+            if (quotationFilteredList != null && quotationFilteredList.Any())
             {
                 suppliercomboBox.Enabled = false;
+                quotationIDforQuery = quotationID;
                 AllQuotationListDataGridView objToMove = quotationFilteredList.FirstOrDefault(q => q.ID == quotationID);
 
                 if (objToMove != null)
@@ -242,13 +250,31 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                     // Remove the object from the source list
                     quotationFilteredList.Remove(objToMove);
 
+                    supplyInQuotationBindingSource.DataSource = null;
+                    quotationBindingSource.DataSource = null;
+                    quotationBindingSource.DataSource = quotationFilteredList;
+                    quotationDatagridview.DataSource = quotationBindingSource;
+                    FormatQuotationForSelectedSupplier();
+
                     // Add the object to the destination list
+                    if (currentSelectedQuotationList == null)
+                    {
+                        currentSelectedQuotationList = new List<AllQuotationListDataGridView>();
+                    }
                     currentSelectedQuotationList.Add(objToMove);
+
+                    currentSelectedQuotationBindingSource.DataSource = null;
                     currentSelectedQuotationBindingSource.DataSource = currentSelectedQuotationList;
                     currentSelectedQuotationdataGridView.DataSource = currentSelectedQuotationBindingSource;
                     FormatCurrentSelectedQuotation();
+
+                    UpdatePreSupplyInPR();
                 }
-            }      
+            }
+            else
+            {
+                MessageBox.Show("กุณาเลือก ใบเสนอราคา");
+            }
         }
         private void FormatCurrentSelectedQuotation()
         {
@@ -289,6 +315,15 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             {
                 Columns["QuotationPDF"].Visible = false;
             }
+        }
+        //Pre-SupplyInPR
+        private void UpdatePreSupplyInPR()
+        {
+            supplyInQuotation = SupplyInQuotation.GetSupplyInQuotationList(quotationIDforQuery);
+            preSupplyInPRList.AddRange(supplyInQuotation);
+            preSupplyInPRBindingSource.DataSource = null;
+            preSupplyInPRBindingSource.DataSource = preSupplyInPRList;
+            preSupplyInPRdataGridView.DataSource = preSupplyInPRBindingSource;
         }
     }
 }
