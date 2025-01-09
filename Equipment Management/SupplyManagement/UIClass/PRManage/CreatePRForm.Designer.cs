@@ -133,6 +133,7 @@
             this.addToSupplyInPRbutton.TabIndex = 27;
             this.addToSupplyInPRbutton.Text = "◀️";
             this.addToSupplyInPRbutton.UseVisualStyleBackColor = true;
+            this.addToSupplyInPRbutton.Click += new System.EventHandler(this.addToSupplyInPRbutton_Click);
             // 
             // removeFromSupplyInPRbutton
             // 
@@ -161,6 +162,7 @@
             this.preSupplyInPRdataGridView.ShowCellToolTips = false;
             this.preSupplyInPRdataGridView.Size = new System.Drawing.Size(511, 307);
             this.preSupplyInPRdataGridView.TabIndex = 24;
+            this.preSupplyInPRdataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellClick);
             // 
             // PRgroupBox
             // 

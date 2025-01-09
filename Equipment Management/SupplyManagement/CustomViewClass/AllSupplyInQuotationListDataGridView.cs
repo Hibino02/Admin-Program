@@ -44,5 +44,24 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
             }
             return siqViewList.OrderBy(siq => siq.ID).ToList();
         }
+        public static List<AllSupplyInQuotationListDataGridView> SupplyInQuotationList(List<SupplyInQuotation> list)
+        {
+            List<AllSupplyInQuotationListDataGridView> siqViewList = new List<AllSupplyInQuotationListDataGridView>();
+            foreach (SupplyInQuotation siq in list)
+            {
+                AllSupplyInQuotationListDataGridView view = new AllSupplyInQuotationListDataGridView
+                {
+                    ID = siq.ID,
+                    QuotationID = siq.QuotationID,
+                    SupplyID = siq.Supply.ID,
+                    SupplyName = siq.Supply.SupplyName,
+                    Price = siq.Price,
+                    SupplyUnit = siq.Supply.SupplyUnit,
+                    SupplyPhoto = siq.Supply.SupplyPhoto
+                };
+                siqViewList.Add(view);
+            }
+            return siqViewList;
+        }
     }
 }

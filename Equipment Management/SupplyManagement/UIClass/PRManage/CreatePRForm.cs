@@ -17,24 +17,31 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         private List<int> supplierID = new List<int>();
         List<AllSupplierListDataDridView> supplierList;
         int selectedSupplierID;
-        //Variable for selected supplier and showing quotationlist
+        //Selected supplier and showing quotationlist
         List<AllQuotationListDataGridView> quotationFilteredList;
         List<AllQuotationListDataGridView> quotationOriginalList = AllQuotationListDataGridView.AllQuotationFilteredByValidDate();
         BindingSource quotationBindingSource;
         string quotationPDF;
         int quotationID;
-        //Variable for showing supply
+        //Showing supply
         BindingSource supplyInQuotationBindingSource;
         List<AllSupplyInQuotationListDataGridView> supplyInQuotationViewList = AllSupplyInQuotationListDataGridView.allSupplyInQuotation();
         List<AllSupplyInQuotationListDataGridView> filteredList = new List<AllSupplyInQuotationListDataGridView>();
-        //Variable for Current Quotation Selected Datagridview
+        //Current Quotation Selected Datagridview
         List<AllQuotationListDataGridView> currentSelectedQuotationList;
         BindingSource currentSelectedQuotationBindingSource;
-        //Variable for pre-SupplyInPR
+        //Pre-SupplyInPR
         List<SupplyInQuotation> supplyInQuotation;
         List<SupplyInQuotation> preSupplyInPRList;
+        List<AllSupplyInQuotationListDataGridView> preSupplyInPRView;
         BindingSource preSupplyInPRBindingSource;
+        DataGridViewRow selectedRowInPreSupply;
         int quotationIDforQuery;
+        int supplyIDforQuery;
+        float price;
+        //Selected SupplyInPR
+        List<AllSupplyInPRListDataGridView> supplyInPRList; //This object create in addQuotationbutton_Click
+        BindingSource supplyInPRBindingSource;
 
         public CreatePRForm()
         {
@@ -48,6 +55,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             currentSelectedQuotationBindingSource = new BindingSource();
             supplyInQuotationBindingSource = new BindingSource();
             preSupplyInPRBindingSource = new BindingSource();
+            supplyInPRBindingSource = new BindingSource();
 
             UpdateComponents();
         }
@@ -186,6 +194,12 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                 quotationDatagridview.CurrentCell = quotationDatagridview.Rows[0].Cells[2];
                 quotationDatagridview_CellClick(this, new DataGridViewCellEventArgs(0, 0));
             }
+            else
+            {
+                //To clear linklist
+                quotationPDF = null;
+                quotationPDFlinkLabel.LinkColor = System.Drawing.Color.Blue;
+            }
         }
         private void UpdateSupplyInQuotationList(int qid)
         {
@@ -241,6 +255,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         {
             if (quotationFilteredList != null && quotationFilteredList.Any())
             {
+                supplyInPRList = new List<AllSupplyInPRListDataGridView>();
                 suppliercomboBox.Enabled = false;
                 quotationIDforQuery = quotationID;
                 AllQuotationListDataGridView objToMove = quotationFilteredList.FirstOrDefault(q => q.ID == quotationID);
@@ -321,9 +336,150 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         {
             supplyInQuotation = SupplyInQuotation.GetSupplyInQuotationList(quotationIDforQuery);
             preSupplyInPRList.AddRange(supplyInQuotation);
+            preSupplyInPRView = AllSupplyInQuotationListDataGridView.SupplyInQuotationList(preSupplyInPRList);
             preSupplyInPRBindingSource.DataSource = null;
-            preSupplyInPRBindingSource.DataSource = preSupplyInPRList;
+            preSupplyInPRBindingSource.DataSource = preSupplyInPRView;
             preSupplyInPRdataGridView.DataSource = preSupplyInPRBindingSource;
+
+            FormatSupplyInQuotationListDataGridView();
+        }
+        private void FormatSupplyInQuotationListDataGridView()
+        {
+            var Columns = preSupplyInPRdataGridView.Columns;
+            if (Columns["ID"] != null)
+            {
+                Columns["ID"].Visible = false;
+            }
+            if (Columns["QuotationID"] != null)
+            {
+                Columns["QuotationID"].Visible = false;
+            }
+            if (Columns["SupplyID"] != null)
+            {
+                Columns["SupplyID"].Visible = false;
+            }
+            if (Columns["SupplyName"] != null)
+            {
+                Columns["SupplyName"].HeaderText = "ชื่อวัดดุ";
+                Columns["SupplyName"].Width = 280;
+            }
+            if (Columns["Price"] != null)
+            {
+                Columns["Price"].HeaderText = "ราคา";
+                Columns["Price"].Width = 100;
+            }
+            if (Columns["SupplyUnit"] != null)
+            {
+                Columns["SupplyUnit"].HeaderText = "หน่วย";
+                Columns["SupplyUnit"].Width = 100;
+            }
+            if (Columns["SupplyPhoto"] != null)
+            {
+                Columns["SupplyPhoto"].HeaderText = "รูป";
+                Columns["SupplyPhoto"].Width = 24;
+            }
+        }
+        //Add-SupplyToPR
+        private void preSupplyInPRdataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.RowIndex >= 0)
+            {
+                quotationIDforQuery = 0;
+                supplyIDforQuery = 0;
+                price = 0;
+                selectedRowInPreSupply = preSupplyInPRdataGridView.Rows[e.RowIndex];
+
+                quotationIDforQuery = Convert.ToInt32(selectedRowInPreSupply.Cells["QuotationID"].Value);
+                supplyIDforQuery = Convert.ToInt32(selectedRowInPreSupply.Cells["SupplyID"].Value);
+                price = Convert.ToSingle(selectedRowInPreSupply.Cells["Price"].Value);
+            }
+        }
+        private void addToSupplyInPRbutton_Click(object sender, EventArgs e)
+        {
+            if(selectedRowInPreSupply != null)
+            {
+                if (!string.IsNullOrEmpty(quantitytextBox.Text))
+                {
+                    int quantity = -1;
+                    if (int.TryParse(quantitytextBox.Text, out quantity) && quantity > 0)
+                    {
+                        float amount = 0;
+                        amount = quantity * price;
+                        Quotation q = new Quotation(quotationIDforQuery);
+                        Supply s = new Supply(supplyIDforQuery);
+                        AllSupplyInPRListDataGridView list = new AllSupplyInPRListDataGridView(
+                            s.SupplyName, price, s.SupplyUnit,quantity, amount,q.QuotationNumber
+                            ,s.SupplyPhoto,q.QuotationPDF);
+                        supplyInPRList.Add(list);
+
+                        UpdateSupplyInPR();
+                    }
+                    else
+                    {
+                        MessageBox.Show("จำนวนที่ระบุ ไม่ถูกต้อง");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("กรุณาระบุ จำนวน");
+                }  
+            }
+            else
+            {
+                MessageBox.Show("กรุณา เลือกวัสดุและระบุจำนวน");
+            }
+        }
+        //SupplyInPR
+        private void UpdateSupplyInPR()
+        {
+            supplyInPRBindingSource.DataSource = null;
+            supplyInPRBindingSource.DataSource = supplyInPRList;
+            supplyInPRdataGridView.DataSource = supplyInPRBindingSource;
+
+            FormatSupplyInPRListDataGridView();
+        }
+        private void FormatSupplyInPRListDataGridView()
+        {
+            var Columns = supplyInPRdataGridView.Columns;
+            if (Columns["SupplyName"] != null)
+            {
+                Columns["SupplyName"].HeaderText = "ชื่อวัดดุ";
+                Columns["SupplyName"].Width = 305;
+            }
+            if (Columns["Price"] != null)
+            {
+                Columns["Price"].HeaderText = "ราคา/หน่วย";
+                Columns["Price"].Width = 70;
+            }
+            if (Columns["SupplyUnit"] != null)
+            {
+                Columns["SupplyUnit"].HeaderText = "หน่วย";
+                Columns["SupplyUnit"].Width = 50;
+            }
+            if (Columns["Quantity"] != null)
+            {
+                Columns["Quantity"].HeaderText = "จำนวน";
+                Columns["Quantity"].Width = 50;
+            }
+            if (Columns["Amount"] != null)
+            {
+                Columns["Amount"].HeaderText = "สุทธิ";
+                Columns["Amount"].Width = 80;
+            }
+            if (Columns["QuotationNumber"] != null)
+            {
+                Columns["QuotationNumber"].HeaderText = "จากใบเสนอราคา";
+                Columns["QuotationNumber"].Width = 150;
+            }
+            if (Columns["SupplyPhoto"] != null)
+            {
+                Columns["SupplyPhoto"].HeaderText = "รูป";
+                Columns["SupplyPhoto"].Width = 24;
+            }
+            if (Columns["QuotationPDF"] != null)
+            {
+                Columns["QuotationPDF"].Visible = false;
+            }
         }
     }
 }
