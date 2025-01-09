@@ -95,6 +95,7 @@
             this.quantitytextBox.Name = "quantitytextBox";
             this.quantitytextBox.Size = new System.Drawing.Size(136, 22);
             this.quantitytextBox.TabIndex = 35;
+            this.quantitytextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.quantitytextBox_KeyPress);
             // 
             // supplyQuantitylabel
             // 
@@ -123,6 +124,7 @@
             this.supplyInPRdataGridView.ShowCellToolTips = false;
             this.supplyInPRdataGridView.Size = new System.Drawing.Size(736, 338);
             this.supplyInPRdataGridView.TabIndex = 28;
+            this.supplyInPRdataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.supplyInPRdataGridView_RowPrePaint);
             // 
             // addToSupplyInPRbutton
             // 
@@ -163,6 +165,7 @@
             this.preSupplyInPRdataGridView.Size = new System.Drawing.Size(511, 307);
             this.preSupplyInPRdataGridView.TabIndex = 24;
             this.preSupplyInPRdataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellClick);
+            this.preSupplyInPRdataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.preSupplyInPRdataGridView_RowPrePaint);
             // 
             // PRgroupBox
             // 
@@ -227,6 +230,8 @@
             this.currentSelectedQuotationdataGridView.ShowCellToolTips = false;
             this.currentSelectedQuotationdataGridView.Size = new System.Drawing.Size(368, 154);
             this.currentSelectedQuotationdataGridView.TabIndex = 63;
+            this.currentSelectedQuotationdataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.currentSelectedQuotationdataGridView_RowPrePaint);
+            this.currentSelectedQuotationdataGridView.SelectionChanged += new System.EventHandler(this.currentSelectedQuotationdataGridView_SelectionChanged);
             // 
             // selectedSupplyInQuotationlabel
             // 
@@ -286,6 +291,7 @@
             this.supplyInQuotationdataGridView.ShowCellToolTips = false;
             this.supplyInQuotationdataGridView.Size = new System.Drawing.Size(511, 345);
             this.supplyInQuotationdataGridView.TabIndex = 58;
+            this.supplyInQuotationdataGridView.SelectionChanged += new System.EventHandler(this.supplyInQuotationdataGridView_SelectionChanged);
             // 
             // quotationDatagridview
             // 
