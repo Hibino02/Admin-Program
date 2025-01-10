@@ -140,8 +140,8 @@ WHERE q.ID = @id;";
                     object result = cmd.ExecuteScalar();
                     if(result != null)
                     {
-                        GlobalVariable.Global.ID = -1;
-                        GlobalVariable.Global.ID = Convert.ToInt32(result);
+                        GlobalVariable.Global.QID = -1;
+                        GlobalVariable.Global.QID = Convert.ToInt32(result);
                     }
                     // Commit the transaction
                     transaction.Commit();

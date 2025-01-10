@@ -467,7 +467,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
                             s.IsActive = true;
                             MessageBox.Show("เปลี่ยนสถานะ วัสดุเป็นกำลังใช้งาน");
                         }
-                        SupplyInQuotation siq = new SupplyInQuotation(Global.ID, s, siqView.Price);
+                        SupplyInQuotation siq = new SupplyInQuotation(Global.QID, s, siqView.Price);
                         if (!siq.Create())
                         {
                             MessageBox.Show("การสร้างซัพพลาย รายการ : " + siq.Supply + " ไอดี : " + siq.ID + " ล้มเหลว");

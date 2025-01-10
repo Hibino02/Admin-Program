@@ -36,10 +36,6 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public DateTime DeliveryDate { get { return deliverydate; }set { deliverydate = value; } }
         string contactperson;
         public string ContactPerson { get { return contactperson; }set { contactperson = value; } }
-        DateTime? arrivaldate;
-        public DateTime? ArrivalDate { get { return arrivaldate; }set { arrivaldate = value; } }
-        string invoicepdf;
-        public string InvoicePDF { get { return invoicepdf; }set { invoicepdf = value; } }
         int warehouseID;
         public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
@@ -58,7 +54,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
 pr.ID AS PRID, pr.SupplierID AS PRSupplierID, spr.SupplierName AS PRSupplierName, spr.SupplierAddress AS PRSupplierAddress, 
 pr.Requester, pr.PRTitle, pr.IsCostOfSale, pr.IsCompanyAsset, pr.IsMaintainance, pr.IsRental, pr.IsOther, pr.OtherReason, pr.AddDetails, 
 pr.PRStatusID, sta.Status,
-pr.DeliveryDate, pr.ContactPerson, pr.ArrivalDate, pr.InvoicePDF
+pr.DeliveryDate, pr.ContactPerson
 FROM PR pr
 LEFT JOIN Supplier spr ON pr.SupplierID = spr.ID
 LEFT JOIN PRStatus sta ON pr.PRStatusID = sta.ID
@@ -91,8 +87,6 @@ WHERE pr.ID = @id;";
                             prstatus = new PRStatus(sid,sta);
                             deliverydate = Convert.ToDateTime(reader["DeliveryDate"]);
                             contactperson = reader["ContactPerson"].ToString();
-                            arrivaldate = reader["ArrivalDate"] != DBNull.Value ? Convert.ToDateTime(reader["ArrivalDate"]) : (DateTime?)null;
-                            invoicepdf = reader["InvoicePDF"].ToString();
                             warehouseID = GlobalVariable.Global.warehouseID;
                         }
                     }
@@ -112,7 +106,7 @@ WHERE pr.ID = @id;";
         }
         public PR(int id,int whid,Supplier prs,string requester,string prtitle,bool iscostofsale
             ,bool iscompanyasset,bool ismaintainance,bool isrental,bool isother,string otherreason,string adddetails
-            ,PRStatus prstatus,DateTime deliverydate,string contactperson,string invpdf,DateTime? arrivaldate = null)
+            ,PRStatus prstatus,DateTime deliverydate,string contactperson)
         {
             this.id = id;
             this.warehouseID = whid;
@@ -129,12 +123,10 @@ WHERE pr.ID = @id;";
             this.prstatus = prstatus;
             this.deliverydate = deliverydate;
             this.contactperson = contactperson;
-            this.invoicepdf = invpdf;
-            this.arrivaldate = arrivaldate;
         }
         public PR(int whid,Supplier prs, string requester, string prtitle, bool iscostofsale
             , bool iscompanyasset, bool ismaintainance, bool isrental, bool isother, string otherreason, string adddetails
-            , PRStatus prstatus, DateTime deliverydate, string contactperson, string invpdf, DateTime? arrivaldate = null)
+            , PRStatus prstatus, DateTime deliverydate, string contactperson)
         {
             this.warehouseID = whid;
             this.supplier = prs;
@@ -150,20 +142,22 @@ WHERE pr.ID = @id;";
             this.prstatus = prstatus;
             this.deliverydate = deliverydate;
             this.contactperson = contactperson;
-            this.invoicepdf = invpdf;
-            this.arrivaldate = arrivaldate;
         }
 
         public bool Create()
         {
             MySqlConnection conn = null;
+            MySqlTransaction transaction = null;
             try
             {
                 conn = new MySqlConnection(connstr);
                 conn.Open();
+
+                transaction = conn.BeginTransaction();
+
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO PR (ID, SupplierID, Requester, PRTitle, IsCostOfSale, IsCompanyAsset, IsMaintainance, IsRental, IsOther, OtherReason, AddDetails, PRStatusID, DeliveryDate, ContactPerson, Arrivaldate, InvoicePDF, WarehouseID) VALUES (NULL, @supid, @requester, @prtitle, @iscostofsale, @iscompanyasset, @ismaintainance, @isrental, @isother, @otherreason, @adddetails, @prstatusid, @deliverydate, @contactperson, @arrivaldate, @invoicepdf, @whid)";
+                    string insert = "INSERT INTO PR (ID, SupplierID, Requester, PRTitle, IsCostOfSale, IsCompanyAsset, IsMaintainance, IsRental, IsOther, OtherReason, AddDetails, PRStatusID, DeliveryDate, ContactPerson, WarehouseID) VALUES (NULL, @supid, @requester, @prtitle, @iscostofsale, @iscompanyasset, @ismaintainance, @isrental, @isother, @otherreason, @adddetails, @prstatusid, @deliverydate, @contactperson, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@supid",supplier.ID);
                     cmd.Parameters.AddWithValue("@requester", requester);
@@ -179,68 +173,30 @@ WHERE pr.ID = @id;";
                     cmd.Parameters.AddWithValue("@deliverydate", deliverydate);
                     cmd.Parameters.AddWithValue("@contactperson", contactperson);
                     cmd.Parameters.AddWithValue("@whid", warehouseID);
-                    if(arrivaldate == null)
-                    {
-                        cmd.Parameters.AddWithValue("@arrivaldate", DBNull.Value);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@arrivaldate", arrivaldate);
-                    }
-                    cmd.Parameters.AddWithValue("@invoicepdf", invoicepdf);
                     cmd.ExecuteNonQuery();
+
+                    //Retrieve last inserted ID in this transaction
+                    cmd.CommandText = "SELECT LAST_INSERT_ID();";
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        GlobalVariable.Global.PRID = -1;
+                        GlobalVariable.Global.PRID = Convert.ToInt32(result);
+                    }
+                    // Commit the transaction
+                    transaction.Commit();
                 }
                 return true;
             }
             catch (MySqlException e)
             {
-                return false;
-            }
-            finally
-            {
-                if (conn != null && conn.State != ConnectionState.Closed)
-                    conn.Close();
-            }
-        }
-        public bool Change()
-        {
-            MySqlConnection conn = null;
-            try
-            {
-                conn = new MySqlConnection(connstr);
-                conn.Open();
-                using (var cmd = conn.CreateCommand())
+                // Rollback the transaction in case of error
+                if (transaction != null)
                 {
-                    string update = "UPDATE PR SET SupplierID = @supid, Requester = @requester, PRTitle = @prtitle, IsCostOfSale = @iscostofsale, IsCompanyAsset = @iscompanyasset, IsMaintainance = @ismaintainance, IsRental = @isrental, IsOther = @isother, OtherReason = @otherreason, AddDetails = @adddetails, PRStatusID = @prstatusid, DeliveryDate = @deliverydate, ContactPerson = @contactperson, ArrivalDate = @arrivaldate, InvoicePDF = @invoicepdf WHERE ID = @id";
-                    cmd.CommandText = update;
-                    cmd.Parameters.AddWithValue("@supid", supplier.ID);
-                    cmd.Parameters.AddWithValue("@requester", requester);
-                    cmd.Parameters.AddWithValue("@prtitle", prtitle);
-                    cmd.Parameters.AddWithValue("@iscostofsale", iscostofsale);
-                    cmd.Parameters.AddWithValue("@iscompanyasset", iscompanyasset);
-                    cmd.Parameters.AddWithValue("@ismaintainance", ismaintainance);
-                    cmd.Parameters.AddWithValue("@isrental", isrental);
-                    cmd.Parameters.AddWithValue("@isother", isother);
-                    cmd.Parameters.AddWithValue("@otherreason", otherreason);
-                    cmd.Parameters.AddWithValue("@adddetails", adddetails);
-                    cmd.Parameters.AddWithValue("@prstatusid", prstatus.ID);
-                    cmd.Parameters.AddWithValue("@deliverydate", deliverydate);
-                    cmd.Parameters.AddWithValue("@contactperson", contactperson);
-                    if (arrivaldate == null)
-                    {
-                        cmd.Parameters.AddWithValue("@arrivaldate", DBNull.Value);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@arrivaldate", arrivaldate);
-                    }
-                    cmd.Parameters.AddWithValue("@invoicepdf", invoicepdf);
-                    cmd.ExecuteNonQuery();
+                    transaction.Rollback();
                 }
-                return true;
-            }
-            catch (MySqlException e)
-            {
+                // Log the error
+                Console.WriteLine("MySQL Error: " + e.Message);
                 return false;
             }
             finally
@@ -290,7 +246,7 @@ WHERE pr.ID = @id;";
 pr.ID AS PRID, pr.SupplierID AS PRSupplierID, spr.SupplierName AS PRSupplierName, spr.SupplierAddress AS PRSupplierAddress, 
 pr.Requester, pr.PRTitle, pr.IsCostOfSale, pr.IsCompanyAsset, pr.IsMaintainance, pr.IsRental, pr.IsOther, pr.OtherReason, pr.AddDetails, 
 pr.PRStatusID, sta.Status,
-pr.DeliveryDate, pr.ContactPerson, pr.ArrivalDate, pr.InvoicePDF
+pr.DeliveryDate, pr.ContactPerson
 FROM PR pr
 LEFT JOIN Supplier spr ON pr.SupplierID = spr.ID
 LEFT JOIN PRStatus sta ON pr.PRStatusID = sta.ID
@@ -323,10 +279,8 @@ WHERE pr.WarehouseID = @whid;";
                             PRStatus prstatus = new PRStatus(sid, sta);
                             DateTime deliverydate = Convert.ToDateTime(reader["DeliveryDate"]);
                             string contactperson = reader["ContactPerson"].ToString();
-                            DateTime? arrivaldate = reader["ArrivalDate"] != DBNull.Value ? Convert.ToDateTime(reader["ArrivalDate"]) : (DateTime?)null;
-                            string invoicepdf = reader["InvoicePDF"].ToString();
 
-                            PR pr = new PR(id,GlobalVariable.Global.warehouseID, supplier, requester, prtitle, iscostofsale, iscompanyasset, ismaintainance, isrental, isother, otherreason, adddetails, prstatus, deliverydate, contactperson, invoicepdf, arrivaldate);
+                            PR pr = new PR(id,GlobalVariable.Global.warehouseID, supplier, requester, prtitle, iscostofsale, iscompanyasset, ismaintainance, isrental, isother, otherreason, adddetails, prstatus, deliverydate, contactperson);
                             prList.Add(pr);
                         }
                     }

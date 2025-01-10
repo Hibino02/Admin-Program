@@ -2,13 +2,11 @@
 using Admin_Program.SupplyManagement.ObjectClass;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Admin_Program.GlobalVariable;
 
 namespace Admin_Program.SupplyManagement.UIClass.PRManage
 {
@@ -17,6 +15,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         private List<int> supplierID = new List<int>();
         List<AllSupplierListDataDridView> supplierList;
         int selectedSupplierID;
+        Supplier supplier;
         //Selected supplier and showing quotationlist
         List<AllQuotationListDataGridView> quotationFilteredList;
         List<AllQuotationListDataGridView> quotationOriginalList = AllQuotationListDataGridView.AllQuotationFilteredByValidDate();
@@ -30,6 +29,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         //Current Quotation Selected Datagridview
         List<AllQuotationListDataGridView> currentSelectedQuotationList;
         BindingSource currentSelectedQuotationBindingSource;
+        string selectedQuotationPDF;
         //Pre-SupplyInPR
         List<SupplyInQuotation> supplyInQuotation;
         List<SupplyInQuotation> preSupplyInPRList;
@@ -40,11 +40,13 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         int supplyIDforQuery;
         float price;
         //Selected SupplyInPR
-        List<AllSupplyInPRListDataGridView> supplyInPRList; //This object create in addQuotationbutton_Click
+        List<AllSupplyInPRListDataGridView> supplyInPRList;
         BindingSource supplyInPRBindingSource;
-
-        private Dictionary<string, Color> idToColorMap = new Dictionary<string, Color>();
+        //PictureBox
+        private PictureBox leftPictureBox;
+        private PictureBox rightPictureBox;
         // List of predefined colors for highlighting
+        private Dictionary<string, Color> idToColorMap = new Dictionary<string, Color>();
         private readonly List<Color> highlightColors = new List<Color>
         {
             Color.LightCyan,
@@ -64,11 +66,39 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
 
             supplierList = new List<AllSupplierListDataDridView>();
             preSupplyInPRList = new List<SupplyInQuotation>();
+            supplyInPRList = new List<AllSupplyInPRListDataGridView>();
+
             quotationBindingSource = new BindingSource();
             currentSelectedQuotationBindingSource = new BindingSource();
             supplyInQuotationBindingSource = new BindingSource();
             preSupplyInPRBindingSource = new BindingSource();
             supplyInPRBindingSource = new BindingSource();
+
+            leftPictureBox = new PictureBox
+            {
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Visible = false,
+                BackColor = Color.Transparent,
+                Size = new Size(900, 620),
+                Location = new Point(10, 10)
+            };
+            this.Controls.Add(leftPictureBox);
+            supplyInQuotationdataGridView.CellMouseEnter += supplyInQuotationdataGridView_CellMouseEnter;
+            supplyInQuotationdataGridView.CellMouseLeave += supplyInQuotationdataGridView_CellMouseLeave;
+            preSupplyInPRdataGridView.CellMouseEnter += preSupplyInPRdataGridView_CellMouseEnter;
+            preSupplyInPRdataGridView.CellMouseLeave += preSupplyInPRdataGridView_CellMouseLeave;
+
+            rightPictureBox = new PictureBox
+            {
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Visible = false,
+                BackColor = Color.Transparent,
+                Size = new Size(900, 620),
+                Location = new Point(750, 0)
+            };
+            this.Controls.Add(rightPictureBox);
+            supplyInPRdataGridView.CellMouseEnter += supplyInPRdataGridView_CellMouseEnter;
+            supplyInPRdataGridView.CellMouseLeave += supplyInPRdataGridView_CellMouseLeave;
 
             UpdateComponents();
         }
@@ -188,7 +218,8 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         //Event to showing supply refer to clicking Quotation
         private void quotationDatagridview_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.RowIndex >= 0)
+            resetSelectionInCurrentSelectedQuotation();
+            if (e.RowIndex >= 0)
             {
                 DataGridViewRow selectedRow = quotationDatagridview.Rows[e.RowIndex];
 
@@ -210,7 +241,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         {
             if (!string.IsNullOrEmpty(quotationPDF))
             {
-                GlobalVariable.Global.DownloadAndOpenPdf(quotationPDF);
+                Global.DownloadAndOpenPdf(quotationPDF);
             }
         }
         private void quotationDatagridview_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -241,6 +272,10 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
 
             FormatSupplyInQuotationDataGridView();
         }
+        private void supplyInQuotationdataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            supplyInQuotationdataGridView.ClearSelection();
+        }
         private void FormatSupplyInQuotationDataGridView()
         {
             var Columns = supplyInQuotationdataGridView.Columns;
@@ -259,17 +294,17 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             if (Columns["SupplyName"] != null)
             {
                 Columns["SupplyName"].HeaderText = "ชื่อวัดดุ";
-                Columns["SupplyName"].Width = 280;
+                Columns["SupplyName"].Width = 360;
             }
             if (Columns["Price"] != null)
             {
                 Columns["Price"].HeaderText = "ราคา";
-                Columns["Price"].Width = 100;
+                Columns["Price"].Width = 60;
             }
             if (Columns["SupplyUnit"] != null)
             {
                 Columns["SupplyUnit"].HeaderText = "หน่วย";
-                Columns["SupplyUnit"].Width = 100;
+                Columns["SupplyUnit"].Width = 60;
             }
             if (Columns["SupplyPhoto"] != null)
             {
@@ -277,54 +312,105 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                 Columns["SupplyPhoto"].Width = 24;
             }
         }
-        private void supplyInQuotationdataGridView_SelectionChanged(object sender, EventArgs e)
+        private void supplyInQuotationdataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-            supplyInQuotationdataGridView.ClearSelection();
+            if(e.RowIndex >= 0)
+            {
+                string columnName = supplyInQuotationdataGridView.Columns[e.ColumnIndex].Name;
+                if(columnName == "SupplyPhoto")
+                {
+                    string imagePath = supplyInQuotationdataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
+                    if (string.IsNullOrEmpty(imagePath))
+                    {
+                        return;
+                    }
+
+                    Global.LoadImageIntoPictureBox(imagePath, leftPictureBox);
+                    leftPictureBox.Visible = true;
+                    leftPictureBox.BringToFront();
+                }
+            }
+        }
+        private void supplyInQuotationdataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            leftPictureBox.Visible = false;
         }
         //Event to addSelectedQuotation to PR
+        private void resetSelectionInCurrentSelectedQuotation()
+        {
+            currentSelectedQuotationdataGridView.ClearSelection();
+            selectedQuotationPDF = null;
+            currentSelectedQuotationPDFlinkLabel.LinkColor = System.Drawing.Color.Blue;
+        }
         private void addQuotationbutton_Click(object sender, EventArgs e)
         {
             if (quotationFilteredList != null && quotationFilteredList.Any())
             {
-                supplyInPRList = new List<AllSupplyInPRListDataGridView>();
-                suppliercomboBox.Enabled = false;
-                quotationIDforQuery = quotationID;
-                AllQuotationListDataGridView objToMove = quotationFilteredList.FirstOrDefault(q => q.ID == quotationID);
-
-                if (objToMove != null)
+                DialogResult result = MessageBox.Show("ใบเสนอราคาที่ถูกเพิ่ม จะไม่สามารถยกเลิกได้ คุณแน่ใจหรือไม่?", "ยืนยันการเพิ่ม",
+                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(result == DialogResult.Yes)
                 {
-                    // Remove the object from the source list
-                    quotationFilteredList.Remove(objToMove);
+                    suppliercomboBox.Enabled = false;
+                    quotationIDforQuery = quotationID;
+                    AllQuotationListDataGridView objToMove = quotationFilteredList.FirstOrDefault(q => q.ID == quotationID);
 
-                    supplyInQuotationBindingSource.DataSource = null;
-                    quotationBindingSource.DataSource = null;
-                    quotationBindingSource.DataSource = quotationFilteredList;
-                    quotationDatagridview.DataSource = quotationBindingSource;
-                    FormatQuotationForSelectedSupplier();
-
-                    // Add the object to the destination list
-                    if (currentSelectedQuotationList == null)
+                    if (objToMove != null)
                     {
-                        currentSelectedQuotationList = new List<AllQuotationListDataGridView>();
+                        // Remove the object from the source list
+                        quotationFilteredList.Remove(objToMove);
+
+                        supplyInQuotationBindingSource.DataSource = null;
+                        quotationBindingSource.DataSource = null;
+                        quotationBindingSource.DataSource = quotationFilteredList;
+                        quotationDatagridview.DataSource = quotationBindingSource;
+                        FormatQuotationForSelectedSupplier();
+
+                        // Add the object to the destination list
+                        if (currentSelectedQuotationList == null)
+                        {
+                            currentSelectedQuotationList = new List<AllQuotationListDataGridView>();
+                        }
+                        currentSelectedQuotationList.Add(objToMove);
+
+                        currentSelectedQuotationBindingSource.DataSource = null;
+                        currentSelectedQuotationBindingSource.DataSource = currentSelectedQuotationList;
+                        currentSelectedQuotationdataGridView.DataSource = currentSelectedQuotationBindingSource;
+                        FormatCurrentSelectedQuotation();
+
+                        resetSelectionInCurrentSelectedQuotation();
+                        UpdatePreSupplyInPR();
                     }
-                    currentSelectedQuotationList.Add(objToMove);
-
-                    currentSelectedQuotationBindingSource.DataSource = null;
-                    currentSelectedQuotationBindingSource.DataSource = currentSelectedQuotationList;
-                    currentSelectedQuotationdataGridView.DataSource = currentSelectedQuotationBindingSource;
-                    FormatCurrentSelectedQuotation();
-
-                    UpdatePreSupplyInPR();
-                }
+                }         
             }
             else
             {
                 MessageBox.Show("กุณาเลือก ใบเสนอราคา");
             }
         }
-        private void currentSelectedQuotationdataGridView_SelectionChanged(object sender, EventArgs e)
+        private void currentSelectedQuotationdataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            currentSelectedQuotationdataGridView.ClearSelection();
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow selectedRow = currentSelectedQuotationdataGridView.Rows[e.RowIndex];
+
+                selectedQuotationPDF = selectedRow.Cells["QuotationPDF"].Value.ToString();
+                // Update link label colors based on file existence
+                if (!string.IsNullOrEmpty(selectedQuotationPDF))
+                {
+                    currentSelectedQuotationPDFlinkLabel.LinkColor = System.Drawing.Color.Purple;
+                }
+                else
+                {
+                    currentSelectedQuotationPDFlinkLabel.LinkColor = System.Drawing.Color.Blue;
+                }
+            }
+        }
+        private void currentSelectedQuotationPDFlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(selectedQuotationPDF))
+            {
+                Global.DownloadAndOpenPdf(selectedQuotationPDF);
+            }
         }
         private void FormatCurrentSelectedQuotation()
         {
@@ -404,17 +490,17 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             if (Columns["SupplyName"] != null)
             {
                 Columns["SupplyName"].HeaderText = "ชื่อวัดดุ";
-                Columns["SupplyName"].Width = 300;
+                Columns["SupplyName"].Width = 350;
             }
             if (Columns["Price"] != null)
             {
                 Columns["Price"].HeaderText = "ราคา/หน่วย";
-                Columns["Price"].Width = 100;
+                Columns["Price"].Width = 80;
             }
             if (Columns["SupplyUnit"] != null)
             {
                 Columns["SupplyUnit"].HeaderText = "หน่วย";
-                Columns["SupplyUnit"].Width = 80;
+                Columns["SupplyUnit"].Width = 50;
             }
             if (Columns["SupplyPhoto"] != null)
             {
@@ -430,6 +516,29 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             // Set row color based on the ID
             SetRowColorById(preSupplyInPRdataGridView.Rows[e.RowIndex], id);
         }
+        private void preSupplyInPRdataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.RowIndex >= 0)
+            {
+                string columnName = preSupplyInPRdataGridView.Columns[e.ColumnIndex].Name;
+                if(columnName == "SupplyPhoto")
+                {
+                    string imagePath = preSupplyInPRdataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
+                    if (string.IsNullOrEmpty(imagePath))
+                    {
+                        return;
+                    }
+
+                    Global.LoadImageIntoPictureBox(imagePath ,leftPictureBox);
+                    leftPictureBox.Visible = true;
+                    leftPictureBox.BringToFront();
+                }
+            }
+        }
+        private void preSupplyInPRdataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            leftPictureBox.Visible = false;
+        }
         //Add-SupplyToPR
         private void preSupplyInPRdataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -443,6 +552,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                 quotationIDforQuery = Convert.ToInt32(selectedRowInPreSupply.Cells["QuotationID"].Value);
                 supplyIDforQuery = Convert.ToInt32(selectedRowInPreSupply.Cells["SupplyID"].Value);
                 price = Convert.ToSingle(selectedRowInPreSupply.Cells["Price"].Value);
+                resetSelectionInCurrentSelectedQuotation();
             }
         }
         private void addToSupplyInPRbutton_Click(object sender, EventArgs e)
@@ -460,10 +570,11 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                         Supply s = new Supply(supplyIDforQuery);
                         AllSupplyInPRListDataGridView list = new AllSupplyInPRListDataGridView(
                             s.SupplyName, price, s.SupplyUnit,quantity, amount,q.QuotationNumber
-                            ,s.SupplyPhoto,q.QuotationPDF,q.ID);
+                            ,s.SupplyPhoto,q.QuotationPDF,q.ID,s.ID);
                         supplyInPRList.Add(list);
 
                         quantitytextBox.Clear();
+                        resetSelectionInCurrentSelectedQuotation();
                         UpdateSupplyInPR();
                     }
                     else
@@ -502,6 +613,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                             supplyInPRList.Add(list);
 
                             quantitytextBox.Clear();
+                            resetSelectionInCurrentSelectedQuotation();
                             UpdateSupplyInPR();
                         }
                         else
@@ -520,7 +632,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                 }
             }
         }
-        //SupplyInPR
+        //SupplyInPR ADD
         private void UpdateSupplyInPR()
         {
             supplyInPRBindingSource.DataSource = null;
@@ -528,6 +640,10 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             supplyInPRdataGridView.DataSource = supplyInPRBindingSource;
 
             FormatSupplyInPRListDataGridView();
+        }
+        private void supplyInPRdataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            resetSelectionInCurrentSelectedQuotation();
         }
         private void FormatSupplyInPRListDataGridView()
         {
@@ -575,6 +691,33 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             {
                 Columns["QuotationID"].Visible = false;
             }
+            if (Columns["SupplyID"] != null)
+            {
+                Columns["SupplyID"].Visible = false;
+            }
+        }
+        private void supplyInPRdataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.RowIndex >= 0)
+            {
+                string columnName = supplyInPRdataGridView.Columns[e.ColumnIndex].Name;
+                if(columnName == "SupplyPhoto")
+                {
+                    string imagePath = supplyInPRdataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString();
+                    if (string.IsNullOrEmpty(imagePath))
+                    {
+                        return;
+                    }
+
+                    Global.LoadImageIntoPictureBox(imagePath, rightPictureBox);
+                    rightPictureBox.Visible = true;
+                    rightPictureBox.BringToFront();
+                }
+            }
+        }
+        private void supplyInPRdataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            rightPictureBox.Visible = false;
         }
         private void supplyInPRdataGridView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
@@ -583,6 +726,101 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
 
             // Set row color based on the ID
             SetRowColorById(supplyInPRdataGridView.Rows[e.RowIndex], id);
+        }
+        //SupplyInPR REMOVE
+        private void removeFromSupplyInPRbutton_Click(object sender, EventArgs e)
+        {
+            if(supplyInPRdataGridView.SelectedRows.Count > 0)
+            {
+                var selectedRow = supplyInPRdataGridView.SelectedRows[0];
+                int rowIndex = selectedRow.Index;
+                if (rowIndex >= 0 && rowIndex < supplyInPRList.Count)
+                {
+                    supplyInPRList.RemoveAt(rowIndex);
+                    resetSelectionInCurrentSelectedQuotation();
+                    UpdateSupplyInPR();
+                }
+            }
+        }
+        //Check PR attribute
+        private bool CheckPR()
+        {
+            int selectSupplierIndex = suppliercomboBox.SelectedIndex;
+            if (selectSupplierIndex >= 0 && selectSupplierIndex < supplierID.Count)
+            {
+                int selectedSupplierID = supplierID[selectSupplierIndex];
+                supplier = new Supplier(selectedSupplierID);
+            }
+            else
+            {
+                MessageBox.Show("กรุณาเลือก ซัพพลายเออร์");
+                return false;
+            }
+            if (string.IsNullOrEmpty(requestertextBox.Text))
+            {
+                MessageBox.Show("กรุณาระบุ ชื่อผู้ออกคำขอซื้อ");
+                return false;
+            }
+            if (string.IsNullOrEmpty(PRTitletextBox.Text))
+            {
+                MessageBox.Show("กรุณาระบุ หัวข้อคำขอซื้อ");
+                return false;
+            }
+            bool isAnyPrimaryChecked = costOfSalecheckBox.Checked || companyAssetcheckBox.Checked 
+                || maintainancecheckBox.Checked || rentalLeasecheckBox.Checked;
+            if (othercheckBox.Checked && string.IsNullOrEmpty(otherReasontextBox.Text))
+            {
+                MessageBox.Show("ใส่ข้อมูลสำหรับบัญชีเมื่อเลือก 'อื่นๆ'");
+                return false;
+            }
+            if (!isAnyPrimaryChecked && !othercheckBox.Checked)
+            {
+                MessageBox.Show("กรุณาเลือก ข้อมูลสำหรับบัญชี อย่างน้อย 1 ข้อ");
+                return false;
+            }
+            if (deliveryDateTimePicker.Value.Date <= DateTime.Now)
+            {
+                MessageBox.Show("วันที่ต้องการให้ส่ง ต้องมากกว่าวันที่ปัจจุบัน");
+                return false;
+            }
+            if (string.IsNullOrEmpty(contactPersontextBox.Text))
+            {
+                MessageBox.Show("กรุณาระบุ ชื่อผู้ติดต่อส่งสินค้า");
+                return false;
+            }
+            return true;
+        }
+        //Check SupplyInPR
+        private bool SupplyInPR()
+        {
+            if(supplyInPRList.Count == 0)
+            {
+                MessageBox.Show("กรุณา เพิ่มวัสดุ อย่างน้อย 1 รายการ");
+                return false;
+            }
+            return true;
+        }
+        //Create PR
+        private void createPRbutton_Click(object sender, EventArgs e)
+        {
+            if (CheckPR() && SupplyInPR())
+            {
+                PRStatus prS = new PRStatus(1);
+                PR newPR = new PR(Global.warehouseID, supplier, requestertextBox.Text, PRTitletextBox.Text,
+                    costOfSalecheckBox.Checked, companyAssetcheckBox.Checked, maintainancecheckBox.Checked,
+                    rentalLeasecheckBox.Checked, othercheckBox.Checked, otherReasontextBox.Text, addDetailsrichTextBox.Text,
+                    prS, deliveryDateTimePicker.Value.Date, contactPersontextBox.Text);
+                if (newPR.Create())
+                {
+                    foreach(AllSupplyInPRListDataGridView siprView in supplyInPRList)
+                    {
+                        Supply s = new Supply(siprView.SupplyID);
+                        SupplyInPR sipr = new SupplyInPR(Global.PRID,s,siprView.Price,siprView.Quantity
+                            ,siprView.Amount,siprView.QuotationPDF,siprView.QuotationNumber);
+                        //Think for save quotation seperately and not duplicate here
+                    }
+                }
+            }
         }
     }
 }

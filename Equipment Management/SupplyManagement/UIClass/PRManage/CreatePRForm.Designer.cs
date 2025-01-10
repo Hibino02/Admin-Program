@@ -36,16 +36,6 @@
             this.removeFromSupplyInPRbutton = new System.Windows.Forms.Button();
             this.preSupplyInPRdataGridView = new System.Windows.Forms.DataGridView();
             this.PRgroupBox = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.currentSelectedQuotationdataGridView = new System.Windows.Forms.DataGridView();
-            this.selectedSupplyInQuotationlabel = new System.Windows.Forms.Label();
-            this.quotationPDFlinkLabel = new System.Windows.Forms.LinkLabel();
-            this.addQuotationbutton = new System.Windows.Forms.Button();
-            this.supplyInQuotationlabel = new System.Windows.Forms.Label();
-            this.supplyInQuotationdataGridView = new System.Windows.Forms.DataGridView();
-            this.quotationDatagridview = new System.Windows.Forms.DataGridView();
-            this.quotation1label = new System.Windows.Forms.Label();
-            this.supplierAddresslabel = new System.Windows.Forms.Label();
             this.supplierAddressrichTextBox = new System.Windows.Forms.RichTextBox();
             this.suppliercomboBox = new System.Windows.Forms.ComboBox();
             this.contactPersontextBox = new System.Windows.Forms.TextBox();
@@ -57,13 +47,26 @@
             this.othercheckBox = new System.Windows.Forms.CheckBox();
             this.rentalLeasecheckBox = new System.Windows.Forms.CheckBox();
             this.maintainancecheckBox = new System.Windows.Forms.CheckBox();
-            this.complayAssetcheckBox = new System.Windows.Forms.CheckBox();
+            this.companyAssetcheckBox = new System.Windows.Forms.CheckBox();
             this.costOfSalecheckBox = new System.Windows.Forms.CheckBox();
             this.forAccountlabel = new System.Windows.Forms.Label();
             this.PRTitletextBox = new System.Windows.Forms.TextBox();
             this.PRtitlelabel = new System.Windows.Forms.Label();
             this.requestertextBox = new System.Windows.Forms.TextBox();
             this.prCreatorNamelabel = new System.Windows.Forms.Label();
+            this.currentSelectedQuotationPDFlinkLabel = new System.Windows.Forms.LinkLabel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.currentSelectedQuotationdataGridView = new System.Windows.Forms.DataGridView();
+            this.selectedSupplyInQuotationlabel = new System.Windows.Forms.Label();
+            this.quotationPDFlinkLabel = new System.Windows.Forms.LinkLabel();
+            this.addQuotationbutton = new System.Windows.Forms.Button();
+            this.supplyInQuotationlabel = new System.Windows.Forms.Label();
+            this.supplyInQuotationdataGridView = new System.Windows.Forms.DataGridView();
+            this.quotationDatagridview = new System.Windows.Forms.DataGridView();
+            this.quotation1label = new System.Windows.Forms.Label();
+            this.createPRbutton = new System.Windows.Forms.Button();
+            this.addDetaillabel = new System.Windows.Forms.Label();
+            this.addDetailsrichTextBox = new System.Windows.Forms.RichTextBox();
             this.supplyInPRgroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInPRdataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.preSupplyInPRdataGridView)).BeginInit();
@@ -124,6 +127,9 @@
             this.supplyInPRdataGridView.ShowCellToolTips = false;
             this.supplyInPRdataGridView.Size = new System.Drawing.Size(736, 338);
             this.supplyInPRdataGridView.TabIndex = 28;
+            this.supplyInPRdataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyInPRdataGridView_CellClick);
+            this.supplyInPRdataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyInPRdataGridView_CellMouseEnter);
+            this.supplyInPRdataGridView.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyInPRdataGridView_CellMouseLeave);
             this.supplyInPRdataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.supplyInPRdataGridView_RowPrePaint);
             // 
             // addToSupplyInPRbutton
@@ -146,6 +152,7 @@
             this.removeFromSupplyInPRbutton.TabIndex = 26;
             this.removeFromSupplyInPRbutton.Text = "▶️";
             this.removeFromSupplyInPRbutton.UseVisualStyleBackColor = true;
+            this.removeFromSupplyInPRbutton.Click += new System.EventHandler(this.removeFromSupplyInPRbutton_Click);
             // 
             // preSupplyInPRdataGridView
             // 
@@ -165,20 +172,14 @@
             this.preSupplyInPRdataGridView.Size = new System.Drawing.Size(511, 307);
             this.preSupplyInPRdataGridView.TabIndex = 24;
             this.preSupplyInPRdataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellClick);
+            this.preSupplyInPRdataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellMouseEnter);
+            this.preSupplyInPRdataGridView.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellMouseLeave);
             this.preSupplyInPRdataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.preSupplyInPRdataGridView_RowPrePaint);
             // 
             // PRgroupBox
             // 
-            this.PRgroupBox.Controls.Add(this.label1);
-            this.PRgroupBox.Controls.Add(this.currentSelectedQuotationdataGridView);
-            this.PRgroupBox.Controls.Add(this.selectedSupplyInQuotationlabel);
-            this.PRgroupBox.Controls.Add(this.quotationPDFlinkLabel);
-            this.PRgroupBox.Controls.Add(this.addQuotationbutton);
-            this.PRgroupBox.Controls.Add(this.supplyInQuotationlabel);
-            this.PRgroupBox.Controls.Add(this.supplyInQuotationdataGridView);
-            this.PRgroupBox.Controls.Add(this.quotationDatagridview);
-            this.PRgroupBox.Controls.Add(this.quotation1label);
-            this.PRgroupBox.Controls.Add(this.supplierAddresslabel);
+            this.PRgroupBox.Controls.Add(this.addDetailsrichTextBox);
+            this.PRgroupBox.Controls.Add(this.addDetaillabel);
             this.PRgroupBox.Controls.Add(this.supplierAddressrichTextBox);
             this.PRgroupBox.Controls.Add(this.suppliercomboBox);
             this.PRgroupBox.Controls.Add(this.contactPersontextBox);
@@ -190,155 +191,25 @@
             this.PRgroupBox.Controls.Add(this.othercheckBox);
             this.PRgroupBox.Controls.Add(this.rentalLeasecheckBox);
             this.PRgroupBox.Controls.Add(this.maintainancecheckBox);
-            this.PRgroupBox.Controls.Add(this.complayAssetcheckBox);
+            this.PRgroupBox.Controls.Add(this.companyAssetcheckBox);
             this.PRgroupBox.Controls.Add(this.costOfSalecheckBox);
             this.PRgroupBox.Controls.Add(this.forAccountlabel);
             this.PRgroupBox.Controls.Add(this.PRTitletextBox);
             this.PRgroupBox.Controls.Add(this.PRtitlelabel);
             this.PRgroupBox.Controls.Add(this.requestertextBox);
             this.PRgroupBox.Controls.Add(this.prCreatorNamelabel);
-            this.PRgroupBox.Location = new System.Drawing.Point(-1, 0);
+            this.PRgroupBox.Location = new System.Drawing.Point(5, 0);
             this.PRgroupBox.Name = "PRgroupBox";
-            this.PRgroupBox.Size = new System.Drawing.Size(1468, 419);
+            this.PRgroupBox.Size = new System.Drawing.Size(565, 408);
             this.PRgroupBox.TabIndex = 33;
             this.PRgroupBox.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label1.Location = new System.Drawing.Point(571, 199);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(228, 24);
-            this.label1.TabIndex = 64;
-            this.label1.Text = "ใบเสนอราคาที่ถูกเลือกปัจจุบัน :";
-            // 
-            // currentSelectedQuotationdataGridView
-            // 
-            this.currentSelectedQuotationdataGridView.AllowUserToAddRows = false;
-            this.currentSelectedQuotationdataGridView.AllowUserToDeleteRows = false;
-            this.currentSelectedQuotationdataGridView.AllowUserToResizeColumns = false;
-            this.currentSelectedQuotationdataGridView.AllowUserToResizeRows = false;
-            this.currentSelectedQuotationdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.currentSelectedQuotationdataGridView.Location = new System.Drawing.Point(575, 226);
-            this.currentSelectedQuotationdataGridView.MultiSelect = false;
-            this.currentSelectedQuotationdataGridView.Name = "currentSelectedQuotationdataGridView";
-            this.currentSelectedQuotationdataGridView.ReadOnly = true;
-            this.currentSelectedQuotationdataGridView.RowHeadersVisible = false;
-            this.currentSelectedQuotationdataGridView.RowTemplate.Height = 24;
-            this.currentSelectedQuotationdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.currentSelectedQuotationdataGridView.ShowCellToolTips = false;
-            this.currentSelectedQuotationdataGridView.Size = new System.Drawing.Size(368, 154);
-            this.currentSelectedQuotationdataGridView.TabIndex = 63;
-            this.currentSelectedQuotationdataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.currentSelectedQuotationdataGridView_RowPrePaint);
-            this.currentSelectedQuotationdataGridView.SelectionChanged += new System.EventHandler(this.currentSelectedQuotationdataGridView_SelectionChanged);
-            // 
-            // selectedSupplyInQuotationlabel
-            // 
-            this.selectedSupplyInQuotationlabel.AutoSize = true;
-            this.selectedSupplyInQuotationlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.selectedSupplyInQuotationlabel.Location = new System.Drawing.Point(1104, 385);
-            this.selectedSupplyInQuotationlabel.Name = "selectedSupplyInQuotationlabel";
-            this.selectedSupplyInQuotationlabel.Size = new System.Drawing.Size(262, 24);
-            this.selectedSupplyInQuotationlabel.TabIndex = 62;
-            this.selectedSupplyInQuotationlabel.Text = "รายการวัสดุจากใบเสนอราคาที่เลือก :";
-            // 
-            // quotationPDFlinkLabel
-            // 
-            this.quotationPDFlinkLabel.AutoSize = true;
-            this.quotationPDFlinkLabel.Location = new System.Drawing.Point(829, 16);
-            this.quotationPDFlinkLabel.Name = "quotationPDFlinkLabel";
-            this.quotationPDFlinkLabel.Size = new System.Drawing.Size(110, 13);
-            this.quotationPDFlinkLabel.TabIndex = 61;
-            this.quotationPDFlinkLabel.TabStop = true;
-            this.quotationPDFlinkLabel.Text = "ดูเอกสารใบเสนอราคา";
-            this.quotationPDFlinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.quotationPDFlinkLabel_LinkClicked);
-            // 
-            // addQuotationbutton
-            // 
-            this.addQuotationbutton.Location = new System.Drawing.Point(868, 197);
-            this.addQuotationbutton.Name = "addQuotationbutton";
-            this.addQuotationbutton.Size = new System.Drawing.Size(75, 23);
-            this.addQuotationbutton.TabIndex = 60;
-            this.addQuotationbutton.Text = "เพิ่ม";
-            this.addQuotationbutton.UseVisualStyleBackColor = true;
-            this.addQuotationbutton.Click += new System.EventHandler(this.addQuotationbutton_Click);
-            // 
-            // supplyInQuotationlabel
-            // 
-            this.supplyInQuotationlabel.AutoSize = true;
-            this.supplyInQuotationlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.supplyInQuotationlabel.Location = new System.Drawing.Point(945, 8);
-            this.supplyInQuotationlabel.Name = "supplyInQuotationlabel";
-            this.supplyInQuotationlabel.Size = new System.Drawing.Size(211, 24);
-            this.supplyInQuotationlabel.TabIndex = 59;
-            this.supplyInQuotationlabel.Text = "รายการวัสดุในใบเสนอราคา :";
-            // 
-            // supplyInQuotationdataGridView
-            // 
-            this.supplyInQuotationdataGridView.AllowUserToAddRows = false;
-            this.supplyInQuotationdataGridView.AllowUserToDeleteRows = false;
-            this.supplyInQuotationdataGridView.AllowUserToResizeColumns = false;
-            this.supplyInQuotationdataGridView.AllowUserToResizeRows = false;
-            this.supplyInQuotationdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.supplyInQuotationdataGridView.Location = new System.Drawing.Point(949, 35);
-            this.supplyInQuotationdataGridView.MultiSelect = false;
-            this.supplyInQuotationdataGridView.Name = "supplyInQuotationdataGridView";
-            this.supplyInQuotationdataGridView.ReadOnly = true;
-            this.supplyInQuotationdataGridView.RowHeadersVisible = false;
-            this.supplyInQuotationdataGridView.RowTemplate.Height = 24;
-            this.supplyInQuotationdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.supplyInQuotationdataGridView.ShowCellToolTips = false;
-            this.supplyInQuotationdataGridView.Size = new System.Drawing.Size(511, 345);
-            this.supplyInQuotationdataGridView.TabIndex = 58;
-            this.supplyInQuotationdataGridView.SelectionChanged += new System.EventHandler(this.supplyInQuotationdataGridView_SelectionChanged);
-            // 
-            // quotationDatagridview
-            // 
-            this.quotationDatagridview.AllowUserToAddRows = false;
-            this.quotationDatagridview.AllowUserToDeleteRows = false;
-            this.quotationDatagridview.AllowUserToResizeColumns = false;
-            this.quotationDatagridview.AllowUserToResizeRows = false;
-            this.quotationDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.quotationDatagridview.Location = new System.Drawing.Point(575, 35);
-            this.quotationDatagridview.MultiSelect = false;
-            this.quotationDatagridview.Name = "quotationDatagridview";
-            this.quotationDatagridview.ReadOnly = true;
-            this.quotationDatagridview.RowHeadersVisible = false;
-            this.quotationDatagridview.RowTemplate.Height = 24;
-            this.quotationDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.quotationDatagridview.ShowCellToolTips = false;
-            this.quotationDatagridview.Size = new System.Drawing.Size(368, 159);
-            this.quotationDatagridview.TabIndex = 57;
-            this.quotationDatagridview.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.quotationDatagridview_CellClick);
-            this.quotationDatagridview.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.quotationDatagridview_DataBindingComplete);
-            // 
-            // quotation1label
-            // 
-            this.quotation1label.AutoSize = true;
-            this.quotation1label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.quotation1label.Location = new System.Drawing.Point(563, 8);
-            this.quotation1label.Name = "quotation1label";
-            this.quotation1label.Size = new System.Drawing.Size(110, 24);
-            this.quotation1label.TabIndex = 56;
-            this.quotation1label.Text = "ใบเสนอราคา :";
-            // 
-            // supplierAddresslabel
-            // 
-            this.supplierAddresslabel.AutoSize = true;
-            this.supplierAddresslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.supplierAddresslabel.Location = new System.Drawing.Point(20, 298);
-            this.supplierAddresslabel.Name = "supplierAddresslabel";
-            this.supplierAddresslabel.Size = new System.Drawing.Size(145, 24);
-            this.supplierAddresslabel.TabIndex = 55;
-            this.supplierAddresslabel.Text = "ที่อยู่ซัพพลายเออร์ :";
             // 
             // supplierAddressrichTextBox
             // 
             this.supplierAddressrichTextBox.Enabled = false;
-            this.supplierAddressrichTextBox.Location = new System.Drawing.Point(20, 325);
+            this.supplierAddressrichTextBox.Location = new System.Drawing.Point(20, 245);
             this.supplierAddressrichTextBox.Name = "supplierAddressrichTextBox";
-            this.supplierAddressrichTextBox.Size = new System.Drawing.Size(533, 78);
+            this.supplierAddressrichTextBox.Size = new System.Drawing.Size(533, 61);
             this.supplierAddressrichTextBox.TabIndex = 54;
             this.supplierAddressrichTextBox.Text = "";
             // 
@@ -346,7 +217,7 @@
             // 
             this.suppliercomboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.suppliercomboBox.FormattingEnabled = true;
-            this.suppliercomboBox.Location = new System.Drawing.Point(136, 243);
+            this.suppliercomboBox.Location = new System.Drawing.Point(136, 207);
             this.suppliercomboBox.Name = "suppliercomboBox";
             this.suppliercomboBox.Size = new System.Drawing.Size(417, 32);
             this.suppliercomboBox.TabIndex = 53;
@@ -355,7 +226,7 @@
             // contactPersontextBox
             // 
             this.contactPersontextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.contactPersontextBox.Location = new System.Drawing.Point(164, 192);
+            this.contactPersontextBox.Location = new System.Drawing.Point(164, 172);
             this.contactPersontextBox.Name = "contactPersontextBox";
             this.contactPersontextBox.Size = new System.Drawing.Size(389, 29);
             this.contactPersontextBox.TabIndex = 52;
@@ -364,7 +235,7 @@
             // 
             this.contactPersonlabel.AutoSize = true;
             this.contactPersonlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.contactPersonlabel.Location = new System.Drawing.Point(8, 197);
+            this.contactPersonlabel.Location = new System.Drawing.Point(8, 177);
             this.contactPersonlabel.Name = "contactPersonlabel";
             this.contactPersonlabel.Size = new System.Drawing.Size(150, 24);
             this.contactPersonlabel.TabIndex = 51;
@@ -372,7 +243,7 @@
             // 
             // deliveryDateTimePicker
             // 
-            this.deliveryDateTimePicker.Location = new System.Drawing.Point(164, 159);
+            this.deliveryDateTimePicker.Location = new System.Drawing.Point(164, 146);
             this.deliveryDateTimePicker.Name = "deliveryDateTimePicker";
             this.deliveryDateTimePicker.Size = new System.Drawing.Size(200, 20);
             this.deliveryDateTimePicker.TabIndex = 50;
@@ -381,7 +252,7 @@
             // 
             this.deliveryDatelabel.AutoSize = true;
             this.deliveryDatelabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.deliveryDatelabel.Location = new System.Drawing.Point(16, 155);
+            this.deliveryDatelabel.Location = new System.Drawing.Point(16, 142);
             this.deliveryDatelabel.Name = "deliveryDatelabel";
             this.deliveryDatelabel.Size = new System.Drawing.Size(142, 24);
             this.deliveryDatelabel.TabIndex = 49;
@@ -391,7 +262,7 @@
             // 
             this.supplierlabel.AutoSize = true;
             this.supplierlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.supplierlabel.Location = new System.Drawing.Point(16, 246);
+            this.supplierlabel.Location = new System.Drawing.Point(16, 210);
             this.supplierlabel.Name = "supplierlabel";
             this.supplierlabel.Size = new System.Drawing.Size(114, 24);
             this.supplierlabel.TabIndex = 48;
@@ -436,15 +307,15 @@
             this.maintainancecheckBox.Text = "Maintainance";
             this.maintainancecheckBox.UseVisualStyleBackColor = true;
             // 
-            // complayAssetcheckBox
+            // companyAssetcheckBox
             // 
-            this.complayAssetcheckBox.AutoSize = true;
-            this.complayAssetcheckBox.Location = new System.Drawing.Point(255, 88);
-            this.complayAssetcheckBox.Name = "complayAssetcheckBox";
-            this.complayAssetcheckBox.Size = new System.Drawing.Size(99, 17);
-            this.complayAssetcheckBox.TabIndex = 43;
-            this.complayAssetcheckBox.Text = "Company Asset";
-            this.complayAssetcheckBox.UseVisualStyleBackColor = true;
+            this.companyAssetcheckBox.AutoSize = true;
+            this.companyAssetcheckBox.Location = new System.Drawing.Point(255, 88);
+            this.companyAssetcheckBox.Name = "companyAssetcheckBox";
+            this.companyAssetcheckBox.Size = new System.Drawing.Size(99, 17);
+            this.companyAssetcheckBox.TabIndex = 43;
+            this.companyAssetcheckBox.Text = "Company Asset";
+            this.companyAssetcheckBox.UseVisualStyleBackColor = true;
             // 
             // costOfSalecheckBox
             // 
@@ -502,12 +373,186 @@
             this.prCreatorNamelabel.TabIndex = 37;
             this.prCreatorNamelabel.Text = "ชื่อผู้ออกคำขอซื้อ :";
             // 
+            // currentSelectedQuotationPDFlinkLabel
+            // 
+            this.currentSelectedQuotationPDFlinkLabel.AutoSize = true;
+            this.currentSelectedQuotationPDFlinkLabel.Location = new System.Drawing.Point(830, 385);
+            this.currentSelectedQuotationPDFlinkLabel.Name = "currentSelectedQuotationPDFlinkLabel";
+            this.currentSelectedQuotationPDFlinkLabel.Size = new System.Drawing.Size(110, 13);
+            this.currentSelectedQuotationPDFlinkLabel.TabIndex = 75;
+            this.currentSelectedQuotationPDFlinkLabel.TabStop = true;
+            this.currentSelectedQuotationPDFlinkLabel.Text = "ดูเอกสารใบเสนอราคา";
+            this.currentSelectedQuotationPDFlinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.currentSelectedQuotationPDFlinkLabel_LinkClicked);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label1.Location = new System.Drawing.Point(572, 199);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(228, 24);
+            this.label1.TabIndex = 74;
+            this.label1.Text = "ใบเสนอราคาที่ถูกเลือกปัจจุบัน :";
+            // 
+            // currentSelectedQuotationdataGridView
+            // 
+            this.currentSelectedQuotationdataGridView.AllowUserToAddRows = false;
+            this.currentSelectedQuotationdataGridView.AllowUserToDeleteRows = false;
+            this.currentSelectedQuotationdataGridView.AllowUserToResizeColumns = false;
+            this.currentSelectedQuotationdataGridView.AllowUserToResizeRows = false;
+            this.currentSelectedQuotationdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.currentSelectedQuotationdataGridView.Location = new System.Drawing.Point(576, 226);
+            this.currentSelectedQuotationdataGridView.MultiSelect = false;
+            this.currentSelectedQuotationdataGridView.Name = "currentSelectedQuotationdataGridView";
+            this.currentSelectedQuotationdataGridView.ReadOnly = true;
+            this.currentSelectedQuotationdataGridView.RowHeadersVisible = false;
+            this.currentSelectedQuotationdataGridView.RowTemplate.Height = 24;
+            this.currentSelectedQuotationdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.currentSelectedQuotationdataGridView.ShowCellToolTips = false;
+            this.currentSelectedQuotationdataGridView.Size = new System.Drawing.Size(368, 154);
+            this.currentSelectedQuotationdataGridView.TabIndex = 73;
+            this.currentSelectedQuotationdataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.currentSelectedQuotationdataGridView_CellClick);
+            this.currentSelectedQuotationdataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.currentSelectedQuotationdataGridView_RowPrePaint);
+            // 
+            // selectedSupplyInQuotationlabel
+            // 
+            this.selectedSupplyInQuotationlabel.AutoSize = true;
+            this.selectedSupplyInQuotationlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.selectedSupplyInQuotationlabel.Location = new System.Drawing.Point(1105, 385);
+            this.selectedSupplyInQuotationlabel.Name = "selectedSupplyInQuotationlabel";
+            this.selectedSupplyInQuotationlabel.Size = new System.Drawing.Size(262, 24);
+            this.selectedSupplyInQuotationlabel.TabIndex = 72;
+            this.selectedSupplyInQuotationlabel.Text = "รายการวัสดุจากใบเสนอราคาที่เลือก :";
+            // 
+            // quotationPDFlinkLabel
+            // 
+            this.quotationPDFlinkLabel.AutoSize = true;
+            this.quotationPDFlinkLabel.Location = new System.Drawing.Point(830, 16);
+            this.quotationPDFlinkLabel.Name = "quotationPDFlinkLabel";
+            this.quotationPDFlinkLabel.Size = new System.Drawing.Size(110, 13);
+            this.quotationPDFlinkLabel.TabIndex = 71;
+            this.quotationPDFlinkLabel.TabStop = true;
+            this.quotationPDFlinkLabel.Text = "ดูเอกสารใบเสนอราคา";
+            this.quotationPDFlinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.quotationPDFlinkLabel_LinkClicked);
+            // 
+            // addQuotationbutton
+            // 
+            this.addQuotationbutton.Location = new System.Drawing.Point(869, 197);
+            this.addQuotationbutton.Name = "addQuotationbutton";
+            this.addQuotationbutton.Size = new System.Drawing.Size(75, 23);
+            this.addQuotationbutton.TabIndex = 70;
+            this.addQuotationbutton.Text = "เพิ่ม";
+            this.addQuotationbutton.UseVisualStyleBackColor = true;
+            this.addQuotationbutton.Click += new System.EventHandler(this.addQuotationbutton_Click);
+            // 
+            // supplyInQuotationlabel
+            // 
+            this.supplyInQuotationlabel.AutoSize = true;
+            this.supplyInQuotationlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.supplyInQuotationlabel.Location = new System.Drawing.Point(946, 8);
+            this.supplyInQuotationlabel.Name = "supplyInQuotationlabel";
+            this.supplyInQuotationlabel.Size = new System.Drawing.Size(211, 24);
+            this.supplyInQuotationlabel.TabIndex = 69;
+            this.supplyInQuotationlabel.Text = "รายการวัสดุในใบเสนอราคา :";
+            // 
+            // supplyInQuotationdataGridView
+            // 
+            this.supplyInQuotationdataGridView.AllowUserToAddRows = false;
+            this.supplyInQuotationdataGridView.AllowUserToDeleteRows = false;
+            this.supplyInQuotationdataGridView.AllowUserToResizeColumns = false;
+            this.supplyInQuotationdataGridView.AllowUserToResizeRows = false;
+            this.supplyInQuotationdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.supplyInQuotationdataGridView.Location = new System.Drawing.Point(950, 35);
+            this.supplyInQuotationdataGridView.MultiSelect = false;
+            this.supplyInQuotationdataGridView.Name = "supplyInQuotationdataGridView";
+            this.supplyInQuotationdataGridView.ReadOnly = true;
+            this.supplyInQuotationdataGridView.RowHeadersVisible = false;
+            this.supplyInQuotationdataGridView.RowTemplate.Height = 24;
+            this.supplyInQuotationdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.supplyInQuotationdataGridView.ShowCellToolTips = false;
+            this.supplyInQuotationdataGridView.Size = new System.Drawing.Size(511, 345);
+            this.supplyInQuotationdataGridView.TabIndex = 68;
+            this.supplyInQuotationdataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyInQuotationdataGridView_CellMouseEnter);
+            this.supplyInQuotationdataGridView.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyInQuotationdataGridView_CellMouseLeave);
+            this.supplyInQuotationdataGridView.SelectionChanged += new System.EventHandler(this.supplyInQuotationdataGridView_SelectionChanged);
+            // 
+            // quotationDatagridview
+            // 
+            this.quotationDatagridview.AllowUserToAddRows = false;
+            this.quotationDatagridview.AllowUserToDeleteRows = false;
+            this.quotationDatagridview.AllowUserToResizeColumns = false;
+            this.quotationDatagridview.AllowUserToResizeRows = false;
+            this.quotationDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.quotationDatagridview.Location = new System.Drawing.Point(576, 35);
+            this.quotationDatagridview.MultiSelect = false;
+            this.quotationDatagridview.Name = "quotationDatagridview";
+            this.quotationDatagridview.ReadOnly = true;
+            this.quotationDatagridview.RowHeadersVisible = false;
+            this.quotationDatagridview.RowTemplate.Height = 24;
+            this.quotationDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.quotationDatagridview.ShowCellToolTips = false;
+            this.quotationDatagridview.Size = new System.Drawing.Size(368, 159);
+            this.quotationDatagridview.TabIndex = 67;
+            this.quotationDatagridview.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.quotationDatagridview_CellClick);
+            this.quotationDatagridview.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.quotationDatagridview_DataBindingComplete);
+            // 
+            // quotation1label
+            // 
+            this.quotation1label.AutoSize = true;
+            this.quotation1label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.quotation1label.Location = new System.Drawing.Point(572, 8);
+            this.quotation1label.Name = "quotation1label";
+            this.quotation1label.Size = new System.Drawing.Size(110, 24);
+            this.quotation1label.TabIndex = 66;
+            this.quotation1label.Text = "ใบเสนอราคา :";
+            // 
+            // createPRbutton
+            // 
+            this.createPRbutton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.createPRbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.createPRbutton.Location = new System.Drawing.Point(1377, 699);
+            this.createPRbutton.Name = "createPRbutton";
+            this.createPRbutton.Size = new System.Drawing.Size(75, 70);
+            this.createPRbutton.TabIndex = 76;
+            this.createPRbutton.Text = "สร้าง";
+            this.createPRbutton.UseVisualStyleBackColor = false;
+            this.createPRbutton.Click += new System.EventHandler(this.createPRbutton_Click);
+            // 
+            // addDetaillabel
+            // 
+            this.addDetaillabel.AutoSize = true;
+            this.addDetaillabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.addDetaillabel.Location = new System.Drawing.Point(16, 309);
+            this.addDetaillabel.Name = "addDetaillabel";
+            this.addDetaillabel.Size = new System.Drawing.Size(114, 24);
+            this.addDetaillabel.TabIndex = 55;
+            this.addDetaillabel.Text = "ข้อมูลเพิ่มเติม :";
+            // 
+            // addDetailsrichTextBox
+            // 
+            this.addDetailsrichTextBox.Location = new System.Drawing.Point(20, 336);
+            this.addDetailsrichTextBox.Name = "addDetailsrichTextBox";
+            this.addDetailsrichTextBox.Size = new System.Drawing.Size(533, 62);
+            this.addDetailsrichTextBox.TabIndex = 56;
+            this.addDetailsrichTextBox.Text = "";
+            // 
             // CreatePRForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.Controls.Add(this.createPRbutton);
+            this.Controls.Add(this.currentSelectedQuotationPDFlinkLabel);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.currentSelectedQuotationdataGridView);
+            this.Controls.Add(this.selectedSupplyInQuotationlabel);
+            this.Controls.Add(this.quotationPDFlinkLabel);
+            this.Controls.Add(this.addQuotationbutton);
+            this.Controls.Add(this.supplyInQuotationlabel);
+            this.Controls.Add(this.supplyInQuotationdataGridView);
+            this.Controls.Add(this.quotationDatagridview);
+            this.Controls.Add(this.quotation1label);
             this.Controls.Add(this.PRgroupBox);
             this.Controls.Add(this.supplyInPRgroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -526,6 +571,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.supplyInQuotationdataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.quotationDatagridview)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -538,16 +584,6 @@
         private System.Windows.Forms.TextBox quantitytextBox;
         private System.Windows.Forms.Label supplyQuantitylabel;
         private System.Windows.Forms.GroupBox PRgroupBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView currentSelectedQuotationdataGridView;
-        private System.Windows.Forms.Label selectedSupplyInQuotationlabel;
-        private System.Windows.Forms.LinkLabel quotationPDFlinkLabel;
-        private System.Windows.Forms.Button addQuotationbutton;
-        private System.Windows.Forms.Label supplyInQuotationlabel;
-        private System.Windows.Forms.DataGridView supplyInQuotationdataGridView;
-        private System.Windows.Forms.DataGridView quotationDatagridview;
-        private System.Windows.Forms.Label quotation1label;
-        private System.Windows.Forms.Label supplierAddresslabel;
         private System.Windows.Forms.RichTextBox supplierAddressrichTextBox;
         private System.Windows.Forms.ComboBox suppliercomboBox;
         private System.Windows.Forms.TextBox contactPersontextBox;
@@ -559,12 +595,25 @@
         private System.Windows.Forms.CheckBox othercheckBox;
         private System.Windows.Forms.CheckBox rentalLeasecheckBox;
         private System.Windows.Forms.CheckBox maintainancecheckBox;
-        private System.Windows.Forms.CheckBox complayAssetcheckBox;
+        private System.Windows.Forms.CheckBox companyAssetcheckBox;
         private System.Windows.Forms.CheckBox costOfSalecheckBox;
         private System.Windows.Forms.Label forAccountlabel;
         private System.Windows.Forms.TextBox PRTitletextBox;
         private System.Windows.Forms.Label PRtitlelabel;
         private System.Windows.Forms.TextBox requestertextBox;
         private System.Windows.Forms.Label prCreatorNamelabel;
+        private System.Windows.Forms.LinkLabel currentSelectedQuotationPDFlinkLabel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView currentSelectedQuotationdataGridView;
+        private System.Windows.Forms.Label selectedSupplyInQuotationlabel;
+        private System.Windows.Forms.LinkLabel quotationPDFlinkLabel;
+        private System.Windows.Forms.Button addQuotationbutton;
+        private System.Windows.Forms.Label supplyInQuotationlabel;
+        private System.Windows.Forms.DataGridView supplyInQuotationdataGridView;
+        private System.Windows.Forms.DataGridView quotationDatagridview;
+        private System.Windows.Forms.Label quotation1label;
+        private System.Windows.Forms.Button createPRbutton;
+        private System.Windows.Forms.RichTextBox addDetailsrichTextBox;
+        private System.Windows.Forms.Label addDetaillabel;
     }
 }

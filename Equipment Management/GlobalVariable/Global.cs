@@ -15,6 +15,8 @@ namespace Admin_Program.GlobalVariable
         public static int warehouseID { get; set; }
         public static string userName { get; set; }
         public static int ID { get; set; }
+        public static int QID { get; set; }
+        public static int PRID { get; set; }
         public static int EStatusID { get; set; }
         public static Equipment equipmentGlobal { get; set; }
         public static AllEquipmentView selectedEquipmentInJob { get; set; }

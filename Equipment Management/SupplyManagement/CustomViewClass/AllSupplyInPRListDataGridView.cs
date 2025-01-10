@@ -16,11 +16,12 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
         public string SupplyPhoto { get; set; }
         public string QuotationPDF { get; set; }
         public int QuotationID { get; set; }
+        public int SupplyID { get; set; }
 
         public AllSupplyInPRListDataGridView() { }
         
         public AllSupplyInPRListDataGridView(string sName,float price,string sUnit,int quantity,float amount,string qNum
-            ,string sPhoto,string qPDF, int qid)
+            ,string sPhoto,string qPDF, int qid, int sid)
         {
             this.SupplyName = sName;
             this.Price = price;
@@ -31,6 +32,7 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
             this.SupplyPhoto = sPhoto;
             this.QuotationPDF = qPDF;
             this.QuotationID = qid;
+            this.SupplyID = sid;
         }
 
         public static List<AllSupplyInPRListDataGridView> SupplyInQuotationForPR(List<SupplyInQuotation> list)
