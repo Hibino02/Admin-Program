@@ -111,7 +111,7 @@ namespace Admin_Program.GlobalVariable
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show($"Failed to upload photo: {ex.Message}", "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show($"Failed to upload file: {ex.Message}", "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                 }
             }
         }
@@ -136,7 +136,7 @@ namespace Admin_Program.GlobalVariable
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show($"Failed to upload photo: {ex.Message}", "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show($"Failed to upload file: {ex.Message}", "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                 }
             }
         }
@@ -376,6 +376,34 @@ namespace Admin_Program.GlobalVariable
                 // The file is still locked; do nothing and try again later
             }
         }
+        //Downloading PDF to Local
+        public static string DownloadPdfToLocalPath(string ftpUri)
+        {
+            try
+            {
+                // Create a temporary file path with a .pdf extension
+                string tempFilePath = Path.GetTempFileName();
+                string pdfFilePath = Path.ChangeExtension(tempFilePath, ".pdf");
 
+                // Create an FTP request
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ftpUri);
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
+                request.Credentials = new NetworkCredential(user, pass);
+
+                // Download the PDF file and save it locally
+                using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+                using (Stream responseStream = response.GetResponseStream())
+                using (FileStream fileStream = new FileStream(pdfFilePath, FileMode.Create))
+                {
+                    responseStream.CopyTo(fileStream);
+                }
+                return pdfFilePath;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

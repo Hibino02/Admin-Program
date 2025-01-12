@@ -470,7 +470,11 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
                         SupplyInQuotation siq = new SupplyInQuotation(Global.QID, s, siqView.Price);
                         if (!siq.Create())
                         {
-                            MessageBox.Show("การสร้างซัพพลาย รายการ : " + siq.Supply + " ไอดี : " + siq.ID + " ล้มเหลว");
+                            MessageBox.Show("การสร้างซัพพลาย รายการ : " + siq.Supply + " ล้มเหลว");
+                            SupplyInQuotation.Remove(Global.QID);
+                            MessageBox.Show("ทำการลบรายการ ซัพพลายทั้งหมด ในใบเสนอราคา");
+                            newQ.Remove();
+                            MessageBox.Show("ทำการลบใบเสนอราคา เนื่องจากการสร้าง ซัพพลายล้มเหลว");
                         }
                     }
                     MessageBox.Show("สร้างใบเสนอราคา สมบูรณ์");

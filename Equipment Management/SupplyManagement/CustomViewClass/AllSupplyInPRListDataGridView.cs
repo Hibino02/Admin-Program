@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Admin_Program.SupplyManagement.ObjectClass;
-using System;
 
 namespace Admin_Program.SupplyManagement.CustomViewClass
 {
     class AllSupplyInPRListDataGridView
     {
+        public int PRID { get; set; }
         public string SupplyName { get; set; }
         public float Price { get; set; }
         public string SupplyUnit { get; set; }
@@ -49,6 +48,22 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
                 siqForPR.Add(view);
             }
             return siqForPR;
+        }
+        public static List<AllSupplyInPRListDataGridView> AllSupplyInActivePR()
+        {
+            List<AllSupplyInPRListDataGridView> allActivePR = new List<AllSupplyInPRListDataGridView>();
+            List<SupplyInPR> sipr = SupplyInPR.GetAllSupplyInPRList();
+            foreach(SupplyInPR s in sipr)
+            {
+                AllSupplyInPRListDataGridView view = new AllSupplyInPRListDataGridView
+                {
+                    PRID = s.PRID,
+                    SupplyName = s.Supply.SupplyName,
+                    Quantity = s.Quantity
+                };
+                allActivePR.Add(view);
+            }
+            return allActivePR;
         }
     }
 }

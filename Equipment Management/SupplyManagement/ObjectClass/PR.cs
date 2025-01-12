@@ -205,7 +205,7 @@ WHERE pr.ID = @id;";
                     conn.Close();
             }
         }
-        public bool Remove()
+        public bool Remove(int id)
         {
             MySqlConnection conn = null;
             try

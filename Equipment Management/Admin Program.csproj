@@ -43,6 +43,14 @@
       <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ClosedXML, Version=0.87.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.87.1\lib\net40\ClosedXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Google.Protobuf, Version=3.21.9.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.21.9\lib\net45\Google.Protobuf.dll</HintPath>
       <Private>True</Private>
@@ -290,6 +298,7 @@
     <Compile Include="EquipmentManagement\UIClass\Plan\RemovePlanProcessingForm.Designer.cs">
       <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplyManagement\CustomViewClass\AllPRListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllQuotationListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllSupplierListDataDridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllSupplyInPRListDataGridView.cs" />

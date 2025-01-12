@@ -41,6 +41,7 @@
             this.SearchLabel = new System.Windows.Forms.Label();
             this.SupplyInventoryLabel = new System.Windows.Forms.Label();
             this.SupplyRequestGroupBox = new System.Windows.Forms.GroupBox();
+            this.supplyInSelectedPRdataGridView = new System.Windows.Forms.DataGridView();
             this.backToMainMenuButton = new System.Windows.Forms.Button();
             this.CompletePRButton = new System.Windows.Forms.Button();
             this.manageSupplyButton = new System.Windows.Forms.Button();
@@ -56,6 +57,7 @@
             this.SupplyInventoryGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SupplyInventoryDatagridview)).BeginInit();
             this.SupplyRequestGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.supplyInSelectedPRdataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyRequestDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -190,6 +192,7 @@
             // 
             // SupplyRequestGroupBox
             // 
+            this.SupplyRequestGroupBox.Controls.Add(this.supplyInSelectedPRdataGridView);
             this.SupplyRequestGroupBox.Controls.Add(this.backToMainMenuButton);
             this.SupplyRequestGroupBox.Controls.Add(this.CompletePRButton);
             this.SupplyRequestGroupBox.Controls.Add(this.manageSupplyButton);
@@ -207,6 +210,23 @@
             this.SupplyRequestGroupBox.Size = new System.Drawing.Size(707, 772);
             this.SupplyRequestGroupBox.TabIndex = 1;
             this.SupplyRequestGroupBox.TabStop = false;
+            // 
+            // supplyInSelectedPRdataGridView
+            // 
+            this.supplyInSelectedPRdataGridView.AllowUserToAddRows = false;
+            this.supplyInSelectedPRdataGridView.AllowUserToDeleteRows = false;
+            this.supplyInSelectedPRdataGridView.AllowUserToResizeColumns = false;
+            this.supplyInSelectedPRdataGridView.AllowUserToResizeRows = false;
+            this.supplyInSelectedPRdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.supplyInSelectedPRdataGridView.Location = new System.Drawing.Point(349, 111);
+            this.supplyInSelectedPRdataGridView.MultiSelect = false;
+            this.supplyInSelectedPRdataGridView.Name = "supplyInSelectedPRdataGridView";
+            this.supplyInSelectedPRdataGridView.ReadOnly = true;
+            this.supplyInSelectedPRdataGridView.RowHeadersVisible = false;
+            this.supplyInSelectedPRdataGridView.RowTemplate.Height = 24;
+            this.supplyInSelectedPRdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.supplyInSelectedPRdataGridView.Size = new System.Drawing.Size(355, 542);
+            this.supplyInSelectedPRdataGridView.TabIndex = 22;
             // 
             // backToMainMenuButton
             // 
@@ -308,8 +328,9 @@
             this.supplyRequestDataGridView.RowHeadersVisible = false;
             this.supplyRequestDataGridView.RowTemplate.Height = 24;
             this.supplyRequestDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.supplyRequestDataGridView.Size = new System.Drawing.Size(696, 542);
+            this.supplyRequestDataGridView.Size = new System.Drawing.Size(338, 542);
             this.supplyRequestDataGridView.TabIndex = 13;
+            this.supplyRequestDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyRequestDataGridView_CellClick);
             // 
             // searchSupplyRequestTextBox
             // 
@@ -317,6 +338,7 @@
             this.searchSupplyRequestTextBox.Name = "searchSupplyRequestTextBox";
             this.searchSupplyRequestTextBox.Size = new System.Drawing.Size(258, 20);
             this.searchSupplyRequestTextBox.TabIndex = 13;
+            this.searchSupplyRequestTextBox.TextChanged += new System.EventHandler(this.searchSupplyRequestTextBox_TextChanged);
             // 
             // searchSupplylabel
             // 
@@ -355,6 +377,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SupplyInventoryDatagridview)).EndInit();
             this.SupplyRequestGroupBox.ResumeLayout(false);
             this.SupplyRequestGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.supplyInSelectedPRdataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyRequestDataGridView)).EndInit();
             this.ResumeLayout(false);
 
@@ -387,5 +410,6 @@
         private System.Windows.Forms.Button removePRButton;
         private System.Windows.Forms.Button manageSupplierButton;
         private System.Windows.Forms.Button backToMainMenuButton;
+        private System.Windows.Forms.DataGridView supplyInSelectedPRdataGridView;
     }
 }

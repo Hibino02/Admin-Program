@@ -36,6 +36,8 @@
             this.removeFromSupplyInPRbutton = new System.Windows.Forms.Button();
             this.preSupplyInPRdataGridView = new System.Windows.Forms.DataGridView();
             this.PRgroupBox = new System.Windows.Forms.GroupBox();
+            this.addDetailsrichTextBox = new System.Windows.Forms.RichTextBox();
+            this.addDetaillabel = new System.Windows.Forms.Label();
             this.supplierAddressrichTextBox = new System.Windows.Forms.RichTextBox();
             this.suppliercomboBox = new System.Windows.Forms.ComboBox();
             this.contactPersontextBox = new System.Windows.Forms.TextBox();
@@ -65,8 +67,7 @@
             this.quotationDatagridview = new System.Windows.Forms.DataGridView();
             this.quotation1label = new System.Windows.Forms.Label();
             this.createPRbutton = new System.Windows.Forms.Button();
-            this.addDetaillabel = new System.Windows.Forms.Label();
-            this.addDetailsrichTextBox = new System.Windows.Forms.RichTextBox();
+            this.genExcellbutton = new System.Windows.Forms.Button();
             this.supplyInPRgroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInPRdataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.preSupplyInPRdataGridView)).BeginInit();
@@ -174,6 +175,7 @@
             this.preSupplyInPRdataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellClick);
             this.preSupplyInPRdataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellMouseEnter);
             this.preSupplyInPRdataGridView.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellMouseLeave);
+            this.preSupplyInPRdataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.preSupplyInPRdataGridView_DataBindingComplete);
             this.preSupplyInPRdataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.preSupplyInPRdataGridView_RowPrePaint);
             // 
             // PRgroupBox
@@ -203,6 +205,24 @@
             this.PRgroupBox.Size = new System.Drawing.Size(565, 408);
             this.PRgroupBox.TabIndex = 33;
             this.PRgroupBox.TabStop = false;
+            // 
+            // addDetailsrichTextBox
+            // 
+            this.addDetailsrichTextBox.Location = new System.Drawing.Point(20, 336);
+            this.addDetailsrichTextBox.Name = "addDetailsrichTextBox";
+            this.addDetailsrichTextBox.Size = new System.Drawing.Size(533, 62);
+            this.addDetailsrichTextBox.TabIndex = 56;
+            this.addDetailsrichTextBox.Text = "";
+            // 
+            // addDetaillabel
+            // 
+            this.addDetaillabel.AutoSize = true;
+            this.addDetaillabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.addDetaillabel.Location = new System.Drawing.Point(16, 309);
+            this.addDetaillabel.Name = "addDetaillabel";
+            this.addDetaillabel.Size = new System.Drawing.Size(114, 24);
+            this.addDetaillabel.TabIndex = 55;
+            this.addDetaillabel.Text = "ข้อมูลเพิ่มเติม :";
             // 
             // supplierAddressrichTextBox
             // 
@@ -508,7 +528,7 @@
             // 
             // createPRbutton
             // 
-            this.createPRbutton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.createPRbutton.BackColor = System.Drawing.SystemColors.Info;
             this.createPRbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.createPRbutton.Location = new System.Drawing.Point(1377, 699);
             this.createPRbutton.Name = "createPRbutton";
@@ -518,23 +538,19 @@
             this.createPRbutton.UseVisualStyleBackColor = false;
             this.createPRbutton.Click += new System.EventHandler(this.createPRbutton_Click);
             // 
-            // addDetaillabel
+            // genExcellbutton
             // 
-            this.addDetaillabel.AutoSize = true;
-            this.addDetaillabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.addDetaillabel.Location = new System.Drawing.Point(16, 309);
-            this.addDetaillabel.Name = "addDetaillabel";
-            this.addDetaillabel.Size = new System.Drawing.Size(114, 24);
-            this.addDetaillabel.TabIndex = 55;
-            this.addDetaillabel.Text = "ข้อมูลเพิ่มเติม :";
-            // 
-            // addDetailsrichTextBox
-            // 
-            this.addDetailsrichTextBox.Location = new System.Drawing.Point(20, 336);
-            this.addDetailsrichTextBox.Name = "addDetailsrichTextBox";
-            this.addDetailsrichTextBox.Size = new System.Drawing.Size(533, 62);
-            this.addDetailsrichTextBox.TabIndex = 56;
-            this.addDetailsrichTextBox.Text = "";
+            this.genExcellbutton.BackColor = System.Drawing.SystemColors.Highlight;
+            this.genExcellbutton.Enabled = false;
+            this.genExcellbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.genExcellbutton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.genExcellbutton.Location = new System.Drawing.Point(1377, 623);
+            this.genExcellbutton.Name = "genExcellbutton";
+            this.genExcellbutton.Size = new System.Drawing.Size(75, 70);
+            this.genExcellbutton.TabIndex = 77;
+            this.genExcellbutton.Text = "Gen Excel";
+            this.genExcellbutton.UseVisualStyleBackColor = false;
+            this.genExcellbutton.Click += new System.EventHandler(this.genExcellbutton_Click);
             // 
             // CreatePRForm
             // 
@@ -542,6 +558,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.Controls.Add(this.genExcellbutton);
             this.Controls.Add(this.createPRbutton);
             this.Controls.Add(this.currentSelectedQuotationPDFlinkLabel);
             this.Controls.Add(this.label1);
@@ -615,5 +632,6 @@
         private System.Windows.Forms.Button createPRbutton;
         private System.Windows.Forms.RichTextBox addDetailsrichTextBox;
         private System.Windows.Forms.Label addDetaillabel;
+        private System.Windows.Forms.Button genExcellbutton;
     }
 }

@@ -169,7 +169,7 @@ WHERE sipr.ID = @id;";
                     conn.Close();
             }
         }
-        public bool Remove(int prid)
+        public static bool Remove(int prid)
         {
             MySqlConnection conn = null;
             try
