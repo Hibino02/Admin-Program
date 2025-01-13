@@ -184,6 +184,10 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         private void FormatQuotationForSelectedSupplier()
         {
             var Columns = quotationDatagridview.Columns;
+            if (Columns["PRID"] != null)
+            {
+                Columns["PRID"].Visible = false;
+            }
             if (Columns["ID"] != null)
             {
                 Columns["ID"].Visible = false;

@@ -35,13 +35,12 @@ namespace Admin_Program.SupplyManagement.UIClass
             this.StartPosition = FormStartPosition.Manual;
             this.Size = new Size(1450, 760);
 
-            allSupplyInPRList = AllSupplyInPRListDataGridView.AllSupplyInActivePR();
-
             UpdatePRDatagridView();
         }
         //PR DataGrid
         private void UpdatePRDatagridView()
         {
+            allSupplyInPRList = AllSupplyInPRListDataGridView.AllSupplyInActivePR();
             allPRlistInDataGridView = AllPRListDataGridView.AllPRInDataGridView();
             PRBindingSource.DataSource = allPRlistInDataGridView;
             supplyRequestDataGridView.DataSource = PRBindingSource;
@@ -123,10 +122,42 @@ namespace Admin_Program.SupplyManagement.UIClass
                 Columns["SupplyName"].HeaderText = "ชื่อวัสดุ";
                 Columns["SupplyName"].Width = 300;
             }
+            if (Columns["Price"] != null)
+            {
+                Columns["Price"].Visible = false;
+            }
+            if (Columns["SupplyUnit"] != null)
+            {
+                Columns["SupplyUnit"].Visible = false;
+            }
             if (Columns["Quantity"] != null)
             {
                 Columns["Quantity"].HeaderText = "จำนวน";
                 Columns["Quantity"].Width = 50;
+            }
+            if (Columns["Amount"] != null)
+            {
+                Columns["Amount"].Visible = false;
+            }
+            if (Columns["QuotationNumber"] != null)
+            {
+                Columns["QuotationNumber"].Visible = false;
+            }
+            if (Columns["SupplyPhoto"] != null)
+            {
+                Columns["SupplyPhoto"].Visible = false;
+            }
+            if (Columns["QuotationPDF"] != null)
+            {
+                Columns["QuotationPDF"].Visible = false;
+            }
+            if (Columns["QuotationID"] != null)
+            {
+                Columns["QuotationID"].Visible = false;
+            }
+            if (Columns["SupplyID"] != null)
+            {
+                Columns["SupplyID"].Visible = false;
             }
         }
         //Supply Manage
