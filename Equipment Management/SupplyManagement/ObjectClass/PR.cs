@@ -182,6 +182,8 @@ WHERE pr.ID = @id;";
                     {
                         GlobalVariable.Global.PRID = -1;
                         GlobalVariable.Global.PRID = Convert.ToInt32(result);
+                        //Update PR for remove if it's fail
+                        id = GlobalVariable.Global.PRID;
                     }
                     // Commit the transaction
                     transaction.Commit();
@@ -205,7 +207,7 @@ WHERE pr.ID = @id;";
                     conn.Close();
             }
         }
-        public bool Remove(int id)
+        public bool Remove()
         {
             MySqlConnection conn = null;
             try

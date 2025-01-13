@@ -915,7 +915,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                         MessageBox.Show("ทำการลบรายการ ซัพพลายทั้งหมด ในคำขอซื้อ");
 
                         // Remove the PR
-                        newPR.Remove(Global.PRID);
+                        newPR.Remove();
                         MessageBox.Show("ทำการลบ PR เนื่องจากการสร้าง ซัพลลายล้มเหลว");
                         Close();
                     }

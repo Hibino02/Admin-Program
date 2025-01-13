@@ -59,7 +59,8 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
                 {
                     PRID = s.PRID,
                     SupplyName = s.Supply.SupplyName,
-                    Quantity = s.Quantity
+                    Quantity = s.Quantity,
+                    SupplyUnit = s.Supply.SupplyUnit
                 };
                 allActivePR.Add(view);
             }

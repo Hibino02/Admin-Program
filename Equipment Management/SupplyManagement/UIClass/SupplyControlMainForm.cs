@@ -9,6 +9,7 @@ using Admin_Program.SupplyManagement.UIClass.PRManage;
 using System.Collections.Generic;
 using Admin_Program.SupplyManagement.CustomViewClass;
 using System.Linq;
+using Admin_Program.SupplyManagement.ObjectClass;
 
 namespace Admin_Program.SupplyManagement.UIClass
 {
@@ -23,7 +24,9 @@ namespace Admin_Program.SupplyManagement.UIClass
 
         List<AllPRListDataGridView> allPRlistInDataGridView = new List<AllPRListDataGridView>();
         BindingSource PRBindingSource = new BindingSource();
-        List<AllSupplyInPRListDataGridView> allSupplyInPRList = new List<AllSupplyInPRListDataGridView>();
+        int prStatusID;
+        int PRID;
+        List <AllSupplyInPRListDataGridView> allSupplyInPRList = new List<AllSupplyInPRListDataGridView>();
         List<AllSupplyInPRListDataGridView> supplyInSelectedPRList = new List<AllSupplyInPRListDataGridView>();
         BindingSource supplyInPRBindingSource = new BindingSource();
 
@@ -69,6 +72,10 @@ namespace Admin_Program.SupplyManagement.UIClass
                 Columns["PRStatus"].HeaderText = "สถานะ";
                 Columns["PRStatus"].Width = 75;
             }
+            if (Columns["PRStatusID"] != null)
+            {
+                Columns["PRStatusID"].Visible = false;
+            }
         }
         private void searchSupplyRequestTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -95,8 +102,17 @@ namespace Admin_Program.SupplyManagement.UIClass
             {
                 DataGridViewRow selectedRow = supplyRequestDataGridView.Rows[e.RowIndex];
 
-                int PRID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+                PRID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+                prStatusID = Convert.ToInt32(selectedRow.Cells["PRStatusID"].Value);
                 UpdateSupplyInPRList(PRID);
+            }
+        }
+        private void supplyRequestDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if(supplyRequestDataGridView.Rows.Count > 0)
+            {
+                supplyRequestDataGridView.CurrentCell = supplyRequestDataGridView.Rows[0].Cells[1];
+                supplyRequestDataGridView_CellClick(this,new DataGridViewCellEventArgs(0,0));
             }
         }
         //Supply In PR DataGrid
@@ -120,7 +136,7 @@ namespace Admin_Program.SupplyManagement.UIClass
             if(Columns["SupplyName"] != null)
             {
                 Columns["SupplyName"].HeaderText = "ชื่อวัสดุ";
-                Columns["SupplyName"].Width = 300;
+                Columns["SupplyName"].Width = 270;
             }
             if (Columns["Price"] != null)
             {
@@ -133,7 +149,21 @@ namespace Admin_Program.SupplyManagement.UIClass
             if (Columns["Quantity"] != null)
             {
                 Columns["Quantity"].HeaderText = "จำนวน";
-                Columns["Quantity"].Width = 50;
+                Columns["Quantity"].Width = 80;
+
+                supplyInSelectedPRdataGridView.CellFormatting += (s, e) =>
+                {
+                    if (e.ColumnIndex == Columns["Quantity"].Index && e.RowIndex >= 0)
+                    {
+                        string quantity = supplyInSelectedPRdataGridView.Rows[e.RowIndex].Cells["Quantity"]?.Value?.ToString();
+                        string supplyUnit = supplyInSelectedPRdataGridView.Rows[e.RowIndex].Cells["SupplyUnit"]?.Value.ToString();
+                        if(!string.IsNullOrEmpty(quantity) && !string.IsNullOrEmpty(supplyUnit))
+                        {
+                            e.Value = $"{quantity} {supplyUnit}";
+                            e.FormattingApplied = true;
+                        }
+                    }
+                };
             }
             if (Columns["Amount"] != null)
             {
@@ -189,11 +219,34 @@ namespace Admin_Program.SupplyManagement.UIClass
             createPR.ShowDialog();
             UpdatePRDatagridView();
         }
+        //Remove PR
+        private void removePRButton_Click(object sender, EventArgs e)
+        {
+            if (prStatusID > 1)
+            {
+                MessageBox.Show("คำขอซื้อนี้ กำลังดำเนินการ จึงไม่สามารถลบได้");
+            }
+            else
+            {
+                if (SupplyInPR.Remove(PRID))
+                {
+                    //Finding ways to remove quotation too.
+                    MessageBox.Show("ลบวัสดุของ PR สมบูรณ์");
+                    PR pr = new PR(PRID);
+                    if (pr.Remove())
+                    {
+                        MessageBox.Show("ลบ PR สมบูรณ์");
+                    }
+                }
+            }
+        }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)
         {
             returnMain?.Invoke(this, EventArgs.Empty);
             Close();
         }
+
+
     }
 }

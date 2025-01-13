@@ -11,6 +11,7 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
         public string PRTitle { get; set; }
         public DateTime DeliveryDate { get; set; }
         public string PRStatus { get; set; }
+        public int PRStatusID { get; set; }
 
         public AllPRListDataGridView() { }
 
@@ -27,7 +28,8 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
                         ID = pr.ID,
                         PRTitle = pr.PRTitle,
                         DeliveryDate = pr.DeliveryDate.Date,
-                        PRStatus = pr.PRStatus.Status
+                        PRStatus = pr.PRStatus.Status,
+                        PRStatusID = pr.PRStatus.ID
                     };
                     prinGridList.Add(view);
                 }

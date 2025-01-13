@@ -270,6 +270,7 @@
             this.removePRButton.TabIndex = 18;
             this.removePRButton.Text = "ลบคำขอซื้อ";
             this.removePRButton.UseVisualStyleBackColor = true;
+            this.removePRButton.Click += new System.EventHandler(this.removePRButton_Click);
             // 
             // manageSupplierButton
             // 
@@ -331,6 +332,7 @@
             this.supplyRequestDataGridView.Size = new System.Drawing.Size(338, 542);
             this.supplyRequestDataGridView.TabIndex = 13;
             this.supplyRequestDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyRequestDataGridView_CellClick);
+            this.supplyRequestDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.supplyRequestDataGridView_DataBindingComplete);
             // 
             // searchSupplyRequestTextBox
             // 
