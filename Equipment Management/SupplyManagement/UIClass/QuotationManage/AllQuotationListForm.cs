@@ -343,6 +343,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
                         }
                         q.Remove();
                         MessageBox.Show("ลบใบเสนอราคา สมบูรณ์");
+                        supplyInQuotationBindingSource = null;
                         UpdateQuotationList();
                         supplyInQuotationViewList = AllSupplyInQuotationListDataGridView.allSupplyInQuotation();
                     }          

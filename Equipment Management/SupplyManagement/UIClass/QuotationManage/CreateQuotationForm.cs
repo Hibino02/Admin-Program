@@ -280,7 +280,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
 
             if (selectedRow == null)
             {
-                MessageBox.Show("กรุณาเลือกแถวในตาราง");
+                MessageBox.Show("กรุณาเลือกวัสดุ");
                 return;
             }
 

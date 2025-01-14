@@ -160,7 +160,7 @@
             this.explainSupplyNameLabel.Name = "explainSupplyNameLabel";
             this.explainSupplyNameLabel.Size = new System.Drawing.Size(143, 13);
             this.explainSupplyNameLabel.TabIndex = 36;
-            this.explainSupplyNameLabel.Text = "* ชื่อวัสดุห้ามเกิน 50 ตัวอักษร";
+            this.explainSupplyNameLabel.Text = "* ชื่อวัสดุห้ามเกิน 77 ตัวอักษร";
             // 
             // supplyNameTextBox
             // 

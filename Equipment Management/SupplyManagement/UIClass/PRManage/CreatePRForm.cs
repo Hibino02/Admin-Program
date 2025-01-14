@@ -549,15 +549,27 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         {
             leftPictureBox.Visible = false;
         }
-        //Add-SupplyToPR
-        private void preSupplyInPRdataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        private void preSupplyInPRtextBox_TextChanged(object sender, EventArgs e)
         {
-            if(preSupplyInPRdataGridView.Rows.Count > 0)
+            string searchText = preSupplyInPRtextBox.Text.ToLower();
+            if (!string.IsNullOrEmpty(searchText))
             {
-                preSupplyInPRdataGridView.CurrentCell = preSupplyInPRdataGridView.Rows[0].Cells[3];
-                preSupplyInPRdataGridView_CellClick(this, new DataGridViewCellEventArgs(0, 0));
+                var searchResult = preSupplyInPRView.Where(psipr =>
+                psipr.SupplyName.ToLower().Contains(searchText)).ToList();
+
+                preSupplyInPRBindingSource.DataSource = searchResult;
+                preSupplyInPRdataGridView.DataSource = preSupplyInPRBindingSource;
+            }
+            else
+            {
+                preSupplyInPRBindingSource.DataSource = null;
+                preSupplyInPRBindingSource.DataSource = preSupplyInPRView;
+                preSupplyInPRdataGridView.DataSource = preSupplyInPRBindingSource;
+
+                FormatSupplyInQuotationListDataGridView();
             }
         }
+        //Add-SupplyToPR
         private void preSupplyInPRdataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if(e.RowIndex >= 0)
@@ -681,6 +693,10 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
         private void FormatSupplyInPRListDataGridView()
         {
             var Columns = supplyInPRdataGridView.Columns;
+            if (Columns["PRID"] != null)
+            {
+                Columns["PRID"].Visible = false;
+            }
             if (Columns["SupplyName"] != null)
             {
                 Columns["SupplyName"].HeaderText = "ชื่อวัดดุ";

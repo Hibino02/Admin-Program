@@ -144,6 +144,11 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 MessageBox.Show("กรุณาระบุ ชื่อ ของวัสดุ");
                 isComplete = false;
             }
+            if(supplyNameTextBox.Text.Length > 77)
+            {
+                MessageBox.Show("จำนวนตัวอักษรเกิน 77 ตัว");
+                isComplete = false;
+            }
             if (string.IsNullOrEmpty(supplyUnitTextBox.Text))
             {
                 MessageBox.Show("กรุณาระบุ หน่วย ของวัสดุ");

@@ -101,12 +101,13 @@ WHERE sb.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO SupplyBalance (ID, SupplyID, Balance, UpdateDate, Updater) VALUES (NULL, @supplyid, @balance, @updatedate, @updater)";
+                    string insert = "INSERT INTO SupplyBalance (ID, SupplyID, Balance, UpdateDate, Updater, WarehouseID) VALUES (NULL, @supplyid, @balance, @updatedate, @updater, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@supplyid", supply.ID);
                     cmd.Parameters.AddWithValue("@balance", balance);
                     cmd.Parameters.AddWithValue("@updatedate", updatedate);
                     cmd.Parameters.AddWithValue("@updater", updater);
+                    cmd.Parameters.AddWithValue("@whid", GlobalVariable.Global.warehouseID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;

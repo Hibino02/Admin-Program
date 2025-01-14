@@ -256,5 +256,65 @@ WHERE sipr.WarehouseID = @whid;";
             }
             return siprList;
         }
+        public static List<SupplyInPR> GetAllSupplyInPRList(int prID)
+        {
+            MySqlConnection conn = null;
+            List<SupplyInPR> siprList = new List<SupplyInPR>();
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string selectAll = @"SELECT
+sipr.ID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
+st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount, sipr.QuotationPDF, sipr.QuotationNumber
+FROM SupplyInPR sipr
+LEFT JOIN Supply s ON sipr.SupplyID = s.ID
+LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
+WHERE sipr.PRID = @prid;";
+                    cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@prid", prID);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = Convert.ToInt32(reader["ID"]);
+                            int prid = Convert.ToInt32(reader["PRID"]);
+                            //Supply
+                            int sid = Convert.ToInt32(reader["SupplyID"]);
+                            string sname = reader["SupplyName"].ToString();
+                            string sunit = reader["SupplyUnit"].ToString();
+                            int moq = Convert.ToInt32(reader["MOQ"]);
+                            bool isactive = Convert.ToBoolean(reader["IsActive"]);
+                            string sphoto = reader["SupplyPhoto"].ToString();
+                            //SupplyType
+                            int stid = Convert.ToInt32(reader["SupplyTypeID"]);
+                            string stname = reader["TypeName"].ToString();
+                            SupplyType st = new SupplyType(stid, stname, GlobalVariable.Global.warehouseID);
+
+                            Supply supply = new Supply(sid, sname, sunit, moq, isactive, st, GlobalVariable.Global.warehouseID, sphoto);
+
+                            float price = Convert.ToSingle(reader["Price"]);
+                            int quantity = Convert.ToInt32(reader["Quantity"]);
+                            float amount = Convert.ToSingle(reader["Amount"]);
+                            string qPDF = reader["QuotationPDF"].ToString();
+                            string qNum = reader["QuotationNumber"].ToString();
+
+                            SupplyInPR sipr = new SupplyInPR(id, prid, supply, price, quantity, amount, qPDF, qNum);
+
+                            siprList.Add(sipr);
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e) { }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+            return siprList;
+        }
     }
 }

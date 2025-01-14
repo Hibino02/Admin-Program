@@ -59,7 +59,6 @@
             this.currentSelectedQuotationPDFlinkLabel = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.currentSelectedQuotationdataGridView = new System.Windows.Forms.DataGridView();
-            this.selectedSupplyInQuotationlabel = new System.Windows.Forms.Label();
             this.quotationPDFlinkLabel = new System.Windows.Forms.LinkLabel();
             this.addQuotationbutton = new System.Windows.Forms.Button();
             this.supplyInQuotationlabel = new System.Windows.Forms.Label();
@@ -68,6 +67,8 @@
             this.quotation1label = new System.Windows.Forms.Label();
             this.createPRbutton = new System.Windows.Forms.Button();
             this.genExcellbutton = new System.Windows.Forms.Button();
+            this.preSupplyInPRtextBox = new System.Windows.Forms.TextBox();
+            this.preSupplyInPRSearchlabel = new System.Windows.Forms.Label();
             this.supplyInPRgroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInPRdataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.preSupplyInPRdataGridView)).BeginInit();
@@ -87,7 +88,7 @@
             this.supplyInPRgroupBox.Controls.Add(this.preSupplyInPRdataGridView);
             this.supplyInPRgroupBox.Location = new System.Drawing.Point(-1, 407);
             this.supplyInPRgroupBox.Name = "supplyInPRgroupBox";
-            this.supplyInPRgroupBox.Size = new System.Drawing.Size(1359, 374);
+            this.supplyInPRgroupBox.Size = new System.Drawing.Size(1372, 374);
             this.supplyInPRgroupBox.TabIndex = 32;
             this.supplyInPRgroupBox.TabStop = false;
             // 
@@ -170,12 +171,11 @@
             this.preSupplyInPRdataGridView.RowTemplate.Height = 24;
             this.preSupplyInPRdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.preSupplyInPRdataGridView.ShowCellToolTips = false;
-            this.preSupplyInPRdataGridView.Size = new System.Drawing.Size(511, 307);
+            this.preSupplyInPRdataGridView.Size = new System.Drawing.Size(520, 307);
             this.preSupplyInPRdataGridView.TabIndex = 24;
             this.preSupplyInPRdataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellClick);
             this.preSupplyInPRdataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellMouseEnter);
             this.preSupplyInPRdataGridView.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.preSupplyInPRdataGridView_CellMouseLeave);
-            this.preSupplyInPRdataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.preSupplyInPRdataGridView_DataBindingComplete);
             this.preSupplyInPRdataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.preSupplyInPRdataGridView_RowPrePaint);
             // 
             // PRgroupBox
@@ -434,16 +434,6 @@
             this.currentSelectedQuotationdataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.currentSelectedQuotationdataGridView_CellClick);
             this.currentSelectedQuotationdataGridView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.currentSelectedQuotationdataGridView_RowPrePaint);
             // 
-            // selectedSupplyInQuotationlabel
-            // 
-            this.selectedSupplyInQuotationlabel.AutoSize = true;
-            this.selectedSupplyInQuotationlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.selectedSupplyInQuotationlabel.Location = new System.Drawing.Point(1105, 385);
-            this.selectedSupplyInQuotationlabel.Name = "selectedSupplyInQuotationlabel";
-            this.selectedSupplyInQuotationlabel.Size = new System.Drawing.Size(262, 24);
-            this.selectedSupplyInQuotationlabel.TabIndex = 72;
-            this.selectedSupplyInQuotationlabel.Text = "รายการวัสดุจากใบเสนอราคาที่เลือก :";
-            // 
             // quotationPDFlinkLabel
             // 
             this.quotationPDFlinkLabel.AutoSize = true;
@@ -552,18 +542,37 @@
             this.genExcellbutton.UseVisualStyleBackColor = false;
             this.genExcellbutton.Click += new System.EventHandler(this.genExcellbutton_Click);
             // 
+            // preSupplyInPRtextBox
+            // 
+            this.preSupplyInPRtextBox.BackColor = System.Drawing.SystemColors.Info;
+            this.preSupplyInPRtextBox.Location = new System.Drawing.Point(950, 388);
+            this.preSupplyInPRtextBox.Name = "preSupplyInPRtextBox";
+            this.preSupplyInPRtextBox.Size = new System.Drawing.Size(296, 20);
+            this.preSupplyInPRtextBox.TabIndex = 78;
+            this.preSupplyInPRtextBox.TextChanged += new System.EventHandler(this.preSupplyInPRtextBox_TextChanged);
+            // 
+            // preSupplyInPRSearchlabel
+            // 
+            this.preSupplyInPRSearchlabel.AutoSize = true;
+            this.preSupplyInPRSearchlabel.Location = new System.Drawing.Point(1251, 391);
+            this.preSupplyInPRSearchlabel.Name = "preSupplyInPRSearchlabel";
+            this.preSupplyInPRSearchlabel.Size = new System.Drawing.Size(178, 13);
+            this.preSupplyInPRSearchlabel.TabIndex = 79;
+            this.preSupplyInPRSearchlabel.Text = ": ค้นหาชื่อวัสดุในใบเสนอราคาที่เลือก";
+            // 
             // CreatePRForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.Controls.Add(this.preSupplyInPRSearchlabel);
+            this.Controls.Add(this.preSupplyInPRtextBox);
             this.Controls.Add(this.genExcellbutton);
             this.Controls.Add(this.createPRbutton);
             this.Controls.Add(this.currentSelectedQuotationPDFlinkLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.currentSelectedQuotationdataGridView);
-            this.Controls.Add(this.selectedSupplyInQuotationlabel);
             this.Controls.Add(this.quotationPDFlinkLabel);
             this.Controls.Add(this.addQuotationbutton);
             this.Controls.Add(this.supplyInQuotationlabel);
@@ -622,7 +631,6 @@
         private System.Windows.Forms.LinkLabel currentSelectedQuotationPDFlinkLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView currentSelectedQuotationdataGridView;
-        private System.Windows.Forms.Label selectedSupplyInQuotationlabel;
         private System.Windows.Forms.LinkLabel quotationPDFlinkLabel;
         private System.Windows.Forms.Button addQuotationbutton;
         private System.Windows.Forms.Label supplyInQuotationlabel;
@@ -633,5 +641,7 @@
         private System.Windows.Forms.RichTextBox addDetailsrichTextBox;
         private System.Windows.Forms.Label addDetaillabel;
         private System.Windows.Forms.Button genExcellbutton;
+        private System.Windows.Forms.TextBox preSupplyInPRtextBox;
+        private System.Windows.Forms.Label preSupplyInPRSearchlabel;
     }
 }

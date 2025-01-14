@@ -112,9 +112,9 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 MessageBox.Show("กรุณาเลือกประเภทวัสดุ");
                 return false;
             }
-            if (supplyNameTextBox.TextLength > 50)
+            if (supplyNameTextBox.TextLength > 77)
             {
-                MessageBox.Show("จำนวนตัวอักษรเกิน 50 ตัว");
+                MessageBox.Show("จำนวนตัวอักษรเกิน 77 ตัว");
                 return false;
             }
             if (string.IsNullOrEmpty(supplyNameTextBox.Text))
@@ -141,7 +141,16 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 if (newSp.Create())
                 {
                     MessageBox.Show("ซัพพลายถูกสร้างเรียบร้อย");
-                    Close();
+                    SupplyBalance sb = new ObjectClass.SupplyBalance(newSp, 0, DateTime.Now, Global.userName);
+                    if (sb.Create())
+                    {
+                        MessageBox.Show("ยอดคงเหลือของซัพพลายนี้ ถูกเพิ่มเริ่มโดยต้นที่ 0");
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("การสร้างประวัติยอดคงเหลือล้มเหลว");
+                    }
                 }
                 else
                 {

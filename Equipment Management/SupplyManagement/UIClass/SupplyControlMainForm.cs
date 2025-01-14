@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Admin_Program.SupplyManagement.CustomViewClass;
 using System.Linq;
 using Admin_Program.SupplyManagement.ObjectClass;
+using Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan;
 
 namespace Admin_Program.SupplyManagement.UIClass
 {
@@ -21,11 +22,13 @@ namespace Admin_Program.SupplyManagement.UIClass
         private AllSupplierListForm allSupplierList;
         private AllQuotationListForm allQuotationList;
         private CreatePRForm createPR;
+        private AllSupplyDiliveryListForm supplyDeliveryPlan;
 
         List<AllPRListDataGridView> allPRlistInDataGridView = new List<AllPRListDataGridView>();
         BindingSource PRBindingSource = new BindingSource();
         int prStatusID;
         int PRID;
+        string quotationInSupply;
         List <AllSupplyInPRListDataGridView> allSupplyInPRList = new List<AllSupplyInPRListDataGridView>();
         List<AllSupplyInPRListDataGridView> supplyInSelectedPRList = new List<AllSupplyInPRListDataGridView>();
         BindingSource supplyInPRBindingSource = new BindingSource();
@@ -228,17 +231,41 @@ namespace Admin_Program.SupplyManagement.UIClass
             }
             else
             {
+                List<SupplyInPR> sipr = SupplyInPR.GetAllSupplyInPRList(PRID);
+                foreach (SupplyInPR s in sipr)
+                {
+                    if(s.QuotationPDF != quotationInSupply)
+                    {
+                        quotationInSupply = s.QuotationPDF;
+                        if (!string.IsNullOrEmpty(s.QuotationPDF))
+                        {
+                            GlobalVariable.Global.DeleteFileFromFtpSupply(s.QuotationPDF);
+                        }
+                        else
+                        {
+                            MessageBox.Show("การลบไฟล์อ้างอิง ใบเสนอราคา ของวัสดุเกิดข้อผิดพลาด");
+                        }
+                    }
+                }
                 if (SupplyInPR.Remove(PRID))
                 {
-                    //Finding ways to remove quotation too.
                     MessageBox.Show("ลบวัสดุของ PR สมบูรณ์");
                     PR pr = new PR(PRID);
                     if (pr.Remove())
                     {
                         MessageBox.Show("ลบ PR สมบูรณ์");
+                        supplyInSelectedPRdataGridView.DataSource = null;
+                        UpdatePRDatagridView();
                     }
                 }
             }
+        }
+        //Supply Dilivery Plan
+        private void supplyPlanButton_Click(object sender, EventArgs e)
+        {
+            supplyDeliveryPlan = new AllSupplyDiliveryListForm();
+            supplyDeliveryPlan.Owner = main;
+            supplyDeliveryPlan.ShowDialog();
         }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)
@@ -246,7 +273,5 @@ namespace Admin_Program.SupplyManagement.UIClass
             returnMain?.Invoke(this, EventArgs.Empty);
             Close();
         }
-
-
     }
 }

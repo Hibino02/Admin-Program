@@ -89,6 +89,7 @@
             this.supplyPlanButton.TabIndex = 12;
             this.supplyPlanButton.Text = "แผนการส่งวัสดุ";
             this.supplyPlanButton.UseVisualStyleBackColor = true;
+            this.supplyPlanButton.Click += new System.EventHandler(this.supplyPlanButton_Click);
             // 
             // explainLabel2
             // 
