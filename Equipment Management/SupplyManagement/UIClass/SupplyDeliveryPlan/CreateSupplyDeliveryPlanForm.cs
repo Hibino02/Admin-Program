@@ -1,8 +1,5 @@
-﻿using Admin_Program.GlobalVariable;
-using Admin_Program.SupplyManagement.CustomViewClass;
+﻿using Admin_Program.SupplyManagement.CustomViewClass;
 using Admin_Program.SupplyManagement.ObjectClass;
-using Admin_Program.SupplyManagement.UIClass.SupplierManage;
-using Admin_Program.UIClass;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,6 +17,8 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
 
         List<AllSupplyListDataGridView> allSupplyViewList;
         BindingSource allSupplyBindingSource;
+        List<AllSupplyListDataGridView> selectedSupplyViewList;
+        BindingSource selectedSupplyViewListBindingSource;
         //Filter algorithm
         List<AllSupplyListDataGridView> originalSupplyViewList;
         List<AllSupplyListDataGridView> supplyTypeFilteredList;
@@ -32,7 +31,9 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             allSupplyTypeList = new List<SupplyType>();
             allMonthList = new List<AllMonthListDataGridView>();
             allSupplyViewList = new List<AllSupplyListDataGridView>();
+            selectedSupplyViewList = new List<AllSupplyListDataGridView>();
 
+            selectedSupplyViewListBindingSource = new BindingSource();
             allSupplyBindingSource = new BindingSource();
 
             UpdateComponent();
@@ -54,7 +55,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             allMonthList = AllMonthListDataGridView.AllMonth();
             monthSelectioncomboBox.Items.Clear();
             MonthListID.Clear();
-            monthSelectioncomboBox.Items.Add("------กรุณาเลือกเดือน------");
+            monthSelectioncomboBox.Items.Add("-กรุณาเลือกเดือน-");
             MonthListID.Add(-1);
             foreach (AllMonthListDataGridView m in allMonthList)
             {
@@ -163,7 +164,83 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             int supplyID = (int)selectedRow.Cells["ID"].Value;
             string supplyName = selectedRow.Cells["SupplyName"].Value?.ToString() ?? string.Empty;
             string supplyUnit = selectedRow.Cells["SupplyUnit"].Value?.ToString() ?? string.Empty;
-            string supplyPhoto = selectedRow.Cells["SupplyPhoto"].Value?.ToString() ?? string.Empty;
+
+            AllSupplyListDataGridView selectedSupplyToShow = new AllSupplyListDataGridView(supplyID, supplyName, supplyUnit);
+            selectedSupplyViewList.Add(selectedSupplyToShow);
+            UpdateSelectedSupplyList();
+        }
+        //Selected Supply DataGridView
+        private void UpdateSelectedSupplyList()
+        {
+            selectedSupplyDatagridview.DataSource = null;
+            selectedSupplyViewListBindingSource.DataSource = selectedSupplyViewList;
+            selectedSupplyDatagridview.DataSource = selectedSupplyViewListBindingSource;
+
+            FormatSelectedSupplyDataGridView();
+        }
+        private void FormatSelectedSupplyDataGridView()
+        {
+            if (selectedSupplyDatagridview.Columns["ID"] != null)
+            {
+                selectedSupplyDatagridview.Columns["ID"].Visible = false;
+            }
+            if (selectedSupplyDatagridview.Columns["SupplyName"] != null)
+            {
+                var customColumn = selectedSupplyDatagridview.Columns["SupplyName"];
+                customColumn.HeaderText = "ชื่อวัสดุ";
+                customColumn.Width = 500;
+            }
+            if (selectedSupplyDatagridview.Columns["SupplyUnit"] != null)
+            {
+                var customColumn = selectedSupplyDatagridview.Columns["SupplyUnit"];
+                customColumn.HeaderText = "หน่วย";
+                customColumn.Width = 55;
+            }
+            if (selectedSupplyDatagridview.Columns["MOQ"] != null)
+            {
+                selectedSupplyDatagridview.Columns["MOQ"].Visible = false;
+            }
+            if (selectedSupplyDatagridview.Columns["IsActive"] != null)
+            {
+                selectedSupplyDatagridview.Columns["IsActive"].Visible = false;
+            }
+            if (selectedSupplyDatagridview.Columns["SupplyTypeID"] != null)
+            {
+                selectedSupplyDatagridview.Columns["SupplyTypeID"].Visible = false;
+            }
+            if (selectedSupplyDatagridview.Columns["SupplyTypeName"] != null)
+            {
+                selectedSupplyDatagridview.Columns["SupplyTypeName"].Visible = false;
+            }
+            if (selectedSupplyDatagridview.Columns["SupplyPhoto"] != null)
+            {
+                selectedSupplyDatagridview.Columns["SupplyPhoto"].Visible = false;
+            }
+        }
+        //Remove Supply from plan
+        private void removeFromSupplyInPRbutton_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = selectedSupplyDatagridview.CurrentRow;
+
+            if(selectedRow == null)
+            {
+                MessageBox.Show("กรุณาเลือกวัสดุที่จะนำออกจากรายการ");
+                return;
+            }
+            int rowIndex = selectedRow.Index;
+            // Check if the index is valid in the list
+            if (rowIndex >= 0 && rowIndex < selectedSupplyViewList.Count)
+            {
+                // Remove the item from the list at the given index
+                selectedSupplyViewList.RemoveAt(rowIndex);
+
+                // Update the DataGridView
+                UpdateSelectedSupplyList();
+            }
+        }
+        //Check attributes
+        private void createPRbutton_Click(object sender, EventArgs e)
+        {
 
         }
     }

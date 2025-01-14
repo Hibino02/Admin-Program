@@ -16,6 +16,12 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
         public string SupplyPhoto { get; set; }
 
         public AllSupplyListDataGridView() { }
+        public AllSupplyListDataGridView(int sid,string sname,string sunit)
+        {
+            ID = sid;
+            SupplyName = sname;
+            SupplyUnit = sunit;
+        }
 
         public static List<AllSupplyListDataGridView> AllSupply()
         {

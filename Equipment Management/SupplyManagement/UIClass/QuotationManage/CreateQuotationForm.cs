@@ -340,7 +340,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
 
             if (selectedRow == null)
             {
-                MessageBox.Show("กรุณาเลือกแถวในตาราง");
+                MessageBox.Show("กรุณาเลือกวัสดุที่จะนำออกจากรายการ");
                 return;
             }
             int rowIndex = selectedRow.Index;

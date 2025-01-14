@@ -32,7 +32,7 @@
             this.monthSelectioncomboBox = new System.Windows.Forms.ComboBox();
             this.planNamelabel = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.SupplierDatagridview = new System.Windows.Forms.DataGridView();
+            this.selectedSupplyDatagridview = new System.Windows.Forms.DataGridView();
             this.addToSupplyInPRbutton = new System.Windows.Forms.Button();
             this.removeFromSupplyInPRbutton = new System.Windows.Forms.Button();
             this.supplyTypecomboBox = new System.Windows.Forms.ComboBox();
@@ -43,7 +43,7 @@
             this.allSupplylabel = new System.Windows.Forms.Label();
             this.allSupplydataGridView = new System.Windows.Forms.DataGridView();
             this.createPRbutton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.SupplierDatagridview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedSupplyDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.allSupplydataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,22 +84,22 @@
             this.textBox1.Size = new System.Drawing.Size(274, 24);
             this.textBox1.TabIndex = 3;
             // 
-            // SupplierDatagridview
+            // selectedSupplyDatagridview
             // 
-            this.SupplierDatagridview.AllowUserToAddRows = false;
-            this.SupplierDatagridview.AllowUserToDeleteRows = false;
-            this.SupplierDatagridview.AllowUserToResizeColumns = false;
-            this.SupplierDatagridview.AllowUserToResizeRows = false;
-            this.SupplierDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SupplierDatagridview.Location = new System.Drawing.Point(12, 70);
-            this.SupplierDatagridview.MultiSelect = false;
-            this.SupplierDatagridview.Name = "SupplierDatagridview";
-            this.SupplierDatagridview.ReadOnly = true;
-            this.SupplierDatagridview.RowHeadersVisible = false;
-            this.SupplierDatagridview.RowTemplate.Height = 24;
-            this.SupplierDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.SupplierDatagridview.Size = new System.Drawing.Size(671, 623);
-            this.SupplierDatagridview.TabIndex = 26;
+            this.selectedSupplyDatagridview.AllowUserToAddRows = false;
+            this.selectedSupplyDatagridview.AllowUserToDeleteRows = false;
+            this.selectedSupplyDatagridview.AllowUserToResizeColumns = false;
+            this.selectedSupplyDatagridview.AllowUserToResizeRows = false;
+            this.selectedSupplyDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.selectedSupplyDatagridview.Location = new System.Drawing.Point(12, 70);
+            this.selectedSupplyDatagridview.MultiSelect = false;
+            this.selectedSupplyDatagridview.Name = "selectedSupplyDatagridview";
+            this.selectedSupplyDatagridview.ReadOnly = true;
+            this.selectedSupplyDatagridview.RowHeadersVisible = false;
+            this.selectedSupplyDatagridview.RowTemplate.Height = 24;
+            this.selectedSupplyDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.selectedSupplyDatagridview.Size = new System.Drawing.Size(671, 623);
+            this.selectedSupplyDatagridview.TabIndex = 26;
             // 
             // addToSupplyInPRbutton
             // 
@@ -121,6 +121,7 @@
             this.removeFromSupplyInPRbutton.TabIndex = 36;
             this.removeFromSupplyInPRbutton.Text = "▶️";
             this.removeFromSupplyInPRbutton.UseVisualStyleBackColor = true;
+            this.removeFromSupplyInPRbutton.Click += new System.EventHandler(this.removeFromSupplyInPRbutton_Click);
             // 
             // supplyTypecomboBox
             // 
@@ -208,6 +209,7 @@
             this.createPRbutton.TabIndex = 77;
             this.createPRbutton.Text = "สร้าง";
             this.createPRbutton.UseVisualStyleBackColor = false;
+            this.createPRbutton.Click += new System.EventHandler(this.createPRbutton_Click);
             // 
             // CreateSupplyDeliveryPlanForm
             // 
@@ -225,7 +227,7 @@
             this.Controls.Add(this.supplySelectionlabel);
             this.Controls.Add(this.addToSupplyInPRbutton);
             this.Controls.Add(this.removeFromSupplyInPRbutton);
-            this.Controls.Add(this.SupplierDatagridview);
+            this.Controls.Add(this.selectedSupplyDatagridview);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.planNamelabel);
             this.Controls.Add(this.monthSelectioncomboBox);
@@ -236,7 +238,7 @@
             this.Name = "CreateSupplyDeliveryPlanForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "สร้างแผนส่งวัสดุ";
-            ((System.ComponentModel.ISupportInitialize)(this.SupplierDatagridview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedSupplyDatagridview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.allSupplydataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -249,7 +251,7 @@
         private System.Windows.Forms.ComboBox monthSelectioncomboBox;
         private System.Windows.Forms.Label planNamelabel;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.DataGridView SupplierDatagridview;
+        private System.Windows.Forms.DataGridView selectedSupplyDatagridview;
         private System.Windows.Forms.Button addToSupplyInPRbutton;
         private System.Windows.Forms.Button removeFromSupplyInPRbutton;
         private System.Windows.Forms.ComboBox supplyTypecomboBox;
