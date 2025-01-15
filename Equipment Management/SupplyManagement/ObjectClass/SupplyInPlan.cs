@@ -20,6 +20,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public int ReqW3 { get { return reqw3; }set { reqw3 = value; } }
         int reqw4;
         public int ReqW4 { get { return reqw4; }set { reqw4 = value; } }
+        int planID;
+        public int PlanID { get { return planID; }set { planID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -34,7 +36,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 {
                     string select = @"SELECT
 sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
-st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4
+st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID
 FROM SupplyInPlan sip
 LEFT JOIN Supply s ON sip.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -63,6 +65,7 @@ WHERE sip.ID = @id;";
                             reqw2 = Convert.ToInt32(reader["ReqW2"]);
                             reqw3 = Convert.ToInt32(reader["ReqW3"]);
                             reqw4 = Convert.ToInt32(reader["ReqW4"]);
+                            planID = Convert.ToInt32(reader["PlanID"]);
                         }
                     }
                 }
@@ -79,7 +82,7 @@ WHERE sip.ID = @id;";
         {
             UpdateAttribute(id.ToString());
         }
-        public SupplyInPlan(int id, Supply supply, int reqw1, int reqw2, int reqw3, int reqw4)
+        public SupplyInPlan(int id, Supply supply, int reqw1, int reqw2, int reqw3, int reqw4, int pid)
         {
             this.id = id;
             this.supply = supply;
@@ -87,14 +90,16 @@ WHERE sip.ID = @id;";
             this.reqw2 = reqw2;
             this.reqw3 = reqw3;
             this.reqw4 = reqw4;
+            this.planID = pid;
         }
-        public SupplyInPlan(Supply supply, int reqw1, int reqw2, int reqw3, int reqw4)
+        public SupplyInPlan(Supply supply, int reqw1, int reqw2, int reqw3, int reqw4, int pid)
         {
             this.supply = supply;
             this.reqw1 = reqw1;
             this.reqw2 = reqw2;
             this.reqw3 = reqw3;
             this.reqw4 = reqw4;
+            this.planID = pid;
         }
 
         public bool Create()
@@ -106,13 +111,15 @@ WHERE sip.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO SupplyInPlan (ID, SupplyID, ReqW1, ReqW2, ReqW3, ReqW4) VALUES (NULL, @sid, @w1, @w2, @w3, @w4)";
+                    string insert = "INSERT INTO SupplyInPlan (ID, SupplyID, ReqW1, ReqW2, ReqW3, ReqW4, WarehouseID, PlanID) VALUES (NULL, @sid, @w1, @w2, @w3, @w4, @whid, @pid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@sid", supply.ID);
                     cmd.Parameters.AddWithValue("@w1", reqw1);
                     cmd.Parameters.AddWithValue("@w2", reqw2);
                     cmd.Parameters.AddWithValue("@w3", reqw3);
                     cmd.Parameters.AddWithValue("@w4", reqw4);
+                    cmd.Parameters.AddWithValue("@whid", GlobalVariable.Global.warehouseID);
+                    cmd.Parameters.AddWithValue("@pid", planID);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -185,7 +192,7 @@ WHERE sip.ID = @id;";
             }
         }
 
-        public static List<SupplyInPlan> GetAllSupplyInPlanList(int supplyID)
+        public static List<SupplyInPlan> GetAllSupplyInPlanList()
         {
             MySqlConnection conn = null;
             List<SupplyInPlan> sipList = new List<SupplyInPlan>();
@@ -196,8 +203,8 @@ WHERE sip.ID = @id;";
                 using (var cmd= conn.CreateCommand())
                 {
                     string selectAll = @"SELECT
-sip.ID, sip.WarehouseID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
-st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4
+sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
+st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID
 FROM SupplyInPlan sip
 LEFT JOIN Supply s ON sip.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -226,8 +233,9 @@ WHERE sip.WarehouseID = @whid;";
                             int reqw2 = Convert.ToInt32(reader["ReqW2"]);
                             int reqw3 = Convert.ToInt32(reader["ReqW3"]);
                             int reqw4 = Convert.ToInt32(reader["ReqW4"]);
+                            int planID = Convert.ToInt32(reader["PlanID"]);
 
-                            SupplyInPlan sip = new SupplyInPlan(id,supply,reqw1,reqw2,reqw3,reqw4);
+                            SupplyInPlan sip = new SupplyInPlan(id,supply,reqw1,reqw2,reqw3,reqw4,planID);
                             sipList.Add(sip);
                         }
                     }

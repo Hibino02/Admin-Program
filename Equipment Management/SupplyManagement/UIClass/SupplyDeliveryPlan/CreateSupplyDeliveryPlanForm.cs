@@ -14,6 +14,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         List<int> SupplyTypeListID = new List<int>();
         List<AllMonthListDataGridView> allMonthList;
         List<int> MonthListID = new List<int>();
+        DeliveryMonth selectMonth;
 
         List<AllSupplyListDataGridView> allSupplyViewList;
         BindingSource allSupplyBindingSource;
@@ -26,7 +27,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         public CreateSupplyDeliveryPlanForm()
         {
             InitializeComponent();
-            this.Size = new Size(1480, 820);
+            this.Size = new Size(1480, 434);
 
             allSupplyTypeList = new List<SupplyType>();
             allMonthList = new List<AllMonthListDataGridView>();
@@ -239,9 +240,48 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             }
         }
         //Check attributes
+        private bool CheckAll()
+        {
+            int selectMonthIndex = monthSelectioncomboBox.SelectedIndex;
+            if(selectMonthIndex >= 0&& selectMonthIndex < MonthListID.Count)
+            {
+                int selectedMonthID = MonthListID[selectMonthIndex];
+                selectMonth = new DeliveryMonth(selectedMonthID);
+            }
+            else
+            {
+                MessageBox.Show("กรุณาเลือก เดือน");
+                return false;
+            }
+            if (string.IsNullOrEmpty(planNametextBox.Text))
+            {
+                MessageBox.Show("กรุณา ตั้งชื่อแผน");
+                return false;
+            }
+            if(selectedSupplyViewList.Count <= 0)
+            {
+                MessageBox.Show("กรุณาเลือกวัสดุ อย่างน้อย 1 รายการ");
+                return false;
+            }
+            return true;
+        }
         private void createPRbutton_Click(object sender, EventArgs e)
         {
-
+            if (CheckAll())
+            {
+                DeliveryPlan dp = new DeliveryPlan(GlobalVariable.Global.warehouseID, planNametextBox.Text, selectMonth);
+                if (dp.Create())
+                {
+                    foreach (AllSupplyListDataGridView selectS in selectedSupplyViewList)
+                    {
+                        Supply newS = new Supply(selectS.ID);
+                        SupplyInPlan sip = new SupplyInPlan(newS,0,0,0,0, dp.ID);
+                        sip.Create();
+                    }
+                }  
+                MessageBox.Show("สร้างแผนเสร็จสิ้น");
+                Close();
+            }
         }
     }
 }

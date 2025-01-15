@@ -78,10 +78,14 @@ WHERE dp.ID = @id;";
         public bool Create()
         {
             MySqlConnection conn = null;
+            MySqlTransaction transaction = null;
             try
             {
                 conn = new MySqlConnection(connstr);
                 conn.Open();
+
+                transaction = conn.BeginTransaction();
+
                 using (var cmd = conn.CreateCommand())
                 {
                     string insert = "INSERT INTO DeliveryPlan (ID, PlanName, MonthID, WarehouseID) VALUES (NULL, @planname, @monthid, @whid)";
@@ -90,6 +94,16 @@ WHERE dp.ID = @id;";
                     cmd.Parameters.AddWithValue("@monthid", _month.ID);
                     cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
+
+                    //Retrieve last inserted ID in this transaction
+                    cmd.CommandText = "SELECT LAST_INSERT_ID();";
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        this.id = Convert.ToInt32(result);
+                    }
+                    // Commit the transaction
+                    transaction.Commit();
                 }
                 return true;
             }

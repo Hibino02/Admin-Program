@@ -31,7 +31,7 @@
             this.monthSelectopnlabel = new System.Windows.Forms.Label();
             this.monthSelectioncomboBox = new System.Windows.Forms.ComboBox();
             this.planNamelabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.planNametextBox = new System.Windows.Forms.TextBox();
             this.selectedSupplyDatagridview = new System.Windows.Forms.DataGridView();
             this.addToSupplyInPRbutton = new System.Windows.Forms.Button();
             this.removeFromSupplyInPRbutton = new System.Windows.Forms.Button();
@@ -76,13 +76,13 @@
             this.planNamelabel.TabIndex = 2;
             this.planNamelabel.Text = "ชื่อแผน :";
             // 
-            // textBox1
+            // planNametextBox
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.textBox1.Location = new System.Drawing.Point(320, 9);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(274, 24);
-            this.textBox1.TabIndex = 3;
+            this.planNametextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.planNametextBox.Location = new System.Drawing.Point(320, 9);
+            this.planNametextBox.Name = "planNametextBox";
+            this.planNametextBox.Size = new System.Drawing.Size(274, 24);
+            this.planNametextBox.TabIndex = 3;
             // 
             // selectedSupplyDatagridview
             // 
@@ -98,13 +98,13 @@
             this.selectedSupplyDatagridview.RowHeadersVisible = false;
             this.selectedSupplyDatagridview.RowTemplate.Height = 24;
             this.selectedSupplyDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.selectedSupplyDatagridview.Size = new System.Drawing.Size(671, 623);
+            this.selectedSupplyDatagridview.Size = new System.Drawing.Size(671, 313);
             this.selectedSupplyDatagridview.TabIndex = 26;
             // 
             // addToSupplyInPRbutton
             // 
             this.addToSupplyInPRbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.addToSupplyInPRbutton.Location = new System.Drawing.Point(689, 350);
+            this.addToSupplyInPRbutton.Location = new System.Drawing.Point(689, 213);
             this.addToSupplyInPRbutton.Name = "addToSupplyInPRbutton";
             this.addToSupplyInPRbutton.Size = new System.Drawing.Size(75, 45);
             this.addToSupplyInPRbutton.TabIndex = 37;
@@ -115,7 +115,7 @@
             // removeFromSupplyInPRbutton
             // 
             this.removeFromSupplyInPRbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.removeFromSupplyInPRbutton.Location = new System.Drawing.Point(689, 299);
+            this.removeFromSupplyInPRbutton.Location = new System.Drawing.Point(689, 162);
             this.removeFromSupplyInPRbutton.Name = "removeFromSupplyInPRbutton";
             this.removeFromSupplyInPRbutton.Size = new System.Drawing.Size(75, 45);
             this.removeFromSupplyInPRbutton.TabIndex = 36;
@@ -145,6 +145,7 @@
             // 
             // supplySearchtextBox
             // 
+            this.supplySearchtextBox.BackColor = System.Drawing.SystemColors.Info;
             this.supplySearchtextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.supplySearchtextBox.Location = new System.Drawing.Point(1033, 8);
             this.supplySearchtextBox.Name = "supplySearchtextBox";
@@ -196,16 +197,16 @@
             this.allSupplydataGridView.RowHeadersVisible = false;
             this.allSupplydataGridView.RowTemplate.Height = 24;
             this.allSupplydataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.allSupplydataGridView.Size = new System.Drawing.Size(671, 623);
+            this.allSupplydataGridView.Size = new System.Drawing.Size(671, 313);
             this.allSupplydataGridView.TabIndex = 46;
             // 
             // createPRbutton
             // 
             this.createPRbutton.BackColor = System.Drawing.SystemColors.Info;
             this.createPRbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.createPRbutton.Location = new System.Drawing.Point(1366, 699);
+            this.createPRbutton.Location = new System.Drawing.Point(1377, 8);
             this.createPRbutton.Name = "createPRbutton";
-            this.createPRbutton.Size = new System.Drawing.Size(75, 70);
+            this.createPRbutton.Size = new System.Drawing.Size(75, 46);
             this.createPRbutton.TabIndex = 77;
             this.createPRbutton.Text = "สร้าง";
             this.createPRbutton.UseVisualStyleBackColor = false;
@@ -216,7 +217,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.ClientSize = new System.Drawing.Size(1464, 395);
             this.Controls.Add(this.createPRbutton);
             this.Controls.Add(this.allSupplydataGridView);
             this.Controls.Add(this.allSupplylabel);
@@ -228,7 +229,7 @@
             this.Controls.Add(this.addToSupplyInPRbutton);
             this.Controls.Add(this.removeFromSupplyInPRbutton);
             this.Controls.Add(this.selectedSupplyDatagridview);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.planNametextBox);
             this.Controls.Add(this.planNamelabel);
             this.Controls.Add(this.monthSelectioncomboBox);
             this.Controls.Add(this.monthSelectopnlabel);
@@ -250,7 +251,7 @@
         private System.Windows.Forms.Label monthSelectopnlabel;
         private System.Windows.Forms.ComboBox monthSelectioncomboBox;
         private System.Windows.Forms.Label planNamelabel;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox planNametextBox;
         private System.Windows.Forms.DataGridView selectedSupplyDatagridview;
         private System.Windows.Forms.Button addToSupplyInPRbutton;
         private System.Windows.Forms.Button removeFromSupplyInPRbutton;
