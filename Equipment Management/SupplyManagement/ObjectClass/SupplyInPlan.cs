@@ -143,7 +143,7 @@ WHERE sip.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string update = "UPDATE SupplyInPlan SET SupplyID = @sid, ReqW1 = @w1, ReqW2 = @w2, ReqW3 = @w3, ReqW4 = @4 WHERE ID = @id";
+                    string update = "UPDATE SupplyInPlan SET SupplyID = @sid, ReqW1 = @w1, ReqW2 = @w2, ReqW3 = @w3, ReqW4 = @w4 WHERE ID = @id";
                     cmd.CommandText = update;
                     cmd.Parameters.AddWithValue("@sid", supply.ID);
                     cmd.Parameters.AddWithValue("@w1", reqw1);
@@ -165,7 +165,7 @@ WHERE sip.ID = @id;";
                     conn.Close();
             }
         }
-        public bool Remove()
+        public static bool Remove(int pid)
         {
             MySqlConnection conn = null;
             try
@@ -174,9 +174,9 @@ WHERE sip.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string delete = "DELETE FROM SupplyInPlan WHERE ID = @id";
+                    string delete = "DELETE FROM SupplyInPlan WHERE PlanID = @pid";
                     cmd.CommandText = delete;
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@pid", pid);
                     cmd.ExecuteNonQuery();
                 }
                 return true;

@@ -3,12 +3,9 @@ using Admin_Program.SupplyManagement.ObjectClass;
 using Admin_Program.UIClass;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
@@ -23,8 +20,11 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         List<AllPlanListDataGridView> planList;
         BindingSource planListBindingSource;
         int planID;
+        string planName;
+        int monthID;
+        string monthName;
 
-        List<AllSupplyInPlanListDataGridView> allSupplyList = AllSupplyInPlanListDataGridView.AllSupplyInPlan();
+        List<AllSupplyInPlanListDataGridView> allSupplyList = new List<AllSupplyInPlanListDataGridView>();
         List<AllSupplyInPlanListDataGridView> selectPlanSupplyList = new List<AllSupplyInPlanListDataGridView>();
         BindingSource selectPlanSupplyBindingSource;
         public AllSupplyDiliveryListForm()
@@ -56,6 +56,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         //Update Plan
         private void UpdatePlanGridView()
         {
+            allSupplyList = AllSupplyInPlanListDataGridView.AllSupplyInPlan();
             planList = AllPlanListDataGridView.AllPlan();
             planListBindingSource.DataSource = planList;
             planDatagridview.DataSource = planListBindingSource;
@@ -91,6 +92,9 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                 DataGridViewRow selectedRow = planDatagridview.Rows[e.RowIndex];
 
                 planID = Convert.ToInt32(selectedRow.Cells["PlanID"].Value);
+                planName = selectedRow.Cells["PlanName"].Value.ToString();
+                monthID = Convert.ToInt32(selectedRow.Cells["MonthID"].Value);
+                monthName = selectedRow.Cells["MonthName"].Value.ToString();
                 UpdateSupplyInPlanFridView(planID);
             }
         }
@@ -197,10 +201,28 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             createSupply.ShowDialog();
             UpdatePlanGridView();
         }
+        private void CheckSelectMonth()
+        {
+            int selectMonthIndex = selectMonthcomboBox.SelectedIndex;
+            if(selectMonthIndex > 0)
+            {
+                int selectedMonthID = mID[selectMonthIndex];
+                if (selectedMonthID != monthID)
+                {
+                    DeliveryMonth newM = new DeliveryMonth(selectedMonthID);
+                    DeliveryMonth m = new DeliveryMonth(monthID, monthName);
+                    DeliveryPlan dp = new DeliveryPlan(planID, GlobalVariable.Global.warehouseID, planName, m);
+                    dp._Month = newM;
+                    dp.Change();
+                    MessageBox.Show("เดือนของแผนที่เลือกถูกแก้ใข");
+                }
+            }
+        }
         //Update Plan
         private void editButton_Click(object sender, EventArgs e)
         {
-            if(selectPlanSupplydataGridView.Rows.Count > 0)
+            CheckSelectMonth();
+            if (selectPlanSupplydataGridView.Rows.Count > 0)
             {
                 foreach (DataGridViewRow row in selectPlanSupplydataGridView.Rows)
                 {
@@ -217,7 +239,39 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                     sip.ReqW4 = qw4;
                     sip.Change();
                 }
-            } 
+                MessageBox.Show("อัฟเดทแผนเรียบร้อย");
+                UpdatePlanGridView();
+            }
+        }
+        //Remove Plan
+        private void removeButton_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = planDatagridview.CurrentRow;
+
+            if(selectedRow == null)
+            {
+                MessageBox.Show("กรุณาเลือกแผน");
+                return;
+            }
+            DialogResult result = MessageBox.Show(
+            "คุณแน่ใจหรือไม่ว่าต้องการลบแผนนี้?",
+            "ยืนยันการลบ",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question);
+
+            if(result == DialogResult.Yes)
+            {
+                int planID = (int)selectedRow.Cells["PlanID"].Value;
+                if (SupplyInPlan.Remove(planID))
+                {
+                    MessageBox.Show("ลบรายการวัสดุในแผนเรียบร้อย");
+                    if (DeliveryPlan.Remove(planID))
+                    {
+                        MessageBox.Show("ลบแผนเรียบร้อย");
+                        UpdatePlanGridView();
+                    }
+                }
+            }
         }
     }
 }

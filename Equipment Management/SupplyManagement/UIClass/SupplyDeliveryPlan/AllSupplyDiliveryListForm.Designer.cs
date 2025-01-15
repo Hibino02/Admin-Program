@@ -61,6 +61,7 @@
             this.removeButton.TabIndex = 28;
             this.removeButton.Text = "ลบแผน";
             this.removeButton.UseVisualStyleBackColor = true;
+            this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
             // 
             // editButton
             // 

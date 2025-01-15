@@ -145,7 +145,7 @@ WHERE dp.ID = @id;";
                     conn.Close();
             }
         }
-        public bool Remove()
+        public static bool Remove(int id)
         {
             MySqlConnection conn = null;
             try
