@@ -90,6 +90,10 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             {
                 allSupplydataGridView.Columns["ID"].Visible = false;
             }
+            if (allSupplydataGridView.Columns["UserGroup"] != null)
+            {
+                allSupplydataGridView.Columns["UserGroup"].Visible = false;
+            }
             if (allSupplydataGridView.Columns["SupplyName"] != null)
             {
                 var customColumn = allSupplydataGridView.Columns["SupplyName"];

@@ -27,8 +27,8 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyBalanceManage
         }
         private bool CheckAttribute()
         {
-            if (currentBalancetextBox.Text == supplyInBalance.Balance.ToString() ||
-               updateDatedateTimePicker.Value.Date == supplyInBalance.UpdateDate.Date)
+            if (currentBalancetextBox.Text != supplyInBalance.Balance.ToString() ||
+               updateDatedateTimePicker.Value.Date != supplyInBalance.UpdateDate.Date)
             {
                 if (string.IsNullOrEmpty(currentBalancetextBox.Text))
                 {
@@ -57,7 +57,13 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyBalanceManage
         {
             if (CheckAttribute())
             {
-                
+                supplyInBalance.Balance = currentBalance;
+                supplyInBalance.UpdateDate = updateDatedateTimePicker.Value.Date;
+                if (supplyInBalance.Change())
+                {
+                    MessageBox.Show("แก้ใขข้อมูลเรียบร้อย");
+                    Close();
+                }
             }
         }
     }

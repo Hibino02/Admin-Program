@@ -53,6 +53,7 @@
             this.searchSupplyRequestTextBox = new System.Windows.Forms.TextBox();
             this.searchSupplylabel = new System.Windows.Forms.Label();
             this.requestSupplyLabel = new System.Windows.Forms.Label();
+            this.excelGenbutton = new System.Windows.Forms.Button();
             this.SupplyInventoryGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyBalanceDatagridview)).BeginInit();
             this.SupplyRequestGroupBox.SuspendLayout();
@@ -186,6 +187,7 @@
             // 
             // SupplyRequestGroupBox
             // 
+            this.SupplyRequestGroupBox.Controls.Add(this.excelGenbutton);
             this.SupplyRequestGroupBox.Controls.Add(this.supplyInSelectedPRdataGridView);
             this.SupplyRequestGroupBox.Controls.Add(this.backToMainMenuButton);
             this.SupplyRequestGroupBox.Controls.Add(this.CompletePRButton);
@@ -356,6 +358,17 @@
             this.requestSupplyLabel.TabIndex = 13;
             this.requestSupplyLabel.Text = "คำขอซื้อ วัสดุสิ้นเปลือง";
             // 
+            // excelGenbutton
+            // 
+            this.excelGenbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.excelGenbutton.Location = new System.Drawing.Point(265, 659);
+            this.excelGenbutton.Name = "excelGenbutton";
+            this.excelGenbutton.Size = new System.Drawing.Size(124, 52);
+            this.excelGenbutton.TabIndex = 23;
+            this.excelGenbutton.Text = "Excel Gen";
+            this.excelGenbutton.UseVisualStyleBackColor = true;
+            this.excelGenbutton.Click += new System.EventHandler(this.excelGenbutton_Click);
+            // 
             // SupplyControlMainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -406,5 +419,6 @@
         private System.Windows.Forms.Button manageSupplierButton;
         private System.Windows.Forms.Button backToMainMenuButton;
         private System.Windows.Forms.DataGridView supplyInSelectedPRdataGridView;
+        private System.Windows.Forms.Button excelGenbutton;
     }
 }

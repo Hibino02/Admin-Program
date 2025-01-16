@@ -28,21 +28,25 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
         {
             List<AllSupplyListDataGridView> sViewList = new List<AllSupplyListDataGridView>();
             List<Supply> sList = Supply.GetAllSupplyList();
+
             foreach (Supply s in sList)
             {
-                AllSupplyListDataGridView view = new AllSupplyListDataGridView
+                if(s.UserGroup == GlobalVariable.Global.userGroup || GlobalVariable.Global.userGroup == "ADMIN")
                 {
-                    ID = s.ID,
-                    SupplyName = s.SupplyName,
-                    SupplyUnit = s.SupplyUnit,
-                    MOQ = s.MOQ,
-                    IsActive = s.IsActive,
-                    SupplyPhoto = s.SupplyPhoto,
-                    SupplyTypeID = s.SupplyType.ID,
-                    SupplyTypeName = s.SupplyType.TypeName,
-                    UserGroup = s.UserGroup
-                };
-                sViewList.Add(view);
+                    AllSupplyListDataGridView view = new AllSupplyListDataGridView
+                    {
+                        ID = s.ID,
+                        SupplyName = s.SupplyName,
+                        SupplyUnit = s.SupplyUnit,
+                        MOQ = s.MOQ,
+                        IsActive = s.IsActive,
+                        SupplyPhoto = s.SupplyPhoto,
+                        SupplyTypeID = s.SupplyType.ID,
+                        SupplyTypeName = s.SupplyType.TypeName,
+                        UserGroup = s.UserGroup
+                    };
+                    sViewList.Add(view);
+                }
             }
             return sViewList.OrderBy(s => s.SupplyName).ToList();
         }
