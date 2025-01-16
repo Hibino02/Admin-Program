@@ -43,6 +43,8 @@
             this.supplyNameTextBox = new System.Windows.Forms.TextBox();
             this.supplyNameLabel = new System.Windows.Forms.Label();
             this.manageSupplyButton = new System.Windows.Forms.Button();
+            this.userGrouplabel = new System.Windows.Forms.Label();
+            this.userGroupcomboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.supplyPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.moqnumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -190,12 +192,33 @@
             this.manageSupplyButton.UseVisualStyleBackColor = true;
             this.manageSupplyButton.Click += new System.EventHandler(this.manageSupplyButton_Click);
             // 
+            // userGrouplabel
+            // 
+            this.userGrouplabel.AutoSize = true;
+            this.userGrouplabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.userGrouplabel.Location = new System.Drawing.Point(752, 118);
+            this.userGrouplabel.Name = "userGrouplabel";
+            this.userGrouplabel.Size = new System.Drawing.Size(90, 18);
+            this.userGrouplabel.TabIndex = 50;
+            this.userGrouplabel.Text = "เลือกกลุ่มวัสดุ :";
+            // 
+            // userGroupcomboBox
+            // 
+            this.userGroupcomboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.userGroupcomboBox.FormattingEnabled = true;
+            this.userGroupcomboBox.Location = new System.Drawing.Point(848, 115);
+            this.userGroupcomboBox.Name = "userGroupcomboBox";
+            this.userGroupcomboBox.Size = new System.Drawing.Size(185, 24);
+            this.userGroupcomboBox.TabIndex = 49;
+            // 
             // EditSupplyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.Controls.Add(this.userGrouplabel);
+            this.Controls.Add(this.userGroupcomboBox);
             this.Controls.Add(this.manageSupplyButton);
             this.Controls.Add(this.editButton);
             this.Controls.Add(this.supplyPictureBox);
@@ -241,5 +264,7 @@
         private System.Windows.Forms.TextBox supplyNameTextBox;
         private System.Windows.Forms.Label supplyNameLabel;
         private System.Windows.Forms.Button manageSupplyButton;
+        private System.Windows.Forms.Label userGrouplabel;
+        private System.Windows.Forms.ComboBox userGroupcomboBox;
     }
 }

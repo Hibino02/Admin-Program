@@ -13,6 +13,7 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
         public bool IsActive { get; set; }
         public int SupplyTypeID { get; set; }
         public string SupplyTypeName { get; set; }
+        public string UserGroup { get; set; }
         public string SupplyPhoto { get; set; }
 
         public AllSupplyListDataGridView() { }
@@ -38,7 +39,8 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
                     IsActive = s.IsActive,
                     SupplyPhoto = s.SupplyPhoto,
                     SupplyTypeID = s.SupplyType.ID,
-                    SupplyTypeName = s.SupplyType.TypeName
+                    SupplyTypeName = s.SupplyType.TypeName,
+                    UserGroup = s.UserGroup
                 };
                 sViewList.Add(view);
             }

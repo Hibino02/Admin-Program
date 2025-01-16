@@ -87,7 +87,7 @@
             this.RemoveSupplyButton.Name = "RemoveSupplyButton";
             this.RemoveSupplyButton.Size = new System.Drawing.Size(124, 52);
             this.RemoveSupplyButton.TabIndex = 17;
-            this.RemoveSupplyButton.Text = "ลบ";
+            this.RemoveSupplyButton.Text = "สิ้นสุดการใช้งาน";
             this.RemoveSupplyButton.UseVisualStyleBackColor = true;
             this.RemoveSupplyButton.Click += new System.EventHandler(this.RemoveSupplyButton_Click);
             // 

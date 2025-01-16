@@ -34,10 +34,9 @@
             this.explainLabel1 = new System.Windows.Forms.Label();
             this.editSupplyButton = new System.Windows.Forms.Button();
             this.updateSupplyButton = new System.Windows.Forms.Button();
-            this.SupplyInventoryDatagridview = new System.Windows.Forms.DataGridView();
+            this.supplyBalanceDatagridview = new System.Windows.Forms.DataGridView();
             this.supplyInventoryDatagridviewLabel = new System.Windows.Forms.Label();
-            this.supplyTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.searchSupplyInventoryTextBox = new System.Windows.Forms.TextBox();
+            this.searchSupplyBalanceTextBox = new System.Windows.Forms.TextBox();
             this.SearchLabel = new System.Windows.Forms.Label();
             this.SupplyInventoryLabel = new System.Windows.Forms.Label();
             this.SupplyRequestGroupBox = new System.Windows.Forms.GroupBox();
@@ -55,7 +54,7 @@
             this.searchSupplylabel = new System.Windows.Forms.Label();
             this.requestSupplyLabel = new System.Windows.Forms.Label();
             this.SupplyInventoryGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SupplyInventoryDatagridview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.supplyBalanceDatagridview)).BeginInit();
             this.SupplyRequestGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInSelectedPRdataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyRequestDataGridView)).BeginInit();
@@ -68,10 +67,9 @@
             this.SupplyInventoryGroupBox.Controls.Add(this.explainLabel1);
             this.SupplyInventoryGroupBox.Controls.Add(this.editSupplyButton);
             this.SupplyInventoryGroupBox.Controls.Add(this.updateSupplyButton);
-            this.SupplyInventoryGroupBox.Controls.Add(this.SupplyInventoryDatagridview);
+            this.SupplyInventoryGroupBox.Controls.Add(this.supplyBalanceDatagridview);
             this.SupplyInventoryGroupBox.Controls.Add(this.supplyInventoryDatagridviewLabel);
-            this.SupplyInventoryGroupBox.Controls.Add(this.supplyTypeComboBox);
-            this.SupplyInventoryGroupBox.Controls.Add(this.searchSupplyInventoryTextBox);
+            this.SupplyInventoryGroupBox.Controls.Add(this.searchSupplyBalanceTextBox);
             this.SupplyInventoryGroupBox.Controls.Add(this.SearchLabel);
             this.SupplyInventoryGroupBox.Controls.Add(this.SupplyInventoryLabel);
             this.SupplyInventoryGroupBox.Location = new System.Drawing.Point(12, 5);
@@ -118,6 +116,7 @@
             this.editSupplyButton.TabIndex = 9;
             this.editSupplyButton.Text = "แก้ใข";
             this.editSupplyButton.UseVisualStyleBackColor = true;
+            this.editSupplyButton.Click += new System.EventHandler(this.editSupplyButton_Click);
             // 
             // updateSupplyButton
             // 
@@ -128,23 +127,24 @@
             this.updateSupplyButton.TabIndex = 8;
             this.updateSupplyButton.Text = "อัฟเดท";
             this.updateSupplyButton.UseVisualStyleBackColor = true;
+            this.updateSupplyButton.Click += new System.EventHandler(this.updateSupplyButton_Click);
             // 
-            // SupplyInventoryDatagridview
+            // supplyBalanceDatagridview
             // 
-            this.SupplyInventoryDatagridview.AllowUserToAddRows = false;
-            this.SupplyInventoryDatagridview.AllowUserToDeleteRows = false;
-            this.SupplyInventoryDatagridview.AllowUserToResizeColumns = false;
-            this.SupplyInventoryDatagridview.AllowUserToResizeRows = false;
-            this.SupplyInventoryDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SupplyInventoryDatagridview.Location = new System.Drawing.Point(6, 111);
-            this.SupplyInventoryDatagridview.MultiSelect = false;
-            this.SupplyInventoryDatagridview.Name = "SupplyInventoryDatagridview";
-            this.SupplyInventoryDatagridview.ReadOnly = true;
-            this.SupplyInventoryDatagridview.RowHeadersVisible = false;
-            this.SupplyInventoryDatagridview.RowTemplate.Height = 24;
-            this.SupplyInventoryDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.SupplyInventoryDatagridview.Size = new System.Drawing.Size(696, 542);
-            this.SupplyInventoryDatagridview.TabIndex = 7;
+            this.supplyBalanceDatagridview.AllowUserToAddRows = false;
+            this.supplyBalanceDatagridview.AllowUserToDeleteRows = false;
+            this.supplyBalanceDatagridview.AllowUserToResizeColumns = false;
+            this.supplyBalanceDatagridview.AllowUserToResizeRows = false;
+            this.supplyBalanceDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.supplyBalanceDatagridview.Location = new System.Drawing.Point(6, 111);
+            this.supplyBalanceDatagridview.MultiSelect = false;
+            this.supplyBalanceDatagridview.Name = "supplyBalanceDatagridview";
+            this.supplyBalanceDatagridview.ReadOnly = true;
+            this.supplyBalanceDatagridview.RowHeadersVisible = false;
+            this.supplyBalanceDatagridview.RowTemplate.Height = 24;
+            this.supplyBalanceDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.supplyBalanceDatagridview.Size = new System.Drawing.Size(696, 542);
+            this.supplyBalanceDatagridview.TabIndex = 7;
             // 
             // supplyInventoryDatagridviewLabel
             // 
@@ -156,20 +156,13 @@
             this.supplyInventoryDatagridviewLabel.TabIndex = 6;
             this.supplyInventoryDatagridviewLabel.Text = "รายการวัสดุสิ้นเปลือง ปัจจุบัณ";
             // 
-            // supplyTypeComboBox
+            // searchSupplyBalanceTextBox
             // 
-            this.supplyTypeComboBox.FormattingEnabled = true;
-            this.supplyTypeComboBox.Location = new System.Drawing.Point(364, 58);
-            this.supplyTypeComboBox.Name = "supplyTypeComboBox";
-            this.supplyTypeComboBox.Size = new System.Drawing.Size(337, 21);
-            this.supplyTypeComboBox.TabIndex = 4;
-            // 
-            // searchSupplyInventoryTextBox
-            // 
-            this.searchSupplyInventoryTextBox.Location = new System.Drawing.Point(100, 58);
-            this.searchSupplyInventoryTextBox.Name = "searchSupplyInventoryTextBox";
-            this.searchSupplyInventoryTextBox.Size = new System.Drawing.Size(258, 20);
-            this.searchSupplyInventoryTextBox.TabIndex = 3;
+            this.searchSupplyBalanceTextBox.Location = new System.Drawing.Point(149, 55);
+            this.searchSupplyBalanceTextBox.Name = "searchSupplyBalanceTextBox";
+            this.searchSupplyBalanceTextBox.Size = new System.Drawing.Size(386, 20);
+            this.searchSupplyBalanceTextBox.TabIndex = 3;
+            this.searchSupplyBalanceTextBox.TextChanged += new System.EventHandler(this.searchSupplyBalanceTextBox_TextChanged);
             // 
             // SearchLabel
             // 
@@ -177,9 +170,9 @@
             this.SearchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.SearchLabel.Location = new System.Drawing.Point(6, 56);
             this.SearchLabel.Name = "SearchLabel";
-            this.SearchLabel.Size = new System.Drawing.Size(88, 20);
+            this.SearchLabel.Size = new System.Drawing.Size(137, 20);
             this.SearchLabel.TabIndex = 2;
-            this.SearchLabel.Text = "ค้นหารายการ";
+            this.SearchLabel.Text = "ค้นหารายการจากชื่อ :";
             // 
             // SupplyInventoryLabel
             // 
@@ -377,7 +370,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.SupplyInventoryGroupBox.ResumeLayout(false);
             this.SupplyInventoryGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SupplyInventoryDatagridview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.supplyBalanceDatagridview)).EndInit();
             this.SupplyRequestGroupBox.ResumeLayout(false);
             this.SupplyRequestGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInSelectedPRdataGridView)).EndInit();
@@ -392,10 +385,9 @@
         private System.Windows.Forms.GroupBox SupplyRequestGroupBox;
         private System.Windows.Forms.Label SupplyInventoryLabel;
         private System.Windows.Forms.Label SearchLabel;
-        private System.Windows.Forms.ComboBox supplyTypeComboBox;
-        private System.Windows.Forms.TextBox searchSupplyInventoryTextBox;
+        private System.Windows.Forms.TextBox searchSupplyBalanceTextBox;
         private System.Windows.Forms.Label supplyInventoryDatagridviewLabel;
-        private System.Windows.Forms.DataGridView SupplyInventoryDatagridview;
+        private System.Windows.Forms.DataGridView supplyBalanceDatagridview;
         private System.Windows.Forms.Button supplyPlanButton;
         private System.Windows.Forms.Label explainLabel2;
         private System.Windows.Forms.Label explainLabel1;

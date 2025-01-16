@@ -47,6 +47,10 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 supplyTypeComboBox.Items.Add(spt.TypeName);
                 supplyTypeID.Add(spt.ID);
             }
+            userGroupcomboBox.Items.Add("--เลือกกลุ่มวัสดุ--");
+            userGroupcomboBox.Items.Add("GROUP1");
+            userGroupcomboBox.Items.Add("GROUP2");
+            userGroupcomboBox.Items.Add("GROUP3");
         }
         //Method to show current supply
         private void ShowSelectedSupplyToForm()
@@ -136,12 +140,12 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
             }
             else
             {
-                MessageBox.Show("กรุณาเลือก ประเภท ของวัสดุ");
+                MessageBox.Show("กรุณาเลือกประเภทวัสดุ");
                 isComplete = false;
             }
             if (string.IsNullOrEmpty(supplyNameTextBox.Text))
             {
-                MessageBox.Show("กรุณาระบุ ชื่อ ของวัสดุ");
+                MessageBox.Show("กรุณาใส่ชื่อวัสดุ");
                 isComplete = false;
             }
             if(supplyNameTextBox.Text.Length > 77)
@@ -151,8 +155,13 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
             }
             if (string.IsNullOrEmpty(supplyUnitTextBox.Text))
             {
-                MessageBox.Show("กรุณาระบุ หน่วย ของวัสดุ");
+                MessageBox.Show("กรุณาใส่หน่วยวัสดุ");
                 isComplete = false;
+            }
+            if (userGroupcomboBox.SelectedIndex > 0)
+            {
+                string userGroup = userGroupcomboBox.SelectedItem?.ToString();
+                supply.UserGroup = userGroup;
             }
             int moq = (int)moqnumericUpDown.Value;
             supply.MOQ = moq;

@@ -191,6 +191,32 @@ WHERE sip.ID = @id;";
                     conn.Close();
             }
         }
+        public static bool RemoveBySupplyID(int sid)
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string delete = "DELETE FROM SupplyInPlan WHERE SupplyID = @sid";
+                    cmd.CommandText = delete;
+                    cmd.Parameters.AddWithValue("@sid", sid);
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
 
         public static List<SupplyInPlan> GetAllSupplyInPlanList()
         {

@@ -298,6 +298,7 @@
     <Compile Include="EquipmentManagement\UIClass\Plan\RemovePlanProcessingForm.Designer.cs">
       <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplyManagement\CustomViewClass\AllSupplyInventoryDatagridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllMonthListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllPlanListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllPRListDataGridView.cs" />
@@ -367,6 +368,18 @@
     </Compile>
     <Compile Include="SupplyManagement\UIClass\SupplyArrivalManage\SupplyArrivalForm.Designer.cs">
       <DependentUpon>SupplyArrivalForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyBalanceManage\SupplyBalanceEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyBalanceManage\SupplyBalanceEditForm.Designer.cs">
+      <DependentUpon>SupplyBalanceEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyBalanceManage\SupplyBalanceUpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyBalanceManage\SupplyBalanceUpdateForm.Designer.cs">
+      <DependentUpon>SupplyBalanceUpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SupplyManagement\UIClass\SupplyControlMainForm.cs">
       <SubType>Form</SubType>
@@ -545,6 +558,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\SupplyArrivalManage\SupplyArrivalForm.resx">
       <DependentUpon>SupplyArrivalForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplyBalanceManage\SupplyBalanceEditForm.resx">
+      <DependentUpon>SupplyBalanceEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplyBalanceManage\SupplyBalanceUpdateForm.resx">
+      <DependentUpon>SupplyBalanceUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\SupplyControlMainForm.resx">
       <DependentUpon>SupplyControlMainForm.cs</DependentUpon>

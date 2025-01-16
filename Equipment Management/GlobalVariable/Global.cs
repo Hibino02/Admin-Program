@@ -14,6 +14,7 @@ namespace Admin_Program.GlobalVariable
     {
         public static int warehouseID { get; set; }
         public static string userName { get; set; }
+        public static string userGroup { get; set; }
         public static int ID { get; set; }
         public static int QID { get; set; }
         public static int PRID { get; set; }

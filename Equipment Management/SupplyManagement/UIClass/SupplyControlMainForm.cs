@@ -11,6 +11,7 @@ using Admin_Program.SupplyManagement.CustomViewClass;
 using System.Linq;
 using Admin_Program.SupplyManagement.ObjectClass;
 using Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan;
+using Admin_Program.SupplyManagement.UIClass.SupplyBalanceManage;
 
 namespace Admin_Program.SupplyManagement.UIClass
 {
@@ -23,15 +24,22 @@ namespace Admin_Program.SupplyManagement.UIClass
         private AllQuotationListForm allQuotationList;
         private CreatePRForm createPR;
         private AllSupplyDiliveryListForm supplyDeliveryPlan;
+        private SupplyBalanceUpdateForm supplyBalanceUpdate;
+        private SupplyBalanceEditForm supplyBalanceEdit;
 
+        //PR Variables
         List<AllPRListDataGridView> allPRlistInDataGridView = new List<AllPRListDataGridView>();
         BindingSource PRBindingSource = new BindingSource();
         int prStatusID;
         int PRID;
         string quotationInSupply;
-        List <AllSupplyInPRListDataGridView> allSupplyInPRList = new List<AllSupplyInPRListDataGridView>();
+        List<AllSupplyInPRListDataGridView> allSupplyInPRList = new List<AllSupplyInPRListDataGridView>();
         List<AllSupplyInPRListDataGridView> supplyInSelectedPRList = new List<AllSupplyInPRListDataGridView>();
         BindingSource supplyInPRBindingSource = new BindingSource();
+
+        //Balance Variables
+        List<AllSupplyInventoryDatagridView> supplyBalanceAsUserGruop = new List<AllSupplyInventoryDatagridView>();
+        BindingSource supplyBalanceAsUserGruopBindingSource = new BindingSource();
 
         public event EventHandler returnMain;
 
@@ -42,6 +50,7 @@ namespace Admin_Program.SupplyManagement.UIClass
             this.Size = new Size(1450, 760);
 
             UpdatePRDatagridView();
+            UpdateSupplyBalanceDatafridView();
         }
         //PR DataGrid
         private void UpdatePRDatagridView()
@@ -191,6 +200,128 @@ namespace Admin_Program.SupplyManagement.UIClass
             if (Columns["SupplyID"] != null)
             {
                 Columns["SupplyID"].Visible = false;
+            }
+        }
+
+        //Supply Balance
+        private void UpdateSupplyBalanceDatafridView()
+        {
+            supplyBalanceAsUserGruop = AllSupplyInventoryDatagridView.AllSupplyBalance();
+            supplyBalanceAsUserGruopBindingSource.DataSource = supplyBalanceAsUserGruop;
+            supplyBalanceDatagridview.DataSource = supplyBalanceAsUserGruopBindingSource;
+            FormatSupplyBalancedataGridView();
+        }
+        private void FormatSupplyBalancedataGridView()
+        {
+            var Columns = supplyBalanceDatagridview.Columns;
+            if (Columns["ID"] != null)
+            {
+                Columns["ID"].Visible = false;
+            }
+            if (Columns["SupplyID"] != null)
+            {
+                Columns["SupplyID"].Visible = false;
+            }
+            if (Columns["SupplyName"] != null)
+            {
+                Columns["SupplyName"].HeaderText = "ชื่อวัสดุ";
+                Columns["SupplyName"].Width = 395;
+            }
+            if (Columns["SupplyUnit"] != null)
+            {
+                Columns["SupplyUnit"].Visible = false;
+            }
+            if (Columns["Balance"] != null)
+            {
+                Columns["Balance"].HeaderText = "จำนวนปัจจุบัน";
+                Columns["Balance"].Width = 80;
+
+                supplyBalanceDatagridview.CellFormatting += (s, e) =>
+                {
+                    if (e.ColumnIndex == Columns["Balance"].Index && e.RowIndex >= 0)
+                    {
+                        string quantity = supplyBalanceDatagridview.Rows[e.RowIndex].Cells["Balance"]?.Value?.ToString();
+                        string supplyUnit = supplyBalanceDatagridview.Rows[e.RowIndex].Cells["SupplyUnit"]?.Value.ToString();
+                        if (!string.IsNullOrEmpty(quantity) && !string.IsNullOrEmpty(supplyUnit))
+                        {
+                            e.Value = $"{quantity} {supplyUnit}";
+                            e.FormattingApplied = true;
+                        }
+                    }
+                };
+            }
+            if (Columns["UpdateDate"] != null)
+            {
+                Columns["UpdateDate"].HeaderText = "วันที่อัฟเดท";
+                Columns["UpdateDate"].Width = 93;
+                Columns["UpdateDate"].DefaultCellStyle.Format = "MMM dd, yyy";
+            }
+            if (Columns["Updater"] != null)
+            {
+                Columns["Updater"].HeaderText = "ผู้บันทึก";
+                Columns["Updater"].Width = 80;
+            }
+            if (Columns["SupplyPhoto"] != null)
+            {
+                Columns["SupplyPhoto"].HeaderText = "รูป";
+                Columns["SupplyPhoto"].Width = 40;
+            }
+        }
+        private void searchSupplyBalanceTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = searchSupplyBalanceTextBox.Text.ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                UpdateSupplyBalanceDatafridView();
+            }
+            else
+            {
+                var searchResult = supplyBalanceAsUserGruop
+                    .Where(sb =>
+                    sb.SupplyName.ToLower().Contains(searchText)).ToList();
+
+                supplyBalanceAsUserGruopBindingSource.DataSource = searchResult;
+                supplyBalanceDatagridview.DataSource = supplyBalanceAsUserGruopBindingSource;
+            }
+        }
+
+        //Supply Balance Update
+        private void updateSupplyButton_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = supplyBalanceDatagridview.CurrentRow;
+
+            if(selectedRow != null)
+            {
+                GlobalVariable.Global.ID = -1;
+                GlobalVariable.Global.ID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+                supplyBalanceUpdate = new SupplyBalanceUpdateForm();
+                supplyBalanceUpdate.Owner = main;
+                supplyBalanceUpdate.ShowDialog();
+                UpdateSupplyBalanceDatafridView();
+            }
+            else
+            {
+                MessageBox.Show("กรุณาเลือกรายการวัสดุ");
+            }
+        }
+        //Supply Balance Edit
+        private void editSupplyButton_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = supplyBalanceDatagridview.CurrentRow;
+
+            if(selectedRow != null)
+            {
+                GlobalVariable.Global.ID = -1;
+                GlobalVariable.Global.ID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+                supplyBalanceEdit = new SupplyBalanceEditForm();
+                supplyBalanceEdit.Owner = main;
+                supplyBalanceEdit.ShowDialog();
+                UpdateSupplyBalanceDatafridView();
+            }
+            else
+            {
+                MessageBox.Show("กรุณาเลือกรายการวัสดุ");
             }
         }
         //Supply Manage

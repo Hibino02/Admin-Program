@@ -139,6 +139,11 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 Columns["SupplyTypeName"].HeaderText = "ประเภทวัสดุ";
                 Columns["SupplyTypeName"].Width = 400;
             }
+            if (Columns["UserGroup"] != null)
+            {
+                Columns["UserGroup"].HeaderText = "กลุ่มวัสดุ";
+                Columns["UserGroup"].Width = 100;
+            }
         }
         private void supplyTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -177,21 +182,15 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
             DataGridViewRow selectedRow = SupplyInventoryDatagridview.CurrentRow;
             if (selectedRow != null)
             {
-                DialogResult result = MessageBox.Show("คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?", "ยืนยันการลบ", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("คุณแน่ใจหรือไม่ว่าต้องการสิ้นสุดรายการนี้?", "ยืนยัน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     int id = (int)selectedRow.Cells["ID"].Value;
                     Supply supply = new Supply(id);
-                    if (supply.Remove())
-                    {
-                        Global.DeleteFileFromFtpSupply(supply.SupplyPhoto);
-                        MessageBox.Show("ลบวัสดุเสร็จสิ้น");
-                        UpdateSupplyList();
-                    }
-                    else
-                    {
-                        MessageBox.Show("ไม่สามารถลบได้ เนื่องจากกำลังถูกใช้งาน");
-                    }
+                    supply.IsActive = false;
+                    supply.Change();
+                    MessageBox.Show("เปลี่ยนสถานะวัสดุเป็นไม่ใช้งาน");
+                    SupplyInPlan.RemoveBySupplyID(id);
                 }
             }
         }

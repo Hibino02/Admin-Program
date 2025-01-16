@@ -26,7 +26,14 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
             List<AllSupplyInPlanListDataGridView> sipView = new List<AllSupplyInPlanListDataGridView>();
             List<SupplyBalance> allSib = SupplyBalance.GetAllSupplyBalanceList();
             List<SupplyInPlan> allSip = SupplyInPlan.GetAllSupplyInPlanList();
-            foreach (SupplyBalance sib in allSib)
+
+            // Group by SupplyID and select the most recent UpdateDate for each group
+            var mostRecent = allSib
+                .Where(sb => sb.Supply.UserGroup == GlobalVariable.Global.userGroup || GlobalVariable.Global.userGroup == "ADMIN")
+                .GroupBy(sb => sb.Supply.ID)
+                .Select(group => group.OrderByDescending(sb => sb.UpdateDate).First());
+
+            foreach (SupplyBalance sib in mostRecent)
             {
                 foreach(SupplyInPlan sip in allSip)
                 {

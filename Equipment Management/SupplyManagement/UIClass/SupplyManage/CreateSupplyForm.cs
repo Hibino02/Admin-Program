@@ -43,6 +43,10 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 supplyTypeComboBox.Items.Add(spt.TypeName);
                 supplyTypeID.Add(spt.ID);
             }
+            userGroupcomboBox.Items.Add("--เลือกกลุ่มวัสดุ--");
+            userGroupcomboBox.Items.Add("GROUP1");
+            userGroupcomboBox.Items.Add("GROUP2");
+            userGroupcomboBox.Items.Add("GROUP3");
         }
         //Create supply type
         private void CreateSupplyTypeButton_Click(object sender, EventArgs e)
@@ -126,7 +130,12 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
             {
                 MessageBox.Show("กรุณาใส่หน่วยวัสดุ");
                 return false;
-            }     
+            }  
+            if (userGroupcomboBox.SelectedIndex <= 0)
+            {
+                MessageBox.Show("กรุณาใส่กลุ่มวัสดุ");
+                return false;
+            }   
             SaveSupplyPhoto();
             return true;
         }
@@ -136,12 +145,13 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
             if (CheckAllAttribute())
             {
                 int moq = (int)moqnumericUpDown.Value;
+                string userGroup = userGroupcomboBox.SelectedItem?.ToString();
                 Supply newSp = new Supply(supplyNameTextBox.Text, supplyUnitTextBox.Text, moq, 
-                    IsActiveCheckBox.Checked, selecedSupplyType,Global.warehouseID,supplyPhoto);
+                    IsActiveCheckBox.Checked, selecedSupplyType,Global.warehouseID,userGroup, supplyPhoto);
                 if (newSp.Create())
                 {
                     MessageBox.Show("ซัพพลายถูกสร้างเรียบร้อย");
-                    SupplyBalance sb = new ObjectClass.SupplyBalance(newSp, 0, DateTime.Now, Global.userName);
+                    SupplyBalance sb = new ObjectClass.SupplyBalance(newSp, 0, DateTime.Now, Global.userName,Global.warehouseID);
                     if (sb.Create())
                     {
                         MessageBox.Show("ยอดคงเหลือของซัพพลายนี้ ถูกเพิ่มเริ่มโดยต้นที่ 0");

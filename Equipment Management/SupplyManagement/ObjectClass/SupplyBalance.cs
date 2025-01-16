@@ -18,6 +18,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public DateTime UpdateDate { get { return updatedate; }set { updatedate = value; } }
         string updater;
         public string Updater { get { return updater; } set { updater = value; } }
+        int warehouseID;
+        public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -84,12 +86,13 @@ WHERE sb.ID = @id;";
             this.updatedate = updatedate;
             this.updater = updater;
         }
-        public SupplyBalance(Supply supply, int balance, DateTime updatedate, string updater)
+        public SupplyBalance(Supply supply, int balance, DateTime updatedate, string updater, int whid)
         {
             this.supply = supply;
             this.balance = balance;
             this.updatedate = updatedate;
             this.updater = updater;
+            this.warehouseID = whid;
         }
 
         public bool Create()
@@ -152,7 +155,7 @@ WHERE sb.ID = @id;";
                     conn.Close();
             }
         }
-        public bool Remove()
+        public static bool Remove(int sid)
         {
             MySqlConnection conn = null;
             try
@@ -161,9 +164,9 @@ WHERE sb.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string delete = "DELETE FROM SupplyBalance WHERE ID = @id";
+                    string delete = "DELETE FROM SupplyBalance WHERE SupplyID = @sid";
                     cmd.CommandText = delete;
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@sid", sid);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -191,7 +194,7 @@ WHERE sb.ID = @id;";
                 {
                     string selectAll = @"SELECT
 sb.ID AS SupplyBalanceID, sb.WarehouseID, sb.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto,
-s.SupplyTypeID, st.TypeName, sb.Balance, sb.UpdateDate, sb.Updater
+s.SupplyTypeID, s.UserGroup, st.TypeName, sb.Balance, sb.UpdateDate, sb.Updater
 FROM SupplyBalance sb
 LEFT JOIN Supply s ON sb.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -210,12 +213,13 @@ WHERE sb.WarehouseID = @whid;";
                             int moq = Convert.ToInt32(reader["MOQ"]);
                             bool isactive = Convert.ToBoolean(reader["IsActive"]);
                             string sphoto = reader["SupplyPhoto"].ToString();
+                            string userG = reader["UserGroup"].ToString();
 
                             int stid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stn = reader["TypeName"].ToString();
                             SupplyType st = new SupplyType(stid,stn,GlobalVariable.Global.warehouseID);
 
-                            Supply s = new Supply(sid, sname, sunit, moq, isactive, st, GlobalVariable.Global.warehouseID, sphoto);
+                            Supply s = new Supply(sid, sname, sunit, moq, isactive, st, GlobalVariable.Global.warehouseID, userG, sphoto);
 
                             int b = Convert.ToInt32(reader["Balance"]);
                             DateTime ud = Convert.ToDateTime(reader["UpdateDate"]);

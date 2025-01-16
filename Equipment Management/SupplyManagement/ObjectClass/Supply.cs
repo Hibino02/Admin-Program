@@ -24,6 +24,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public SupplyType SupplyType {get{ return supplytype; }set { supplytype = value; } }
         int warehouseID;
         public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
+        string userGroup;
+        public string UserGroup { get { return userGroup; }set { userGroup = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -37,7 +39,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 using (var cmd = conn.CreateCommand())
                 {
                     string select = @"SELECT
-s.ID AS SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID, s.WarehouseID,
+s.ID AS SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID, s.WarehouseID, s.UserGroup,
 st.TypeName, st.WarehouseID AS STWHID
 FROM Supply s
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -55,6 +57,7 @@ WHERE s.ID = @id;";
                             isactive = Convert.ToBoolean(reader["IsActive"]);
                             supplyphoto = reader["SupplyPhoto"].ToString();
                             warehouseID = Convert.ToInt32(reader["WarehouseID"]);
+                            userGroup = reader["UserGroup"].ToString();
 
                             int stid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stname = reader["TypeName"].ToString();
@@ -77,23 +80,25 @@ WHERE s.ID = @id;";
         {
             UpdateAttribute(id.ToString());
         }
-        public Supply(int id,string supplyname,string supplyunit,int moq,bool isactive, SupplyType st,int whid, string supplyphoto = null)
+        public Supply(int id,string supplyname,string supplyunit,int moq,bool isactive, SupplyType st,int whid, string userg,string supplyphoto = null)
         {
             this.id = id;
             this.supplyname = supplyname;
             this.supplyunit = supplyunit;
             this.moq = moq;
             this.isactive = isactive;
+            this.userGroup = userg;
             this.supplyphoto = supplyphoto;
             this.supplytype = st;
             this.warehouseID = whid;
         }
-        public Supply(string supplyname, string supplyunit, int moq, bool isactive, SupplyType st,int whid, string supplyphoto = null)
+        public Supply(string supplyname, string supplyunit, int moq, bool isactive, SupplyType st,int whid, string userg,string supplyphoto = null)
         {
             this.supplyname = supplyname;
             this.supplyunit = supplyunit;
             this.moq = moq;
             this.isactive = isactive;
+            this.userGroup = userg;
             this.supplyphoto = supplyphoto;
             this.supplytype = st;
             this.warehouseID = whid;
@@ -112,7 +117,7 @@ WHERE s.ID = @id;";
 
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO Supply (ID, SupplyName, SupplyUnit, MOQ, IsActive, SupplyPhoto, SupplyTypeID, WarehouseID) VALUES (NULL, @supplyname, @supplyunit, @moq, @isactive, @supplyphoto, @supplytypeid, @whid)";
+                    string insert = "INSERT INTO Supply (ID, SupplyName, SupplyUnit, MOQ, IsActive, SupplyPhoto, SupplyTypeID, WarehouseID, UserGroup) VALUES (NULL, @supplyname, @supplyunit, @moq, @isactive, @supplyphoto, @supplytypeid, @whid, @userg)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@supplyname", supplyname);
                     cmd.Parameters.AddWithValue("@supplyunit", supplyunit);
@@ -121,6 +126,7 @@ WHERE s.ID = @id;";
                     cmd.Parameters.AddWithValue("@supplyphoto", supplyphoto);
                     cmd.Parameters.AddWithValue("@supplytypeid", supplytype.ID);
                     cmd.Parameters.AddWithValue("@whid", warehouseID);
+                    cmd.Parameters.AddWithValue("@userg", userGroup);
                     cmd.ExecuteNonQuery();
 
                     //Retrieve last inserted ID in this transaction
@@ -154,7 +160,7 @@ WHERE s.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string update = "UPDATE Supply SET SupplyName = @supplyname, SupplyUnit = @supplyunit, MOQ = @moq, IsActive = @isactive, SupplyPhoto = @supplyphoto, SupplyTypeID = @supplytypeid WHERE ID = @id";
+                    string update = "UPDATE Supply SET SupplyName = @supplyname, SupplyUnit = @supplyunit, MOQ = @moq, IsActive = @isactive, SupplyPhoto = @supplyphoto, SupplyTypeID = @supplytypeid, UserGroup = @userg WHERE ID = @id";
                     cmd.CommandText = update;
                     cmd.Parameters.AddWithValue("@supplyname", supplyname);
                     cmd.Parameters.AddWithValue("@supplyunit", supplyunit);
@@ -162,6 +168,7 @@ WHERE s.ID = @id;";
                     cmd.Parameters.AddWithValue("@isactive", isactive);
                     cmd.Parameters.AddWithValue("@supplyphoto", supplyphoto);
                     cmd.Parameters.AddWithValue("@supplytypeid", supplytype.ID);
+                    cmd.Parameters.AddWithValue("@userg", userGroup);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                 }
@@ -215,7 +222,7 @@ WHERE s.ID = @id;";
                 using (var cmd = conn.CreateCommand())
                 {
                     string selectAll = @"SELECT
-s.ID AS SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID, s.WarehouseID,
+s.ID AS SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID, s.WarehouseID, s.UserGroup,
 st.TypeName, st.WarehouseID AS STWHID
 FROM Supply s
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -233,13 +240,14 @@ WHERE s.WarehouseID = @whid;";
                             bool isactive = Convert.ToBoolean(reader["IsActive"]);
                             string supplyphoto = reader["SupplyPhoto"].ToString();
                             int whid = Convert.ToInt32(reader["WarehouseID"]);
+                            string userg = reader["UserGroup"].ToString();
 
                             int supplytypeid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string supplytypename = reader["TypeName"].ToString();
                             int stwhid = Convert.ToInt32(reader["STWHID"]);
                             SupplyType st = new SupplyType(supplytypeid, supplytypename, stwhid);
 
-                            Supply s = new Supply(id,supplyname,supplyunit,moq,isactive,st,whid,supplyphoto);
+                            Supply s = new Supply(id,supplyname,supplyunit,moq,isactive,st,whid, userg, supplyphoto);
                             spList.Add(s);
                         }
                     }
