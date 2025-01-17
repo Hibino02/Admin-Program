@@ -40,6 +40,7 @@
             this.SearchLabel = new System.Windows.Forms.Label();
             this.SupplyInventoryLabel = new System.Windows.Forms.Label();
             this.SupplyRequestGroupBox = new System.Windows.Forms.GroupBox();
+            this.excelGenbutton = new System.Windows.Forms.Button();
             this.supplyInSelectedPRdataGridView = new System.Windows.Forms.DataGridView();
             this.backToMainMenuButton = new System.Windows.Forms.Button();
             this.CompletePRButton = new System.Windows.Forms.Button();
@@ -53,7 +54,6 @@
             this.searchSupplyRequestTextBox = new System.Windows.Forms.TextBox();
             this.searchSupplylabel = new System.Windows.Forms.Label();
             this.requestSupplyLabel = new System.Windows.Forms.Label();
-            this.excelGenbutton = new System.Windows.Forms.Button();
             this.SupplyInventoryGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyBalanceDatagridview)).BeginInit();
             this.SupplyRequestGroupBox.SuspendLayout();
@@ -207,6 +207,17 @@
             this.SupplyRequestGroupBox.TabIndex = 1;
             this.SupplyRequestGroupBox.TabStop = false;
             // 
+            // excelGenbutton
+            // 
+            this.excelGenbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.excelGenbutton.Location = new System.Drawing.Point(265, 659);
+            this.excelGenbutton.Name = "excelGenbutton";
+            this.excelGenbutton.Size = new System.Drawing.Size(124, 52);
+            this.excelGenbutton.TabIndex = 23;
+            this.excelGenbutton.Text = "Excel Gen";
+            this.excelGenbutton.UseVisualStyleBackColor = true;
+            this.excelGenbutton.Click += new System.EventHandler(this.excelGenbutton_Click);
+            // 
             // supplyInSelectedPRdataGridView
             // 
             this.supplyInSelectedPRdataGridView.AllowUserToAddRows = false;
@@ -245,6 +256,7 @@
             this.CompletePRButton.TabIndex = 20;
             this.CompletePRButton.Text = "ตรวจรับสินค้า";
             this.CompletePRButton.UseVisualStyleBackColor = true;
+            this.CompletePRButton.Click += new System.EventHandler(this.CompletePRButton_Click);
             // 
             // manageSupplyButton
             // 
@@ -357,17 +369,6 @@
             this.requestSupplyLabel.Size = new System.Drawing.Size(258, 31);
             this.requestSupplyLabel.TabIndex = 13;
             this.requestSupplyLabel.Text = "คำขอซื้อ วัสดุสิ้นเปลือง";
-            // 
-            // excelGenbutton
-            // 
-            this.excelGenbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.excelGenbutton.Location = new System.Drawing.Point(265, 659);
-            this.excelGenbutton.Name = "excelGenbutton";
-            this.excelGenbutton.Size = new System.Drawing.Size(124, 52);
-            this.excelGenbutton.TabIndex = 23;
-            this.excelGenbutton.Text = "Excel Gen";
-            this.excelGenbutton.UseVisualStyleBackColor = true;
-            this.excelGenbutton.Click += new System.EventHandler(this.excelGenbutton_Click);
             // 
             // SupplyControlMainForm
             // 

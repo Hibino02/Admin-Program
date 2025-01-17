@@ -895,12 +895,18 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                             {
                                 currentSupplyInPRQuotationPDF = uploadedFiles[siprView.QuotationID];
                             }
+                            //Create Supply In PR & Supply In Arrival
                             Supply s = new Supply(siprView.SupplyID);
                             SupplyInPR sipr = new SupplyInPR(Global.PRID, s, siprView.Price, siprView.Quantity
                                 , siprView.Amount, currentSupplyInPRQuotationPDF, siprView.QuotationNumber);
+                            SupplyInPRArrival sipra = new SupplyInPRArrival(Global.PRID, s.ID, 0, null, null, null);
                             if (!sipr.Create())
                             {
                                 throw new Exception($"การสร้างซัพพลาย รายการ: {sipr.Supply.SupplyName} ล้มเหลว");
+                            }
+                            if(!sipra.Create())
+                            {
+                                throw new Exception($"การสร้างซัพพลาย รายการ: {sipra.ID} ล้มเหลว");
                             }
                             else
                             {

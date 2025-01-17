@@ -15,6 +15,7 @@ using Admin_Program.SupplyManagement.UIClass.SupplyBalanceManage;
 using ClosedXML.Excel;
 using System.IO;
 using System.Diagnostics;
+using Admin_Program.SupplyManagement.UIClass.SupplyArrivalManage;
 
 namespace Admin_Program.SupplyManagement.UIClass
 {
@@ -29,6 +30,7 @@ namespace Admin_Program.SupplyManagement.UIClass
         private AllSupplyDiliveryListForm supplyDeliveryPlan;
         private SupplyBalanceUpdateForm supplyBalanceUpdate;
         private SupplyBalanceEditForm supplyBalanceEdit;
+        private SupplyArrivalForm supplyInPRArrival;
 
         //PR Variables
         List<AllPRListDataGridView> allPRlistInDataGridView = new List<AllPRListDataGridView>();
@@ -1045,12 +1047,31 @@ namespace Admin_Program.SupplyManagement.UIClass
             supplyDeliveryPlan.Owner = main;
             supplyDeliveryPlan.ShowDialog();
         }
+        //Supply Arrival
+        private void CompletePRButton_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = supplyRequestDataGridView.CurrentRow;
+            if(selectedRow != null)
+            {
+                GlobalVariable.Global.PRID = -1;
+                GlobalVariable.Global.PRID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+                supplyInPRArrival = new SupplyArrivalForm();
+                supplyInPRArrival.Owner = main;
+                supplyInPRArrival.ShowDialog();
+
+                UpdatePRDatagridView();
+                UpdateSupplyBalanceDatafridView();
+            }
+            else
+            {
+                MessageBox.Show("กรุณาเลือกรายการ คำขอซื้อ");
+            }
+        }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)
         {
             returnMain?.Invoke(this, EventArgs.Empty);
             Close();
         }
-       
     }
 }

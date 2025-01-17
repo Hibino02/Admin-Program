@@ -298,6 +298,7 @@
     <Compile Include="EquipmentManagement\UIClass\Plan\RemovePlanProcessingForm.Designer.cs">
       <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplyManagement\CustomViewClass\AllSupplyInPRArrivalListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllSupplyInventoryDatagridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllMonthListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllPlanListDataGridView.cs" />
@@ -318,6 +319,7 @@
     <Compile Include="SupplyManagement\ObjectClass\SupplyBalance.cs" />
     <Compile Include="SupplyManagement\ObjectClass\SupplyInPlan.cs" />
     <Compile Include="SupplyManagement\ObjectClass\SupplyInPR.cs" />
+    <Compile Include="SupplyManagement\ObjectClass\SupplyInPRArrival.cs" />
     <Compile Include="SupplyManagement\ObjectClass\SupplyInQuotation.cs" />
     <Compile Include="SupplyManagement\ObjectClass\SupplyType.cs" />
     <Compile Include="SupplyManagement\ObjectClass\User.cs" />

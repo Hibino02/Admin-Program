@@ -269,6 +269,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                     {
                         MessageBox.Show("ลบแผนเรียบร้อย");
                         UpdatePlanGridView();
+                        selectPlanSupplyBindingSource.DataSource = null;
                     }
                 }
             }

@@ -67,7 +67,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         //All Supply DataGridView
         private void UpdateSupplyList()
         {
-            allSupplyViewList = AllSupplyListDataGridView.AllSupply();
+            allSupplyViewList = AllSupplyListDataGridView.AllSupplyNotInPlan();
             originalSupplyViewList = new List<AllSupplyListDataGridView>(allSupplyViewList);
             ApplyCurrentSupplyFilter();
         }
@@ -220,6 +220,10 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             if (selectedSupplyDatagridview.Columns["SupplyPhoto"] != null)
             {
                 selectedSupplyDatagridview.Columns["SupplyPhoto"].Visible = false;
+            }
+            if (selectedSupplyDatagridview.Columns["UserGroup"] != null)
+            {
+                selectedSupplyDatagridview.Columns["UserGroup"].Visible = false;
             }
         }
         //Remove Supply from plan
