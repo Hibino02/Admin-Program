@@ -597,18 +597,28 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                         int quantity = -1;
                         if (int.TryParse(quantitytextBox.Text, out quantity) && quantity > 0)
                         {
-                            float amount = 0;
-                            amount = quantity * price;
-                            Quotation q = new Quotation(quotationIDforQuery);
-                            Supply s = new Supply(supplyIDforQuery);
-                            AllSupplyInPRListDataGridView list = new AllSupplyInPRListDataGridView(
-                                s.SupplyName, price, s.SupplyUnit, quantity, amount, q.QuotationNumber
-                                , s.SupplyPhoto, q.QuotationPDF, q.ID, s.ID);
-                            supplyInPRList.Add(list);
+                            // Check if SupplyID is already in the list
+                            bool isDuplicate = supplyInPRList.Any(item => item.SupplyID == supplyIDforQuery);
+                            if (!isDuplicate)
+                            {
+                                float amount = 0;
+                                amount = quantity * price;
+                                Quotation q = new Quotation(quotationIDforQuery);
+                                Supply s = new Supply(supplyIDforQuery);
+                                AllSupplyInPRListDataGridView list = new AllSupplyInPRListDataGridView(
+                                    s.SupplyName, price, s.SupplyUnit, quantity, amount, q.QuotationNumber
+                                    , s.SupplyPhoto, q.QuotationPDF, q.ID, s.ID);
+                                supplyInPRList.Add(list);
 
-                            quantitytextBox.Clear();
-                            resetSelectionInCurrentSelectedQuotation();
-                            UpdateSupplyInPR();
+                                quantitytextBox.Clear();
+                                resetSelectionInCurrentSelectedQuotation();
+                                UpdateSupplyInPR();
+                            }
+                            else
+                            {
+                                MessageBox.Show("วัสดุนี้ได้ถูกเพิ่มในใบเสนอราคาแล้ว");
+                                quantitytextBox.Clear();
+                            }
                         }
                         else
                         {
@@ -623,6 +633,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                 else
                 {
                     MessageBox.Show("สามารถเพิ่ม ซัพพลายสูงสุดได้ 15 รายการ");
+                    quantitytextBox.Clear();
                 }
             }
             else
@@ -643,18 +654,27 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                             int quantity = -1;
                             if (int.TryParse(quantitytextBox.Text, out quantity) && quantity > 0)
                             {
-                                float amount = 0;
-                                amount = quantity * price;
-                                Quotation q = new Quotation(quotationIDforQuery);
-                                Supply s = new Supply(supplyIDforQuery);
-                                AllSupplyInPRListDataGridView list = new AllSupplyInPRListDataGridView(
-                                    s.SupplyName, price, s.SupplyUnit, quantity, amount, q.QuotationNumber
-                                    , s.SupplyPhoto, q.QuotationPDF, q.ID, s.ID);
-                                supplyInPRList.Add(list);
+                                bool isDuplicate = supplyInPRList.Any(item => item.SupplyID == supplyIDforQuery);
+                                if (!isDuplicate)
+                                {
+                                    float amount = 0;
+                                    amount = quantity * price;
+                                    Quotation q = new Quotation(quotationIDforQuery);
+                                    Supply s = new Supply(supplyIDforQuery);
+                                    AllSupplyInPRListDataGridView list = new AllSupplyInPRListDataGridView(
+                                        s.SupplyName, price, s.SupplyUnit, quantity, amount, q.QuotationNumber
+                                        , s.SupplyPhoto, q.QuotationPDF, q.ID, s.ID);
+                                    supplyInPRList.Add(list);
 
-                                quantitytextBox.Clear();
-                                resetSelectionInCurrentSelectedQuotation();
-                                UpdateSupplyInPR();
+                                    quantitytextBox.Clear();
+                                    resetSelectionInCurrentSelectedQuotation();
+                                    UpdateSupplyInPR();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("วัสดุนี้ได้ถูกเพิ่มในใบเสนอราคาแล้ว");
+                                    quantitytextBox.Clear();
+                                }
                             }
                             else
                             {
@@ -669,6 +689,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                     else
                     {
                         MessageBox.Show("สามารถเพิ่ม ซัพพลายสูงสุดได้ 15 รายการ");
+                        quantitytextBox.Clear();
                     }
                 }
                 else
@@ -743,6 +764,22 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             if (Columns["SupplyID"] != null)
             {
                 Columns["SupplyID"].Visible = false;
+            }
+            if (Columns["Balance"] != null)
+            {
+                Columns["Balance"].Visible = false;
+            }
+            if (Columns["UpdateDate"] != null)
+            {
+                Columns["UpdateDate"].Visible = false;
+            }
+            if (Columns["TotalArrive"] != null)
+            {
+                Columns["TotalArrive"].Visible = false;
+            }
+            if (Columns["TotalAmount"] != null)
+            {
+                Columns["TotalAmount"].Visible = false;
             }
         }
         private void supplyInPRdataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
@@ -899,19 +936,11 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                             Supply s = new Supply(siprView.SupplyID);
                             SupplyInPR sipr = new SupplyInPR(Global.PRID, s, siprView.Price, siprView.Quantity
                                 , siprView.Amount, currentSupplyInPRQuotationPDF, siprView.QuotationNumber);
-                            SupplyInPRArrival sipra = new SupplyInPRArrival(Global.PRID, s.ID, 0, null, null, null);
                             if (!sipr.Create())
                             {
                                 throw new Exception($"การสร้างซัพพลาย รายการ: {sipr.Supply.SupplyName} ล้มเหลว");
                             }
-                            if(!sipra.Create())
-                            {
-                                throw new Exception($"การสร้างซัพพลาย รายการ: {sipra.ID} ล้มเหลว");
-                            }
-                            else
-                            {
-                                supplyInPR.Add(sipr);
-                            }
+                            supplyInPR.Add(sipr);
                         }
                         MessageBox.Show("สร้างคำขอซื้อ เสร็จสมบูรณ์");
                         PRgroupBox.Enabled = false;

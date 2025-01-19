@@ -207,6 +207,60 @@ WHERE pr.ID = @id;";
                     conn.Close();
             }
         }
+        public bool Change()
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string update = "UPDATE PR SET PRStatusID = @prs WHERE ID = @id";
+                    cmd.CommandText = update;
+                    cmd.Parameters.AddWithValue("@prs", prstatus.ID);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
+        public static bool Change(int prid, int statusID)
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string update = "UPDATE PR SET PRStatusID = @prs WHERE ID = @id";
+                    cmd.CommandText = update;
+                    cmd.Parameters.AddWithValue("@prs", statusID);
+                    cmd.Parameters.AddWithValue("@id", prid);
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
         public bool Remove()
         {
             MySqlConnection conn = null;

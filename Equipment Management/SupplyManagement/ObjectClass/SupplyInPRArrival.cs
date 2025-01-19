@@ -61,11 +61,12 @@ WHERE sipra.ID = @id;";
                     conn.Close();
             }
         }
+        public SupplyInPRArrival() { }
         public SupplyInPRArrival(int id)
         {
             UpdateAttribute(id.ToString());
         }
-        public SupplyInPRArrival(int prid,int supplyid,int quantity,DateTime? adate = null,string inv = null,string recever = null)
+        public SupplyInPRArrival(int prid, int supplyid, int quantity,DateTime? adate = null,string inv = null,string recever = null)
         {
             this.prid = prid;
             this.supplyid = supplyid;
@@ -74,7 +75,7 @@ WHERE sipra.ID = @id;";
             this.invoicepdf = inv;
             this.recever = recever;
         }
-        public SupplyInPRArrival(int id,int prid,int supplyid,int quantity,DateTime? adate = null,string inv = null,string recever = null)
+        public SupplyInPRArrival(int id,int prid,int supplyid, int quantity,DateTime? adate = null,string inv = null,string recever = null)
         {
             this.id = id;
             this.prid = prid;
@@ -116,7 +117,7 @@ WHERE sipra.ID = @id;";
                     conn.Close();
             }
         }
-        public bool Change()
+        public static bool Change(int id,int quantity)
         {
             MySqlConnection conn = null;
             try
@@ -125,16 +126,13 @@ WHERE sipra.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "UPDATE SupplyInPRArrival SET ArrivalDate = @adate, Quantity = @q, InvoicePDF = @invpdf, Recever = @rec WHERE ID = @id";
-                    cmd.CommandText = insert;
-                    cmd.Parameters.AddWithValue("@adate", arrivaldate);
-                    cmd.Parameters.AddWithValue("@q", quantity);
-                    cmd.Parameters.AddWithValue("@invpdf", invoicepdf);
-                    cmd.Parameters.AddWithValue("@rec", recever);
-                    cmd.Parameters.AddWithValue("@id", id);
+                    string update = "UPDATE SupplyInPRArrival SET Quantity = @q WHERE ID = @id";
+                    cmd.CommandText = update;
+                    cmd.Parameters.AddWithValue("@q",quantity);
+                    cmd.Parameters.AddWithValue("@id",id);
                     cmd.ExecuteNonQuery();
                 }
-                    return true;
+                return true;
             }
             catch (MySqlException e)
             {
@@ -146,7 +144,7 @@ WHERE sipra.ID = @id;";
                     conn.Close();
             }
         }
-        public bool Remove(int prid)
+        public static bool Remove(int prid)
         {
             MySqlConnection conn = null;
             try
@@ -201,7 +199,7 @@ WHERE sipra.PRID = @prid;";
                             string inv = reader["InvoicePDF"] != DBNull.Value ? reader["InvoicePDF"].ToString() : (string)null;
                             string update = reader["Recever"] != DBNull.Value ? reader["Recever"].ToString() : (string)null;
 
-                            SupplyInPRArrival sipr = new SupplyInPRArrival(id,prida,supid,q,ad,inv,update);
+                            SupplyInPRArrival sipr = new SupplyInPRArrival(id,prida,supid, q,ad,inv,update);
                             sipraList.Add(sipr);
                         }
                     }

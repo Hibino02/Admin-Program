@@ -11,6 +11,7 @@ namespace Admin_Program.SupplyManagement
         public int SupplyID { get; set; }
         public string SupplyName { get; set; }
         public int Balance { get; set; }
+        public int MOQ { get; set; }
         public string SupplyUnit { get; set; }
         public DateTime UpdateDate { get; set; }
         public string Updater { get; set; }
@@ -39,6 +40,7 @@ namespace Admin_Program.SupplyManagement
                         SupplyID = sb.Supply.ID,
                         SupplyName = sb.Supply.SupplyName,
                         Balance = sb.Balance,
+                        MOQ = sb.Supply.MOQ,
                         SupplyUnit = sb.Supply.SupplyUnit,
                         UpdateDate = sb.UpdateDate,
                         Updater = sb.Updater,

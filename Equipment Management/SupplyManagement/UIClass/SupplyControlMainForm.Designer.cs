@@ -40,6 +40,7 @@
             this.SearchLabel = new System.Windows.Forms.Label();
             this.SupplyInventoryLabel = new System.Windows.Forms.Label();
             this.SupplyRequestGroupBox = new System.Windows.Forms.GroupBox();
+            this.PRHistorybutton = new System.Windows.Forms.Button();
             this.excelGenbutton = new System.Windows.Forms.Button();
             this.supplyInSelectedPRdataGridView = new System.Windows.Forms.DataGridView();
             this.backToMainMenuButton = new System.Windows.Forms.Button();
@@ -187,6 +188,7 @@
             // 
             // SupplyRequestGroupBox
             // 
+            this.SupplyRequestGroupBox.Controls.Add(this.PRHistorybutton);
             this.SupplyRequestGroupBox.Controls.Add(this.excelGenbutton);
             this.SupplyRequestGroupBox.Controls.Add(this.supplyInSelectedPRdataGridView);
             this.SupplyRequestGroupBox.Controls.Add(this.backToMainMenuButton);
@@ -206,6 +208,17 @@
             this.SupplyRequestGroupBox.Size = new System.Drawing.Size(707, 772);
             this.SupplyRequestGroupBox.TabIndex = 1;
             this.SupplyRequestGroupBox.TabStop = false;
+            // 
+            // PRHistorybutton
+            // 
+            this.PRHistorybutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PRHistorybutton.Location = new System.Drawing.Point(577, 53);
+            this.PRHistorybutton.Name = "PRHistorybutton";
+            this.PRHistorybutton.Size = new System.Drawing.Size(124, 52);
+            this.PRHistorybutton.TabIndex = 24;
+            this.PRHistorybutton.Text = "ประวัติคำขอซื้อและการจัดส่ง";
+            this.PRHistorybutton.UseVisualStyleBackColor = true;
+            this.PRHistorybutton.Click += new System.EventHandler(this.PRHistorybutton_Click);
             // 
             // excelGenbutton
             // 
@@ -421,5 +434,6 @@
         private System.Windows.Forms.Button backToMainMenuButton;
         private System.Windows.Forms.DataGridView supplyInSelectedPRdataGridView;
         private System.Windows.Forms.Button excelGenbutton;
+        private System.Windows.Forms.Button PRHistorybutton;
     }
 }

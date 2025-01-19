@@ -309,6 +309,7 @@
     <Compile Include="SupplyManagement\CustomViewClass\AllSupplyInPRListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllSupplyInQuotationListDataGridView.cs" />
     <Compile Include="SupplyManagement\CustomViewClass\AllSupplyListDataGridView.cs" />
+    <Compile Include="SupplyManagement\CustomViewClass\SupplyArrivalHistory.cs" />
     <Compile Include="SupplyManagement\ObjectClass\DeliveryMonth.cs" />
     <Compile Include="SupplyManagement\ObjectClass\DeliveryPlan.cs" />
     <Compile Include="SupplyManagement\ObjectClass\PR.cs" />
@@ -323,6 +324,12 @@
     <Compile Include="SupplyManagement\ObjectClass\SupplyInQuotation.cs" />
     <Compile Include="SupplyManagement\ObjectClass\SupplyType.cs" />
     <Compile Include="SupplyManagement\ObjectClass\User.cs" />
+    <Compile Include="SupplyManagement\UIClass\PRandArrivalHistory\PRandArrivalHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\PRandArrivalHistory\PRandArrivalHistoryForm.Designer.cs">
+      <DependentUpon>PRandArrivalHistoryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SupplyManagement\UIClass\PRManage\CreatePRForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -536,6 +543,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EquipmentManagement\UIClass\Plan\RemovePlanProcessingForm.resx">
       <DependentUpon>RemovePlanProcessingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\PRandArrivalHistory\PRandArrivalHistoryForm.resx">
+      <DependentUpon>PRandArrivalHistoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\PRManage\CreatePRForm.resx">
       <DependentUpon>CreatePRForm.cs</DependentUpon>

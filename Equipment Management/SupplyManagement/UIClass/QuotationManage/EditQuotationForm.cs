@@ -255,6 +255,10 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
             {
                 supplyDatagridview.Columns["IsActive"].Visible = false;
             }
+            if (supplyDatagridview.Columns["UserGroup"] != null)
+            {
+                supplyDatagridview.Columns["UserGroup"].Visible = false;
+            }
             if (supplyDatagridview.Columns["SupplyTypeID"] != null)
             {
                 supplyDatagridview.Columns["SupplyTypeID"].Visible = false;

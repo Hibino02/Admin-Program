@@ -115,6 +115,7 @@ WHERE sipr.ID = @id;";
             {
                 conn = new MySqlConnection(connstr);
                 conn.Open();
+
                 using (var cmd = conn.CreateCommand())
                 {
                     string insert = "INSERT INTO SupplyInPR (ID, PRID, SupplyID, Price, Quantity, Amount, WarehouseID, QuotationPDF, QuotationNumber) VALUES (NULL, @prid, @sid, @price, @quantity, @amount, @whid, @qpdf, @qnum)";

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Admin_Program.SupplyManagement.ObjectClass;
+using System.Linq;
+using System;
 
 namespace Admin_Program.SupplyManagement.CustomViewClass
 {
@@ -9,13 +11,17 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
         public string SupplyName { get; set; }
         public float Price { get; set; }
         public string SupplyUnit { get; set; }
-        public int Quantity { get; set; }
+        public int Balance { get; set; }
+        public DateTime UpdateDate { get; set; }
         public float Amount { get; set; }
         public string QuotationNumber { get; set; }
+        public int Quantity { get; set; }
         public string SupplyPhoto { get; set; }
         public string QuotationPDF { get; set; }
         public int QuotationID { get; set; }
         public int SupplyID { get; set; }
+        public int TotalArrive { get; set; }
+        public int TotalAmount { get; set; }
 
         public AllSupplyInPRListDataGridView() { }
         
@@ -65,6 +71,60 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
                 allActivePR.Add(view);
             }
             return allActivePR;
+        }
+        public static List<AllSupplyInPRListDataGridView> AllSupplyInSelectedPR(int prid)
+        {
+            List<AllSupplyInPRListDataGridView> allSupplyInSelectedPR = new List<AllSupplyInPRListDataGridView>();
+            List<SupplyInPR> sipr = SupplyInPR.GetAllSupplyInPRList(prid);
+
+            foreach (SupplyInPR s in sipr)
+            {
+                AllSupplyInPRListDataGridView view = new AllSupplyInPRListDataGridView
+                {
+                    PRID = s.PRID,
+                    Price = s.Price,
+                    SupplyName = s.Supply.SupplyName,
+                    Quantity = s.Quantity,
+                    SupplyUnit = s.Supply.SupplyUnit,
+                    QuotationNumber = s.QuotationNumber,
+                    SupplyPhoto = s.Supply.SupplyPhoto,
+                    QuotationPDF = s.QuotationPDF,
+                    SupplyID = s.Supply.ID,
+                };
+                allSupplyInSelectedPR.Add(view);
+            }
+            return allSupplyInSelectedPR.OrderBy(s => s.SupplyName).ToList();
+        }
+        public static List<AllSupplyInPRListDataGridView> AllSupplyInSelectedPRHistory(int prid)
+        {
+            List<AllSupplyInPRListDataGridView> allSupplyInSelectedPR = new List<AllSupplyInPRListDataGridView>();
+            List<SupplyInPR> sipr = SupplyInPR.GetAllSupplyInPRList(prid);
+            List<SupplyInPRArrival> sipra = SupplyInPRArrival.GetAllSupplyInPRByPRID(prid);
+
+            foreach (SupplyInPR s in sipr)
+            {
+                var matchedArrivals = sipra.Where(si => si.SupplyID == s.Supply.ID);
+                // Aggregate the quantity from matched arrivals
+                var totalQuantity = matchedArrivals.Sum(si => si.Quantity);
+
+                AllSupplyInPRListDataGridView view = new AllSupplyInPRListDataGridView
+                {
+                    PRID = s.PRID,
+                    Price = s.Price,
+                    SupplyName = s.Supply.SupplyName,
+                    Quantity = s.Quantity,
+                    Amount = s.Amount,
+                    SupplyUnit = s.Supply.SupplyUnit,
+                    QuotationNumber = s.QuotationNumber,
+                    SupplyPhoto = s.Supply.SupplyPhoto,
+                    QuotationPDF = s.QuotationPDF,
+                    SupplyID = s.Supply.ID,
+                    TotalArrive = totalQuantity,
+                    TotalAmount = totalQuantity - s.Quantity
+                };
+                allSupplyInSelectedPR.Add(view);
+            }
+            return allSupplyInSelectedPR.OrderBy(s => s.SupplyName).ToList();
         }
     }
 }

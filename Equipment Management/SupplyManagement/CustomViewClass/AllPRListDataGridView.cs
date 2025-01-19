@@ -36,5 +36,23 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
             }
             return prinGridList.OrderBy(pr=>pr.ID).ToList();
         }
+        public static List<AllPRListDataGridView> AllPR()
+        {
+            List<AllPRListDataGridView> prinGridList = new List<AllPRListDataGridView>();
+            List<PR> prList = PR.GetAllPRList();
+            foreach (PR pr in prList)
+            {
+                AllPRListDataGridView view = new AllPRListDataGridView
+                {
+                    ID = pr.ID,
+                    PRTitle = pr.PRTitle,
+                    DeliveryDate = pr.DeliveryDate.Date,
+                    PRStatus = pr.PRStatus.Status,
+                    PRStatusID = pr.PRStatus.ID
+                };
+                prinGridList.Add(view);
+            }
+            return prinGridList.OrderByDescending(pr => pr.ID).ToList();
+        }
     }
 }
