@@ -17,6 +17,7 @@ using System.IO;
 using System.Diagnostics;
 using Admin_Program.SupplyManagement.UIClass.SupplyArrivalManage;
 using Admin_Program.SupplyManagement.UIClass.PRandArrivalHistory;
+using Admin_Program.SupplyManagement.UIClass.SupplyHistory;
 
 namespace Admin_Program.SupplyManagement.UIClass
 {
@@ -33,6 +34,7 @@ namespace Admin_Program.SupplyManagement.UIClass
         private SupplyBalanceEditForm supplyBalanceEdit;
         private SupplyArrivalForm supplyInPRArrival;
         private PRandArrivalHistoryForm prandArrivalHsitoryForm;
+        private SupplyHistoryForm supplyHistoryForm;
 
         //PR Variables
         List<AllPRListDataGridView> allPRlistInDataGridView = new List<AllPRListDataGridView>();
@@ -47,6 +49,7 @@ namespace Admin_Program.SupplyManagement.UIClass
         //Balance Variables
         List<AllSupplyInventoryDatagridView> supplyBalanceAsUserGruop = new List<AllSupplyInventoryDatagridView>();
         BindingSource supplyBalanceAsUserGruopBindingSource = new BindingSource();
+        List<int> balanceID = new List<int>();
 
         public event EventHandler returnMain;
 
@@ -233,7 +236,13 @@ namespace Admin_Program.SupplyManagement.UIClass
             supplyBalanceAsUserGruop = AllSupplyInventoryDatagridView.AllSupplyBalance();
             supplyBalanceAsUserGruopBindingSource.DataSource = supplyBalanceAsUserGruop;
             supplyBalanceDatagridview.DataSource = supplyBalanceAsUserGruopBindingSource;
-            FormatSupplyBalancedataGridView();
+
+            supplyBalanceDatagridview.DataBindingComplete += (sender, e) =>
+            {
+                CheckBalanceAndBufferStock(supplyBalanceAsUserGruop);
+                HighlightInven(balanceID);
+                FormatSupplyBalancedataGridView();
+            };
         }
         private void FormatSupplyBalancedataGridView()
         {
@@ -327,6 +336,36 @@ namespace Admin_Program.SupplyManagement.UIClass
                 supplyBalanceDatagridview.DataSource = supplyBalanceAsUserGruopBindingSource;
             }
         }
+        //Check Balance and Buffer stock
+        private void CheckBalanceAndBufferStock(List<AllSupplyInventoryDatagridView> list)
+        {
+            balanceID.Clear();
+            foreach(AllSupplyInventoryDatagridView inven in list)
+            {
+                if(inven.Balance <= inven.MOQ)
+                {
+                    balanceID.Add(inven.ID);
+                }
+            }
+        }
+        //Highlight if Balance and MOQ is matched
+        private void HighlightInven(List<int> id)
+        {
+            foreach (DataGridViewRow row in supplyBalanceDatagridview.Rows)
+            {
+                int ID = Convert.ToInt32(row.Cells["ID"].Value);
+                if (balanceID.Contains(ID))
+                {
+                    // Set the background color of the entire row to orange
+                    row.DefaultCellStyle.BackColor = Color.Orange;
+                }
+                else
+                {
+                    // Reset the background color to default if not matched
+                    row.DefaultCellStyle.BackColor = Color.White;
+                }
+            }
+        }
 
         //Supply Balance Update
         private void updateSupplyButton_Click(object sender, EventArgs e)
@@ -365,6 +404,13 @@ namespace Admin_Program.SupplyManagement.UIClass
             {
                 MessageBox.Show("กรุณาเลือกรายการวัสดุ");
             }
+        }
+        //Generate inventory chart
+        private void transactionbutton_Click(object sender, EventArgs e)
+        {
+            supplyHistoryForm = new SupplyHistoryForm();
+            supplyHistoryForm.Owner = main;
+            supplyHistoryForm.ShowDialog();
         }
         //Supply Manage
         private void manageSupplyButton_Click(object sender, EventArgs e)
@@ -565,23 +611,27 @@ namespace Admin_Program.SupplyManagement.UIClass
                     string address = newPR.Supplier.Address;
                     if (!string.IsNullOrEmpty(address))
                     {
-                        string remaining = address;
+                        // Split the address by newlines (\r\n or \n)
+                        string[] lines = address.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-                        // Split first line
-                        string line1 = GetLine(remaining, 65, out remaining);
-                        worksheet.Cell(11, 1).Value = line1;
+                        // Start row for the address lines
+                        int row = 11;
 
-                        if (!string.IsNullOrEmpty(remaining))
+                        // Iterate over the split lines and place them in Excel cells
+                        foreach (string line in lines)
                         {
-                            // Split second line
-                            string line2 = GetLine(remaining, 65, out remaining);
-                            worksheet.Cell(12, 1).Value = line2;
-
-                            if (!string.IsNullOrEmpty(remaining))
+                            if (row <= 13)  // Assuming a limit of 3 rows in Excel
                             {
-                                // Remaining characters go to the third line
-                                worksheet.Cell(13, 1).Value = remaining;
+                                worksheet.Cell(row, 1).Value = line;
+                                row++;
                             }
+                        }
+
+                        // If there are more than 3 lines, concatenate the remaining parts and place in the last cell
+                        if (lines.Length > 3)
+                        {
+                            string remaining = string.Join(" ", lines.Skip(3));
+                            worksheet.Cell(13, 1).Value = remaining;
                         }
                     }
                     worksheet.Cell(11, 6).Value = "Delivery Place : Nippon Express NEC Logistics (Thailand) Co., Ltd.";

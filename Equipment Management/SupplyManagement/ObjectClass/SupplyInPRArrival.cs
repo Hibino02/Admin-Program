@@ -213,5 +213,47 @@ WHERE sipra.PRID = @prid;";
             }
             return sipraList;
         }
+        public static List<SupplyInPRArrival> GetAllSupplyInPRBySupplyID(int sid)
+        {
+            MySqlConnection conn = null;
+            List<SupplyInPRArrival> sipraList = new List<SupplyInPRArrival>();
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string selectAll = @"SELECT
+sipra.ID, sipra.PRID, sipra.SupplyID, sipra.ArrivalDate, sipra.Quantity, sipra.InvoicePDF, sipra.Recever
+FROM SupplyInPRArrival sipra
+WHERE sipra.SupplyID = @sid;";
+                    cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@sid", sid);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = Convert.ToInt32(reader["ID"]);
+                            int prida = Convert.ToInt32(reader["PRID"]);
+                            int supid = Convert.ToInt32(reader["SupplyID"]);
+                            DateTime? ad = reader["ArrivalDate"] != DBNull.Value ? Convert.ToDateTime(reader["ArrivalDate"]) : (DateTime?)null;
+                            int q = Convert.ToInt32(reader["Quantity"]);
+                            string inv = reader["InvoicePDF"] != DBNull.Value ? reader["InvoicePDF"].ToString() : (string)null;
+                            string update = reader["Recever"] != DBNull.Value ? reader["Recever"].ToString() : (string)null;
+
+                            SupplyInPRArrival sipr = new SupplyInPRArrival(id, prida, supid, q, ad, inv, update);
+                            sipraList.Add(sipr);
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e) { }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+            return sipraList;
+        }
     }
 }

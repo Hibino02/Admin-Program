@@ -47,8 +47,9 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplierManage
         {
             if (CheckAllArrtibute())
             {
+                string sAddress = supplierAddressrichTextBox.Text;
                 supplier.Name = supplierNametextBox.Text;
-                supplier.Address = supplierAddressrichTextBox.Text;
+                supplier.Address = sAddress;
                 if (supplier.Change())
                 {
                     MessageBox.Show("แก้ใขข้อมูล เรียบร้อย");

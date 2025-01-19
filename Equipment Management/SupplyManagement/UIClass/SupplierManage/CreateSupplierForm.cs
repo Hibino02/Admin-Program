@@ -36,7 +36,8 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplierManage
         {
             if (CheckAllArrtibute())
             {
-                Supplier sup = new Supplier(supplierNametextBox.Text, supplierAddressrichTextBox.Text,Global.warehouseID);
+                string supplierAddress = supplierAddressrichTextBox.Text;
+                Supplier sup = new Supplier(supplierNametextBox.Text, supplierAddress, Global.warehouseID);
                 if (sup.Create())
                 {
                     MessageBox.Show("ซัพพลายเออร์ถูกสร้างเรียบร้อย");

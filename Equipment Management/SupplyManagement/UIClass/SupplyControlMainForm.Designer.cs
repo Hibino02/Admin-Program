@@ -55,6 +55,7 @@
             this.searchSupplyRequestTextBox = new System.Windows.Forms.TextBox();
             this.searchSupplylabel = new System.Windows.Forms.Label();
             this.requestSupplyLabel = new System.Windows.Forms.Label();
+            this.transactionbutton = new System.Windows.Forms.Button();
             this.SupplyInventoryGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyBalanceDatagridview)).BeginInit();
             this.SupplyRequestGroupBox.SuspendLayout();
@@ -64,6 +65,7 @@
             // 
             // SupplyInventoryGroupBox
             // 
+            this.SupplyInventoryGroupBox.Controls.Add(this.transactionbutton);
             this.SupplyInventoryGroupBox.Controls.Add(this.supplyPlanButton);
             this.SupplyInventoryGroupBox.Controls.Add(this.explainLabel2);
             this.SupplyInventoryGroupBox.Controls.Add(this.explainLabel1);
@@ -383,6 +385,17 @@
             this.requestSupplyLabel.TabIndex = 13;
             this.requestSupplyLabel.Text = "คำขอซื้อ วัสดุสิ้นเปลือง";
             // 
+            // transactionbutton
+            // 
+            this.transactionbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.transactionbutton.Location = new System.Drawing.Point(447, 659);
+            this.transactionbutton.Name = "transactionbutton";
+            this.transactionbutton.Size = new System.Drawing.Size(124, 52);
+            this.transactionbutton.TabIndex = 13;
+            this.transactionbutton.Text = "ประวัติย้อนหลัง";
+            this.transactionbutton.UseVisualStyleBackColor = true;
+            this.transactionbutton.Click += new System.EventHandler(this.transactionbutton_Click);
+            // 
             // SupplyControlMainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -435,5 +448,6 @@
         private System.Windows.Forms.DataGridView supplyInSelectedPRdataGridView;
         private System.Windows.Forms.Button excelGenbutton;
         private System.Windows.Forms.Button PRHistorybutton;
+        private System.Windows.Forms.Button transactionbutton;
     }
 }

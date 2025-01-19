@@ -1097,23 +1097,27 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                 string address = newPR.Supplier.Address;
                 if (!string.IsNullOrEmpty(address))
                 {
-                    string remaining = address;
+                    // Split the address by newlines (\r\n or \n)
+                    string[] lines = address.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-                    // Split first line
-                    string line1 = GetLine(remaining, 65, out remaining);
-                    worksheet.Cell(11, 1).Value = line1;
+                    // Start row for the address lines
+                    int row = 11;
 
-                    if (!string.IsNullOrEmpty(remaining))
+                    // Iterate over the split lines and place them in Excel cells
+                    foreach (string line in lines)
                     {
-                        // Split second line
-                        string line2 = GetLine(remaining, 65, out remaining);
-                        worksheet.Cell(12, 1).Value = line2;
-
-                        if (!string.IsNullOrEmpty(remaining))
+                        if (row <= 13)  // Assuming a limit of 3 rows in Excel
                         {
-                            // Remaining characters go to the third line
-                            worksheet.Cell(13, 1).Value = remaining;
+                            worksheet.Cell(row, 1).Value = line;
+                            row++;
                         }
+                    }
+
+                    // If there are more than 3 lines, concatenate the remaining parts and place in the last cell
+                    if (lines.Length > 3)
+                    {
+                        string remaining = string.Join(" ", lines.Skip(3));
+                        worksheet.Cell(13, 1).Value = remaining;
                     }
                 }
                 worksheet.Cell(11, 6).Value = "Delivery Place : Nippon Express NEC Logistics (Thailand) Co., Ltd.";
