@@ -399,14 +399,16 @@
             // SupplyControlMainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1450, 780);
             this.ControlBox = false;
             this.Controls.Add(this.SupplyRequestGroupBox);
             this.Controls.Add(this.SupplyInventoryGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SupplyControlMainForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.SupplyInventoryGroupBox.ResumeLayout(false);
             this.SupplyInventoryGroupBox.PerformLayout();

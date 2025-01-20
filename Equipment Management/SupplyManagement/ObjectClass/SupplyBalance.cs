@@ -33,7 +33,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 using (var cmd = conn.CreateCommand())
                 {
                     string select = @"SELECT
-sb.ID AS SupplyBalanceID, sb.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto,
+sb.ID AS SupplyBalanceID, sb.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.UserGroup,
 s.SupplyTypeID, st.TypeName, sb.Balance, sb.UpdateDate, sb.Updater
 FROM SupplyBalance sb
 LEFT JOIN Supply s ON sb.SupplyID = s.ID
@@ -52,12 +52,13 @@ WHERE sb.ID = @id;";
                             int moq = Convert.ToInt32(reader["MOQ"]);
                             bool isactive = Convert.ToBoolean(reader["IsActive"]);
                             string sphoto = reader["SupplyPhoto"].ToString();
+                            string userg = reader["UserGroup"].ToString();
 
                             int stid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stname = reader["TypeName"].ToString();
                             SupplyType st = new SupplyType(stid,stname,GlobalVariable.Global.warehouseID);
 
-                            supply = new Supply(sid,sname,sunit,moq,isactive,st,GlobalVariable.Global.warehouseID,sphoto);
+                            supply = new Supply(sid,sname,sunit,moq,isactive,st,GlobalVariable.Global.warehouseID, userg, sphoto);
 
                             balance = Convert.ToInt32(reader["Balance"]);
                             updatedate = Convert.ToDateTime(reader["UpdateDate"]);

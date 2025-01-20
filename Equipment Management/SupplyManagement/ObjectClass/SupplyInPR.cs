@@ -37,7 +37,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 using (var cmd = conn.CreateCommand())
                 {
                     string select = @"SELECT
-sipr.ID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
+sipr.ID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.UserGroup, s.SupplyTypeID,
 st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount, sipr.QuotationPDF, sipr.QuotationNumber
 FROM SupplyInPR sipr
 LEFT JOIN Supply s ON sipr.SupplyID = s.ID
@@ -58,12 +58,13 @@ WHERE sipr.ID = @id;";
                             int moq = Convert.ToInt32(reader["MOQ"]);
                             bool isactive = Convert.ToBoolean(reader["IsActive"]);
                             string sphoto = reader["SupplyPhoto"].ToString();
+                            string usergroup = reader["UserGroup"].ToString();
                             //SupplyType
                             int stid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stname = reader["TypeName"].ToString();
                             SupplyType st = new SupplyType(stid, stname, GlobalVariable.Global.warehouseID);
 
-                            supply = new Supply(sid, sname, sunit, moq, isactive, st,GlobalVariable.Global.warehouseID,sphoto);
+                            supply = new Supply(sid, sname, sunit, moq, isactive, st,GlobalVariable.Global.warehouseID, usergroup, sphoto);
 
                             price = Convert.ToSingle(reader["Price"]);
                             quantity = Convert.ToInt32(reader["Quantity"]);
@@ -208,7 +209,7 @@ WHERE sipr.ID = @id;";
                 using (var cmd = conn.CreateCommand())
                 {
                     string selectAll = @"SELECT
-sipr.ID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
+sipr.ID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.UserGroup, s.SupplyTypeID,
 st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount, sipr.QuotationPDF, sipr.QuotationNumber
 FROM SupplyInPR sipr
 LEFT JOIN Supply s ON sipr.SupplyID = s.ID
@@ -229,12 +230,13 @@ WHERE sipr.WarehouseID = @whid;";
                             int moq = Convert.ToInt32(reader["MOQ"]);
                             bool isactive = Convert.ToBoolean(reader["IsActive"]);
                             string sphoto = reader["SupplyPhoto"].ToString();
+                            string userg = reader["UserGroup"].ToString();
                             //SupplyType
                             int stid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stname = reader["TypeName"].ToString();
                             SupplyType st = new SupplyType(stid, stname,GlobalVariable.Global.warehouseID);
 
-                            Supply supply = new Supply(sid, sname, sunit, moq, isactive, st,GlobalVariable.Global.warehouseID, sphoto);
+                            Supply supply = new Supply(sid, sname, sunit, moq, isactive, st,GlobalVariable.Global.warehouseID, userg, sphoto);
 
                             float price = Convert.ToSingle(reader["Price"]);
                             int quantity = Convert.ToInt32(reader["Quantity"]);
@@ -268,7 +270,7 @@ WHERE sipr.WarehouseID = @whid;";
                 using (var cmd = conn.CreateCommand())
                 {
                     string selectAll = @"SELECT
-sipr.ID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
+sipr.ID, sipr.PRID, sipr.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.UserGroup, s.SupplyTypeID,
 st.TypeName, sipr.Price, sipr.Quantity, sipr.Amount, sipr.QuotationPDF, sipr.QuotationNumber
 FROM SupplyInPR sipr
 LEFT JOIN Supply s ON sipr.SupplyID = s.ID
@@ -289,12 +291,13 @@ WHERE sipr.PRID = @prid;";
                             int moq = Convert.ToInt32(reader["MOQ"]);
                             bool isactive = Convert.ToBoolean(reader["IsActive"]);
                             string sphoto = reader["SupplyPhoto"].ToString();
+                            string userg = reader["UserGroup"].ToString();
                             //SupplyType
                             int stid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stname = reader["TypeName"].ToString();
                             SupplyType st = new SupplyType(stid, stname, GlobalVariable.Global.warehouseID);
 
-                            Supply supply = new Supply(sid, sname, sunit, moq, isactive, st, GlobalVariable.Global.warehouseID, sphoto);
+                            Supply supply = new Supply(sid, sname, sunit, moq, isactive, st, GlobalVariable.Global.warehouseID, userg, sphoto);
 
                             float price = Convert.ToSingle(reader["Price"]);
                             int quantity = Convert.ToInt32(reader["Quantity"]);

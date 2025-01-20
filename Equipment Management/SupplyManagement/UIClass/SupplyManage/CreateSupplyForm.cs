@@ -151,7 +151,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 if (newSp.Create())
                 {
                     MessageBox.Show("ซัพพลายถูกสร้างเรียบร้อย");
-                    SupplyBalance sb = new ObjectClass.SupplyBalance(newSp, 0, DateTime.Now, Global.userName,Global.warehouseID);
+                    SupplyBalance sb = new ObjectClass.SupplyBalance(newSp, 0, DateTime.MinValue, Global.userName,Global.warehouseID);
                     if (sb.Create())
                     {
                         MessageBox.Show("ยอดคงเหลือของซัพพลายนี้ ถูกเพิ่มเริ่มโดยต้นที่ 0");

@@ -35,7 +35,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 using (var cmd = conn.CreateCommand())
                 {
                     string select = @"SELECT
-sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
+sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID, s.UserGroup,
 st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID
 FROM SupplyInPlan sip
 LEFT JOIN Supply s ON sip.SupplyID = s.ID
@@ -55,11 +55,12 @@ WHERE sip.ID = @id;";
                             int moq = Convert.ToInt32(reader["MOQ"]);
                             bool isactive = Convert.ToBoolean(reader["IsActive"]);
                             string sphoto = reader["SupplyPhoto"].ToString();
+                            string userg = reader["UserGroup"].ToString();
 
                             int stypeid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stypename = reader["TypeName"].ToString();
                             SupplyType stype = new SupplyType(stypeid,stypename,GlobalVariable.Global.warehouseID);
-                            supply = new Supply(supid,sname,sunit,moq,isactive,stype,GlobalVariable.Global.warehouseID,sphoto);
+                            supply = new Supply(supid,sname,sunit,moq,isactive,stype,GlobalVariable.Global.warehouseID, userg, sphoto);
 
                             reqw1 = Convert.ToInt32(reader["ReqW1"]);
                             reqw2 = Convert.ToInt32(reader["ReqW2"]);
@@ -229,7 +230,7 @@ WHERE sip.ID = @id;";
                 using (var cmd= conn.CreateCommand())
                 {
                     string selectAll = @"SELECT
-sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID,
+sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID, s.UserGroup,
 st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID
 FROM SupplyInPlan sip
 LEFT JOIN Supply s ON sip.SupplyID = s.ID
@@ -249,11 +250,12 @@ WHERE sip.WarehouseID = @whid;";
                             int moq = Convert.ToInt32(reader["MOQ"]);
                             bool isactive = Convert.ToBoolean(reader["IsActive"]);
                             string sphoto = reader["SupplyPhoto"].ToString();
+                            string userg = reader["UserGroup"].ToString();
 
                             int stypeid = Convert.ToInt32(reader["SupplyTypeID"]);
                             string stypename = reader["TypeName"].ToString();
                             SupplyType stype = new SupplyType(stypeid, stypename,GlobalVariable.Global.warehouseID);
-                            Supply supply = new Supply(supid, sname, sunit, moq, isactive, stype,GlobalVariable.Global.warehouseID, sphoto);
+                            Supply supply = new Supply(supid, sname, sunit, moq, isactive, stype,GlobalVariable.Global.warehouseID, userg, sphoto);
 
                             int reqw1 = Convert.ToInt32(reader["ReqW1"]);
                             int reqw2 = Convert.ToInt32(reader["ReqW2"]);

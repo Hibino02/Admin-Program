@@ -56,7 +56,7 @@ namespace Admin_Program.UIClass
         //Call user login for Supply
         private void LogInForSupply(object sender, EventArgs e)
         {
-            logInForm = new UserLogInWindow
+            logInForm = new SupplyManagement.UIClass.UserLogInWindow
             {
                 MdiParent = this
             };
