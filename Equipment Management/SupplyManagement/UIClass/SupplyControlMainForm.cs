@@ -418,6 +418,7 @@ namespace Admin_Program.SupplyManagement.UIClass
             allSupplyList = new AllSupplyListForm();
             allSupplyList.Owner = main;
             allSupplyList.ShowDialog();
+            UpdateSupplyBalanceDatafridView();
         }
         //Supplier Manage
         private void manageSupplierButton_Click(object sender, EventArgs e)

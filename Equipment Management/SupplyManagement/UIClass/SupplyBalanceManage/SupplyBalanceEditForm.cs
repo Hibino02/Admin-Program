@@ -62,7 +62,11 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyBalanceManage
                 if (supplyInBalance.Change())
                 {
                     MessageBox.Show("แก้ใขข้อมูลเรียบร้อย");
-                    Close();
+                    if (GlobalVariable.EmailService.SendEmail(supplyInBalance.Supply.SupplyName, supplyInBalance.Balance))
+                    {
+                        MessageBox.Show("ส่งข้อความถึง ผู้ดูแล สมบูรณ์");
+                        Close();
+                    }
                 }
             }
         }
