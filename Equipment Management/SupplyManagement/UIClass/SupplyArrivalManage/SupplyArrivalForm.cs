@@ -394,6 +394,22 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyArrivalManage
                                 return;
                             }
                         }
+                        else
+                        {
+                            string sid = s.SupplyID.ToString();
+                            SupplyBalance sb = new SupplyBalance(sid);
+                            sb.Balance += s.Quantity;
+                            sb.UpdateDate = s.ArrivalDate.Value.Date;
+                            sb.Updater = s.Recever;
+                            if (sb.Change())
+                            {
+                                MessageBox.Show("แก้ใขยอดคงคลัง ปัจจุบัน");
+                            }
+                            else
+                            {
+                                MessageBox.Show("แก้ใขยอดคงคลัง ล้มเหลว");
+                            }
+                        }
                     }
                     UpdateSupplyInPlanDatagridView();
 

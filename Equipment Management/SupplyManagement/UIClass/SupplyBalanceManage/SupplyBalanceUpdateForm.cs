@@ -59,11 +59,9 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyBalanceManage
                     if (sb.Create())
                     {
                         MessageBox.Show("อัฟเดทยอดปัจจุบันเรียบร้อย");
-                        if (GlobalVariable.EmailService.SendEmail(supplyInBalance.Supply.SupplyName, supplyInBalance.Balance))
-                        {
-                            MessageBox.Show("ส่งข้อความถึง ผู้ดูแล สมบูรณ์");
-                            Close();
-                        }
+                        GlobalVariable.EmailService.SendEmail(sb.Supply.SupplyName, sb.Balance);
+                        MessageBox.Show("ส่งข้อความถึง ผู้ดูแล สมบูรณ์");
+                        Close();
                     }
                     else
                     {

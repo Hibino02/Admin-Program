@@ -6,13 +6,13 @@ namespace Admin_Program.GlobalVariable
 {
     class EmailService
     {
-        public static bool SendEmail(string item,int qty)
+        public static void SendEmail(string item,int qty)
         {
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;
             string fromEmail = "networktruckfornecpf@gmail.com";
             string fromPassword = "hqyxypwprwzijiku";
-            string toEmail = "zolo_atm@msn.com";
+            string toEmail = "C.Nuttawut@nipponexpress-necl.co.th";
 
             try
             {
@@ -30,14 +30,11 @@ namespace Admin_Program.GlobalVariable
                     Credentials = new NetworkCredential(fromEmail, fromPassword),
                     EnableSsl = true
                 };
-
-                smtpClient.Send(mail);
-                return true;
+                smtpClient.SendMailAsync(mail);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error sending email: {ex.Message}");
-                return false;
             }
         }
     }

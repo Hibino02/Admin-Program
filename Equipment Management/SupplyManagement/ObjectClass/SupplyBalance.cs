@@ -74,10 +74,69 @@ WHERE sb.ID = @id;";
                     conn.Close();
             }
         }
+        void UpdateAttributeBySupplyID(string value)
+        {
+            MySqlConnection conn = null;
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string select = @"SELECT
+sb.ID AS SupplyBalanceID, sb.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.UserGroup,
+s.SupplyTypeID, st.TypeName, sb.Balance, sb.UpdateDate, sb.Updater
+FROM SupplyBalance sb
+LEFT JOIN Supply s ON sb.SupplyID = s.ID
+LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
+WHERE sb.ID = (
+    SELECT MAX(ID) 
+    FROM SupplyBalance 
+    WHERE SupplyID = @supplyid
+);";
+                    cmd.CommandText = select;
+                    cmd.Parameters.AddWithValue("@supplyid", value);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            id = Convert.ToInt32(reader["SupplyBalanceID"]);
+                            int sid = Convert.ToInt32(reader["SupplyID"]);
+                            string sname = reader["SupplyName"].ToString();
+                            string sunit = reader["SupplyUnit"].ToString();
+                            int moq = Convert.ToInt32(reader["MOQ"]);
+                            bool isactive = Convert.ToBoolean(reader["IsActive"]);
+                            string sphoto = reader["SupplyPhoto"].ToString();
+                            string userg = reader["UserGroup"].ToString();
+
+                            int stid = Convert.ToInt32(reader["SupplyTypeID"]);
+                            string stname = reader["TypeName"].ToString();
+                            SupplyType st = new SupplyType(stid, stname, GlobalVariable.Global.warehouseID);
+
+                            supply = new Supply(sid, sname, sunit, moq, isactive, st, GlobalVariable.Global.warehouseID, userg, sphoto);
+
+                            balance = Convert.ToInt32(reader["Balance"]);
+                            updatedate = Convert.ToDateTime(reader["UpdateDate"]);
+                            updater = reader["Updater"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e) { }
+            finally
+            {
+                if (conn != null && conn.State != System.Data.ConnectionState.Closed)
+                    conn.Close();
+            }
+        }
 
         public SupplyBalance(int id)
         {
             UpdateAttribute(id.ToString());
+        }
+        public SupplyBalance(string sid)
+        {
+            UpdateAttributeBySupplyID(sid);
         }
         public SupplyBalance(int id, Supply supply, int balance, DateTime updatedate, string updater)
         {

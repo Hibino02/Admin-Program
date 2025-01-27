@@ -32,21 +32,24 @@ namespace Admin_Program.SupplyManagement
 
             foreach (SupplyBalance sb in mostRecentBalances)
             {
-                if(sb.Supply.UserGroup == GlobalVariable.Global.userGroup || GlobalVariable.Global.userGroup == "ADMIN")
+                if(sb.Supply.IsActive == true)
                 {
-                    AllSupplyInventoryDatagridView view = new AllSupplyInventoryDatagridView()
+                    if (sb.Supply.UserGroup == GlobalVariable.Global.userGroup || GlobalVariable.Global.userGroup == "ADMIN")
                     {
-                        ID = sb.ID,
-                        SupplyID = sb.Supply.ID,
-                        SupplyName = sb.Supply.SupplyName,
-                        Balance = sb.Balance,
-                        MOQ = sb.Supply.MOQ,
-                        SupplyUnit = sb.Supply.SupplyUnit,
-                        UpdateDate = sb.UpdateDate,
-                        Updater = sb.Updater,
-                        SupplyPhoto = sb.Supply.SupplyPhoto
-                    };
-                    sBalanceView.Add(view);
+                        AllSupplyInventoryDatagridView view = new AllSupplyInventoryDatagridView()
+                        {
+                            ID = sb.ID,
+                            SupplyID = sb.Supply.ID,
+                            SupplyName = sb.Supply.SupplyName,
+                            Balance = sb.Balance,
+                            MOQ = sb.Supply.MOQ,
+                            SupplyUnit = sb.Supply.SupplyUnit,
+                            UpdateDate = sb.UpdateDate,
+                            Updater = sb.Updater,
+                            SupplyPhoto = sb.Supply.SupplyPhoto
+                        };
+                        sBalanceView.Add(view);
+                    }
                 }
             }
             return sBalanceView;
