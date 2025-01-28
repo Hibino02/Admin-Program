@@ -197,7 +197,10 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
             acquisitionDocumentPath = edit.EDocumentPath;
             oldAcquisitionDocumentPath = edit.EDocumentPath;
 
+            equipmentPhotoPath = edit.EPhotoPath;
             oldEquipmentPhotoPath = edit.EPhotoPath;
+
+            installationPlacePhotoPath = edit.OPlacePhotoPath;
             oldInstallationPlacePhotoPath = edit.OPlacePhotoPath;
 
             writeoffTransferDocumentPath = edit.WriteOffPath;

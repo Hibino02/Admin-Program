@@ -412,6 +412,12 @@
     <Compile Include="SupplyManagement\UIClass\SupplyDeliveryPlan\CreateSupplyDeliveryPlanForm.Designer.cs">
       <DependentUpon>CreateSupplyDeliveryPlanForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyForPackingHistory\SelectHistoryDateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagement\UIClass\SupplyForPackingHistory\SelectHistoryDateForm.Designer.cs">
+      <DependentUpon>SelectHistoryDateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SupplyManagement\UIClass\SupplyHistory\SupplyHistoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -595,6 +601,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\SupplyDeliveryPlan\CreateSupplyDeliveryPlanForm.resx">
       <DependentUpon>CreateSupplyDeliveryPlanForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagement\UIClass\SupplyForPackingHistory\SelectHistoryDateForm.resx">
+      <DependentUpon>SelectHistoryDateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagement\UIClass\SupplyHistory\SupplyHistoryForm.resx">
       <DependentUpon>SupplyHistoryForm.cs</DependentUpon>

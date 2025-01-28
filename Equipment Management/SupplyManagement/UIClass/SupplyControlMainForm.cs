@@ -19,6 +19,7 @@ using Admin_Program.SupplyManagement.UIClass.SupplyArrivalManage;
 using Admin_Program.SupplyManagement.UIClass.PRandArrivalHistory;
 using Admin_Program.SupplyManagement.UIClass.SupplyHistory;
 using Admin_Program.SupplyManagement.BusinessClass;
+using System.Text.RegularExpressions;
 
 namespace Admin_Program.SupplyManagement.UIClass
 {
@@ -1181,8 +1182,16 @@ namespace Admin_Program.SupplyManagement.UIClass
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
+                    string pattern = @"\((\d+)\)$";
                     // Get selected file names
-                    string[] selectedFiles = openFileDialog.FileNames.OrderBy(f=>f).ToArray();
+                    string[] selectedFiles = openFileDialog.FileNames
+                        .OrderByDescending(f =>
+                        {
+                            // Extract the number inside parentheses using regex
+                            var match = Regex.Match(Path.GetFileName(f), pattern);
+                            return match.Success ? int.Parse(match.Groups[1].Value) : 0; // If no number, return 0
+                        })
+                        .ToArray();
 
                     if (SFPManage.SFPCheckAndCreate(selectedFiles))
                     {

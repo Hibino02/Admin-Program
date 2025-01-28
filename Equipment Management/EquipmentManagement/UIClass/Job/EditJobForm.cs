@@ -101,7 +101,9 @@ namespace Admin_Program.UIClass.Job
             {
                 Global.LoadImageIntoPictureBox(editJob.CasePhoto, equipmentRepaiePictureBox);
             }
+            jobDocumentPath = editJob.JDocument;
             oldJobDocumentPath = editJob.JDocument;
+            repairEquipmentPhotoPath = editJob.CasePhoto;
             oldRepairEquipmentPhotoPath = editJob.CasePhoto;
             jDetailsrichTextBox.Text = editJob.JDetails;
             approveCheckBox.Checked = editJob.Approve;
@@ -323,7 +325,7 @@ namespace Admin_Program.UIClass.Job
                 Global.SaveFileToServer(jobDocumentPath);
                 Global.Directory = null;
                 jobDocumentPath = Global.TargetFilePath;
-                editJob.JDocument = jobDocumentPath;
+
             }
         }
         //Get file path from user and stream to PictureBox

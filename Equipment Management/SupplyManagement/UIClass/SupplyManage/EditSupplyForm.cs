@@ -66,6 +66,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
                 PhotoURLtextBox.Text = supply.SupplyPhoto;
                 Global.LoadImageIntoPictureBox(supply.SupplyPhoto,supplyPictureBox);
             }
+            supplyPhoto = supply.SupplyPhoto;
             oldSupplyPhoto = supply.SupplyPhoto;
         }
         //Create supply type
@@ -170,7 +171,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyManage
             supply.SupplyUnit = supplyUnitTextBox.Text;
             if (isComplete)
             {
-                if (!string.IsNullOrEmpty(supplyPhoto))
+                if (supplyPhoto != oldSupplyPhoto)
                 {
                     SaveSupplyPhoto();
                     supply.SupplyPhoto = supplyPhoto;
