@@ -102,6 +102,7 @@ namespace Admin_Program.UIClass.Plan
 
             workpermitProcessPath = editPP.WorkPermit;
             oldWorkpermitProcessPath = editPP.WorkPermit;
+            photoContractPath = editPP.Contract;
             oldPhotoContractPath = editPP.Contract;
 
             // Update link label colors based on file existence

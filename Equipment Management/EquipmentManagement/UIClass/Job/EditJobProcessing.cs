@@ -228,10 +228,12 @@ namespace Admin_Program.UIClass.Job
             if(oldContractDocumentPath != contractDocumentPath)
             {
                 SaveContractDocument();
+                editjobToProcess.Contract = contractDocumentPath;
             }
             if (oldWorkPermitDocumentPath != workPermitDocumentPath)
             {
                 SaveWorkPermitDocument();
+                editjobToProcess.WorkPermit = workPermitDocumentPath;
             }
             return true;
         }

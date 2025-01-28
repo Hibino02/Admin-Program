@@ -325,7 +325,6 @@ namespace Admin_Program.UIClass.Job
                 Global.SaveFileToServer(jobDocumentPath);
                 Global.Directory = null;
                 jobDocumentPath = Global.TargetFilePath;
-
             }
         }
         //Get file path from user and stream to PictureBox
@@ -364,7 +363,6 @@ namespace Admin_Program.UIClass.Job
                 Global.SaveFileToServer(repairEquipmentPhotoPath);
                 Global.Directory = null;
                 repairEquipmentPhotoPath = Global.TargetFilePath;
-                editJob.CasePhoto = repairEquipmentPhotoPath;
             }
         }
         //Open job document
@@ -428,10 +426,12 @@ namespace Admin_Program.UIClass.Job
             if(oldJobDocumentPath != jobDocumentPath)
             {
                 SaveJobDocument();
+                editJob.JDocument = jobDocumentPath;
             }
             if(oldRepairEquipmentPhotoPath != repairEquipmentPhotoPath)
             {
                 SaveEquipmentPhoto();
+                editJob.CasePhoto = repairEquipmentPhotoPath;
             }  
             
             editJob.Reporter = reporterNameTextBox.Text;
