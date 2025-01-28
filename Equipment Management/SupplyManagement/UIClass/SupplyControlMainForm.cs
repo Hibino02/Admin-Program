@@ -18,6 +18,7 @@ using System.Diagnostics;
 using Admin_Program.SupplyManagement.UIClass.SupplyArrivalManage;
 using Admin_Program.SupplyManagement.UIClass.PRandArrivalHistory;
 using Admin_Program.SupplyManagement.UIClass.SupplyHistory;
+using Admin_Program.SupplyManagement.BusinessClass;
 
 namespace Admin_Program.SupplyManagement.UIClass
 {
@@ -1168,6 +1169,28 @@ namespace Admin_Program.SupplyManagement.UIClass
             prandArrivalHsitoryForm.Owner = main;
             prandArrivalHsitoryForm.ShowDialog();
             UpdatePRDatagridView();
+        }
+        //packing material file upload
+        private void fileUploadbutton_Click(object sender, EventArgs e)
+        {
+            using(OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All Files (*.*)|*.*";
+                openFileDialog.Multiselect = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Get selected file names
+                    string[] selectedFiles = openFileDialog.FileNames.OrderBy(f=>f).ToArray();
+
+                    if (SFPManage.SFPCheckAndCreate(selectedFiles))
+                    {
+                        UpdateSupplyBalanceDatafridView();
+                        MessageBox.Show("อัฟโหลดสมบูรณ์");
+                    }
+                }
+            }
         }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)

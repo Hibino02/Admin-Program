@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.SupplyInventoryGroupBox = new System.Windows.Forms.GroupBox();
+            this.transactionbutton = new System.Windows.Forms.Button();
             this.supplyPlanButton = new System.Windows.Forms.Button();
             this.explainLabel2 = new System.Windows.Forms.Label();
             this.explainLabel1 = new System.Windows.Forms.Label();
@@ -55,7 +56,7 @@
             this.searchSupplyRequestTextBox = new System.Windows.Forms.TextBox();
             this.searchSupplylabel = new System.Windows.Forms.Label();
             this.requestSupplyLabel = new System.Windows.Forms.Label();
-            this.transactionbutton = new System.Windows.Forms.Button();
+            this.fileUploadbutton = new System.Windows.Forms.Button();
             this.SupplyInventoryGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyBalanceDatagridview)).BeginInit();
             this.SupplyRequestGroupBox.SuspendLayout();
@@ -65,6 +66,7 @@
             // 
             // SupplyInventoryGroupBox
             // 
+            this.SupplyInventoryGroupBox.Controls.Add(this.fileUploadbutton);
             this.SupplyInventoryGroupBox.Controls.Add(this.transactionbutton);
             this.SupplyInventoryGroupBox.Controls.Add(this.supplyPlanButton);
             this.SupplyInventoryGroupBox.Controls.Add(this.explainLabel2);
@@ -81,6 +83,17 @@
             this.SupplyInventoryGroupBox.Size = new System.Drawing.Size(707, 772);
             this.SupplyInventoryGroupBox.TabIndex = 0;
             this.SupplyInventoryGroupBox.TabStop = false;
+            // 
+            // transactionbutton
+            // 
+            this.transactionbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.transactionbutton.Location = new System.Drawing.Point(577, 714);
+            this.transactionbutton.Name = "transactionbutton";
+            this.transactionbutton.Size = new System.Drawing.Size(124, 52);
+            this.transactionbutton.TabIndex = 13;
+            this.transactionbutton.Text = "ประวัติย้อนหลัง";
+            this.transactionbutton.UseVisualStyleBackColor = true;
+            this.transactionbutton.Click += new System.EventHandler(this.transactionbutton_Click);
             // 
             // supplyPlanButton
             // 
@@ -385,16 +398,16 @@
             this.requestSupplyLabel.TabIndex = 13;
             this.requestSupplyLabel.Text = "คำขอซื้อ วัสดุสิ้นเปลือง";
             // 
-            // transactionbutton
+            // fileUploadbutton
             // 
-            this.transactionbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.transactionbutton.Location = new System.Drawing.Point(447, 659);
-            this.transactionbutton.Name = "transactionbutton";
-            this.transactionbutton.Size = new System.Drawing.Size(124, 52);
-            this.transactionbutton.TabIndex = 13;
-            this.transactionbutton.Text = "ประวัติย้อนหลัง";
-            this.transactionbutton.UseVisualStyleBackColor = true;
-            this.transactionbutton.Click += new System.EventHandler(this.transactionbutton_Click);
+            this.fileUploadbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileUploadbutton.Location = new System.Drawing.Point(168, 659);
+            this.fileUploadbutton.Name = "fileUploadbutton";
+            this.fileUploadbutton.Size = new System.Drawing.Size(124, 52);
+            this.fileUploadbutton.TabIndex = 14;
+            this.fileUploadbutton.Text = "อัฟเดทวัสดุ Packing Material";
+            this.fileUploadbutton.UseVisualStyleBackColor = true;
+            this.fileUploadbutton.Click += new System.EventHandler(this.fileUploadbutton_Click);
             // 
             // SupplyControlMainForm
             // 
@@ -451,5 +464,6 @@
         private System.Windows.Forms.Button excelGenbutton;
         private System.Windows.Forms.Button PRHistorybutton;
         private System.Windows.Forms.Button transactionbutton;
+        private System.Windows.Forms.Button fileUploadbutton;
     }
 }

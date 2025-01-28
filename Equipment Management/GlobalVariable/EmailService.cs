@@ -37,5 +37,36 @@ namespace Admin_Program.GlobalVariable
                 Console.WriteLine($"Error sending email: {ex.Message}");
             }
         }
+        public static void SendEmailForPlan(string pname, string m)
+        {
+            string smtpServer = "smtp.gmail.com";
+            int smtpPort = 587;
+            string fromEmail = "networktruckfornecpf@gmail.com";
+            string fromPassword = "hqyxypwprwzijiku";
+            string toEmail = "C.Nuttawut@nipponexpress-necl.co.th";
+
+            try
+            {
+                MailMessage mail = new MailMessage
+                {
+                    From = new MailAddress(fromEmail),
+                    Subject = "มีการอัฟเดทแผนจัดส่งวัสดุ ชื่อแผน :" + pname + " ประจำเดือน " + m,
+                    Body = "แจ้งจากโปรแกรม การจัดการวัสดุ",
+                    IsBodyHtml = false
+                };
+                mail.To.Add(toEmail);
+
+                SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort)
+                {
+                    Credentials = new NetworkCredential(fromEmail, fromPassword),
+                    EnableSsl = true
+                };
+                smtpClient.SendMailAsync(mail);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending email: {ex.Message}");
+            }
+        }
     }
 }

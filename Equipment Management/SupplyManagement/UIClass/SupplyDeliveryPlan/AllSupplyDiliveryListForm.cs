@@ -23,6 +23,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         string planName;
         int monthID;
         string monthName;
+        string mFMail = null;
 
         List<AllSupplyInPlanListDataGridView> allSupplyList = new List<AllSupplyInPlanListDataGridView>();
         List<AllSupplyInPlanListDataGridView> selectPlanSupplyList = new List<AllSupplyInPlanListDataGridView>();
@@ -215,6 +216,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                     dp._Month = newM;
                     dp.Change();
                     MessageBox.Show("เดือนของแผนที่เลือกถูกแก้ใข");
+                    mFMail = dp._Month._Month;
                 }
             }
         }
@@ -238,6 +240,14 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                     sip.ReqW3 = qw3;
                     sip.ReqW4 = qw4;
                     sip.Change();
+                }
+                if(mFMail == null)
+                {
+                    GlobalVariable.EmailService.SendEmailForPlan(planName, monthName);
+                }
+                else
+                {
+                    GlobalVariable.EmailService.SendEmailForPlan(planName, mFMail);
                 }
                 MessageBox.Show("อัฟเดทแผนเรียบร้อย");
                 UpdatePlanGridView();
