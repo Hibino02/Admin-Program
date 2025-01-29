@@ -608,7 +608,7 @@ namespace Admin_Program.SupplyManagement.UIClass
                     var merged11_1 = worksheet.Range("A11:E11");
                     merged11_1.Merge();
                     merged11_1.Style.Font.SetFontName("Calibri");
-                    merged11_1.Style.Font.SetFontSize(13);
+                    merged11_1.Style.Font.SetFontSize(10);
                     merged11_1.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                     merged11_1.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                     worksheet.Cell(11, 6).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
@@ -645,7 +645,7 @@ namespace Admin_Program.SupplyManagement.UIClass
                     var merged12_1 = worksheet.Range("A12:E12");
                     merged12_1.Merge();
                     merged12_1.Style.Font.SetFontName("Calibri");
-                    merged12_1.Style.Font.SetFontSize(13);
+                    merged12_1.Style.Font.SetFontSize(10);
                     merged12_1.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                     merged12_1.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                     worksheet.Cell(12, 6).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
@@ -656,7 +656,7 @@ namespace Admin_Program.SupplyManagement.UIClass
                     var merged13_1 = worksheet.Range("A13:E13");
                     merged13_1.Merge();
                     merged13_1.Style.Font.SetFontName("Calibri");
-                    merged13_1.Style.Font.SetFontSize(13);
+                    merged13_1.Style.Font.SetFontSize(10);
                     merged13_1.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                     merged13_1.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                     worksheet.Cell(13, 6).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
