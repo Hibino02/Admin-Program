@@ -100,7 +100,7 @@
             this.planDatagridview.RowHeadersVisible = false;
             this.planDatagridview.RowTemplate.Height = 24;
             this.planDatagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.planDatagridview.Size = new System.Drawing.Size(392, 343);
+            this.planDatagridview.Size = new System.Drawing.Size(326, 543);
             this.planDatagridview.TabIndex = 25;
             this.planDatagridview.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.planDatagridview_CellClick);
             this.planDatagridview.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.planDatagridview_DataBindingComplete);
@@ -120,14 +120,15 @@
             this.selectPlanSupplydataGridView.AllowUserToResizeRows = false;
             this.selectPlanSupplydataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.selectPlanSupplydataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.selectPlanSupplydataGridView.Location = new System.Drawing.Point(412, 40);
+            this.selectPlanSupplydataGridView.Location = new System.Drawing.Point(346, 40);
             this.selectPlanSupplydataGridView.MultiSelect = false;
             this.selectPlanSupplydataGridView.Name = "selectPlanSupplydataGridView";
             this.selectPlanSupplydataGridView.RowHeadersVisible = false;
             this.selectPlanSupplydataGridView.RowTemplate.Height = 24;
             this.selectPlanSupplydataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.selectPlanSupplydataGridView.Size = new System.Drawing.Size(1040, 343);
+            this.selectPlanSupplydataGridView.Size = new System.Drawing.Size(1106, 543);
             this.selectPlanSupplydataGridView.TabIndex = 31;
+            this.selectPlanSupplydataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.selectPlanSupplydataGridView_CellFormatting);
             // 
             // label1
             // 
@@ -162,7 +163,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(1464, 395);
+            this.ClientSize = new System.Drawing.Size(1464, 595);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.selectMonthcomboBox);
             this.Controls.Add(this.label1);

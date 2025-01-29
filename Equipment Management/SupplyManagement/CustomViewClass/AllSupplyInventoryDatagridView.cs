@@ -52,7 +52,7 @@ namespace Admin_Program.SupplyManagement
                     }
                 }
             }
-            return sBalanceView;
+            return sBalanceView.OrderBy(s=>s.SupplyName).ToList();
         }
     }
 }

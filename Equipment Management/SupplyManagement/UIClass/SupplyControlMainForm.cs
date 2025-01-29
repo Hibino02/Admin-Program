@@ -20,6 +20,7 @@ using Admin_Program.SupplyManagement.UIClass.PRandArrivalHistory;
 using Admin_Program.SupplyManagement.UIClass.SupplyHistory;
 using Admin_Program.SupplyManagement.BusinessClass;
 using System.Text.RegularExpressions;
+using Admin_Program.SupplyManagement.UIClass.SupplyForPackingHistory;
 
 namespace Admin_Program.SupplyManagement.UIClass
 {
@@ -37,6 +38,7 @@ namespace Admin_Program.SupplyManagement.UIClass
         private SupplyArrivalForm supplyInPRArrival;
         private PRandArrivalHistoryForm prandArrivalHsitoryForm;
         private SupplyHistoryForm supplyHistoryForm;
+        private SelectHistoryDateForm selectHistoryDateForm;
 
         //PR Variables
         List<AllPRListDataGridView> allPRlistInDataGridView = new List<AllPRListDataGridView>();
@@ -260,7 +262,7 @@ namespace Admin_Program.SupplyManagement.UIClass
             if (Columns["SupplyName"] != null)
             {
                 Columns["SupplyName"].HeaderText = "ชื่อวัสดุ";
-                Columns["SupplyName"].Width = 418;
+                Columns["SupplyName"].Width = 410;
             }
             if (Columns["SupplyUnit"] != null)
             {
@@ -313,7 +315,7 @@ namespace Admin_Program.SupplyManagement.UIClass
             if (Columns["Updater"] != null)
             {
                 Columns["Updater"].HeaderText = "ผู้บันทึก";
-                Columns["Updater"].Width = 75;
+                Columns["Updater"].Width = 65;
             }
             if (Columns["SupplyPhoto"] != null)
             {
@@ -1200,6 +1202,13 @@ namespace Admin_Program.SupplyManagement.UIClass
                     }
                 }
             }
+        }
+        //packing material history
+        private void packingMatHistorybutton_Click(object sender, EventArgs e)
+        {
+            selectHistoryDateForm = new SelectHistoryDateForm();
+            selectHistoryDateForm.Owner = main;
+            selectHistoryDateForm.ShowDialog();
         }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)

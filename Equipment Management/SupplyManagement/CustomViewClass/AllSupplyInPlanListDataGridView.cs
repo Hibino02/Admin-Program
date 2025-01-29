@@ -57,7 +57,7 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
                     }
                 }
             }
-            return sipView;
+            return sipView.OrderBy(s=>s.SupplyName).ToList();
         }
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.SupplyInventoryGroupBox = new System.Windows.Forms.GroupBox();
+            this.packingMatHistorybutton = new System.Windows.Forms.Button();
             this.fileUploadbutton = new System.Windows.Forms.Button();
             this.transactionbutton = new System.Windows.Forms.Button();
             this.supplyPlanButton = new System.Windows.Forms.Button();
@@ -57,7 +58,6 @@
             this.searchSupplyRequestTextBox = new System.Windows.Forms.TextBox();
             this.searchSupplylabel = new System.Windows.Forms.Label();
             this.requestSupplyLabel = new System.Windows.Forms.Label();
-            this.packingMatHistorybutton = new System.Windows.Forms.Button();
             this.SupplyInventoryGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyBalanceDatagridview)).BeginInit();
             this.SupplyRequestGroupBox.SuspendLayout();
@@ -85,6 +85,17 @@
             this.SupplyInventoryGroupBox.Size = new System.Drawing.Size(707, 772);
             this.SupplyInventoryGroupBox.TabIndex = 0;
             this.SupplyInventoryGroupBox.TabStop = false;
+            // 
+            // packingMatHistorybutton
+            // 
+            this.packingMatHistorybutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.packingMatHistorybutton.Location = new System.Drawing.Point(298, 659);
+            this.packingMatHistorybutton.Name = "packingMatHistorybutton";
+            this.packingMatHistorybutton.Size = new System.Drawing.Size(124, 52);
+            this.packingMatHistorybutton.TabIndex = 15;
+            this.packingMatHistorybutton.Text = "ดูรายการย้อนหลัง Packing Material";
+            this.packingMatHistorybutton.UseVisualStyleBackColor = true;
+            this.packingMatHistorybutton.Click += new System.EventHandler(this.packingMatHistorybutton_Click);
             // 
             // fileUploadbutton
             // 
@@ -410,16 +421,6 @@
             this.requestSupplyLabel.Size = new System.Drawing.Size(258, 31);
             this.requestSupplyLabel.TabIndex = 13;
             this.requestSupplyLabel.Text = "คำขอซื้อ วัสดุสิ้นเปลือง";
-            // 
-            // packingMatHistorybutton
-            // 
-            this.packingMatHistorybutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.packingMatHistorybutton.Location = new System.Drawing.Point(298, 659);
-            this.packingMatHistorybutton.Name = "packingMatHistorybutton";
-            this.packingMatHistorybutton.Size = new System.Drawing.Size(124, 52);
-            this.packingMatHistorybutton.TabIndex = 15;
-            this.packingMatHistorybutton.Text = "ดูรายการย้อนหลัง Packing Material";
-            this.packingMatHistorybutton.UseVisualStyleBackColor = true;
             // 
             // SupplyControlMainForm
             // 

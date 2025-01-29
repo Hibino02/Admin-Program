@@ -23,7 +23,9 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyBalanceManage
             moqtextBox.Text = supplyInBalance.Supply.MOQ.ToString();
             sUnittextBox.Text = supplyInBalance.Supply.SupplyUnit;
             currentBalancetextBox.Text = supplyInBalance.Balance.ToString();
-            updateDatedateTimePicker.Value = supplyInBalance.UpdateDate;
+            updateDatedateTimePicker.Value = supplyInBalance.UpdateDate == DateTime.MinValue
+            ? DateTime.Today // Or any other default valid date
+            : supplyInBalance.UpdateDate;
         }
         private bool CheckAttribute()
         {

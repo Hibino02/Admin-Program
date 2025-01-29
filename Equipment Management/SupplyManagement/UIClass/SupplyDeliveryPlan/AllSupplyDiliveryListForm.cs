@@ -31,7 +31,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         public AllSupplyDiliveryListForm()
         {
             InitializeComponent();
-            this.Size = new Size(1480,434);
+            this.Size = new Size(1480,634);
 
             monthList = new List<AllMonthListDataGridView>();
             planList = new List<AllPlanListDataGridView>();
@@ -74,7 +74,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             if (Columns["PlanName"] != null)
             {
                 Columns["PlanName"].HeaderText = "ชื่อแผน";
-                Columns["PlanName"].Width = 305;
+                Columns["PlanName"].Width = 238;
             }
             if (Columns["MonthID"] != null)
             {
@@ -136,7 +136,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             if (Columns["SupplyName"] != null)
             {
                 Columns["SupplyName"].HeaderText = "ชื่อวัสดุ";
-                Columns["SupplyName"].Width = 542;
+                Columns["SupplyName"].Width = 588;
                 Columns["SupplyName"].ReadOnly = true;
             }
             if (Columns["Balance"] != null)
@@ -193,6 +193,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                 Columns["QuantityW4"].Width = 80;
                 Columns["QuantityW4"].ReadOnly = false;
             }
+            selectPlanSupplydataGridView.CellFormatting += selectPlanSupplydataGridView_CellFormatting;
         }
         //Create Plan
         private void CreateSupplyButton_Click(object sender, EventArgs e)
@@ -280,6 +281,29 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                         MessageBox.Show("ลบแผนเรียบร้อย");
                         UpdatePlanGridView();
                         selectPlanSupplyBindingSource.DataSource = null;
+                    }
+                }
+            }
+        }
+        //Highlight Water proof
+        private void selectPlanSupplydataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            foreach (DataGridViewRow row in selectPlanSupplydataGridView.Rows)
+            {
+                if (row.Cells["SupplyName"].Value != null) // Ensure the cell is not null
+                {
+                    string cellValue = row.Cells["SupplyName"].Value.ToString();
+
+                    if (cellValue.IndexOf("Water", StringComparison.OrdinalIgnoreCase) >=0 ||
+                        cellValue.IndexOf("Poof", StringComparison.OrdinalIgnoreCase)>=0)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Yellow; // Highlight row
+                        row.DefaultCellStyle.ForeColor = Color.Black;  // Change text color if needed
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = Color.White; // Reset color if conditions not met
+                        row.DefaultCellStyle.ForeColor = Color.Black;
                     }
                 }
             }
