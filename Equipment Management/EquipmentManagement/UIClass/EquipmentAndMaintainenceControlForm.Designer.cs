@@ -45,6 +45,8 @@
             this.installationButton = new System.Windows.Forms.Button();
             this.maintainancePlanLabel = new System.Windows.Forms.Label();
             this.maintainancePlanGroupBox = new System.Windows.Forms.GroupBox();
+            this.PlanSearchLabel = new System.Windows.Forms.Label();
+            this.PlanSearchTextBox = new System.Windows.Forms.TextBox();
             this.backToMainMenuButton = new System.Windows.Forms.Button();
             this.removePlanProcessButton = new System.Windows.Forms.Button();
             this.editPlanProcessButton = new System.Windows.Forms.Button();
@@ -58,8 +60,7 @@
             this.completeOrRemovePlanButton = new System.Windows.Forms.Button();
             this.editPlanButton = new System.Windows.Forms.Button();
             this.createPlanButton = new System.Windows.Forms.Button();
-            this.PlanSearchTextBox = new System.Windows.Forms.TextBox();
-            this.PlanSearchLabel = new System.Windows.Forms.Label();
+            this.zMbutton = new System.Windows.Forms.Button();
             this.equipmentControlGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.jobProcessingDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.jobCreatedDatagridview)).BeginInit();
@@ -80,6 +81,7 @@
             // 
             // equipmentControlGroupBox
             // 
+            this.equipmentControlGroupBox.Controls.Add(this.zMbutton);
             this.equipmentControlGroupBox.Controls.Add(this.editJobButton);
             this.equipmentControlGroupBox.Controls.Add(this.removeJobProcessingbutton);
             this.equipmentControlGroupBox.Controls.Add(this.editJobProcessingButton);
@@ -293,6 +295,26 @@
             this.maintainancePlanGroupBox.TabIndex = 2;
             this.maintainancePlanGroupBox.TabStop = false;
             // 
+            // PlanSearchLabel
+            // 
+            this.PlanSearchLabel.AutoSize = true;
+            this.PlanSearchLabel.Location = new System.Drawing.Point(422, 86);
+            this.PlanSearchLabel.Name = "PlanSearchLabel";
+            this.PlanSearchLabel.Size = new System.Drawing.Size(63, 13);
+            this.PlanSearchLabel.TabIndex = 20;
+            this.PlanSearchLabel.Text = "ค้นหาแผน :";
+            // 
+            // PlanSearchTextBox
+            // 
+            this.PlanSearchTextBox.BackColor = System.Drawing.SystemColors.Info;
+            this.PlanSearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PlanSearchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PlanSearchTextBox.Location = new System.Drawing.Point(425, 102);
+            this.PlanSearchTextBox.Name = "PlanSearchTextBox";
+            this.PlanSearchTextBox.Size = new System.Drawing.Size(277, 29);
+            this.PlanSearchTextBox.TabIndex = 8;
+            this.PlanSearchTextBox.TextChanged += new System.EventHandler(this.equipmentListSearchTextBox_TextChanged);
+            // 
             // backToMainMenuButton
             // 
             this.backToMainMenuButton.BackColor = System.Drawing.SystemColors.Info;
@@ -453,25 +475,16 @@
             this.createPlanButton.UseVisualStyleBackColor = true;
             this.createPlanButton.Click += new System.EventHandler(this.createPlanButton_Click);
             // 
-            // PlanSearchTextBox
+            // zMbutton
             // 
-            this.PlanSearchTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.PlanSearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PlanSearchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PlanSearchTextBox.Location = new System.Drawing.Point(425, 102);
-            this.PlanSearchTextBox.Name = "PlanSearchTextBox";
-            this.PlanSearchTextBox.Size = new System.Drawing.Size(277, 29);
-            this.PlanSearchTextBox.TabIndex = 8;
-            this.PlanSearchTextBox.TextChanged += new System.EventHandler(this.equipmentListSearchTextBox_TextChanged);
-            // 
-            // PlanSearchLabel
-            // 
-            this.PlanSearchLabel.AutoSize = true;
-            this.PlanSearchLabel.Location = new System.Drawing.Point(422, 86);
-            this.PlanSearchLabel.Name = "PlanSearchLabel";
-            this.PlanSearchLabel.Size = new System.Drawing.Size(63, 13);
-            this.PlanSearchLabel.TabIndex = 20;
-            this.PlanSearchLabel.Text = "ค้นหาแผน :";
+            this.zMbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.zMbutton.Location = new System.Drawing.Point(616, 55);
+            this.zMbutton.Name = "zMbutton";
+            this.zMbutton.Size = new System.Drawing.Size(86, 52);
+            this.zMbutton.TabIndex = 15;
+            this.zMbutton.Text = "จัดการโซน";
+            this.zMbutton.UseVisualStyleBackColor = true;
+            this.zMbutton.Click += new System.EventHandler(this.zMbutton_Click);
             // 
             // EquipmentAndMaintainenceControlForm
             // 
@@ -536,5 +549,6 @@
         private System.Windows.Forms.Button editJobButton;
         private System.Windows.Forms.Label PlanSearchLabel;
         private System.Windows.Forms.TextBox PlanSearchTextBox;
+        private System.Windows.Forms.Button zMbutton;
     }
 }

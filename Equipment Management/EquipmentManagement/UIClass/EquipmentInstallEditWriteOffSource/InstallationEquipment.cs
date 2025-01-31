@@ -9,6 +9,7 @@ using Admin_Program.CustomWindowComponents;
 using Admin_Program.GlobalVariable;
 using System.Linq;
 using Admin_Program.EquipmentManagement.UIClass.EquipmentInstallEditWriteOffSource;
+using Admin_Program.EquipmentManagement.ObjectClass;
 
 namespace Admin_Program.UIClass.InstallationSource
 {
@@ -29,12 +30,14 @@ namespace Admin_Program.UIClass.InstallationSource
         List<Acquisition> equipmentAcquisitionList;
         List<EquipmentStatus> equipmentInitialStatusList;
         List<RentalBasis> rentalBasisList;
+        List<Zone> zoneList;
         //variable for track primarykey from combobox
         private List<int> equipmentTypeID = new List<int>();
         private List<int> equipmentOwnerID = new List<int>();
         private List<int> equipmentAcquisitionID = new List<int>();
         private List<int> equipmentInitialStatusID = new List<int>();
         private List<int> rentalBasisID = new List<int>();
+        private List<string> zPhotoList = new List<string>();
         //variable for create selected object after choseen combobox
         EquipmentType selectedEquipmentType;
         EquipmentOwner selectedEquipmentOwner;
@@ -52,6 +55,7 @@ namespace Admin_Program.UIClass.InstallationSource
             equipmentAcquisitionList = new List<Acquisition>();
             equipmentInitialStatusList = new List<EquipmentStatus>();
             rentalBasisList = new List<RentalBasis>();
+            zoneList = new List<Zone>();
             //Close rental components as populate
             rentalBasisCombobox.Enabled = false;
             createPeriodButton.Enabled = false;
@@ -117,6 +121,15 @@ namespace Admin_Program.UIClass.InstallationSource
             {
                 rentalBasisCombobox.Items.Add(rent.Basis);
                 rentalBasisID.Add(rent.ID);
+            }
+            zoneList = Zone.GetAllZone();
+            zoneList.Sort((x, y) => x.Name.CompareTo(y.Name));
+            zonecomboBox.Items.Clear();
+            zPhotoList.Clear();
+            foreach(Zone z in zoneList)
+            {
+                zonecomboBox.Items.Add(z.Name);
+                zPhotoList.Add(z.Photo);
             }
         }
 
@@ -329,6 +342,11 @@ namespace Admin_Program.UIClass.InstallationSource
                 ShowCustomMessageBox("กรุณาเลือกประเภท ของอุปกรณ์");
                 return false;
             }
+            if (zonecomboBox.SelectedIndex < 0)
+            {
+                ShowCustomMessageBox("กรุณาเลือก โซนของอุปกรณ์");
+                return false;
+            }
             if (string.IsNullOrEmpty(equipmentNameTextBox.Text))
             {
                 ShowCustomMessageBox("ต้องระบุชื่อเรียก ของอุปกรณ์");
@@ -418,7 +436,7 @@ namespace Admin_Program.UIClass.InstallationSource
             if (CheckAllAttribute())
             {
                 Equipment newEq = new Equipment(Global.warehouseID,equipmentNameTextBox.Text,false, installationDateTimePicker.Value, selectedEquipmentType,
-                selectedEquipmentOwner, selectedEquipmentAcquisition, selectedEquipmentStatus, selectedRentalBasis,
+                selectedEquipmentOwner, selectedEquipmentAcquisition, selectedEquipmentStatus, selectedRentalBasis,zonecomboBox.SelectedText,
                 equipmentSerialTextBox.Text, equipmentPhotoPath, installationPlacePhotoPath, equipmentDetailRichTextBox.Text,
                 replacementCheckBox.Checked, sellDetailsRichTextBox.Text, priceFromTextBox, acquisitionDocumentPath, null,InstallationDetailsRichTextBox.Text);
                 if (newEq.Create())
@@ -521,6 +539,34 @@ namespace Admin_Program.UIClass.InstallationSource
         private void RefreshComponent(object sender, EventArgs e)
         {
             UpdateComponents();
+        }
+        //Zone selection
+        private void zonecomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (zonecomboBox.Items.Count == 0)
+            {
+                selectedZpictureBox.Image = null;
+            }
+            else
+            {
+                int selectItemIndex = zonecomboBox.SelectedIndex;
+                if (selectItemIndex >= 0 && selectItemIndex < zPhotoList.Count)
+                {
+                    string selectItemPhoto = zPhotoList[selectItemIndex];
+                    if (!string.IsNullOrEmpty(selectItemPhoto))
+                    {
+                        GlobalVariable.Global.LoadImageIntoPictureBox(selectItemPhoto, selectedZpictureBox);
+                    }
+                    else
+                    {
+                        selectedZpictureBox.Image = null;
+                    }
+                }
+                else
+                {
+                    selectedZpictureBox.Image = null;
+                }
+            }
         }
     }
 }

@@ -119,6 +119,7 @@
       <DependentUpon>CustomMessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="EquipmentManagement\ObjectClass\User.cs" />
+    <Compile Include="EquipmentManagement\ObjectClass\Zone.cs" />
     <Compile Include="EquipmentManagement\UIClass\RemoveWindowComponent\EquipmentTypeManagementForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +131,12 @@
     </Compile>
     <Compile Include="EquipmentManagement\UIClass\UserLogInWindow.Designer.cs">
       <DependentUpon>UserLogInWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EquipmentManagement\UIClass\Zone\ZoneManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EquipmentManagement\UIClass\Zone\ZoneManageForm.Designer.cs">
+      <DependentUpon>ZoneManageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalVariable\EmailService.cs" />
     <Compile Include="GlobalVariable\ExportExcell.cs" />
@@ -474,6 +481,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EquipmentManagement\UIClass\UserLogInWindow.resx">
       <DependentUpon>UserLogInWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EquipmentManagement\UIClass\Zone\ZoneManageForm.resx">
+      <DependentUpon>ZoneManageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -64,16 +64,20 @@
             this.equipmentTypeLabel = new System.Windows.Forms.Label();
             this.writeOfflinkLabel = new System.Windows.Forms.LinkLabel();
             this.manageTypeButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.selectedZpictureBox = new System.Windows.Forms.PictureBox();
+            this.zonecomboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.installationPlacePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedZpictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // InstallationDetailsRichTextBox
             // 
             this.InstallationDetailsRichTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.InstallationDetailsRichTextBox.Location = new System.Drawing.Point(1047, 151);
+            this.InstallationDetailsRichTextBox.Location = new System.Drawing.Point(704, 248);
             this.InstallationDetailsRichTextBox.Name = "InstallationDetailsRichTextBox";
-            this.InstallationDetailsRichTextBox.Size = new System.Drawing.Size(337, 90);
+            this.InstallationDetailsRichTextBox.Size = new System.Drawing.Size(519, 29);
             this.InstallationDetailsRichTextBox.TabIndex = 72;
             this.InstallationDetailsRichTextBox.Text = "";
             // 
@@ -81,7 +85,7 @@
             // 
             this.equipmentDetailsLabel.AutoSize = true;
             this.equipmentDetailsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.equipmentDetailsLabel.Location = new System.Drawing.Point(705, 125);
+            this.equipmentDetailsLabel.Location = new System.Drawing.Point(703, 99);
             this.equipmentDetailsLabel.Name = "equipmentDetailsLabel";
             this.equipmentDetailsLabel.Size = new System.Drawing.Size(152, 24);
             this.equipmentDetailsLabel.TabIndex = 71;
@@ -118,16 +122,16 @@
             // sellDetailsRichTextBox
             // 
             this.sellDetailsRichTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.sellDetailsRichTextBox.Location = new System.Drawing.Point(703, 31);
+            this.sellDetailsRichTextBox.Location = new System.Drawing.Point(703, 29);
             this.sellDetailsRichTextBox.Name = "sellDetailsRichTextBox";
-            this.sellDetailsRichTextBox.Size = new System.Drawing.Size(681, 90);
+            this.sellDetailsRichTextBox.Size = new System.Drawing.Size(338, 67);
             this.sellDetailsRichTextBox.TabIndex = 66;
             this.sellDetailsRichTextBox.Text = "";
             // 
             // installationPlacePhotoButton
             // 
             this.installationPlacePhotoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.installationPlacePhotoButton.Location = new System.Drawing.Point(1125, 248);
+            this.installationPlacePhotoButton.Location = new System.Drawing.Point(1229, 248);
             this.installationPlacePhotoButton.Name = "installationPlacePhotoButton";
             this.installationPlacePhotoButton.Size = new System.Drawing.Size(155, 28);
             this.installationPlacePhotoButton.TabIndex = 65;
@@ -158,7 +162,7 @@
             // equipmentDetailRichTextBox
             // 
             this.equipmentDetailRichTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.equipmentDetailRichTextBox.Location = new System.Drawing.Point(703, 152);
+            this.equipmentDetailRichTextBox.Location = new System.Drawing.Point(703, 127);
             this.equipmentDetailRichTextBox.Name = "equipmentDetailRichTextBox";
             this.equipmentDetailRichTextBox.Size = new System.Drawing.Size(338, 90);
             this.equipmentDetailRichTextBox.TabIndex = 62;
@@ -168,7 +172,7 @@
             // 
             this.installationPlaceLabel.AutoSize = true;
             this.installationPlaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.installationPlaceLabel.Location = new System.Drawing.Point(1049, 124);
+            this.installationPlaceLabel.Location = new System.Drawing.Point(703, 220);
             this.installationPlaceLabel.Name = "installationPlaceLabel";
             this.installationPlaceLabel.Size = new System.Drawing.Size(246, 24);
             this.installationPlaceLabel.TabIndex = 61;
@@ -411,7 +415,7 @@
             // 
             this.writeOfflinkLabel.AutoSize = true;
             this.writeOfflinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeOfflinkLabel.Location = new System.Drawing.Point(705, 255);
+            this.writeOfflinkLabel.Location = new System.Drawing.Point(508, 109);
             this.writeOfflinkLabel.Name = "writeOfflinkLabel";
             this.writeOfflinkLabel.Size = new System.Drawing.Size(189, 20);
             this.writeOfflinkLabel.TabIndex = 73;
@@ -432,11 +436,43 @@
             this.manageTypeButton.UseVisualStyleBackColor = true;
             this.manageTypeButton.Click += new System.EventHandler(this.manageTypeButton_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(1062, 2);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(126, 24);
+            this.label1.TabIndex = 82;
+            this.label1.Text = "กรุณาเลือกโซน :";
+            // 
+            // selectedZpictureBox
+            // 
+            this.selectedZpictureBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.selectedZpictureBox.Location = new System.Drawing.Point(1057, 29);
+            this.selectedZpictureBox.Name = "selectedZpictureBox";
+            this.selectedZpictureBox.Size = new System.Drawing.Size(395, 213);
+            this.selectedZpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.selectedZpictureBox.TabIndex = 81;
+            this.selectedZpictureBox.TabStop = false;
+            // 
+            // zonecomboBox
+            // 
+            this.zonecomboBox.FormattingEnabled = true;
+            this.zonecomboBox.Location = new System.Drawing.Point(1219, 3);
+            this.zonecomboBox.Name = "zonecomboBox";
+            this.zonecomboBox.Size = new System.Drawing.Size(233, 21);
+            this.zonecomboBox.TabIndex = 80;
+            this.zonecomboBox.SelectedIndexChanged += new System.EventHandler(this.zonecomboBox_SelectedIndexChanged);
+            // 
             // EditEquipmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1443, 781);
+            this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.selectedZpictureBox);
+            this.Controls.Add(this.zonecomboBox);
             this.Controls.Add(this.manageTypeButton);
             this.Controls.Add(this.writeOfflinkLabel);
             this.Controls.Add(this.InstallationDetailsRichTextBox);
@@ -481,6 +517,7 @@
             this.Text = "แก้ใขอุปกรณ์";
             ((System.ComponentModel.ISupportInitialize)(this.installationPlacePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedZpictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -524,5 +561,8 @@
         protected System.Windows.Forms.Label equipmentTypeLabel;
         protected System.Windows.Forms.LinkLabel writeOfflinkLabel;
         protected System.Windows.Forms.Button manageTypeButton;
+        protected System.Windows.Forms.Label label1;
+        protected System.Windows.Forms.PictureBox selectedZpictureBox;
+        private System.Windows.Forms.ComboBox zonecomboBox;
     }
 }

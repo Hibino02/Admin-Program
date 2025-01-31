@@ -46,6 +46,8 @@ namespace Admin_Program.ObjectClass
         public string InstallationDetails { get { return installationDetails; }set { installationDetails = value; } }
         bool onplan;
         public bool OnPlan { get { return onplan; }set { onplan = value; } }
+        string zone;
+        public string Zone { get { return zone; }set { zone = value; } }
         int warehouseID;
         public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
@@ -71,6 +73,7 @@ e.EOwnerID AS EquipmentOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
 e.EAcqID AS AcquisitionID, ea.Accquire,
 e.EStatusID AS EquipmentStatusID, es.EStatus,
 e.ERentID AS RentalBasisID, er.Basis,
+e.Zone AS EquipmentZone, ez.Name,
 e.WriteOff AS WriteOffDocument,
 e.InsDetails AS InstallationDetails,
 e.WarehouseID
@@ -80,6 +83,7 @@ LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
 LEFT JOIN rentalbasis er ON e.ERentID = er.ID
+LEFT JOIN zone ez ON e.Zone = ez.Name
 WHERE e.ID = @id;";
                     cmd.CommandText = select;
                     cmd.Parameters.AddWithValue("@id", value);
@@ -121,6 +125,7 @@ WHERE e.ID = @id;";
 
                             installationDetails = reader["InstallationDetails"].ToString();
                             warehouseID = Convert.ToInt32(reader["WarehouseID"]);
+                            zone = reader["EquipmentZone"].ToString();
                         }
                     }
                 }
@@ -138,7 +143,7 @@ WHERE e.ID = @id;";
             UpdateAttribute(id.ToString());
         }
         public Equipment(int warehouseID,string name,bool onplan, DateTime insdate, EquipmentType etype, EquipmentOwner eowner, Acquisition acc, 
-            EquipmentStatus esta, RentalBasis rent, string serial = null, string ephoto = null, string oplacephoto = null,
+            EquipmentStatus esta, RentalBasis rent,string zname, string serial = null, string ephoto = null, string oplacephoto = null,
             string edetail = null, bool replacement = false, string selldetails = null, double price = 0.0, string edoc = null,
             string write = null,string insdetails = null)
         {
@@ -159,11 +164,12 @@ WHERE e.ID = @id;";
             this.acquisitionobj = acc;
             this.estatusobj = esta;
             this.erentalbasis = rent;
+            this.zone = zname;
             this.writeoffpath = write;
             this.installationDetails = insdetails;
         }
         public Equipment(int id ,int warehouseID, string name,bool onplan, DateTime insdate, EquipmentType etype, EquipmentOwner eowner, Acquisition acc,
-            EquipmentStatus esta, RentalBasis rent, string serial = null, string ephoto = null, string oplacephoto = null,
+            EquipmentStatus esta, RentalBasis rent,string zname, string serial = null, string ephoto = null, string oplacephoto = null,
             string edetail = null, bool replacement = false, string selldetails = null, double price = 0.0, string edoc = null,
             string write = null, string insdetails = null)
         {
@@ -185,6 +191,7 @@ WHERE e.ID = @id;";
             this.acquisitionobj = acc;
             this.estatusobj = esta;
             this.erentalbasis = rent;
+            this.zone = zname;
             this.writeoffpath = write;
             this.installationDetails = insdetails;
         }
@@ -198,7 +205,7 @@ WHERE e.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO equipment (ID, Name, Serial, EPhoto, OPlacePhoto, EDetails, Replacement, SellDetails, Price, EDocument, InsDate, ETypeID, EOwnerID, EAcqID, EStatusID, ERentID, WriteOff, InsDetails, OnPlan, WarehouseID) VALUES (NULL, @name, @serial, @ephoto, @oplacephoto, @edetails, @replacement, @selldetails, @price ,@edocument ,@insdate ,@etypeid ,@eownerid ,@eacqid ,@estatusid ,@erentid ,@writeoff, @insdetails, @onplan, @whid)";
+                    string insert = "INSERT INTO equipment (ID, Name, Serial, EPhoto, OPlacePhoto, EDetails, Replacement, SellDetails, Price, EDocument, InsDate, ETypeID, EOwnerID, EAcqID, EStatusID, ERentID, WriteOff, InsDetails, OnPlan, WarehouseID) VALUES (NULL, @name, @serial, @ephoto, @oplacephoto, @edetails, @replacement, @selldetails, @price ,@edocument ,@insdate ,@etypeid ,@eownerid ,@eacqid ,@estatusid ,@erentid ,@writeoff, @insdetails, @onplan, @zone, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@serial", serial);
@@ -221,6 +228,7 @@ WHERE e.ID = @id;";
                     cmd.Parameters.AddWithValue("@writeoff", writeoffpath);
                     cmd.Parameters.AddWithValue("@insdetails", installationDetails);
                     cmd.Parameters.AddWithValue("@onplan", onplan);
+                    cmd.Parameters.AddWithValue("@zone", zone);
                     cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
@@ -245,7 +253,7 @@ WHERE e.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string update = "UPDATE equipment SET Name = @name, Serial = @serial, EPhoto = @ephoto, OPlacePhoto = @oplacephoto, EDetails = @edetails, Replacement = @replacement, SellDetails = @selldetails, Price = @price, EDocument = @edocument, InsDate = @insdate, ETypeID = @etypeid, EOwnerID = @eownerid, EAcqID = @eacqid, EStatusID = @estatusid, ERentID = @erentid, WriteOff = @writeoff, InsDetails = @insdetails, OnPlan = @onplan, WarehouseID = @whid WHERE ID = @id";
+                    string update = "UPDATE equipment SET Name = @name, Serial = @serial, EPhoto = @ephoto, OPlacePhoto = @oplacephoto, EDetails = @edetails, Replacement = @replacement, SellDetails = @selldetails, Price = @price, EDocument = @edocument, InsDate = @insdate, ETypeID = @etypeid, EOwnerID = @eownerid, EAcqID = @eacqid, EStatusID = @estatusid, ERentID = @erentid, WriteOff = @writeoff, InsDetails = @insdetails, OnPlan = @onplan, Zone = @zone, WarehouseID = @whid WHERE ID = @id";
                     cmd.CommandText = update;
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@serial", serial);
@@ -269,6 +277,7 @@ WHERE e.ID = @id;";
                     cmd.Parameters.AddWithValue("@insdetails", installationDetails);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@onplan", onplan);
+                    cmd.Parameters.AddWithValue("@zone", zone);
                     cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
@@ -332,6 +341,7 @@ e.EOwnerID AS EquipmentOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
 e.EAcqID AS AcquisitionID, ea.Accquire,
 e.EStatusID AS EquipmentStatusID, es.EStatus,
 e.ERentID AS RentalBasisID, er.Basis,
+e.Zone AS EquipmentZone, ez.Name,
 e.WriteOff AS WriteOffDocument,
 e.InsDetails AS InstallationDetails,
 e.WarehouseID
@@ -341,6 +351,7 @@ LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
 LEFT JOIN rentalbasis er ON e.ERentID = er.ID
+LEFT JOIN zone ez ON e.Zone = ez.Name
 WHERE e.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
                     cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
@@ -382,7 +393,8 @@ WHERE e.WarehouseID = @whid;";
                             string ins = reader["InstallationDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["onPlan"]);
                             int warehouseID = Convert.ToInt32(reader["WarehouseID"]);
-                            Equipment eq = new Equipment(id, warehouseID, name,onplan, insdate, etype, eowner, acc, esta, rent, serial, ephoto,
+                            string zName = reader["EquipmentZone"].ToString();
+                            Equipment eq = new Equipment(id, warehouseID, name,onplan, insdate, etype, eowner, acc, esta, rent, zName, serial, ephoto,
                                 oplacephoto, edetail, replacement, selldetails, price, edoc, write,ins);
                             eqList.Add(eq);
                         }

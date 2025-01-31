@@ -11,6 +11,7 @@ using Admin_Program.UIClass.Job;
 using Admin_Program.GlobalVariable;
 using Admin_Program.UIClass.Plan;
 using System.Linq;
+using Admin_Program.EquipmentManagement.UIClass.Zone;
 
 namespace Admin_Program.UIClass
 {
@@ -34,6 +35,7 @@ namespace Admin_Program.UIClass
         private EditPlanProcessing editPlanProcessing;
         private RemovePlanProcessingForm removePlanProcessingForm;
         private PlanHistoryForm planHistoryForm;
+        private ZoneManageForm zoneManageForm;
 
         private PictureBox casePicturebox;
         private PictureBox planPicturebox;
@@ -910,6 +912,13 @@ namespace Admin_Program.UIClass
             planHistoryForm = new Plan.PlanHistoryForm();
             planHistoryForm.Owner = main;
             planHistoryForm.ShowDialog();
+        }
+        //Zone Manage
+        private void zMbutton_Click(object sender, EventArgs e)
+        {
+            zoneManageForm = new ZoneManageForm();
+            zoneManageForm.Owner = main;
+            zoneManageForm.ShowDialog();
         }
         //To Main Menu
         private void backToMainMenuButton_Click(object sender, EventArgs e)
