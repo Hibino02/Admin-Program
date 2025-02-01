@@ -173,6 +173,11 @@ namespace Admin_Program.UIClass.EquipmentListSource
                 Columns["InsDetails"].Width = 250;
                 Columns["InsDetails"].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
+            if (Columns["Zone"] != null)
+            {
+                Columns["Zone"].Visible = false;
+                Columns["Zone"].HeaderText = "โซน";
+            }
             if (Columns["ETypeID"] != null)
             {
                 Columns["ETypeID"].Visible = false;

@@ -16,6 +16,7 @@ namespace Admin_Program.CustomViewClass
         public string EOwner { get; set; }
         public string EStatus { get; set; }
         public string InsDetails { get; set; }
+        public string Zone { get; set; }
         public int ETypeID { get; set; }
         public int EStatusID { get; set; }
         public string InstallEPhoto { get; set; }
@@ -68,7 +69,8 @@ namespace Admin_Program.CustomViewClass
                     InstallEPhoto = e.OPlacePhotoPath,
                     EquipmentPhoto = e.EPhotoPath,
                     EOwnerID = e.EOwnerObj.ID,
-                    IsEJob = isEJob
+                    IsEJob = isEJob,
+                    Zone = e.Zone
                 };
                 equipmentListView.Add(view);
             }    

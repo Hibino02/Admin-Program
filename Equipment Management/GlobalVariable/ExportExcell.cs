@@ -22,20 +22,35 @@ namespace Admin_Program.GlobalVariable
             try
             {
                 // Add column headers for columns 1 to 8
-                int columnCount = Math.Min(8, EquipmentListDataGridView.Columns.Count - 1);
+                int columnCount = Math.Min(9, EquipmentListDataGridView.Columns.Count - 1);
                 for (int i = 1; i <= columnCount; i++)
                 {
                     worksheet.Cells[1, i] = EquipmentListDataGridView.Columns[i].HeaderText;
                 }
 
                 // Add rows for columns 1 to 8
+                int rowCount = 0; // Track the number of actual data rows
                 for (int i = 0; i < EquipmentListDataGridView.Rows.Count; i++)
                 {
+                    bool hasData = false;
                     for (int j = 1; j <= columnCount; j++)
                     {
                         worksheet.Cells[i + 2, j] = EquipmentListDataGridView.Rows[i].Cells[j].Value?.ToString();
                     }
+                    if (hasData)
+                    {
+                        rowCount++; // Increment only for non-empty rows
+                    }
                 }
+                worksheet.Columns.AutoFit();
+
+                // Apply borders to all filled cells (including headers)
+                Excel.Range usedRange = worksheet.Range[
+                    worksheet.Cells[1, 1], // Start from header row, column 1
+                    worksheet.Cells[rowCount + 1, columnCount] // Last filled row and column
+                ];
+                usedRange.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                usedRange.Borders.Weight = Excel.XlBorderWeight.xlThin;
 
                 // Save the file
                 using (var saveFileDialog = new SaveFileDialog

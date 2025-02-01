@@ -269,6 +269,10 @@ namespace Admin_Program.UIClass.Plan
             {
                 EquipmentListDataGridView.Columns["IsEJob"].Visible = false;
             }
+            if (EquipmentListDataGridView.Columns["Zone"] != null)
+            {
+                EquipmentListDataGridView.Columns["Zone"].Visible = false;
+            }
         }
         //Event to add selected Equipment 
         private void EquipmentListDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

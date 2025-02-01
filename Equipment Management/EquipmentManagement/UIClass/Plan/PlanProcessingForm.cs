@@ -182,6 +182,10 @@ namespace Admin_Program.UIClass.Plan
             {
                 rEquipmentListDataGridView.Columns["IsEJob"].Visible = false;
             }
+            if (rEquipmentListDataGridView.Columns["Zone"] != null)
+            {
+                rEquipmentListDataGridView.Columns["Zone"].Visible = false;
+            }
         }
         //Event to filter by Equipment Type
         private void equipmentTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)

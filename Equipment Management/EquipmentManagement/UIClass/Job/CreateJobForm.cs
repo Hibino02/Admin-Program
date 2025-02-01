@@ -336,6 +336,10 @@ namespace Admin_Program.UIClass.Job
             {
                 equipmentSelecteddataGridView.Columns["IsEJob"].Visible = false;
             }
+            if (equipmentSelecteddataGridView.Columns["Zone"] != null)
+            {
+                equipmentSelecteddataGridView.Columns["Zone"].Visible = false;
+            }
         }
         //Searching & filter events
         private void equipmentTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
