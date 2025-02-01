@@ -205,7 +205,7 @@ WHERE e.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO equipment (ID, Name, Serial, EPhoto, OPlacePhoto, EDetails, Replacement, SellDetails, Price, EDocument, InsDate, ETypeID, EOwnerID, EAcqID, EStatusID, ERentID, WriteOff, InsDetails, OnPlan, WarehouseID) VALUES (NULL, @name, @serial, @ephoto, @oplacephoto, @edetails, @replacement, @selldetails, @price ,@edocument ,@insdate ,@etypeid ,@eownerid ,@eacqid ,@estatusid ,@erentid ,@writeoff, @insdetails, @onplan, @zone, @whid)";
+                    string insert = "INSERT INTO equipment (ID, Name, Serial, EPhoto, OPlacePhoto, EDetails, Replacement, SellDetails, Price, EDocument, InsDate, ETypeID, EOwnerID, EAcqID, EStatusID, ERentID, WriteOff, InsDetails, OnPlan, Zone, WarehouseID) VALUES (NULL, @name, @serial, @ephoto, @oplacephoto, @edetails, @replacement, @selldetails, @price ,@edocument ,@insdate ,@etypeid ,@eownerid ,@eacqid ,@estatusid ,@erentid ,@writeoff, @insdetails, @onplan, @zone, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@serial", serial);

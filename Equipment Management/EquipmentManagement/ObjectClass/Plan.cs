@@ -41,7 +41,7 @@ p.ID, p.TimesToDo, p.DateToDo, p.PlanStatus,
 p.PTypeID, pt.PType, pt.WarehouseID AS PTWHID,
 p.PPeriodID, pp.PPeriod, pp.WarehouseID AS PPWHID,
 p.EID, p.WarehouseID,
-e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
+e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, e.Zone,
 e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.InsDetails,
 e.WriteOff, e.ETypeID, et.EType, et.WarehouseID AS ETWHID,
 e.EOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
@@ -109,11 +109,12 @@ WHERE p.ID = @id";
                             int? basisid = reader["ERentID"] != DBNull.Value ? Convert.ToInt32(reader["ERentID"]) : (int?)null;
                             string basis = reader["Basis"] != DBNull.Value ? reader["Basis"].ToString() : null;
                             RentalBasis erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
+                            string zname = reader["Zone"].ToString();
 
                             string insdetail = reader["InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["OnPlan"]);
                             int ewhid = Convert.ToInt32(reader["WarehouseID"]);
-                            eqp = new Equipment(id, ewhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                            eqp = new Equipment(id, ewhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis, zname,
                                 serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                 writeoffpath,insdetail);
                         }
@@ -263,7 +264,7 @@ p.ID, p.TimesToDo, p.DateToDo, p.PlanStatus,
 p.PTypeID, pt.PType, pt.WarehouseID AS PTWHID,
 p.PPeriodID, pp.PPeriod, pp.WarehouseID AS PPWHID,
 p.EID, p.WarehouseID,
-e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan,
+e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, e.Zone,
 e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.InsDetails,
 e.WriteOff, e.ETypeID, et.EType, et.WarehouseID AS ETWHID,
 e.EOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
@@ -331,11 +332,12 @@ WHERE p.WarehouseID = @whid;";
                             int? basisid = reader["ERentID"] != DBNull.Value ? Convert.ToInt32(reader["ERentID"]) : (int?)null;
                             string basis = reader["Basis"] != DBNull.Value ? reader["Basis"].ToString() : null;
                             RentalBasis erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
+                            string zname = reader["Zone"].ToString();
 
                             string insdetail = reader["InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["OnPlan"]);
                             int eqwhid = Convert.ToInt32(reader["EQMWharehouseID"]);
-                            Equipment eqp = new Equipment(eid, eqwhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                            Equipment eqp = new Equipment(eid, eqwhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis, zname,
                                 serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                 writeoffpath,insdetail);
 

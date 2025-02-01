@@ -51,7 +51,7 @@ namespace Admin_Program.ObjectClass
                     string select = @"SELECT
 pp.ID, pp.ProcessDate, pp.StartDetails, pp.PSup, pp.PSupDetails, pp.Cost,
 pp.WorkPermit, pp.Contract, pp.FinishDate, pp.FinishDetails, pp.FinishDoc, pp.WarehouseID AS PPWHID,
-pp.PlanID, pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, e.WarehouseID AS EWHID,
+pp.PlanID, pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, e.WarehouseID AS EWHID, e.Zone,
 e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.WriteOff, e.ETypeID, et.EType, et.WarehouseID AS ETWHID,
 e.EOwnerID, eo.Owner, eo.WarehouseID AS EOWHID, e.EAcqID, ea.Accquire, e.EStatusID, es.EStatus, e.ERentID, er.Basis
 FROM planprocess pp
@@ -115,10 +115,11 @@ WHERE pp.ID = @id";
                                 int? basisid = reader["ERentID"] != DBNull.Value ? Convert.ToInt32(reader["ERentID"]) : (int?)null;
                                 string basis = reader["Basis"] != DBNull.Value ? reader["Basis"].ToString() : null;
                                 RentalBasis erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
+                                string zname = reader["Zone"].ToString();
 
                                 bool onplan = Convert.ToBoolean(reader["OnPlan"]);
                                 int ewhid = Convert.ToInt32(reader["EWHID"]);
-                                re = new Equipment(id1, ewhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                                re = new Equipment(id1, ewhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis, zname,
                                     serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                     writeoffpath);
                             }
@@ -315,7 +316,7 @@ WHERE pp.ID = @id";
                     string selectAll = @"SELECT
 pp.ID, pp.ProcessDate, pp.StartDetails, pp.PSup, pp.PSupDetails, pp.Cost,
 pp.WorkPermit, pp.Contract, pp.FinishDate, pp.FinishDetails, pp.FinishDoc, pp.WarehouseID AS PPWHID,
-pp.PlanID, pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, e.WarehouseID AS EWHID,
+pp.PlanID, pp.REID, e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, e.WarehouseID AS EWHID, e.Zone,
 e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.WriteOff, e.ETypeID, et.EType, et.WarehouseID AS ETWHID,
 e.EOwnerID, eo.Owner, eo.WarehouseID AS EOWHID, e.EAcqID, ea.Accquire, e.EStatusID, es.EStatus, e.ERentID, er.Basis
 FROM planprocess pp
@@ -381,10 +382,11 @@ WHERE pp.WarehouseID = @whid;";
                                 int? basisid = reader["ERentID"] != DBNull.Value ? Convert.ToInt32(reader["ERentID"]) : (int?)null;
                                 string basis = reader["Basis"] != DBNull.Value ? reader["Basis"].ToString() : null;
                                 RentalBasis erentalbasis = basisid.HasValue? new RentalBasis(basisid.Value, basis):null;
+                                string zname = reader["Zone"].ToString();
 
                                 bool onplan = Convert.ToBoolean(reader["OnPlan"]);
                                 int ewhid = Convert.ToInt32(reader["EWHID"]);
-                                re = new Equipment(reid, ewhid, name, onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis,
+                                re = new Equipment(reid, ewhid, name, onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis, zname,
                                     serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                     writeoffpath);
                             }

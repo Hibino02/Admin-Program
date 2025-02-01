@@ -199,7 +199,7 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
             {
                 Global.LoadImageIntoPictureBox(edit.OPlacePhotoPath, installationPlacePictureBox);
             }
-            zonecomboBox.Text = edit.Zone;
+            zonecomboBox.SelectedItem = edit.Zone;
             int zIndex = zonecomboBox.Items.IndexOf(edit.Zone);
             if(zIndex != -1)
             {

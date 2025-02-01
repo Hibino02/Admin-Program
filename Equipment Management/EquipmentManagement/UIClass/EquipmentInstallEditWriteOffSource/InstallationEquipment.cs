@@ -436,7 +436,7 @@ namespace Admin_Program.UIClass.InstallationSource
             if (CheckAllAttribute())
             {
                 Equipment newEq = new Equipment(Global.warehouseID,equipmentNameTextBox.Text,false, installationDateTimePicker.Value, selectedEquipmentType,
-                selectedEquipmentOwner, selectedEquipmentAcquisition, selectedEquipmentStatus, selectedRentalBasis,zonecomboBox.SelectedText,
+                selectedEquipmentOwner, selectedEquipmentAcquisition, selectedEquipmentStatus, selectedRentalBasis,zonecomboBox.SelectedItem.ToString(),
                 equipmentSerialTextBox.Text, equipmentPhotoPath, installationPlacePhotoPath, equipmentDetailRichTextBox.Text,
                 replacementCheckBox.Checked, sellDetailsRichTextBox.Text, priceFromTextBox, acquisitionDocumentPath, null,InstallationDetailsRichTextBox.Text);
                 if (newEq.Create())
