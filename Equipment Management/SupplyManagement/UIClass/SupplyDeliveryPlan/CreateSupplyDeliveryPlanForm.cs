@@ -67,7 +67,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         //All Supply DataGridView
         private void UpdateSupplyList()
         {
-            allSupplyViewList = AllSupplyListDataGridView.AllSupplyNotInPlan();
+            allSupplyViewList = AllSupplyListDataGridView.AllSupply();
             originalSupplyViewList = new List<AllSupplyListDataGridView>(allSupplyViewList);
             ApplyCurrentSupplyFilter();
         }

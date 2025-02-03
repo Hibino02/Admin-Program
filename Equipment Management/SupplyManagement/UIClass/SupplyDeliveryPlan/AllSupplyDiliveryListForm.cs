@@ -15,13 +15,10 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         CreateSupplyDeliveryPlanForm createSupply;
         MainBackGroundFrom main;
 
-        List<AllMonthListDataGridView> monthList;
-        List<int> mID = new List<int>();
         List<AllPlanListDataGridView> planList;
         BindingSource planListBindingSource;
         int planID;
         string planName;
-        int monthID;
         string monthName;
         string mFMail = null;
 
@@ -33,27 +30,13 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             InitializeComponent();
             this.Size = new Size(1480,634);
 
-            monthList = new List<AllMonthListDataGridView>();
             planList = new List<AllPlanListDataGridView>();
             planListBindingSource = new BindingSource();
             selectPlanSupplyBindingSource = new BindingSource();
 
-            UpdateComponent();
             UpdatePlanGridView();
         }
-        private void UpdateComponent()
-        {
-            monthList = AllMonthListDataGridView.AllMonth();
-            selectMonthcomboBox.Items.Clear();
-            mID.Clear();
-            selectMonthcomboBox.Items.Add("---เลือกเดือน---");
-            mID.Add(-1);
-            foreach (AllMonthListDataGridView m in monthList)
-            {
-                selectMonthcomboBox.Items.Add(m.MonthName);
-                mID.Add(m.MonthID);
-            }
-        }
+
         //Update Plan
         private void UpdatePlanGridView()
         {
@@ -94,7 +77,6 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
 
                 planID = Convert.ToInt32(selectedRow.Cells["PlanID"].Value);
                 planName = selectedRow.Cells["PlanName"].Value.ToString();
-                monthID = Convert.ToInt32(selectedRow.Cells["MonthID"].Value);
                 monthName = selectedRow.Cells["MonthName"].Value.ToString();
                 UpdateSupplyInPlanFridView(planID);
             }
@@ -203,28 +185,9 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             createSupply.ShowDialog();
             UpdatePlanGridView();
         }
-        private void CheckSelectMonth()
-        {
-            int selectMonthIndex = selectMonthcomboBox.SelectedIndex;
-            if(selectMonthIndex > 0)
-            {
-                int selectedMonthID = mID[selectMonthIndex];
-                if (selectedMonthID != monthID)
-                {
-                    DeliveryMonth newM = new DeliveryMonth(selectedMonthID);
-                    DeliveryMonth m = new DeliveryMonth(monthID, monthName);
-                    DeliveryPlan dp = new DeliveryPlan(planID, GlobalVariable.Global.warehouseID, planName, m);
-                    dp._Month = newM;
-                    dp.Change();
-                    MessageBox.Show("เดือนของแผนที่เลือกถูกแก้ใข");
-                    mFMail = dp._Month._Month;
-                }
-            }
-        }
         //Update Plan
         private void editButton_Click(object sender, EventArgs e)
         {
-            CheckSelectMonth();
             if (selectPlanSupplydataGridView.Rows.Count > 0)
             {
                 foreach (DataGridViewRow row in selectPlanSupplydataGridView.Rows)

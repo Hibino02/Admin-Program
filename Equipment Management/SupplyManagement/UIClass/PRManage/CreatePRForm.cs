@@ -63,6 +63,10 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             Color.LightPink
         };
         private int currentColorIndex = 0;
+        //List for all plan
+        private List<int> pid = new List<int>();
+        List<DeliveryPlan> dpList = new List<DeliveryPlan>();
+        DeliveryPlan selectPlan = null;
 
         public CreatePRForm()
         {
@@ -135,6 +139,18 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
             {
                 suppliercomboBox.Items.Add(s.SupplierName);
                 supplierID.Add(s.ID);
+            }
+            dpList = DeliveryPlan.GetAllDeliveryPlanList();
+            dpList.Sort((x, y) => x._Month.ID.CompareTo(y._Month.ID));
+            planSelectcomboBox.Items.Clear();
+            pid.Clear();
+
+            planSelectcomboBox.Items.Add("--- กรุณาเลือกแผนการจัดส่ง ถ้าไม่มีกรุณาเว้นว่าง ---");
+            pid.Add(-1);
+            foreach(DeliveryPlan dp in dpList)
+            {
+                planSelectcomboBox.Items.Add(dp.PlanName);
+                pid.Add(dp.ID);
             }
         }
         //Event to change other reason textbox
@@ -874,6 +890,12 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                 MessageBox.Show("กรุณาระบุ ชื่อผู้ติดต่อส่งสินค้า");
                 return false;
             }
+            int selectPIndex = planSelectcomboBox.SelectedIndex;
+            if(selectPIndex >=0 && selectPIndex < pid.Count)
+            {
+                int selectedPID = pid[selectPIndex];
+                selectPlan = new DeliveryPlan(selectedPID);
+            }
             return true;
         }
         //Check SupplyInPR
@@ -895,7 +917,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                 newPR = new PR(Global.warehouseID, supplier, requestertextBox.Text, PRTitletextBox.Text,
                     costOfSalecheckBox.Checked, companyAssetcheckBox.Checked, maintainancecheckBox.Checked,
                     rentalLeasecheckBox.Checked, othercheckBox.Checked, otherReasontextBox.Text, addDetailsrichTextBox.Text,
-                    prS, deliveryDateTimePicker.Value.Date, contactPersontextBox.Text);
+                    prS, deliveryDateTimePicker.Value.Date, contactPersontextBox.Text, selectPlan);
 
                 Dictionary<int, string> uploadedFiles = new Dictionary<int, string>();
                 if (newPR.Create())

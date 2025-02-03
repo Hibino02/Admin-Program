@@ -69,6 +69,8 @@
             this.genExcellbutton = new System.Windows.Forms.Button();
             this.preSupplyInPRtextBox = new System.Windows.Forms.TextBox();
             this.preSupplyInPRSearchlabel = new System.Windows.Forms.Label();
+            this.planSelectcomboBox = new System.Windows.Forms.ComboBox();
+            this.planlabel = new System.Windows.Forms.Label();
             this.supplyInPRgroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.supplyInPRdataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.preSupplyInPRdataGridView)).BeginInit();
@@ -480,7 +482,7 @@
             this.supplyInQuotationdataGridView.RowTemplate.Height = 24;
             this.supplyInQuotationdataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.supplyInQuotationdataGridView.ShowCellToolTips = false;
-            this.supplyInQuotationdataGridView.Size = new System.Drawing.Size(511, 345);
+            this.supplyInQuotationdataGridView.Size = new System.Drawing.Size(511, 318);
             this.supplyInQuotationdataGridView.TabIndex = 68;
             this.supplyInQuotationdataGridView.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyInQuotationdataGridView_CellMouseEnter);
             this.supplyInQuotationdataGridView.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.supplyInQuotationdataGridView_CellMouseLeave);
@@ -560,12 +562,33 @@
             this.preSupplyInPRSearchlabel.TabIndex = 79;
             this.preSupplyInPRSearchlabel.Text = ": ค้นหาชื่อวัสดุในใบเสนอราคาที่เลือก";
             // 
+            // planSelectcomboBox
+            // 
+            this.planSelectcomboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.planSelectcomboBox.FormattingEnabled = true;
+            this.planSelectcomboBox.Location = new System.Drawing.Point(950, 359);
+            this.planSelectcomboBox.Name = "planSelectcomboBox";
+            this.planSelectcomboBox.Size = new System.Drawing.Size(296, 24);
+            this.planSelectcomboBox.TabIndex = 80;
+            // 
+            // planlabel
+            // 
+            this.planlabel.AutoSize = true;
+            this.planlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.planlabel.Location = new System.Drawing.Point(1257, 362);
+            this.planlabel.Name = "planlabel";
+            this.planlabel.Size = new System.Drawing.Size(114, 16);
+            this.planlabel.TabIndex = 81;
+            this.planlabel.Text = ": กรุณาเลือกแผนส่งวัสดุ";
+            // 
             // CreatePRForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 781);
+            this.Controls.Add(this.planlabel);
+            this.Controls.Add(this.planSelectcomboBox);
             this.Controls.Add(this.preSupplyInPRSearchlabel);
             this.Controls.Add(this.preSupplyInPRtextBox);
             this.Controls.Add(this.genExcellbutton);
@@ -643,5 +666,7 @@
         private System.Windows.Forms.Button genExcellbutton;
         private System.Windows.Forms.TextBox preSupplyInPRtextBox;
         private System.Windows.Forms.Label preSupplyInPRSearchlabel;
+        private System.Windows.Forms.ComboBox planSelectcomboBox;
+        private System.Windows.Forms.Label planlabel;
     }
 }

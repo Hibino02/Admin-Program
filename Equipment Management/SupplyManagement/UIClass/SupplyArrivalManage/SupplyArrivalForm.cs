@@ -40,7 +40,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyArrivalManage
         //Supply In Plan
         private void UpdateSupplyInPlanDatagridView()
         {
-            supplyInPRArrivalList = AllSupplyInPRArrivalListDataGridView.SupplyArrivalPlanBySupplyID(GlobalVariable.Global.PRID);
+            supplyInPRArrivalList = AllSupplyInPRArrivalListDataGridView.SupplyInPlanByPR(pr);
             supplyInPRArrivalLstBindingSource.DataSource = supplyInPRArrivalList;
             supplyInPRArrivalLstdataGridView.DataSource = supplyInPRArrivalLstBindingSource;
             FormatSupplyInPlanDatagridView();

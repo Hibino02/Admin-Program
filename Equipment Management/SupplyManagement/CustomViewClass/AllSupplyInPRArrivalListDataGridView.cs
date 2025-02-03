@@ -28,76 +28,64 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
 
         AllSupplyInPRArrivalListDataGridView() { }
 
-        public static List<AllSupplyInPRArrivalListDataGridView> SupplyArrivalPlanBySupplyID(int prid)
+        public static List<AllSupplyInPRArrivalListDataGridView> SupplyInPlanByPR(PR pr)
         {
-            List<AllSupplyInPRArrivalListDataGridView> sapbysidList = new List<AllSupplyInPRArrivalListDataGridView>();
-            List<SupplyInPlan> sipList = SupplyInPlan.GetAllSupplyInPlanList();
-            List<SupplyInPR> siprList = SupplyInPR.GetAllSupplyInPRList(prid);
-
-            List<SupplyInPRArrival> sipraList = SupplyInPRArrival.GetAllSupplyInPRByPRID(prid);
-
-
-            foreach (SupplyInPlan sip in sipList)
+            List<AllSupplyInPRArrivalListDataGridView> sipraView = new List<AllSupplyInPRArrivalListDataGridView>();
+            if (pr.Plan == null)
             {
-                // Check for matching supply in PR arrival
-                var matchedPlan = siprList.Where(s => s.Supply.ID == sip.Supply.ID).ToList();
-
-                if (matchedPlan.Any())
-                {
-                    var pramount = matchedPlan.First().Quantity;
-                    // Create a new entry
-                    var newSupply = new AllSupplyInPRArrivalListDataGridView()
-                    {
-                        SupplyID = sip.Supply.ID,
-                        SupplyName = sip.Supply.SupplyName,
-                        ReqW1 = sip.ReqW1,
-                        ReqW2 = sip.ReqW2,
-                        ReqW3 = sip.ReqW3,
-                        ReqW4 = sip.ReqW4,
-                        ReqAmount = (sip.ReqW1 + sip.ReqW2 + sip.ReqW3 + sip.ReqW4),
-                        PRAmount = pramount,
-                    };
-                    if (sipraList != null)
-                    {
-                        var matchedArrival = sipraList.Where(s => s.SupplyID == newSupply.SupplyID).ToList();
-                        int weekCounter = 1;
-                        // Populate ArrW1 to ArrW4 and their corresponding dates
-                        foreach (var s in matchedArrival)
-                        {
-                            if (s.ArrivalDate != null && s.Quantity > 0)
-                            {
-                                if (weekCounter == 1)
-                                {
-                                    newSupply.ArrW1 = s.Quantity;
-                                    newSupply.ArrDate1 = s.ArrivalDate;
-                                }
-                                else if (weekCounter == 2)
-                                {
-                                    newSupply.ArrW2 = s.Quantity;
-                                    newSupply.ArrDate2 = s.ArrivalDate;
-                                }
-                                else if (weekCounter == 3)
-                                {
-                                    newSupply.ArrW3 = s.Quantity;
-                                    newSupply.ArrDate3 = s.ArrivalDate;
-                                }
-                                else if (weekCounter == 4)
-                                {
-                                    newSupply.ArrW4 = s.Quantity;
-                                    newSupply.ArrDate4 = s.ArrivalDate;
-                                }
-                                weekCounter++;
-                                if (weekCounter > 4) break;
-                            }
-                        }
-                    }
-                    newSupply.ArrAmount = newSupply.ArrW1 + newSupply.ArrW2 + newSupply.ArrW3 + newSupply.ArrW4;
-                    newSupply.RemainAmount =  newSupply.ArrAmount - newSupply.PRAmount;
-                    // Add to the result list
-                    sapbysidList.Add(newSupply);
-                }
+                return sipraView;
             }
-            return sapbysidList.OrderBy(s=>s.SupplyName).ToList();
+            else
+            {
+                List<SupplyInPR> sipr = SupplyInPR.GetAllSupplyInPRList(pr.ID);
+                List<SupplyInPlan> sip = SupplyInPlan.GetAllSupplyInPlanByPlanID(pr.Plan.ID);
+                List<SupplyInPRArrival> sipra = SupplyInPRArrival.GetAllSupplyInPRByPRID(pr.ID);
+                sipraView = sipr.Select(siPR =>
+                {
+                    var matchingPlan = sip.FirstOrDefault(siP => siP.Supply.ID == siPR.Supply.ID);
+                    var matchingArrivals = sipra.Where(siPRA => siPRA.SupplyID == siPR.Supply.ID).ToList();
+
+                    var view = new AllSupplyInPRArrivalListDataGridView
+                    {
+                        SupplyID = siPR.Supply.ID,
+                        SupplyName = siPR.Supply.SupplyName,
+                        ReqW1 = matchingPlan?.ReqW1 ?? 0,
+                        ReqW2 = matchingPlan?.ReqW2 ?? 0,
+                        ReqW3 = matchingPlan?.ReqW3 ?? 0,
+                        ReqW4 = matchingPlan?.ReqW4 ?? 0,
+                    };
+                    //Request in plan amount
+                    int totalRequestAmount = (matchingPlan?.ReqW1 ?? 0) +
+                                         (matchingPlan?.ReqW2 ?? 0) +
+                                         (matchingPlan?.ReqW3 ?? 0) +
+                                         (matchingPlan?.ReqW4 ?? 0);
+                    view.ReqAmount = totalRequestAmount;
+                    //Arrival amount
+                    int totalArrivalAmount = matchingArrivals.Sum(arrival => arrival.Quantity);
+                    view.ArrAmount = totalArrivalAmount;
+                    //Request in PR amount
+                    int totalSiprAmount = sipr.Where(s => s.Supply.ID == siPR.Supply.ID).Sum(s => s.Quantity);
+                    view.PRAmount = totalSiprAmount;
+                    //Remain amount
+                    view.RemainAmount = totalSiprAmount - totalArrivalAmount;
+                    // Dynamically map arrivals to the right weeks
+                    int weekCounter = 1;
+                    foreach (var arrival in matchingArrivals)
+                    {
+                        // Assign each arrival to the next available week (ArrW1, ArrW2, etc.)
+                        var arrPropertyName = $"ArrW{weekCounter}";
+                        var arrDatePropertyName = $"ArrDate{weekCounter}";
+
+                        view.GetType().GetProperty(arrPropertyName)?.SetValue(view, arrival.Quantity);
+                        view.GetType().GetProperty(arrDatePropertyName)?.SetValue(view, arrival.ArrivalDate);
+
+                        weekCounter++;  // Increment to the next week (ArrW2, ArrW3, etc.)
+                    }
+                    return view;
+                }).ToList();
+
+                return sipraView;
+            }
         }
     }
 }

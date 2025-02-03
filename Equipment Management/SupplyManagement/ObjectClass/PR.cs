@@ -36,6 +36,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public DateTime DeliveryDate { get { return deliverydate; }set { deliverydate = value; } }
         string contactperson;
         public string ContactPerson { get { return contactperson; }set { contactperson = value; } }
+        DeliveryPlan plan;
+        public DeliveryPlan Plan { get { return plan; }set { plan = value; } }
         int warehouseID;
         public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
@@ -52,7 +54,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 {
                     string select = @"SELECT
 pr.ID AS PRID, pr.SupplierID AS PRSupplierID, spr.SupplierName AS PRSupplierName, spr.SupplierAddress AS PRSupplierAddress, 
-pr.Requester, pr.PRTitle, pr.IsCostOfSale, pr.IsCompanyAsset, pr.IsMaintainance, pr.IsRental, pr.IsOther, pr.OtherReason, pr.AddDetails, 
+pr.Requester, pr.PRTitle, pr.IsCostOfSale, pr.IsCompanyAsset, pr.IsMaintainance, pr.IsRental, pr.IsOther, pr.OtherReason, pr.AddDetails, pr.PlanID,
 pr.PRStatusID, sta.Status,
 pr.DeliveryDate, pr.ContactPerson
 FROM PR pr
@@ -87,6 +89,17 @@ WHERE pr.ID = @id;";
                             prstatus = new PRStatus(sid,sta);
                             deliverydate = Convert.ToDateTime(reader["DeliveryDate"]);
                             contactperson = reader["ContactPerson"].ToString();
+                            int planID = reader["PlanID"] != DBNull.Value ? Convert.ToInt32(reader["PlanID"]) : 0;
+                            if (planID > 0)
+                            {
+                                DeliveryPlan dp = new DeliveryPlan(planID);
+                                plan = dp;
+                            }
+                            else
+                            {
+                                plan = null;
+                            }
+
                             warehouseID = GlobalVariable.Global.warehouseID;
                         }
                     }
@@ -106,7 +119,7 @@ WHERE pr.ID = @id;";
         }
         public PR(int id,int whid,Supplier prs,string requester,string prtitle,bool iscostofsale
             ,bool iscompanyasset,bool ismaintainance,bool isrental,bool isother,string otherreason,string adddetails
-            ,PRStatus prstatus,DateTime deliverydate,string contactperson)
+            ,PRStatus prstatus,DateTime deliverydate,string contactperson, DeliveryPlan plan)
         {
             this.id = id;
             this.warehouseID = whid;
@@ -123,10 +136,11 @@ WHERE pr.ID = @id;";
             this.prstatus = prstatus;
             this.deliverydate = deliverydate;
             this.contactperson = contactperson;
+            this.plan = plan;
         }
         public PR(int whid,Supplier prs, string requester, string prtitle, bool iscostofsale
             , bool iscompanyasset, bool ismaintainance, bool isrental, bool isother, string otherreason, string adddetails
-            , PRStatus prstatus, DateTime deliverydate, string contactperson)
+            , PRStatus prstatus, DateTime deliverydate, string contactperson, DeliveryPlan plan)
         {
             this.warehouseID = whid;
             this.supplier = prs;
@@ -142,6 +156,7 @@ WHERE pr.ID = @id;";
             this.prstatus = prstatus;
             this.deliverydate = deliverydate;
             this.contactperson = contactperson;
+            this.plan = plan;
         }
 
         public bool Create()
@@ -157,7 +172,7 @@ WHERE pr.ID = @id;";
 
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO PR (ID, SupplierID, Requester, PRTitle, IsCostOfSale, IsCompanyAsset, IsMaintainance, IsRental, IsOther, OtherReason, AddDetails, PRStatusID, DeliveryDate, ContactPerson, WarehouseID) VALUES (NULL, @supid, @requester, @prtitle, @iscostofsale, @iscompanyasset, @ismaintainance, @isrental, @isother, @otherreason, @adddetails, @prstatusid, @deliverydate, @contactperson, @whid)";
+                    string insert = "INSERT INTO PR (ID, SupplierID, Requester, PRTitle, IsCostOfSale, IsCompanyAsset, IsMaintainance, IsRental, IsOther, OtherReason, AddDetails, PRStatusID, DeliveryDate, ContactPerson, PlanID, WarehouseID) VALUES (NULL, @supid, @requester, @prtitle, @iscostofsale, @iscompanyasset, @ismaintainance, @isrental, @isother, @otherreason, @adddetails, @prstatusid, @deliverydate, @contactperson, @pid, @whid)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@supid",supplier.ID);
                     cmd.Parameters.AddWithValue("@requester", requester);
@@ -172,6 +187,14 @@ WHERE pr.ID = @id;";
                     cmd.Parameters.AddWithValue("@prstatusid", prstatus.ID);
                     cmd.Parameters.AddWithValue("@deliverydate", deliverydate);
                     cmd.Parameters.AddWithValue("@contactperson", contactperson);
+                    if(plan?.ID == null)
+                    {
+                        cmd.Parameters.AddWithValue("@pid", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@pid", plan.ID);
+                    }
                     cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
 
@@ -300,7 +323,7 @@ WHERE pr.ID = @id;";
                 {
                     string selectAll = @"SELECT
 pr.ID AS PRID, pr.SupplierID AS PRSupplierID, spr.SupplierName AS PRSupplierName, spr.SupplierAddress AS PRSupplierAddress, 
-pr.Requester, pr.PRTitle, pr.IsCostOfSale, pr.IsCompanyAsset, pr.IsMaintainance, pr.IsRental, pr.IsOther, pr.OtherReason, pr.AddDetails, 
+pr.Requester, pr.PRTitle, pr.IsCostOfSale, pr.IsCompanyAsset, pr.IsMaintainance, pr.IsRental, pr.IsOther, pr.OtherReason, pr.AddDetails, pr.PlanID,
 pr.PRStatusID, sta.Status,
 pr.DeliveryDate, pr.ContactPerson
 FROM PR pr
@@ -335,8 +358,18 @@ WHERE pr.WarehouseID = @whid;";
                             PRStatus prstatus = new PRStatus(sid, sta);
                             DateTime deliverydate = Convert.ToDateTime(reader["DeliveryDate"]);
                             string contactperson = reader["ContactPerson"].ToString();
+                            int planID = reader["PlanID"] != DBNull.Value ? Convert.ToInt32(reader["PlanID"]) : 0;
+                            DeliveryPlan dp;
+                            if (planID > 0)
+                            {
+                                dp = new DeliveryPlan(planID);
+                            }
+                            else
+                            {
+                                dp = null;
+                            }
 
-                            PR pr = new PR(id,GlobalVariable.Global.warehouseID, supplier, requester, prtitle, iscostofsale, iscompanyasset, ismaintainance, isrental, isother, otherreason, adddetails, prstatus, deliverydate, contactperson);
+                            PR pr = new PR(id,GlobalVariable.Global.warehouseID, supplier, requester, prtitle, iscostofsale, iscompanyasset, ismaintainance, isrental, isother, otherreason, adddetails, prstatus, deliverydate, contactperson, dp);
                             prList.Add(pr);
                         }
                     }

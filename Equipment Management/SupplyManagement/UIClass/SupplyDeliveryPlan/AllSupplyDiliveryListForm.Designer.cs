@@ -36,8 +36,6 @@
             this.planNameSearchtextBox = new System.Windows.Forms.TextBox();
             this.selectPlanSupplydataGridView = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
-            this.selectMonthcomboBox = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.planDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectPlanSupplydataGridView)).BeginInit();
             this.SuspendLayout();
@@ -140,32 +138,12 @@
             this.label1.TabIndex = 32;
             this.label1.Text = "รายการวัสดุและปริมาณคงเหลือ";
             // 
-            // selectMonthcomboBox
-            // 
-            this.selectMonthcomboBox.FormattingEnabled = true;
-            this.selectMonthcomboBox.Location = new System.Drawing.Point(1145, 10);
-            this.selectMonthcomboBox.Name = "selectMonthcomboBox";
-            this.selectMonthcomboBox.Size = new System.Drawing.Size(177, 21);
-            this.selectMonthcomboBox.TabIndex = 33;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label2.Location = new System.Drawing.Point(1056, 10);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 20);
-            this.label2.TabIndex = 34;
-            this.label2.Text = "แก้ใขเดือน :";
-            // 
             // AllSupplyDiliveryListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 595);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.selectMonthcomboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.selectPlanSupplydataGridView);
             this.Controls.Add(this.planNameSearchtextBox);
@@ -197,7 +175,5 @@
         private System.Windows.Forms.TextBox planNameSearchtextBox;
         private System.Windows.Forms.DataGridView selectPlanSupplydataGridView;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox selectMonthcomboBox;
-        private System.Windows.Forms.Label label2;
     }
 }

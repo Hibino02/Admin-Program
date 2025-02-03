@@ -50,36 +50,5 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
             }
             return sViewList.OrderBy(s => s.SupplyName).ToList();
         }
-        public static List<AllSupplyListDataGridView> AllSupplyNotInPlan()
-        {
-            List<AllSupplyListDataGridView> sViewList = new List<AllSupplyListDataGridView>();
-            List<Supply> sList = Supply.GetAllSupplyList();
-            List<SupplyInPlan> sipList = SupplyInPlan.GetAllSupplyInPlanList();
-
-            // Extract IDs of supplies in the plan
-            HashSet<int> supplyInPlanIds = new HashSet<int>(sipList.Select(sip => sip.Supply.ID));
-
-            foreach (Supply s in sList)
-            {
-                if ((s.UserGroup == GlobalVariable.Global.userGroup || GlobalVariable.Global.userGroup == "ADMIN") &&
-                    !supplyInPlanIds.Contains(s.ID))
-                {
-                    AllSupplyListDataGridView view = new AllSupplyListDataGridView
-                    {
-                        ID = s.ID,
-                        SupplyName = s.SupplyName,
-                        SupplyUnit = s.SupplyUnit,
-                        MOQ = s.MOQ,
-                        IsActive = s.IsActive,
-                        SupplyPhoto = s.SupplyPhoto,
-                        SupplyTypeID = s.SupplyType.ID,
-                        SupplyTypeName = s.SupplyType.TypeName,
-                        UserGroup = s.UserGroup
-                    };
-                    sViewList.Add(view);
-                }
-            }
-            return sViewList.OrderBy(s => s.SupplyName).ToList();
-        }
     }
 }

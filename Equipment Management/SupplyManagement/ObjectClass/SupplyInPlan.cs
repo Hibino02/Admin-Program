@@ -277,5 +277,63 @@ WHERE sip.WarehouseID = @whid;";
             }
             return sipList;
         }
+        public static List<SupplyInPlan> GetAllSupplyInPlanByPlanID(int pid)
+        {
+            MySqlConnection conn = null;
+            List<SupplyInPlan> sipList = new List<SupplyInPlan>();
+            try
+            {
+                conn = new MySqlConnection(connstr);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string selectAll = @"SELECT
+sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID, s.UserGroup,
+st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID
+FROM SupplyInPlan sip
+LEFT JOIN Supply s ON sip.SupplyID = s.ID
+LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
+WHERE sip.PlanID = @pid;";
+                    cmd.CommandText = selectAll;
+                    cmd.Parameters.AddWithValue("@pid", pid);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = Convert.ToInt32(reader["ID"]);
+                            //Supply
+                            int supid = Convert.ToInt32(reader["SupplyID"]);
+                            string sname = reader["SupplyName"].ToString();
+                            string sunit = reader["SupplyUnit"].ToString();
+                            int moq = Convert.ToInt32(reader["MOQ"]);
+                            bool isactive = Convert.ToBoolean(reader["IsActive"]);
+                            string sphoto = reader["SupplyPhoto"].ToString();
+                            string userg = reader["UserGroup"].ToString();
+
+                            int stypeid = Convert.ToInt32(reader["SupplyTypeID"]);
+                            string stypename = reader["TypeName"].ToString();
+                            SupplyType stype = new SupplyType(stypeid, stypename, GlobalVariable.Global.warehouseID);
+                            Supply supply = new Supply(supid, sname, sunit, moq, isactive, stype, GlobalVariable.Global.warehouseID, userg, sphoto);
+
+                            int reqw1 = Convert.ToInt32(reader["ReqW1"]);
+                            int reqw2 = Convert.ToInt32(reader["ReqW2"]);
+                            int reqw3 = Convert.ToInt32(reader["ReqW3"]);
+                            int reqw4 = Convert.ToInt32(reader["ReqW4"]);
+                            int planID = Convert.ToInt32(reader["PlanID"]);
+
+                            SupplyInPlan sip = new SupplyInPlan(id, supply, reqw1, reqw2, reqw3, reqw4, planID);
+                            sipList.Add(sip);
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e) { }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
+            return sipList;
+        }
     }
 }
