@@ -76,9 +76,15 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
         {
             List<AllSupplyInPRListDataGridView> allSupplyInSelectedPR = new List<AllSupplyInPRListDataGridView>();
             List<SupplyInPR> sipr = SupplyInPR.GetAllSupplyInPRList(prid);
+            List<SupplyBalance> sb = SupplyBalance.GetAllSupplyBalanceList();
 
             foreach (SupplyInPR s in sipr)
             {
+                var matchBalance = sb.Where(b => b.Supply.ID == s.Supply.ID)
+                     .OrderByDescending(b => b.UpdateDate)
+                     .FirstOrDefault();
+                int balance = matchBalance?.Balance ?? 0;
+                DateTime update = matchBalance.UpdateDate;
                 AllSupplyInPRListDataGridView view = new AllSupplyInPRListDataGridView
                 {
                     PRID = s.PRID,
@@ -90,6 +96,8 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
                     SupplyPhoto = s.Supply.SupplyPhoto,
                     QuotationPDF = s.QuotationPDF,
                     SupplyID = s.Supply.ID,
+                    Balance = balance,
+                    UpdateDate = update
                 };
                 allSupplyInSelectedPR.Add(view);
             }
