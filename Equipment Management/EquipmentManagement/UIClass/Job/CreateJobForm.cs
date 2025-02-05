@@ -258,6 +258,10 @@ namespace Admin_Program.UIClass.Job
             {
                 equipmentDisplaydataGridView.Columns["IsEJob"].Visible = false;
             }
+            if (equipmentDisplaydataGridView.Columns["Zone"] != null)
+            {
+                equipmentDisplaydataGridView.Columns["Zone"].Visible = false;
+            }
         }
         //Format for selected
         private void FormatSelectedEquipmentListDataGridView()
