@@ -372,17 +372,19 @@ namespace Admin_Program.UIClass.Job
         //Open job document
         private void repairDocLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(jobDocumentPath))
+            if(jobDocumentPath != oldJobDocumentPath)
             {
-                System.Diagnostics.Process.Start(jobDocumentPath);
-            }
-            else if (!string.IsNullOrEmpty(oldJobDocumentPath))
-            {
-                Global.DownloadAndOpenPdf(oldJobDocumentPath);
+                if (!string.IsNullOrEmpty(jobDocumentPath))
+                {
+                    System.Diagnostics.Process.Start(jobDocumentPath);
+                }
             }
             else
             {
-                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+                if (!string.IsNullOrEmpty(oldJobDocumentPath))
+                {
+                    Global.DownloadAndOpenPdf(oldJobDocumentPath);
+                }
             }
         }
         //Call custom message box
