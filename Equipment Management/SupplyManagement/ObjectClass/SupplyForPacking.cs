@@ -73,7 +73,7 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string selectAll = "SELECT * FROM SupplyForPacking DESC;";
+                    string selectAll = "SELECT * FROM SupplyForPacking ORDER BY PackDate DESC;";
                     cmd.CommandText = selectAll;
                     using (var reader = cmd.ExecuteReader())
                     {
