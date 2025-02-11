@@ -38,12 +38,14 @@ namespace Admin_Program.UIClass.InstallationSource
         private List<int> equipmentInitialStatusID = new List<int>();
         private List<int> rentalBasisID = new List<int>();
         private List<string> zPhotoList = new List<string>();
+        private List<int> zoneID = new List<int>();
         //variable for create selected object after choseen combobox
         EquipmentType selectedEquipmentType;
         EquipmentOwner selectedEquipmentOwner;
         Acquisition selectedEquipmentAcquisition;
         EquipmentStatus selectedEquipmentStatus;
         RentalBasis selectedRentalBasis;
+        Zone selectedZone;
         double priceFromTextBox;
 
         public InstallationEquipment()
@@ -126,10 +128,12 @@ namespace Admin_Program.UIClass.InstallationSource
             zoneList.Sort((x, y) => x.Name.CompareTo(y.Name));
             zonecomboBox.Items.Clear();
             zPhotoList.Clear();
+            zoneID.Clear();
             foreach(Zone z in zoneList)
             {
                 zonecomboBox.Items.Add(z.Name);
                 zPhotoList.Add(z.Photo);
+                zoneID.Add(z.ID);
             }
         }
 
@@ -342,10 +346,16 @@ namespace Admin_Program.UIClass.InstallationSource
                 ShowCustomMessageBox("กรุณาเลือกประเภท ของอุปกรณ์");
                 return false;
             }
-            if (zonecomboBox.SelectedIndex < 0)
+            int selectZoneIndex = zonecomboBox.SelectedIndex;
+            if (selectZoneIndex < 0)
             {
                 ShowCustomMessageBox("กรุณาเลือก โซนของอุปกรณ์");
                 return false;
+            }
+            else
+            {
+                int selectZoneID = zoneID[selectZoneIndex];
+                selectedZone = new Zone(selectZoneID);
             }
             if (string.IsNullOrEmpty(equipmentNameTextBox.Text))
             {
@@ -436,7 +446,7 @@ namespace Admin_Program.UIClass.InstallationSource
             if (CheckAllAttribute())
             {
                 Equipment newEq = new Equipment(Global.warehouseID,equipmentNameTextBox.Text,false, installationDateTimePicker.Value, selectedEquipmentType,
-                selectedEquipmentOwner, selectedEquipmentAcquisition, selectedEquipmentStatus, selectedRentalBasis,zonecomboBox.SelectedItem.ToString(),
+                selectedEquipmentOwner, selectedEquipmentAcquisition, selectedEquipmentStatus, selectedRentalBasis, selectedZone,
                 equipmentSerialTextBox.Text, equipmentPhotoPath, installationPlacePhotoPath, equipmentDetailRichTextBox.Text,
                 replacementCheckBox.Checked, sellDetailsRichTextBox.Text, priceFromTextBox, acquisitionDocumentPath, null,InstallationDetailsRichTextBox.Text);
                 if (newEq.Create())

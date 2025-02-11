@@ -8,8 +8,10 @@ namespace Admin_Program.EquipmentManagement.ObjectClass
 {
     class Zone
     {
+        int id;
+        public int ID { get { return id; } }
         string name;
-        public string Name { get { return name; } }
+        public string Name { get { return name; }set { name = value; } }
         string photo;
         public string Photo { get { return photo; }set { photo = value; } }
         int warehouseid;
@@ -17,7 +19,7 @@ namespace Admin_Program.EquipmentManagement.ObjectClass
 
         static string connstr = Settings.Default.CONNECTION_STRING;
 
-        void UpdateAtribute(string name)
+        void UpdateAtribute(string id)
         {
             MySqlConnection conn = null;
             try
@@ -26,13 +28,14 @@ namespace Admin_Program.EquipmentManagement.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string select = "SELECT * FROM zone WHERE Name = @name";
+                    string select = "SELECT * FROM zone WHERE ID = @id";
                     cmd.CommandText = select;
-                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@id", id);
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
+                            this.id = Convert.ToInt32(reader["ID"]);
                             this.name = reader["Name"].ToString();
                             this.photo = reader["Photo"].ToString();
                             this.warehouseid = Convert.ToInt32(reader["WarehouseID"]);
@@ -48,12 +51,19 @@ namespace Admin_Program.EquipmentManagement.ObjectClass
             }
         }
 
-        public Zone(string name)
+        public Zone(int id)
         {
-            UpdateAtribute(name);
+            UpdateAtribute(id.ToString());
         }
         public Zone(string name,string photo, int whid)
         {
+            this.name = name;
+            this.photo = photo;
+            this.warehouseid = whid;
+        }
+        public Zone(int id,string name,string photo, int whid)
+        {
+            this.id = id;
             this.name = name;
             this.photo = photo;
             this.warehouseid = whid;
@@ -68,7 +78,7 @@ namespace Admin_Program.EquipmentManagement.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO zone (Name, Photo, WarehouseID) VALUES (@n, @p, @w)";
+                    string insert = "INSERT INTO zone (ID, Name, Photo, WarehouseID) VALUES (NULL, @n, @p, @w)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@n", name);
                     cmd.Parameters.AddWithValue("@p",photo);
@@ -96,9 +106,9 @@ namespace Admin_Program.EquipmentManagement.ObjectClass
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string delete = "DELETE FROM zone WHERE Name = @n";
+                    string delete = "DELETE FROM zone WHERE ID = @id";
                     cmd.CommandText = delete;
-                    cmd.Parameters.AddWithValue("@n",name);
+                    cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                 }
                     return true;
@@ -131,10 +141,11 @@ namespace Admin_Program.EquipmentManagement.ObjectClass
                     {
                         while (reader.Read())
                         {
+                            int id = Convert.ToInt32(reader["ID"]);
                             string n = reader["Name"].ToString();
                             string p = reader["Photo"].ToString();
                             int whid = Convert.ToInt32(reader["WarehouseID"]);
-                            Zone z = new Zone(n,p,whid);
+                            Zone z = new Zone(id,n,p,whid);
                             zList.Add(z);
                         }
                     }

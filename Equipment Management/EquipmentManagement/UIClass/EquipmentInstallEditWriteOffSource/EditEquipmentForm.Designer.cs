@@ -452,7 +452,7 @@
             this.selectedZpictureBox.Location = new System.Drawing.Point(1057, 29);
             this.selectedZpictureBox.Name = "selectedZpictureBox";
             this.selectedZpictureBox.Size = new System.Drawing.Size(395, 213);
-            this.selectedZpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.selectedZpictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.selectedZpictureBox.TabIndex = 81;
             this.selectedZpictureBox.TabStop = false;
             // 

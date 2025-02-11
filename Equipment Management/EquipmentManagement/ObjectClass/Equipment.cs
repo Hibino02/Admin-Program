@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using Admin_Program.EquipmentManagement.ObjectClass;
 
 namespace Admin_Program.ObjectClass
 {
@@ -46,8 +47,8 @@ namespace Admin_Program.ObjectClass
         public string InstallationDetails { get { return installationDetails; }set { installationDetails = value; } }
         bool onplan;
         public bool OnPlan { get { return onplan; }set { onplan = value; } }
-        string zone;
-        public string Zone { get { return zone; }set { zone = value; } }
+        Zone zone;
+        public Zone Zone { get { return zone; }set { zone = value; } }
         int warehouseID;
         public int WarehouseID { get { return warehouseID; }set { warehouseID = value; } }
 
@@ -73,7 +74,7 @@ e.EOwnerID AS EquipmentOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
 e.EAcqID AS AcquisitionID, ea.Accquire,
 e.EStatusID AS EquipmentStatusID, es.EStatus,
 e.ERentID AS RentalBasisID, er.Basis,
-e.Zone AS EquipmentZone, ez.Name,
+e.Zone AS EquipmentZoneID, ez.Name AS ZoneName, ez.Photo AS ZonePhoto, ez.WarehouseID AS EZWHID,
 e.WriteOff AS WriteOffDocument,
 e.InsDetails AS InstallationDetails,
 e.WarehouseID
@@ -83,7 +84,7 @@ LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
 LEFT JOIN rentalbasis er ON e.ERentID = er.ID
-LEFT JOIN zone ez ON e.Zone = ez.Name
+LEFT JOIN zone ez ON e.Zone = ez.ID
 WHERE e.ID = @id;";
                     cmd.CommandText = select;
                     cmd.Parameters.AddWithValue("@id", value);
@@ -125,7 +126,12 @@ WHERE e.ID = @id;";
 
                             installationDetails = reader["InstallationDetails"].ToString();
                             warehouseID = Convert.ToInt32(reader["WarehouseID"]);
-                            zone = reader["EquipmentZone"].ToString();
+
+                            int? zid = reader["EquipmentZoneID"] != DBNull.Value ? Convert.ToInt32(reader["EquipmentZoneID"]) : (int?)null;
+                            string zname = reader["ZoneName"] != DBNull.Value ? reader["ZoneName"].ToString() : null;
+                            string zphoto = reader["ZonePhoto"] != DBNull.Value ? reader["ZonePhoto"].ToString() : null;
+                            int? zwhid = reader["EZWHID"] != DBNull.Value ? Convert.ToInt32(reader["EZWHID"]) : (int?)null;
+                            zone = (zid.HasValue && zwhid.HasValue) ? new Zone(zid.Value, zname, zphoto, zwhid.Value) : null;
                         }
                     }
                 }
@@ -143,7 +149,7 @@ WHERE e.ID = @id;";
             UpdateAttribute(id.ToString());
         }
         public Equipment(int warehouseID,string name,bool onplan, DateTime insdate, EquipmentType etype, EquipmentOwner eowner, Acquisition acc, 
-            EquipmentStatus esta, RentalBasis rent,string zname, string serial = null, string ephoto = null, string oplacephoto = null,
+            EquipmentStatus esta, RentalBasis rent,Zone zname, string serial = null, string ephoto = null, string oplacephoto = null,
             string edetail = null, bool replacement = false, string selldetails = null, double price = 0.0, string edoc = null,
             string write = null,string insdetails = null)
         {
@@ -169,7 +175,7 @@ WHERE e.ID = @id;";
             this.installationDetails = insdetails;
         }
         public Equipment(int id ,int warehouseID, string name,bool onplan, DateTime insdate, EquipmentType etype, EquipmentOwner eowner, Acquisition acc,
-            EquipmentStatus esta, RentalBasis rent,string zname, string serial = null, string ephoto = null, string oplacephoto = null,
+            EquipmentStatus esta, RentalBasis rent,Zone zname, string serial = null, string ephoto = null, string oplacephoto = null,
             string edetail = null, bool replacement = false, string selldetails = null, double price = 0.0, string edoc = null,
             string write = null, string insdetails = null)
         {
@@ -228,7 +234,7 @@ WHERE e.ID = @id;";
                     cmd.Parameters.AddWithValue("@writeoff", writeoffpath);
                     cmd.Parameters.AddWithValue("@insdetails", installationDetails);
                     cmd.Parameters.AddWithValue("@onplan", onplan);
-                    cmd.Parameters.AddWithValue("@zone", zone);
+                    cmd.Parameters.AddWithValue("@zone", zone.ID);
                     cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
@@ -277,7 +283,7 @@ WHERE e.ID = @id;";
                     cmd.Parameters.AddWithValue("@insdetails", installationDetails);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@onplan", onplan);
-                    cmd.Parameters.AddWithValue("@zone", zone);
+                    cmd.Parameters.AddWithValue("@zone", zone.ID);
                     cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
@@ -341,7 +347,7 @@ e.EOwnerID AS EquipmentOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
 e.EAcqID AS AcquisitionID, ea.Accquire,
 e.EStatusID AS EquipmentStatusID, es.EStatus,
 e.ERentID AS RentalBasisID, er.Basis,
-e.Zone AS EquipmentZone, ez.Name,
+e.Zone AS EquipmentZoneID, ez.Name AS ZoneName, ez.Photo AS ZonePhoto, ez.WarehouseID AS EZWHID,
 e.WriteOff AS WriteOffDocument,
 e.InsDetails AS InstallationDetails,
 e.WarehouseID
@@ -351,7 +357,7 @@ LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
 LEFT JOIN rentalbasis er ON e.ERentID = er.ID
-LEFT JOIN zone ez ON e.Zone = ez.Name
+LEFT JOIN zone ez ON e.Zone = ez.ID
 WHERE e.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
                     cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
@@ -393,8 +399,14 @@ WHERE e.WarehouseID = @whid;";
                             string ins = reader["InstallationDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["onPlan"]);
                             int warehouseID = Convert.ToInt32(reader["WarehouseID"]);
-                            string zName = reader["EquipmentZone"].ToString();
-                            Equipment eq = new Equipment(id, warehouseID, name,onplan, insdate, etype, eowner, acc, esta, rent, zName, serial, ephoto,
+
+                            int? zid = reader["EquipmentZoneID"] != DBNull.Value ? Convert.ToInt32(reader["EquipmentZoneID"]) : (int?)null;
+                            string zname = reader["ZoneName"] != DBNull.Value ? reader["ZoneName"].ToString() : null;
+                            string zphoto = reader["ZonePhoto"] != DBNull.Value ? reader["ZonePhoto"].ToString() : null;
+                            int? zwhid = reader["EZWHID"] != DBNull.Value ? Convert.ToInt32(reader["EZWHID"]) : (int?)null;
+                            Zone zone = (zid.HasValue && zwhid.HasValue) ? new Zone(zid.Value, zname, zphoto, zwhid.Value) : null;
+
+                            Equipment eq = new Equipment(id, warehouseID, name,onplan, insdate, etype, eowner, acc, esta, rent, zone, serial, ephoto,
                                 oplacephoto, edetail, replacement, selldetails, price, edoc, write,ins);
                             eqList.Add(eq);
                         }

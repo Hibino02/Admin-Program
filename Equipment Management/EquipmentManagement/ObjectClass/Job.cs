@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using Admin_Program.EquipmentManagement.ObjectClass;
 
 namespace Admin_Program.ObjectClass
 {
@@ -90,7 +91,8 @@ namespace Admin_Program.ObjectClass
     j.EID, e1.Name AS E1_Name, e1.Serial AS E1_Serial, e1.EPhoto AS E1_EPhoto, e1.OnPlan AS E1_onPlan, 
     e1.OPlacePhoto AS E1_OPlacePhoto, e1.EDetails AS E1_EDetails, e1.Replacement AS E1_Replacement, 
     e1.SellDetails AS E1_SellDetails, e1.Price AS E1_Price, e1.InsDetails AS E1_InsDetails,
-    e1.EDocument AS E1_EDocument, e1.InsDate AS E1_InsDate, e1.WriteOff AS E1_WriteOff, e1.Zone AS Z1,
+    e1.EDocument AS E1_EDocument, e1.InsDate AS E1_InsDate, e1.WriteOff AS E1_WriteOff,
+    e1.Zone AS EquipmentZoneID1, ez1.Name AS ZoneName1, ez1.Photo AS ZonePhoto1, ez1.WarehouseID AS EZWHID1,
     e1.ETypeID AS E1_ETypeID, et1.EType AS E1_EType, et1.WarehouseID AS ET1WHID,
     e1.EOwnerID AS E1_EOwnerID, eo1.Owner AS E1_Owner, eo1.WarehouseID AS EO1WHID,
     e1.EAcqID AS E1_AcqID, ea1.Accquire AS E1_Accquire,
@@ -100,7 +102,8 @@ namespace Admin_Program.ObjectClass
     j.REID, e2.Name AS E2_Name, e2.Serial AS E2_Serial, e2.EPhoto AS E2_EPhoto, e2.OnPlan AS E2_onPlan,
     e2.OPlacePhoto AS E2_OPlacePhoto, e2.EDetails AS E2_EDetails, e2.Replacement AS E2_Replacement, 
     e2.SellDetails AS E2_SellDetails, e2.Price AS E2_Price, e2.InsDetails AS E2_InsDetails,
-    e2.EDocument AS E2_EDocument, e2.InsDate AS E2_InsDate, e2.WriteOff AS E2_WriteOff, e2.Zone AS Z2,
+    e2.EDocument AS E2_EDocument, e2.InsDate AS E2_InsDate, e2.WriteOff AS E2_WriteOff, 
+    e2.Zone AS EquipmentZoneID2, ez2.Name AS ZoneName2, ez2.Photo AS ZonePhoto2, ez2.WarehouseID AS EZWHID2,
     e2.ETypeID AS E2_ETypeID, et2.EType AS E2_EType, et2.WarehouseID AS ET2WHID,
     e2.EOwnerID AS E2_EOwnerID, eo2.Owner AS E2_Owner, eo2.WarehouseID AS EO2WHID,
     e2.EAcqID AS E2_AcqID, ea2.Accquire AS E2_Accquire,
@@ -122,6 +125,8 @@ LEFT JOIN equipmentstatus es2 ON e2.EStatusID = es2.ID
 LEFT JOIN rentalbasis er1 ON e1.ERentID = er1.ID
 LEFT JOIN rentalbasis er2 ON e2.ERentID = er2.ID
 LEFT JOIN jobtype jt ON j.JTypeID = jt.ID
+LEFT JOIN zone ez1 ON e1.Zone = ez1.ID
+LEFT JOIN zone ez2 ON e2.Zone = ez2.ID
 WHERE j.ID = @jid;";
                     cmd.CommandText = select;
                     cmd.Parameters.AddWithValue("@jid", value);
@@ -190,13 +195,18 @@ WHERE j.ID = @jid;";
                             int? basisid = reader["E1_ERentID"] != DBNull.Value ? Convert.ToInt32(reader["E1_ERentID"]) : (int?)null;
                             string basis = reader["E2_Basis"] != DBNull.Value ? reader["E2_Basis"].ToString() : null;
                             RentalBasis rent = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
-                            string zname1 = reader["Z1"].ToString();
+
+                            int? zid = reader["EquipmentZoneID1"] != DBNull.Value ? Convert.ToInt32(reader["EquipmentZoneID1"]) : (int?)null;
+                            string zname = reader["ZoneName1"] != DBNull.Value ? reader["ZoneName1"].ToString() : null;
+                            string zphoto = reader["ZonePhoto1"] != DBNull.Value ? reader["ZonePhoto1"].ToString() : null;
+                            int? zwhid = reader["EZWHID1"] != DBNull.Value ? Convert.ToInt32(reader["EZWHID1"]) : (int?)null;
+                            Zone zone1 = (zid.HasValue && zwhid.HasValue) ? new Zone(zid.Value, zname, zphoto, zwhid.Value) : null;
 
                             string insdetail = reader["E1_InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["E1_onPlan"]);
                             int e1whid = Convert.ToInt32(reader["EquipmentWHID1"]);
                             jeq = new Equipment(eid, e1whid, name,onplan, insdate, etypeobj, eownerobj, acquisitionobj, estatusobj,
-                                rent, zname1, serial, ephotopath, oplacephotopath, edetails, replacement, selldetails,
+                                rent, zone1, serial, ephotopath, oplacephotopath, edetails, replacement, selldetails,
                                 price, edocumentpath, writeoffpath,insdetail);
 
                             //Replacement equipment for this job
@@ -233,13 +243,18 @@ WHERE j.ID = @jid;";
                                 int? basisid1 = reader["E1_ERentID"] != DBNull.Value ? Convert.ToInt32(reader["E1_ERentID"]) : (int?)null;
                                 string basis1 = reader["E2_Basis"] != DBNull.Value ? reader["E2_Basis"].ToString() : null;
                                 RentalBasis rent1 = basisid.HasValue ? new RentalBasis(basisid1.Value, basis1) : null;
-                                string zname2 = reader["Z2"].ToString();
+
+                                int? zid2 = reader["EquipmentZoneID2"] != DBNull.Value ? Convert.ToInt32(reader["EquipmentZoneID2"]) : (int?)null;
+                                string zname2 = reader["ZoneName2"] != DBNull.Value ? reader["ZoneName2"].ToString() : null;
+                                string zphoto2 = reader["ZonePhoto2"] != DBNull.Value ? reader["ZonePhoto2"].ToString() : null;
+                                int? zwhid2 = reader["EZWHID2"] != DBNull.Value ? Convert.ToInt32(reader["EZWHID2"]) : (int?)null;
+                                Zone zone2 = (zid2.HasValue && zwhid2.HasValue) ? new Zone(zid2.Value, zname2, zphoto2, zwhid2.Value) : null;
 
                                 string insdetail1 = reader["E2_InsDetails"].ToString();
                                 bool onplan1 = Convert.ToBoolean(reader["E2_onPlan"]);
                                 int whid = Convert.ToInt32(reader["EquipmentWHID2"]);
                                 req = new Equipment(eid1, whid, name1,onplan1, insdate1, etypeobj1, eownerobj1, acquisitionobj1, estatusobj1,
-                                    rent1, zname2, serial1, ephotopath1, oplacephotopath1, edetails1, replacement1, selldetails1,
+                                    rent1, zone2, serial1, ephotopath1, oplacephotopath1, edetails1, replacement1, selldetails1,
                                     price1, edocumentpath1, writeoffpath1,insdetail1);
                             }
                             else
@@ -506,22 +521,25 @@ WHERE j.ID = @jid;";
     j.Approver, j.ADate, j.JDocument,
     j.VendName, j.VendDetails, j.RepairDetails,
     j.WorkPermit, j.Cost, j.Contract, j.StartDate, j.FinishDate,
-    j.FinishPhoto, j.FinishDocument, j.Acceptor, j.JobStatus, j.WarehouseID AS JWHID,
+    j.FinishPhoto, j.FinishDocument, j.Acceptor, j.JobStatus,
     j.JTypeID, jt.Type,
-    j.EID, e1.Name AS E1_Name, e1.Serial AS E1_Serial, e1.EPhoto AS E1_EPhoto, e1.OnPlan AS E1_onPlan,
+    j.WarehouseID AS JWHID,
+    j.EID, e1.Name AS E1_Name, e1.Serial AS E1_Serial, e1.EPhoto AS E1_EPhoto, e1.OnPlan AS E1_onPlan, 
     e1.OPlacePhoto AS E1_OPlacePhoto, e1.EDetails AS E1_EDetails, e1.Replacement AS E1_Replacement, 
     e1.SellDetails AS E1_SellDetails, e1.Price AS E1_Price, e1.InsDetails AS E1_InsDetails,
-    e1.EDocument AS E1_EDocument, e1.InsDate AS E1_InsDate, e1.WriteOff AS E1_WriteOff, e1.Zone AS Z1,
+    e1.EDocument AS E1_EDocument, e1.InsDate AS E1_InsDate, e1.WriteOff AS E1_WriteOff,
+    e1.Zone AS EquipmentZoneID1, ez1.Name AS ZoneName1, ez1.Photo AS ZonePhoto1, ez1.WarehouseID AS EZWHID1,
     e1.ETypeID AS E1_ETypeID, et1.EType AS E1_EType, et1.WarehouseID AS ET1WHID,
     e1.EOwnerID AS E1_EOwnerID, eo1.Owner AS E1_Owner, eo1.WarehouseID AS EO1WHID,
     e1.EAcqID AS E1_AcqID, ea1.Accquire AS E1_Accquire,
     e1.EStatusID AS E1_EStatusID, es1.EStatus AS E1_EStatus,
     e1.ERentID AS E1_ERentID, er1.Basis AS E1_Basis,
     e1.WarehouseID AS EquipmentWHID1,
-    j.REID, e2.Name AS E2_Name, e2.Serial AS E2_Serial, e2.EPhoto AS E2_EPhoto, e2.OnPlan AS E2_onPlan, 
+    j.REID, e2.Name AS E2_Name, e2.Serial AS E2_Serial, e2.EPhoto AS E2_EPhoto, e2.OnPlan AS E2_onPlan,
     e2.OPlacePhoto AS E2_OPlacePhoto, e2.EDetails AS E2_EDetails, e2.Replacement AS E2_Replacement, 
     e2.SellDetails AS E2_SellDetails, e2.Price AS E2_Price, e2.InsDetails AS E2_InsDetails,
-    e2.EDocument AS E2_EDocument, e2.InsDate AS E2_InsDate, e2.WriteOff AS E2_WriteOff, e2.Zone AS Z2,
+    e2.EDocument AS E2_EDocument, e2.InsDate AS E2_InsDate, e2.WriteOff AS E2_WriteOff, 
+    e2.Zone AS EquipmentZoneID2, ez2.Name AS ZoneName2, ez2.Photo AS ZonePhoto2, ez2.WarehouseID AS EZWHID2,
     e2.ETypeID AS E2_ETypeID, et2.EType AS E2_EType, et2.WarehouseID AS ET2WHID,
     e2.EOwnerID AS E2_EOwnerID, eo2.Owner AS E2_Owner, eo2.WarehouseID AS EO2WHID,
     e2.EAcqID AS E2_AcqID, ea2.Accquire AS E2_Accquire,
@@ -543,6 +561,8 @@ LEFT JOIN equipmentstatus es2 ON e2.EStatusID = es2.ID
 LEFT JOIN rentalbasis er1 ON e1.ERentID = er1.ID
 LEFT JOIN rentalbasis er2 ON e2.ERentID = er2.ID
 LEFT JOIN jobtype jt ON j.JTypeID = jt.ID
+LEFT JOIN zone ez1 ON e1.Zone = ez1.ID
+LEFT JOIN zone ez2 ON e2.Zone = ez2.ID
 WHERE j.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
                     cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
@@ -611,13 +631,18 @@ WHERE j.WarehouseID = @whid;";
                             int? basisid = reader["E1_ERentID"] != DBNull.Value ? Convert.ToInt32(reader["E1_ERentID"]) : (int?)null;
                             string basis = reader["E2_Basis"] != DBNull.Value ? reader["E2_Basis"].ToString() : null;
                             RentalBasis rent = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
-                            string zname1 = reader["Z1"].ToString();
+
+                            int? zid = reader["EquipmentZoneID1"] != DBNull.Value ? Convert.ToInt32(reader["EquipmentZoneID1"]) : (int?)null;
+                            string zname = reader["ZoneName1"] != DBNull.Value ? reader["ZoneName1"].ToString() : null;
+                            string zphoto = reader["ZonePhoto1"] != DBNull.Value ? reader["ZonePhoto1"].ToString() : null;
+                            int? zwhid = reader["EZWHID1"] != DBNull.Value ? Convert.ToInt32(reader["EZWHID1"]) : (int?)null;
+                            Zone zone1 = (zid.HasValue && zwhid.HasValue) ? new Zone(zid.Value, zname, zphoto, zwhid.Value) : null;
 
                             string insdetail = reader["E1_InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["E1_onPlan"]);
                             int e1whid = Convert.ToInt32(reader["EquipmentWHID1"]);
                             Equipment jeq = new Equipment(eid,e1whid, name,onplan, insdate, etypeobj, eownerobj, acquisitionobj, estatusobj,
-                                rent, zname1, serial, ephotopath, oplacephotopath, edetails, replacement, selldetails,
+                                rent, zone1, serial, ephotopath, oplacephotopath, edetails, replacement, selldetails,
                                 price, edocumentpath, writeoffpath,insdetail);
 
                             //Replacement equipment for this job
@@ -655,13 +680,18 @@ WHERE j.WarehouseID = @whid;";
                                 int? basisid1 = reader["E1_ERentID"] != DBNull.Value ? Convert.ToInt32(reader["E1_ERentID"]) : (int?)null;
                                 string basis1 = reader["E2_Basis"] != DBNull.Value ? reader["E2_Basis"].ToString() : null;
                                 RentalBasis rent1 = basisid.HasValue ? new RentalBasis(basisid1.Value, basis1) : null;
-                                string zname2 = reader["Z2"].ToString();
+
+                                int? zid2 = reader["EquipmentZoneID2"] != DBNull.Value ? Convert.ToInt32(reader["EquipmentZoneID2"]) : (int?)null;
+                                string zname2 = reader["ZoneName2"] != DBNull.Value ? reader["ZoneName2"].ToString() : null;
+                                string zphoto2 = reader["ZonePhoto2"] != DBNull.Value ? reader["ZonePhoto2"].ToString() : null;
+                                int? zwhid2 = reader["EZWHID2"] != DBNull.Value ? Convert.ToInt32(reader["EZWHID2"]) : (int?)null;
+                                Zone zone2 = (zid2.HasValue && zwhid2.HasValue) ? new Zone(zid2.Value, zname2, zphoto2, zwhid2.Value) : null;
 
                                 string insdetail1 = reader["E2_InsDetails"].ToString();
                                 bool onplan1 = Convert.ToBoolean(reader["E2_onPlan"]);
                                 int e2whid = Convert.ToInt32(reader["EquipmentWHID2"]);
                                 req = new Equipment(eid1,e2whid, name1,onplan1, insdate1, etypeobj1, eownerobj1, acquisitionobj1, estatusobj1,
-                                    rent1, zname2, serial1, ephotopath1, oplacephotopath1, edetails1, replacement1, selldetails1,
+                                    rent1, zone2, serial1, ephotopath1, oplacephotopath1, edetails1, replacement1, selldetails1,
                                     price1, edocumentpath1, writeoffpath1,insdetail1);
                             }
                             else

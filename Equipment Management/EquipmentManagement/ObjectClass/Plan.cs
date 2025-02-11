@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using Admin_Program.EquipmentManagement.ObjectClass;
 
 namespace Admin_Program.ObjectClass
 {
@@ -41,7 +42,8 @@ p.ID, p.TimesToDo, p.DateToDo, p.PlanStatus,
 p.PTypeID, pt.PType, pt.WarehouseID AS PTWHID,
 p.PPeriodID, pp.PPeriod, pp.WarehouseID AS PPWHID,
 p.EID, p.WarehouseID,
-e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, e.Zone,
+e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, 
+e.Zone, ez.Name, ez.Photo, ez.WarehouseID AS EZWHID,
 e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.InsDetails,
 e.WriteOff, e.ETypeID, et.EType, et.WarehouseID AS ETWHID,
 e.EOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
@@ -58,6 +60,7 @@ LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
 LEFT JOIN rentalbasis er ON e.ERentID = e.ID
+LEFT JOIN zone ez ON e.Zone = ez.ID
 WHERE p.ID = @id";
                     cmd.CommandText = select;
                     cmd.Parameters.AddWithValue("@id", value);
@@ -109,12 +112,17 @@ WHERE p.ID = @id";
                             int? basisid = reader["ERentID"] != DBNull.Value ? Convert.ToInt32(reader["ERentID"]) : (int?)null;
                             string basis = reader["Basis"] != DBNull.Value ? reader["Basis"].ToString() : null;
                             RentalBasis erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
-                            string zname = reader["Zone"].ToString();
+
+                            int? zid = reader["Zone"] != DBNull.Value ? Convert.ToInt32(reader["Zone"]) : (int?)null;
+                            string zname = reader["Name"] != DBNull.Value ? reader["Name"].ToString() : null;
+                            string zphoto = reader["Photo"] != DBNull.Value ? reader["Photo"].ToString() : null;
+                            int? zwhid = reader["EZWHID"] != DBNull.Value ? Convert.ToInt32(reader["EZWHID"]) : (int?)null;
+                            Zone zone1 = (zid.HasValue && zwhid.HasValue) ? new Zone(zid.Value, zname, zphoto, zwhid.Value) : null;
 
                             string insdetail = reader["InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["OnPlan"]);
                             int ewhid = Convert.ToInt32(reader["WarehouseID"]);
-                            eqp = new Equipment(id, ewhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis, zname,
+                            eqp = new Equipment(id, ewhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis, zone1,
                                 serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                 writeoffpath,insdetail);
                         }
@@ -264,7 +272,8 @@ p.ID, p.TimesToDo, p.DateToDo, p.PlanStatus,
 p.PTypeID, pt.PType, pt.WarehouseID AS PTWHID,
 p.PPeriodID, pp.PPeriod, pp.WarehouseID AS PPWHID,
 p.EID, p.WarehouseID,
-e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, e.Zone,
+e.Name, e.Serial, e.EPhoto, e.OPlacePhoto, e.EDetails, e.OnPlan, 
+e.Zone, ez.Name, ez.Photo, ez.WarehouseID AS EZWHID,
 e.Replacement, e.SellDetails, e.Price, e.EDocument, e.InsDate, e.InsDetails,
 e.WriteOff, e.ETypeID, et.EType, et.WarehouseID AS ETWHID,
 e.EOwnerID, eo.Owner, eo.WarehouseID AS EOWHID,
@@ -281,6 +290,7 @@ LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
 LEFT JOIN rentalbasis er ON e.ERentID = e.ID
+LEFT JOIN zone ez ON e.Zone = ez.ID
 WHERE p.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
                     cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
@@ -332,12 +342,17 @@ WHERE p.WarehouseID = @whid;";
                             int? basisid = reader["ERentID"] != DBNull.Value ? Convert.ToInt32(reader["ERentID"]) : (int?)null;
                             string basis = reader["Basis"] != DBNull.Value ? reader["Basis"].ToString() : null;
                             RentalBasis erentalbasis = basisid.HasValue ? new RentalBasis(basisid.Value, basis) : null;
-                            string zname = reader["Zone"].ToString();
+
+                            int? zid = reader["Zone"] != DBNull.Value ? Convert.ToInt32(reader["Zone"]) : (int?)null;
+                            string zname = reader["Name"] != DBNull.Value ? reader["Name"].ToString() : null;
+                            string zphoto = reader["Photo"] != DBNull.Value ? reader["Photo"].ToString() : null;
+                            int? zwhid = reader["EZWHID"] != DBNull.Value ? Convert.ToInt32(reader["EZWHID"]) : (int?)null;
+                            Zone zone1 = (zid.HasValue && zwhid.HasValue) ? new Zone(zid.Value, zname, zphoto, zwhid.Value) : null;
 
                             string insdetail = reader["InsDetails"].ToString();
                             bool onplan = Convert.ToBoolean(reader["OnPlan"]);
                             int eqwhid = Convert.ToInt32(reader["EQMWharehouseID"]);
-                            Equipment eqp = new Equipment(eid, eqwhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis, zname,
+                            Equipment eqp = new Equipment(eid, eqwhid, name,onplan, insdate, etype, eowner, acquisition, estatus, erentalbasis, zone1,
                                 serial, ephotopath, oplacephotopath, edetails, replacement, selldetails, price, edocumentpath,
                                 writeoffpath,insdetail);
 

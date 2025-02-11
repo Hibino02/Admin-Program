@@ -45,11 +45,13 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
         private List<int> equipmentInitialStatusID = new List<int>();
         private List<int> rentalBasisID = new List<int>();
         private List<string> zPhotoList = new List<string>();
+        private List<int> zoneIDList = new List<int>();
         //variable for create selected object after choseen combobox
         EquipmentType selectedEquipmentType;
         EquipmentOwner selectedEquipmentOwner;
         EquipmentStatus selectedEquipmentStatus;
         RentalBasis selectedRentalBasis;
+        Zone selectedZone;
         double priceFromTextBox;
 
         public EditEquipmentForm()
@@ -170,10 +172,12 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
             zoneList.Sort((x, y) => x.Name.CompareTo(y.Name));
             zonecomboBox.Items.Clear();
             zPhotoList.Clear();
+            zoneIDList.Clear();
             foreach (Zone z in zoneList)
             {
                 zonecomboBox.Items.Add(z.Name);
                 zPhotoList.Add(z.Photo);
+                zoneIDList.Add(z.ID);
             }
         }
         private void SetEquipmentCurrentStatus()
@@ -199,9 +203,9 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
             {
                 Global.LoadImageIntoPictureBox(edit.OPlacePhotoPath, installationPlacePictureBox);
             }
-            zonecomboBox.SelectedItem = edit.Zone;
-            int zIndex = zonecomboBox.Items.IndexOf(edit.Zone);
-            if(zIndex != -1)
+            zonecomboBox.SelectedItem = edit.Zone?.Name;
+            int zIndex = edit.Zone != null ? zonecomboBox.Items.IndexOf(edit.Zone.Name) : -1;
+            if (zIndex != -1)
             {
                 string matchP = zPhotoList[zIndex];
                 Global.LoadImageIntoPictureBox(matchP, selectedZpictureBox);
@@ -460,10 +464,17 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
                 ShowCustomMessageBox("กรุณาเลือกประเภท ของอุปกรณ์");
                 isComplete = false;
             }
-            if (zonecomboBox.SelectedIndex < 0)
+            int selectZoneIndex = zonecomboBox.SelectedIndex;
+            if (selectZoneIndex < 0)
             {
                 ShowCustomMessageBox("กรุณาเลือก โซนของอุปกรณ์");
                 return false;
+            }
+            else
+            {
+                int selectedZoneID = zoneIDList[selectZoneIndex];
+                selectedZone = new Zone(selectedZoneID);
+                edit.Zone = selectedZone;
             }
             if (string.IsNullOrEmpty(equipmentNameTextBox.Text))
             {
@@ -534,7 +545,6 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
             edit.InstallationDetails = InstallationDetailsRichTextBox.Text;
             edit.Replacement = replacementCheckBox.Checked;
             edit.InsDate = installationDateTimePicker.Value;
-            edit.Zone = zonecomboBox.SelectedItem.ToString();
             if (isComplete)
             {
                 if (equipmentPhotoPath != oldEquipmentPhotoPath)

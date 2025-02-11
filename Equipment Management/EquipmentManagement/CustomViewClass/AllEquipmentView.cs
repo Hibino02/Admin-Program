@@ -70,7 +70,7 @@ namespace Admin_Program.CustomViewClass
                     EquipmentPhoto = e.EPhotoPath,
                     EOwnerID = e.EOwnerObj.ID,
                     IsEJob = isEJob,
-                    Zone = e.Zone
+                    Zone = e.Zone?.Name ?? "N/A"
                 };
                 equipmentListView.Add(view);
             }    

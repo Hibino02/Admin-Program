@@ -9,6 +9,7 @@ namespace Admin_Program.EquipmentManagement.UIClass.Zone
     public partial class ZoneManageForm : Form
     {
         List<ObjectClass.Zone> zList = new List<ObjectClass.Zone>();
+        List<int> zid = new List<int>();
         List<string> zPhotoList = new List<string>();
         string zonePhoto;
         public ZoneManageForm()
@@ -24,10 +25,12 @@ namespace Admin_Program.EquipmentManagement.UIClass.Zone
             zList = ObjectClass.Zone.GetAllZone();
             zoneListcomboBox.Items.Clear();
             zPhotoList.Clear();
+            zid.Clear();
             foreach (ObjectClass.Zone z in zList)
             {
                 zoneListcomboBox.Items.Add(z.Name);
                 zPhotoList.Add(z.Photo);
+                zid.Add(z.ID);
             }
         }
         //Add photo for new Zone
@@ -123,7 +126,7 @@ namespace Admin_Program.EquipmentManagement.UIClass.Zone
         //Remove zone
         private void removeZbutton_Click(object sender, EventArgs e)
         {
-            if(zoneListcomboBox.Items.Count == 0)
+            if(zoneListcomboBox.SelectedIndex < 0)
             {
                 MessageBox.Show("กรุณาเลือกรายการที่ต้องการลบ");
                 return;
@@ -131,6 +134,20 @@ namespace Admin_Program.EquipmentManagement.UIClass.Zone
             else
             {
                 int selectItemIndex = zoneListcomboBox.SelectedIndex;
+                if(selectItemIndex > 0 && selectItemIndex < zid.Count)
+                {
+                    int selectId = zid[selectItemIndex];
+                    ObjectClass.Zone z = new ObjectClass.Zone(selectId);
+                    if (z.Remove())
+                    {
+                        MessageBox.Show("ลบโซนเรียบร้อย");
+                        UpdateComponent();
+                    }
+                    else
+                    {
+                        MessageBox.Show("โซนนี้ถูกเลือกใช้อยู่");
+                    }
+                }
             }
         }
     }
