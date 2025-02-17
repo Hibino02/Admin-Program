@@ -1,4 +1,5 @@
-﻿using Admin_Program.SupplyManagement.CustomViewClass;
+﻿using Admin_Program.GlobalVariable;
+using Admin_Program.SupplyManagement.CustomViewClass;
 using Admin_Program.SupplyManagement.ObjectClass;
 using Admin_Program.UIClass;
 using System;
@@ -118,7 +119,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             if (Columns["SupplyName"] != null)
             {
                 Columns["SupplyName"].HeaderText = "ชื่อวัสดุ";
-                Columns["SupplyName"].Width = 588;
+                Columns["SupplyName"].Width = 470;
                 Columns["SupplyName"].ReadOnly = true;
             }
             if (Columns["Balance"] != null)
@@ -139,6 +140,18 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                         }
                     }
                 };
+            }
+            if (Columns["Remain"] != null)
+            {
+                Columns["Remain"].HeaderText = "ค้างส่ง";
+                Columns["Remain"].Width = 40;
+                Columns["Remain"].ReadOnly = true;
+            }
+            if (Columns["IncRemain"] != null)
+            {
+                Columns["IncRemain"].HeaderText = "รวม";
+                Columns["IncRemain"].Width = 40;
+                Columns["IncRemain"].ReadOnly = true;
             }
             if (Columns["SupplyUnit"] != null)
             {
@@ -174,6 +187,12 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                 Columns["QuantityW4"].HeaderText = "สัปดาห์ที่ 4";
                 Columns["QuantityW4"].Width = 80;
                 Columns["QuantityW4"].ReadOnly = false;
+            }
+            if (Columns["Total"] != null)
+            {
+                Columns["Total"].HeaderText = "รวม";
+                Columns["Total"].Width = 40;
+                Columns["Total"].ReadOnly = true;
             }
             selectPlanSupplydataGridView.CellFormatting += selectPlanSupplydataGridView_CellFormatting;
         }
@@ -270,6 +289,12 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                     }
                 }
             }
+        }
+        //Export Excel
+        private void excelbutton_Click(object sender, EventArgs e)
+        {
+            var export = new ExportExcellForSupplyPlan(selectPlanSupplydataGridView);
+            export.ExportToExcel();
         }
     }
 }

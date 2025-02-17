@@ -36,6 +36,7 @@
             this.planNameSearchtextBox = new System.Windows.Forms.TextBox();
             this.selectPlanSupplydataGridView = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
+            this.excelbutton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.planDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectPlanSupplydataGridView)).BeginInit();
             this.SuspendLayout();
@@ -138,12 +139,25 @@
             this.label1.TabIndex = 32;
             this.label1.Text = "รายการวัสดุและปริมาณคงเหลือ";
             // 
+            // excelbutton
+            // 
+            this.excelbutton.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.excelbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.excelbutton.Location = new System.Drawing.Point(1198, 3);
+            this.excelbutton.Name = "excelbutton";
+            this.excelbutton.Size = new System.Drawing.Size(124, 31);
+            this.excelbutton.TabIndex = 33;
+            this.excelbutton.Text = "Export";
+            this.excelbutton.UseVisualStyleBackColor = false;
+            this.excelbutton.Click += new System.EventHandler(this.excelbutton_Click);
+            // 
             // AllSupplyDiliveryListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1464, 595);
+            this.Controls.Add(this.excelbutton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.selectPlanSupplydataGridView);
             this.Controls.Add(this.planNameSearchtextBox);
@@ -175,5 +189,6 @@
         private System.Windows.Forms.TextBox planNameSearchtextBox;
         private System.Windows.Forms.DataGridView selectPlanSupplydataGridView;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button excelbutton;
     }
 }

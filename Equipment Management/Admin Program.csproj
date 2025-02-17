@@ -140,6 +140,7 @@
     </Compile>
     <Compile Include="GlobalVariable\EmailService.cs" />
     <Compile Include="GlobalVariable\ExportExcell.cs" />
+    <Compile Include="GlobalVariable\ExportExcellForSupplyPlan.cs" />
     <Compile Include="GlobalVariable\Global.cs" />
     <Compile Include="GlobalVariable\ImageLoader.cs" />
     <Compile Include="GlobalVariable\SortedBindingList.cs" />
