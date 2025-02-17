@@ -234,7 +234,14 @@ WHERE e.ID = @id;";
                     cmd.Parameters.AddWithValue("@writeoff", writeoffpath);
                     cmd.Parameters.AddWithValue("@insdetails", installationDetails);
                     cmd.Parameters.AddWithValue("@onplan", onplan);
-                    cmd.Parameters.AddWithValue("@zone", zone.ID);
+                    if(zone?.ID == null)
+                    {
+                        cmd.Parameters.AddWithValue("@zone", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@zone", zone.ID);
+                    }
                     cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }
@@ -283,7 +290,14 @@ WHERE e.ID = @id;";
                     cmd.Parameters.AddWithValue("@insdetails", installationDetails);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@onplan", onplan);
-                    cmd.Parameters.AddWithValue("@zone", zone.ID);
+                    if(zone?.ID == null)
+                    {
+                        cmd.Parameters.AddWithValue("@zone", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@zone", zone.ID);
+                    }
                     cmd.Parameters.AddWithValue("@whid", warehouseID);
                     cmd.ExecuteNonQuery();
                 }

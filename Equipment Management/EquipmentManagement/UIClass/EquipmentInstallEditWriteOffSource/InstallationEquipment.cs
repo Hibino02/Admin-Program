@@ -125,15 +125,18 @@ namespace Admin_Program.UIClass.InstallationSource
                 rentalBasisID.Add(rent.ID);
             }
             zoneList = Zone.GetAllZone();
-            zoneList.Sort((x, y) => x.Name.CompareTo(y.Name));
-            zonecomboBox.Items.Clear();
-            zPhotoList.Clear();
-            zoneID.Clear();
-            foreach(Zone z in zoneList)
+            if(zoneList != null)
             {
-                zonecomboBox.Items.Add(z.Name);
-                zPhotoList.Add(z.Photo);
-                zoneID.Add(z.ID);
+                zoneList.Sort((x, y) => x.Name.CompareTo(y.Name));
+                zonecomboBox.Items.Clear();
+                zPhotoList.Clear();
+                zoneID.Clear();
+                foreach (Zone z in zoneList)
+                {
+                    zonecomboBox.Items.Add(z.Name);
+                    zPhotoList.Add(z.Photo);
+                    zoneID.Add(z.ID);
+                }
             }
         }
 
@@ -347,12 +350,7 @@ namespace Admin_Program.UIClass.InstallationSource
                 return false;
             }
             int selectZoneIndex = zonecomboBox.SelectedIndex;
-            if (selectZoneIndex < 0)
-            {
-                ShowCustomMessageBox("กรุณาเลือก โซนของอุปกรณ์");
-                return false;
-            }
-            else
+            if (selectZoneIndex >= 0)
             {
                 int selectZoneID = zoneID[selectZoneIndex];
                 selectedZone = new Zone(selectZoneID);

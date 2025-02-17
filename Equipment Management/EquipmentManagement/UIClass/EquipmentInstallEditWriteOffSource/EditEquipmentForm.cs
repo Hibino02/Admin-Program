@@ -169,16 +169,19 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
                 rentalBasisID.Add(rent.ID);
             }
             zoneList = Zone.GetAllZone();
-            zoneList.Sort((x, y) => x.Name.CompareTo(y.Name));
-            zonecomboBox.Items.Clear();
-            zPhotoList.Clear();
-            zoneIDList.Clear();
-            foreach (Zone z in zoneList)
+            if(zoneList != null)
             {
-                zonecomboBox.Items.Add(z.Name);
-                zPhotoList.Add(z.Photo);
-                zoneIDList.Add(z.ID);
-            }
+                zoneList.Sort((x, y) => x.Name.CompareTo(y.Name));
+                zonecomboBox.Items.Clear();
+                zPhotoList.Clear();
+                zoneIDList.Clear();
+                foreach (Zone z in zoneList)
+                {
+                    zonecomboBox.Items.Add(z.Name);
+                    zPhotoList.Add(z.Photo);
+                    zoneIDList.Add(z.ID);
+                }
+            }           
         }
         private void SetEquipmentCurrentStatus()
         {
@@ -465,12 +468,7 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
                 isComplete = false;
             }
             int selectZoneIndex = zonecomboBox.SelectedIndex;
-            if (selectZoneIndex < 0)
-            {
-                ShowCustomMessageBox("กรุณาเลือก โซนของอุปกรณ์");
-                return false;
-            }
-            else
+            if (selectZoneIndex >= 0)
             {
                 int selectedZoneID = zoneIDList[selectZoneIndex];
                 selectedZone = new Zone(selectedZoneID);
