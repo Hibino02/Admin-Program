@@ -31,7 +31,7 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
             List<SupplyInPlan> allSip = SupplyInPlan.GetAllSupplyInPlanList();
 
             List<PR> allPR = PR.GetAllPRList();
-            var activePR = allPR.Where(a => a.PRStatus.ID == 2);
+            var activePR = allPR.Where(a => a.PRStatus.ID != 3);
             List<AllSupplyInPRArrivalListDataGridView> allSupplyData = new List<AllSupplyInPRArrivalListDataGridView>();
             foreach (PR p in activePR)
             {
