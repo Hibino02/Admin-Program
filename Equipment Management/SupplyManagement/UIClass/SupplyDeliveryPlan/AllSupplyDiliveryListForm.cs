@@ -21,7 +21,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         int planID;
         string planName;
         string monthName;
-        string mFMail = null;
+        DataGridViewRow selectedRow;
 
         List<AllSupplyInPlanListDataGridView> allSupplyList = new List<AllSupplyInPlanListDataGridView>();
         List<AllSupplyInPlanListDataGridView> selectPlanSupplyList = new List<AllSupplyInPlanListDataGridView>();
@@ -74,7 +74,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         {
             if (e.RowIndex >= 0)
             {
-                DataGridViewRow selectedRow = planDatagridview.Rows[e.RowIndex];
+                selectedRow = planDatagridview.Rows[e.RowIndex];
 
                 planID = Convert.ToInt32(selectedRow.Cells["PlanID"].Value);
                 planName = selectedRow.Cells["PlanName"].Value.ToString();
@@ -224,14 +224,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                     sip.ReqW4 = qw4;
                     sip.Change();
                 }
-                if(mFMail == null)
-                {
-                    GlobalVariable.EmailService.SendEmailForPlan(planName, monthName);
-                }
-                else
-                {
-                    GlobalVariable.EmailService.SendEmailForPlan(planName, mFMail);
-                }
+                GlobalVariable.EmailService.SendEmailForPlan(planName, monthName);
                 MessageBox.Show("อัฟเดทแผนเรียบร้อย");
                 UpdatePlanGridView();
             }
@@ -239,8 +232,6 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         //Remove Plan
         private void removeButton_Click(object sender, EventArgs e)
         {
-            DataGridViewRow selectedRow = planDatagridview.CurrentRow;
-
             if(selectedRow == null)
             {
                 MessageBox.Show("กรุณาเลือกแผน");
@@ -254,7 +245,6 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
 
             if(result == DialogResult.Yes)
             {
-                int planID = (int)selectedRow.Cells["PlanID"].Value;
                 if (SupplyInPlan.Remove(planID))
                 {
                     MessageBox.Show("ลบรายการวัสดุในแผนเรียบร้อย");
@@ -264,6 +254,36 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                         UpdatePlanGridView();
                         selectPlanSupplyBindingSource.DataSource = null;
                     }
+                }
+                else
+                {
+                    MessageBox.Show("แผนนี้ไม่สามารถลบได้ เนื่องจากถูกอ้างอิงใน PR กรุณาสิ้นสุดแผน");
+                }
+            }
+        }
+        //Finish Plan
+        private void finbutton_Click(object sender, EventArgs e)
+        {
+            if (selectedRow == null)
+            {
+                MessageBox.Show("กรุณาเลือกแผน");
+                return;
+            }
+            DialogResult result = MessageBox.Show(
+            "คุณแน่ใจหรือไม่ว่าต้องการสิ้นสุดแผนนี้?",
+            "ยืนยันการสิ้นสุด",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                DeliveryPlan selPlan = new DeliveryPlan(planID);
+                selPlan.PlanStatus = false;
+                if (selPlan.Change())
+                {
+                    MessageBox.Show("สิ้นสุดแผนเรียบร้อย");
+                    UpdatePlanGridView();
+                    selectPlanSupplyBindingSource.DataSource = null;
                 }
             }
         }
@@ -296,5 +316,6 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             var export = new ExportExcellForSupplyPlan(selectPlanSupplydataGridView);
             export.ExportToExcel();
         }
+
     }
 }
