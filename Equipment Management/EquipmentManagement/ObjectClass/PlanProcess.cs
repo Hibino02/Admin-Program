@@ -334,9 +334,10 @@ LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
 LEFT JOIN rentalbasis er ON e.ERentID = er.ID
+LEFT JOIN zone ez ON e.Zone = ez.ID
 WHERE pp.WarehouseID = @whid;";
                     cmd.CommandText = selectAll;
-                    cmd.Parameters.AddWithValue("whid",GlobalVariable.Global.warehouseID);
+                    cmd.Parameters.AddWithValue("@whid",GlobalVariable.Global.warehouseID);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
