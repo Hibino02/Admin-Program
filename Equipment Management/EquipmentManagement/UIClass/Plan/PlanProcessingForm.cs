@@ -314,7 +314,7 @@ namespace Admin_Program.UIClass.Plan
                 }
             }
         }
-        //Save photo & documents into folder
+        //Save documents into folder
         private void SavePlanProcessWorkpermit()
         {
             if (!string.IsNullOrEmpty(workpermitProcessPath))

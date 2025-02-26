@@ -63,6 +63,7 @@ LEFT JOIN equipmentowner eo ON e.EOwnerID = eo.ID
 LEFT JOIN acquisition ea ON e.EAcqID = ea.ID
 LEFT JOIN equipmentstatus es ON e.EStatusID = es.ID
 LEFT JOIN rentalbasis er ON e.ERentID = er.ID
+LEFT JOIN zone ez ON e.Zone = ez.ID
 WHERE pp.ID = @id";
                     cmd.CommandText = select;
                     cmd.Parameters.AddWithValue("@id", value);
