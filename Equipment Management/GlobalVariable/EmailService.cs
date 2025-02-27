@@ -12,7 +12,7 @@ namespace Admin_Program.GlobalVariable
             int smtpPort = 587;
             string fromEmail = "networktruckfornecpf@gmail.com";
             string fromPassword = "wgrd njck vfrc hjwy";
-            string toEmail = "C.Nuttawut@nipponexpress-necl.co.th";
+            string toEmail = "C.Nuttawut-1@nipponexpress-necl.co.th";
 
             try
             {
@@ -43,7 +43,7 @@ namespace Admin_Program.GlobalVariable
             int smtpPort = 587;
             string fromEmail = "networktruckfornecpf@gmail.com";
             string fromPassword = "wgrd njck vfrc hjwy";
-            string toEmail = "C.Nuttawut@nipponexpress-necl.co.th";
+            string toEmail = "C.Nuttawut-1@nipponexpress-necl.co.th";
 
             try
             {

@@ -631,6 +631,11 @@ namespace Admin_Program.UIClass
             equipmentList.Owner = main;
             equipmentList.UpdateGrid += OnUpdateCreatedPlan;
             equipmentList.ShowDialog();
+
+            UpdateCreatedJobView();
+            UpdateProcessedJobView();
+            UpdateCreatedPlanView();
+            UpdateProcessedPlanView();
         }
         //Create Job
         private void createJobButton_Click(object sender, EventArgs e)
