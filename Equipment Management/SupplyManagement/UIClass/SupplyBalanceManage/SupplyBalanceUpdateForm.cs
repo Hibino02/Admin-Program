@@ -1,6 +1,8 @@
 ﻿using Admin_Program.SupplyManagement.ObjectClass;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Admin_Program.SupplyManagement.UIClass.SupplyBalanceManage
@@ -56,16 +58,37 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyBalanceManage
                 {
                     Supply s = new Supply(supplyInBalance.Supply.ID);
                     SupplyBalance sb = new SupplyBalance(s,currentBalance, updateDatedateTimePicker.Value.Date,GlobalVariable.Global.userName,GlobalVariable.Global.warehouseID);
-                    if (sb.Create())
+                    List<SupplyBalance> allBalance = SupplyBalance.GetAllSupplyBalanceList();
+                    SupplyBalance existingBalance = allBalance.FirstOrDefault(b => b.Supply.ID == sb.Supply.ID && b.UpdateDate.Date == DateTime.Today);
+                    if (existingBalance != null)
                     {
-                        MessageBox.Show("อัฟเดทยอดปัจจุบันเรียบร้อย");
-                        GlobalVariable.EmailService.SendEmail(sb.Supply.SupplyName, sb.Balance);
-                        MessageBox.Show("ส่งข้อความถึง ผู้ดูแล สมบูรณ์");
-                        Close();
+                        existingBalance.Balance = currentBalance;
+                        existingBalance.Updater = GlobalVariable.Global.userName;
+                        if (existingBalance.Change())
+                        {
+                            MessageBox.Show("แก้ใขยอดปัจจุบันเรียบร้อย");
+                            GlobalVariable.EmailService.SendEmail(existingBalance.Supply.SupplyName, existingBalance.Balance);
+                            MessageBox.Show("ส่งข้อความถึง ผู้ดูแล สมบูรณ์");
+                            Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("ความพยายามแก้ใขยอดล้มเหลว");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("อัฟเดทยอดปัจจุบันล้มเหลว");
+                        if (sb.Create())
+                        {
+                            MessageBox.Show("อัฟเดทยอดปัจจุบันเรียบร้อย");
+                            GlobalVariable.EmailService.SendEmail(sb.Supply.SupplyName, sb.Balance);
+                            MessageBox.Show("ส่งข้อความถึง ผู้ดูแล สมบูรณ์");
+                            Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("อัฟเดทยอดปัจจุบันล้มเหลว");
+                        }
                     }
                 }
             }
