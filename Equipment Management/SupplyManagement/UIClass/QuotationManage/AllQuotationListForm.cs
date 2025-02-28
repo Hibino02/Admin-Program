@@ -19,6 +19,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
         EditQuotationForm editQuotation;
 
         private string quotationPDF;
+        List<int> obsoleteQid = new List<int>();
 
         private PictureBox supplyInQuotationPictureBox;
 
@@ -92,6 +93,8 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
         private void UpdateQuotationList()
         {
             quotationViewList = AllQuotationListDataGridView.AllQuotation();
+            //Check date for highlight
+            CheckDate(quotationViewList);
             originalList = new List<AllQuotationListDataGridView>(quotationViewList);
             ApplyCurrentFilter();
         }
@@ -239,6 +242,7 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
                 quotationDatagridview.CurrentCell = quotationDatagridview.Rows[0].Cells[2];
                 quotationDatagridview_CellClick(this, new DataGridViewCellEventArgs(0,0));
             }
+            HighlightObsolete(obsoleteQid);
         }
         //Showing quotation contents on clicking cell event
         private void quotationDatagridview_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -347,6 +351,34 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
                         UpdateQuotationList();
                         supplyInQuotationViewList = AllSupplyInQuotationListDataGridView.allSupplyInQuotation();
                     }          
+                }
+            }
+        }
+        //Check quotaion date
+        private void CheckDate(List<AllQuotationListDataGridView> allqList)
+        {
+            obsoleteQid.Clear();
+            foreach (AllQuotationListDataGridView aq in allqList)
+            {
+                if(aq.ValidDate != null && aq.ValidDate < DateTime.Now.Date)
+                {
+                    obsoleteQid.Add(aq.ID);
+                }
+            }
+        }
+        //Highlight row if it's obsolete
+        private void HighlightObsolete(List<int> listid)
+        {
+            foreach(DataGridViewRow row in quotationDatagridview.Rows)
+            {
+                int ID = Convert.ToInt32(row.Cells["ID"].Value);
+                if (obsoleteQid.Contains(ID))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Orange;
+                }
+                else
+                {
+                    row.DefaultCellStyle.BackColor = Color.White;
                 }
             }
         }

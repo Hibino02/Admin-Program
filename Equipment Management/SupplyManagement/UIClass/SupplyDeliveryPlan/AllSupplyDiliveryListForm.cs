@@ -287,6 +287,41 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                 }
             }
         }
+        //Clear selected plan
+        private void clearPlanbutton_Click(object sender, EventArgs e)
+        {
+            if (selectedRow == null)
+            {
+                MessageBox.Show("กรุณาเลือกแผน");
+                return;
+            }
+            DialogResult result = MessageBox.Show(
+            "คุณแน่ใจหรือไม่ว่าต้องการ ล้างข้อมูล แผนนี้?",
+            "ยืนยันการล้างข้อมูล",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                if (selectPlanSupplydataGridView.Rows.Count > 0)
+                {
+                    foreach (DataGridViewRow row in selectPlanSupplydataGridView.Rows)
+                    {
+                        int sipid = Convert.ToInt32(row.Cells["ID"].Value ?? 0);
+
+                        SupplyInPlan sip = new SupplyInPlan(sipid);
+                        sip.ReqW1 = 0;
+                        sip.ReqW2 = 0;
+                        sip.ReqW3 = 0;
+                        sip.ReqW4 = 0;
+                        sip.Change();
+                    }
+                    GlobalVariable.EmailService.SendEmailForPlan(planName, monthName);
+                    MessageBox.Show("ล้างแผนเรียบร้อย");
+                    UpdatePlanGridView();
+                }
+            }
+        }
         //Highlight Water proof
         private void selectPlanSupplydataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {

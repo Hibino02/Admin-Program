@@ -50,7 +50,7 @@ namespace Admin_Program.GlobalVariable
                 MailMessage mail = new MailMessage
                 {
                     From = new MailAddress(fromEmail),
-                    Subject = "มีการอัฟเดทแผนจัดส่งวัสดุ ชื่อแผน :" + pname + " ประจำเดือน " + m,
+                    Subject = "มีการอัฟเดทแผนจัดส่งวัสดุ ชื่อแผน :" + pname + " ประจำเดือน " + m + " ผู้อัฟเดท : "+ Global.userName,
                     Body = "แจ้งจากโปรแกรม การจัดการวัสดุ",
                     IsBodyHtml = false
                 };
