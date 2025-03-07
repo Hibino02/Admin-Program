@@ -399,7 +399,14 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyArrivalManage
                             string sid = s.SupplyID.ToString();
                             SupplyBalance sb = new SupplyBalance(sid);
                             sb.Balance += s.Quantity;
-                            sb.UpdateDate = s.ArrivalDate.Value.Date;
+                            if(s.ArrivalDate.Value.Date < DateTime.Now)
+                            {
+                                sb.UpdateDate = DateTime.Now.Date;
+                            }
+                            else
+                            {
+                                sb.UpdateDate = s.ArrivalDate.Value.Date;
+                            }
                             sb.Updater = s.Recever;
                             if (sb.Change())
                             {
