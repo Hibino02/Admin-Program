@@ -2,12 +2,9 @@
 using Admin_Program.SupplyManagement.ObjectClass;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -87,13 +84,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyHistory
             };
 
             var matchingBalance = allSupplyInventory.Where(s => s.Supply.ID == id && s.UpdateDate.Date
-            >= start.Date && s.UpdateDate.Date <= end.Date).ToList();
-
-            if (matchingBalance.Count == 0)
-            {
-                MessageBox.Show("ไม่มีข้อมูลในช่วงเวลาที่เลือก");
-                return;
-            }
+            >= start.Date && s.UpdateDate.Date <= end.Date).OrderBy(s => s.UpdateDate).ToList();
 
             foreach (var balance in matchingBalance)
             {
@@ -136,13 +127,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyHistory
             arrivalSeries["PixelPointWidth"] = "15";
 
             var matchingArrival = allSupplyInPRArrival.Where(a => a.SupplyID == id && a.ArrivalDate.Value.Date
-            >= start.Date && a.ArrivalDate.Value.Date <= end.Date).ToList();
-
-            if (matchingArrival.Count == 0)
-            {
-                MessageBox.Show("ไม่มีข้อมูลในช่วงเวลาที่เลือก");
-                return;
-            }
+            >= start.Date && a.ArrivalDate.Value.Date <= end.Date).OrderBy(s => s.ArrivalDate).ToList();
 
             foreach (var arrival in matchingArrival)
             {
@@ -186,17 +171,11 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyHistory
 
             // Get balances for the selected supply
             var matchingBalance = allSupplyInventory.Where(s => s.Supply.ID == id && s.UpdateDate.Date
-            >= start.Date && s.UpdateDate.Date <= end.Date).ToList();
+            >= start.Date && s.UpdateDate.Date <= end.Date).OrderBy(s => s.UpdateDate).ToList();
 
             // Get arrivals for the selected supply in the same date range
             var matchingArrival = allSupplyInPRArrival.Where(a => a.SupplyID == id && a.ArrivalDate.Value.Date
-            >= start.Date && a.ArrivalDate.Value.Date <= end.Date).ToList();
-
-            if (matchingBalance.Count == 0)
-            {
-                MessageBox.Show("ไม่มีข้อมูลในช่วงเวลาที่เลือก");
-                return;
-            }
+            >= start.Date && a.ArrivalDate.Value.Date <= end.Date).OrderBy(s => s.ArrivalDate).ToList();
 
             // Calculate usage for each period
             for (int i = 1; i < matchingBalance.Count; i++) // Start from the second entry for comparison
