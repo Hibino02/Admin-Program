@@ -673,6 +673,8 @@ namespace Admin_Program.UIClass
                 jobEdit.Owner = main;
                 jobEdit.UpdateGrid += OnUpdateCreatedJob;
                 jobEdit.ShowDialog();
+                //Clear list for selected Job
+                Global.selectedEquipmentInJob = null;
             }
         }
         //Job processing
