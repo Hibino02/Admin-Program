@@ -8,11 +8,11 @@ namespace Admin_Program.GlobalVariable
     {
         public static void SendEmail(string item,int qty)
         {
-            string smtpServer = "smtp.gmail.com";
-            int smtpPort = 587;
-            string fromEmail = "networktruckfornecpf@gmail.com";
-            string fromPassword = "wgrd njck vfrc hjwy";
-            string toEmail = "C.Nuttawut-1@nipponexpress-necl.co.th";
+            string smtpServer = "mail.nipponexpress-necl.co.th";
+            int smtpPort = 5000;
+            string fromEmail = "C.Nuttawut@nipponexpress-necl.co.th";
+            string fromPassword = "CNut4727";
+            string toEmail = "C.Nuttawut@nipponexpress-necl.co.th";
 
             try
             {
@@ -39,11 +39,11 @@ namespace Admin_Program.GlobalVariable
         }
         public static void SendEmailForPlan(string pname, string m)
         {
-            string smtpServer = "smtp.gmail.com";
-            int smtpPort = 587;
-            string fromEmail = "networktruckfornecpf@gmail.com";
-            string fromPassword = "wgrd njck vfrc hjwy";
-            string toEmail = "C.Nuttawut-1@nipponexpress-necl.co.th";
+            string smtpServer = "mail.nipponexpress-necl.co.th";
+            int smtpPort = 5000;
+            string fromEmail = "C.Nuttawut@nipponexpress-necl.co.th";
+            string fromPassword = "CNut4727";
+            string toEmail = "C.Nuttawut@nipponexpress-necl.co.th";
 
             try
             {
