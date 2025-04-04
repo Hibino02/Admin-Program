@@ -404,13 +404,19 @@ namespace Admin_Program.UIClass.Plan
         //Open WorkPermit
         private void pworkpermitlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(workpermitProcessPath))
+            if(workpermitProcessPath != oldWorkpermitProcessPath)
             {
-                Global.DownloadAndOpenPdf(workpermitProcessPath);
+                if (!string.IsNullOrEmpty(workpermitProcessPath))
+                {
+                    System.Diagnostics.Process.Start(workpermitProcessPath);
+                }
             }
             else
             {
-                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+                if (!string.IsNullOrEmpty(oldWorkpermitProcessPath))
+                {
+                    Global.DownloadAndOpenPdf(oldWorkpermitProcessPath);
+                }
             }
         }
         //Call custom message box

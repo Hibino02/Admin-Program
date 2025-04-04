@@ -177,24 +177,36 @@ namespace Admin_Program.UIClass.Job
         //Click to open attached PDF file ------------------------------------------------------------------------
         private void workPermitDocLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(workPermitDocumentPath))
+            if(workPermitDocumentPath != oldWorkPermitDocumentPath)
             {
-               Global.DownloadAndOpenPdf(workPermitDocumentPath);
+                if (!string.IsNullOrEmpty(workPermitDocumentPath))
+                {
+                    System.Diagnostics.Process.Start(workPermitDocumentPath);
+                }
             }
             else
             {
-                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+                if (!string.IsNullOrEmpty(oldWorkPermitDocumentPath))
+                {
+                    Global.DownloadAndOpenPdf(oldWorkPermitDocumentPath);
+                }
             }
         }
         private void contractLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(contractDocumentPath))
+            if(contractDocumentPath != oldContractDocumentPath)
             {
-                Global.DownloadAndOpenPdf(contractDocumentPath);
+                if (!string.IsNullOrEmpty(contractDocumentPath))
+                {
+                    System.Diagnostics.Process.Start(contractDocumentPath);
+                }
             }
             else
             {
-                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+                if (!string.IsNullOrEmpty(oldContractDocumentPath))
+                {
+                    Global.DownloadAndOpenPdf(oldContractDocumentPath);
+                }
             }
         }
 
