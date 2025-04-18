@@ -22,6 +22,14 @@ namespace Admin_Program.SupplyManagement.ObjectClass
         public int ReqW4 { get { return reqw4; }set { reqw4 = value; } }
         int planID;
         public int PlanID { get { return planID; }set { planID = value; } }
+        DateTime? datew1;
+        public DateTime? DateW1 { get { return datew1; }set { datew1 = value; } }
+        DateTime? datew2;
+        public DateTime? DateW2 { get { return datew2; }set { datew2 = value; } }
+        DateTime? datew3;
+        public DateTime? DateW3 { get { return datew3; }set { datew3 = value; } }
+        DateTime? datew4;
+        public DateTime? DateW4 { get { return datew4; }set { datew4 = value; } }
 
         static string connstr = Settings.Default.CONNECTION_STRING_SUPPLY;
 
@@ -36,7 +44,8 @@ namespace Admin_Program.SupplyManagement.ObjectClass
                 {
                     string select = @"SELECT
 sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID, s.UserGroup,
-st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID
+st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID,
+sip.DateW1, sip.DateW2, sip.DateW3, sip.DateW4
 FROM SupplyInPlan sip
 LEFT JOIN Supply s ON sip.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -67,6 +76,11 @@ WHERE sip.ID = @id;";
                             reqw3 = Convert.ToInt32(reader["ReqW3"]);
                             reqw4 = Convert.ToInt32(reader["ReqW4"]);
                             planID = Convert.ToInt32(reader["PlanID"]);
+
+                            datew1 = reader["DateW1"] != DBNull.Value ? Convert.ToDateTime(reader["DateW1"]) : (DateTime?)null;
+                            datew2 = reader["DateW2"] != DBNull.Value ? Convert.ToDateTime(reader["DateW2"]) : (DateTime?)null;
+                            datew3 = reader["DateW3"] != DBNull.Value ? Convert.ToDateTime(reader["DateW3"]) : (DateTime?)null;
+                            datew4 = reader["DateW4"] != DBNull.Value ? Convert.ToDateTime(reader["DateW4"]) : (DateTime?)null;
                         }
                     }
                 }
@@ -83,7 +97,7 @@ WHERE sip.ID = @id;";
         {
             UpdateAttribute(id.ToString());
         }
-        public SupplyInPlan(int id, Supply supply, int reqw1, int reqw2, int reqw3, int reqw4, int pid)
+        public SupplyInPlan(int id, Supply supply, int reqw1, int reqw2, int reqw3, int reqw4, int pid, DateTime? datew1, DateTime? datew2, DateTime? datew3, DateTime? datew4)
         {
             this.id = id;
             this.supply = supply;
@@ -92,8 +106,12 @@ WHERE sip.ID = @id;";
             this.reqw3 = reqw3;
             this.reqw4 = reqw4;
             this.planID = pid;
+            this.datew1 = datew1;
+            this.datew2 = datew2;
+            this.datew3 = datew3;
+            this.datew4 = datew4;
         }
-        public SupplyInPlan(Supply supply, int reqw1, int reqw2, int reqw3, int reqw4, int pid)
+        public SupplyInPlan(Supply supply, int reqw1, int reqw2, int reqw3, int reqw4, int pid, DateTime? datew1, DateTime? datew2, DateTime? datew3, DateTime? datew4)
         {
             this.supply = supply;
             this.reqw1 = reqw1;
@@ -101,6 +119,10 @@ WHERE sip.ID = @id;";
             this.reqw3 = reqw3;
             this.reqw4 = reqw4;
             this.planID = pid;
+            this.datew1 = datew1;
+            this.datew2 = datew2;
+            this.datew3 = datew3;
+            this.datew4 = datew4;
         }
 
         public bool Create()
@@ -112,7 +134,7 @@ WHERE sip.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string insert = "INSERT INTO SupplyInPlan (ID, SupplyID, ReqW1, ReqW2, ReqW3, ReqW4, WarehouseID, PlanID) VALUES (NULL, @sid, @w1, @w2, @w3, @w4, @whid, @pid)";
+                    string insert = "INSERT INTO SupplyInPlan (ID, SupplyID, ReqW1, ReqW2, ReqW3, ReqW4, WarehouseID, PlanID, DateW1, DateW2, DateW3, DateW4) VALUES (NULL, @sid, @w1, @w2, @w3, @w4, @whid, @pid, @dw1, @dw2, @dw3, @dw4)";
                     cmd.CommandText = insert;
                     cmd.Parameters.AddWithValue("@sid", supply.ID);
                     cmd.Parameters.AddWithValue("@w1", reqw1);
@@ -121,6 +143,10 @@ WHERE sip.ID = @id;";
                     cmd.Parameters.AddWithValue("@w4", reqw4);
                     cmd.Parameters.AddWithValue("@whid", GlobalVariable.Global.warehouseID);
                     cmd.Parameters.AddWithValue("@pid", planID);
+                    cmd.Parameters.AddWithValue("@dw1", datew1);
+                    cmd.Parameters.AddWithValue("@dw2", datew2);
+                    cmd.Parameters.AddWithValue("@dw3", datew3);
+                    cmd.Parameters.AddWithValue("@dw4", datew4);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -144,7 +170,7 @@ WHERE sip.ID = @id;";
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    string update = "UPDATE SupplyInPlan SET SupplyID = @sid, ReqW1 = @w1, ReqW2 = @w2, ReqW3 = @w3, ReqW4 = @w4 WHERE ID = @id";
+                    string update = "UPDATE SupplyInPlan SET SupplyID = @sid, ReqW1 = @w1, ReqW2 = @w2, ReqW3 = @w3, ReqW4 = @w4 , DateW1 = @dw1, DateW2 = @dw2, DateW3 = @dw3, DateW4 = @dw4 WHERE ID = @id";
                     cmd.CommandText = update;
                     cmd.Parameters.AddWithValue("@sid", supply.ID);
                     cmd.Parameters.AddWithValue("@w1", reqw1);
@@ -152,6 +178,10 @@ WHERE sip.ID = @id;";
                     cmd.Parameters.AddWithValue("@w3", reqw3);
                     cmd.Parameters.AddWithValue("@w4", reqw4);
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@dw1", datew1);
+                    cmd.Parameters.AddWithValue("@dw2", datew2);
+                    cmd.Parameters.AddWithValue("@dw3", datew3);
+                    cmd.Parameters.AddWithValue("@dw4", datew4);
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -231,7 +261,8 @@ WHERE sip.ID = @id;";
                 {
                     string selectAll = @"SELECT
 sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID, s.UserGroup,
-st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID
+st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID,
+sip.DateW1, sip.DateW2, sip.DateW3, sip.DateW4
 FROM SupplyInPlan sip
 LEFT JOIN Supply s ON sip.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -263,7 +294,12 @@ WHERE sip.WarehouseID = @whid;";
                             int reqw4 = Convert.ToInt32(reader["ReqW4"]);
                             int planID = Convert.ToInt32(reader["PlanID"]);
 
-                            SupplyInPlan sip = new SupplyInPlan(id,supply,reqw1,reqw2,reqw3,reqw4,planID);
+                            DateTime? datew1 = reader["DateW1"] != DBNull.Value ? Convert.ToDateTime(reader["DateW1"]) : (DateTime?)null;
+                            DateTime? datew2 = reader["DateW2"] != DBNull.Value ? Convert.ToDateTime(reader["DateW2"]) : (DateTime?)null;
+                            DateTime? datew3 = reader["DateW3"] != DBNull.Value ? Convert.ToDateTime(reader["DateW3"]) : (DateTime?)null;
+                            DateTime? datew4 = reader["DateW4"] != DBNull.Value ? Convert.ToDateTime(reader["DateW4"]) : (DateTime?)null;
+
+                            SupplyInPlan sip = new SupplyInPlan(id,supply,reqw1,reqw2,reqw3,reqw4,planID,datew1,datew2,datew3,datew4);
                             sipList.Add(sip);
                         }
                     }
@@ -289,7 +325,8 @@ WHERE sip.WarehouseID = @whid;";
                 {
                     string selectAll = @"SELECT
 sip.ID, sip.SupplyID, s.SupplyName, s.SupplyUnit, s.MOQ, s.IsActive, s.SupplyPhoto, s.SupplyTypeID, s.UserGroup,
-st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID
+st.TypeName, sip.ReqW1, sip.ReqW2, sip.ReqW3, sip.Reqw4, sip.PlanID,
+sip.DateW1, sip.DateW2, sip.DateW3, sip.DateW4
 FROM SupplyInPlan sip
 LEFT JOIN Supply s ON sip.SupplyID = s.ID
 LEFT JOIN SupplyType st ON s.SupplyTypeID = st.ID
@@ -321,7 +358,12 @@ WHERE sip.PlanID = @pid;";
                             int reqw4 = Convert.ToInt32(reader["ReqW4"]);
                             int planID = Convert.ToInt32(reader["PlanID"]);
 
-                            SupplyInPlan sip = new SupplyInPlan(id, supply, reqw1, reqw2, reqw3, reqw4, planID);
+                            DateTime? datew1 = reader["DateW1"] != DBNull.Value ? Convert.ToDateTime(reader["DateW1"]) : (DateTime?)null;
+                            DateTime? datew2 = reader["DateW2"] != DBNull.Value ? Convert.ToDateTime(reader["DateW2"]) : (DateTime?)null;
+                            DateTime? datew3 = reader["DateW3"] != DBNull.Value ? Convert.ToDateTime(reader["DateW3"]) : (DateTime?)null;
+                            DateTime? datew4 = reader["DateW4"] != DBNull.Value ? Convert.ToDateTime(reader["DateW4"]) : (DateTime?)null;
+
+                            SupplyInPlan sip = new SupplyInPlan(id, supply, reqw1, reqw2, reqw3, reqw4, planID, datew1, datew2, datew3, datew4);
                             sipList.Add(sip);
                         }
                     }

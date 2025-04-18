@@ -59,25 +59,65 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyArrivalManage
             }
             if(Columns["ReqW1"] != null)
             {
-                Columns["ReqW1"].HeaderText = "สัปดาห์ที่ 1";
+                string header = "สัปดาห์ที่ 1";
+                if (supplyInPRArrivalLstdataGridView.Rows.Count > 0)
+                {
+                    object w1 = supplyInPRArrivalLstdataGridView.Rows[0].Cells["DateW1"].Value;
+                    DateTime date;
+                    if (w1 != null && DateTime.TryParse(w1.ToString(), out date))
+                    {
+                        header = date.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("th-TH"));
+                    }
+                }
+                Columns["ReqW1"].HeaderText = header;
                 Columns["ReqW1"].Width = 65;
                 Columns["ReqW1"].DefaultCellStyle.BackColor = Color.Gold;
             }
             if (Columns["ReqW2"] != null)
             {
-                Columns["ReqW2"].HeaderText = "สัปดาห์ที่ 2";
+                string header = "สัปดาห์ที่ 2";
+                if (supplyInPRArrivalLstdataGridView.Rows.Count > 0)
+                {
+                    object w1 = supplyInPRArrivalLstdataGridView.Rows[0].Cells["DateW2"].Value;
+                    DateTime date;
+                    if (w1 != null && DateTime.TryParse(w1.ToString(), out date))
+                    {
+                        header = date.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("th-TH"));
+                    }
+                }
+                Columns["ReqW2"].HeaderText = header;
                 Columns["ReqW2"].Width = 65;
                 Columns["ReqW2"].DefaultCellStyle.BackColor = Color.Gold;
             }
             if (Columns["ReqW3"] != null)
             {
-                Columns["ReqW3"].HeaderText = "สัปดาห์ที่ 3";
+                string header = "สัปดาห์ที่ 3";
+                if (supplyInPRArrivalLstdataGridView.Rows.Count > 0)
+                {
+                    object w1 = supplyInPRArrivalLstdataGridView.Rows[0].Cells["DateW3"].Value;
+                    DateTime date;
+                    if (w1 != null && DateTime.TryParse(w1.ToString(), out date))
+                    {
+                        header = date.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("th-TH"));
+                    }
+                }
+                Columns["ReqW3"].HeaderText = header;
                 Columns["ReqW3"].Width = 65;
                 Columns["ReqW3"].DefaultCellStyle.BackColor = Color.Gold;
             }
             if (Columns["ReqW4"] != null)
             {
-                Columns["ReqW4"].HeaderText = "สัปดาห์ที่ 4";
+                string header = "สัปดาห์ที่ 4";
+                if (supplyInPRArrivalLstdataGridView.Rows.Count > 0)
+                {
+                    object w1 = supplyInPRArrivalLstdataGridView.Rows[0].Cells["DateW4"].Value;
+                    DateTime date;
+                    if (w1 != null && DateTime.TryParse(w1.ToString(), out date))
+                    {
+                        header = date.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("th-TH"));
+                    }
+                }
+                Columns["ReqW4"].HeaderText = header;
                 Columns["ReqW4"].Width = 65;
                 Columns["ReqW4"].DefaultCellStyle.BackColor = Color.Gold;
             }
@@ -152,6 +192,22 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyArrivalManage
                 Columns["RemainAmount"].HeaderText = "ขาด/เกิน";
                 Columns["RemainAmount"].Width = 60;
                 Columns["RemainAmount"].DefaultCellStyle.BackColor = Color.Orange;
+            }
+            if (Columns["DateW1"] != null)
+            {
+                Columns["DateW1"].Visible = false;
+            }
+            if (Columns["DateW2"] != null)
+            {
+                Columns["DateW2"].Visible = false;
+            }
+            if (Columns["DateW3"] != null)
+            {
+                Columns["DateW3"].Visible = false;
+            }
+            if (Columns["DateW4"] != null)
+            {
+                Columns["DateW4"].Visible = false;
             }
         }
         private void supplyInPRArrivalLstdataGridView_SelectionChanged(object sender, EventArgs e)

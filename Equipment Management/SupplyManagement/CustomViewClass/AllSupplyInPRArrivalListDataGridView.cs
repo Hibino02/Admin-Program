@@ -25,6 +25,10 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
         public int ArrAmount { get; set; }
         public int PRAmount { get; set; }
         public int RemainAmount { get; set; }
+        public DateTime? DateW1 { get; set; }
+        public DateTime? DateW2 { get; set; }
+        public DateTime? DateW3 { get; set; }
+        public DateTime? DateW4 { get; set; }
 
         AllSupplyInPRArrivalListDataGridView() { }
 
@@ -53,6 +57,10 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
                         ReqW2 = matchingPlan?.ReqW2 ?? 0,
                         ReqW3 = matchingPlan?.ReqW3 ?? 0,
                         ReqW4 = matchingPlan?.ReqW4 ?? 0,
+                        DateW1 = matchingPlan.DateW1,
+                        DateW2 = matchingPlan.DateW2,
+                        DateW3 = matchingPlan.DateW3,
+                        DateW4 = matchingPlan.DateW4,
                     };
                     //Request in plan amount
                     int totalRequestAmount = (matchingPlan?.ReqW1 ?? 0) +

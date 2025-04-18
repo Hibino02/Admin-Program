@@ -21,6 +21,10 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
         public int QuantityW3 { get; set; }
         public int QuantityW4 { get; set; }
         public int Total { get; set; }
+        public DateTime? DateW1 { get; set; }
+        public DateTime? DateW2 { get; set; }
+        public DateTime? DateW3 { get; set; }
+        public DateTime? DateW4 { get; set; }
 
         public AllSupplyInPlanListDataGridView() { }
 
@@ -71,6 +75,10 @@ namespace Admin_Program.SupplyManagement.CustomViewClass
                             QuantityW2 = sip.ReqW2,
                             QuantityW3 = sip.ReqW3,
                             QuantityW4 = sip.ReqW4,
+                            DateW1 = sip.DateW1,
+                            DateW2 = sip.DateW2,
+                            DateW3 = sip.DateW3,
+                            DateW4 = sip.DateW4,
                             Total = sip.ReqW1+ sip.ReqW2+ sip.ReqW3+ sip.ReqW4
                         };
                         sipView.Add(view);

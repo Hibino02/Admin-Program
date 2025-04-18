@@ -39,6 +39,15 @@
             this.excelbutton = new System.Windows.Forms.Button();
             this.finbutton = new System.Windows.Forms.Button();
             this.clearPlanbutton = new System.Windows.Forms.Button();
+            this.selectDateLabel = new System.Windows.Forms.Label();
+            this.labelW1 = new System.Windows.Forms.Label();
+            this.labelW2 = new System.Windows.Forms.Label();
+            this.dateTimePickerW1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerW2 = new System.Windows.Forms.DateTimePicker();
+            this.labelW3 = new System.Windows.Forms.Label();
+            this.dateTimePickerW3 = new System.Windows.Forms.DateTimePicker();
+            this.labelW4 = new System.Windows.Forms.Label();
+            this.dateTimePickerW4 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.planDatagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectPlanSupplydataGridView)).BeginInit();
             this.SuspendLayout();
@@ -176,12 +185,107 @@
             this.clearPlanbutton.UseVisualStyleBackColor = false;
             this.clearPlanbutton.Click += new System.EventHandler(this.clearPlanbutton_Click);
             // 
+            // selectDateLabel
+            // 
+            this.selectDateLabel.AutoSize = true;
+            this.selectDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.selectDateLabel.Location = new System.Drawing.Point(104, 586);
+            this.selectDateLabel.Name = "selectDateLabel";
+            this.selectDateLabel.Size = new System.Drawing.Size(175, 20);
+            this.selectDateLabel.TabIndex = 36;
+            this.selectDateLabel.Text = "กำหนดวันส่งของแผนที่เลือก";
+            // 
+            // labelW1
+            // 
+            this.labelW1.AutoSize = true;
+            this.labelW1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.labelW1.Location = new System.Drawing.Point(285, 586);
+            this.labelW1.Name = "labelW1";
+            this.labelW1.Size = new System.Drawing.Size(92, 20);
+            this.labelW1.TabIndex = 37;
+            this.labelW1.Text = "สัปดาห์ที่ 1 :";
+            // 
+            // labelW2
+            // 
+            this.labelW2.AutoSize = true;
+            this.labelW2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.labelW2.Location = new System.Drawing.Point(579, 586);
+            this.labelW2.Name = "labelW2";
+            this.labelW2.Size = new System.Drawing.Size(92, 20);
+            this.labelW2.TabIndex = 38;
+            this.labelW2.Text = "สัปดาห์ที่ 2 :";
+            // 
+            // dateTimePickerW1
+            // 
+            this.dateTimePickerW1.Checked = false;
+            this.dateTimePickerW1.Location = new System.Drawing.Point(373, 586);
+            this.dateTimePickerW1.Name = "dateTimePickerW1";
+            this.dateTimePickerW1.ShowCheckBox = true;
+            this.dateTimePickerW1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerW1.TabIndex = 39;
+            // 
+            // dateTimePickerW2
+            // 
+            this.dateTimePickerW2.Checked = false;
+            this.dateTimePickerW2.Location = new System.Drawing.Point(667, 586);
+            this.dateTimePickerW2.Name = "dateTimePickerW2";
+            this.dateTimePickerW2.ShowCheckBox = true;
+            this.dateTimePickerW2.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerW2.TabIndex = 40;
+            // 
+            // labelW3
+            // 
+            this.labelW3.AutoSize = true;
+            this.labelW3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.labelW3.Location = new System.Drawing.Point(873, 586);
+            this.labelW3.Name = "labelW3";
+            this.labelW3.Size = new System.Drawing.Size(92, 20);
+            this.labelW3.TabIndex = 41;
+            this.labelW3.Text = "สัปดาห์ที่ 3 :";
+            // 
+            // dateTimePickerW3
+            // 
+            this.dateTimePickerW3.Checked = false;
+            this.dateTimePickerW3.Location = new System.Drawing.Point(961, 586);
+            this.dateTimePickerW3.Name = "dateTimePickerW3";
+            this.dateTimePickerW3.ShowCheckBox = true;
+            this.dateTimePickerW3.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerW3.TabIndex = 42;
+            // 
+            // labelW4
+            // 
+            this.labelW4.AutoSize = true;
+            this.labelW4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.labelW4.Location = new System.Drawing.Point(1164, 586);
+            this.labelW4.Name = "labelW4";
+            this.labelW4.Size = new System.Drawing.Size(92, 20);
+            this.labelW4.TabIndex = 43;
+            this.labelW4.Text = "สัปดาห์ที่ 4 :";
+            // 
+            // dateTimePickerW4
+            // 
+            this.dateTimePickerW4.Checked = false;
+            this.dateTimePickerW4.Location = new System.Drawing.Point(1252, 586);
+            this.dateTimePickerW4.Name = "dateTimePickerW4";
+            this.dateTimePickerW4.ShowCheckBox = true;
+            this.dateTimePickerW4.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerW4.TabIndex = 44;
+            // 
             // AllSupplyDiliveryListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(1464, 595);
+            this.ClientSize = new System.Drawing.Size(1464, 618);
+            this.Controls.Add(this.dateTimePickerW4);
+            this.Controls.Add(this.labelW4);
+            this.Controls.Add(this.dateTimePickerW3);
+            this.Controls.Add(this.labelW3);
+            this.Controls.Add(this.dateTimePickerW2);
+            this.Controls.Add(this.dateTimePickerW1);
+            this.Controls.Add(this.labelW2);
+            this.Controls.Add(this.labelW1);
+            this.Controls.Add(this.selectDateLabel);
             this.Controls.Add(this.clearPlanbutton);
             this.Controls.Add(this.finbutton);
             this.Controls.Add(this.excelbutton);
@@ -219,5 +323,14 @@
         private System.Windows.Forms.Button excelbutton;
         private System.Windows.Forms.Button finbutton;
         private System.Windows.Forms.Button clearPlanbutton;
+        private System.Windows.Forms.Label selectDateLabel;
+        private System.Windows.Forms.Label labelW1;
+        private System.Windows.Forms.Label labelW2;
+        private System.Windows.Forms.DateTimePicker dateTimePickerW1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerW2;
+        private System.Windows.Forms.Label labelW3;
+        private System.Windows.Forms.DateTimePicker dateTimePickerW3;
+        private System.Windows.Forms.Label labelW4;
+        private System.Windows.Forms.DateTimePicker dateTimePickerW4;
     }
 }

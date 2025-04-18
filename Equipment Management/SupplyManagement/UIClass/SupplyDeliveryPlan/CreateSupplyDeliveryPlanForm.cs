@@ -283,7 +283,7 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                     foreach (AllSupplyListDataGridView selectS in selectedSupplyViewList)
                     {
                         Supply newS = new Supply(selectS.ID);
-                        SupplyInPlan sip = new SupplyInPlan(newS,0,0,0,0, dp.ID);
+                        SupplyInPlan sip = new SupplyInPlan(newS,0,0,0,0, dp.ID,null,null,null,null);
                         sip.Create();
                     }
                 }  

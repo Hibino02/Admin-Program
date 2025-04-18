@@ -23,13 +23,18 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
         string monthName;
         DataGridViewRow selectedRow;
 
+        object w1;
+        object w2;
+        object w3;
+        object w4;
+
         List<AllSupplyInPlanListDataGridView> allSupplyList = new List<AllSupplyInPlanListDataGridView>();
         List<AllSupplyInPlanListDataGridView> selectPlanSupplyList = new List<AllSupplyInPlanListDataGridView>();
         BindingSource selectPlanSupplyBindingSource;
         public AllSupplyDiliveryListForm()
         {
             InitializeComponent();
-            this.Size = new Size(1480,634);
+            this.Size = new Size(1480,657);
 
             planList = new List<AllPlanListDataGridView>();
             planListBindingSource = new BindingSource();
@@ -81,6 +86,21 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                 monthName = selectedRow.Cells["MonthName"].Value.ToString();
                 UpdateSupplyInPlanFridView(planID);
             }
+        }
+        //Setting dateTimePicker dynamically **call form FormatSupplyInPlanDataGridView()
+        private void SetDateTimePickerValue(DateTimePicker picker, object value)
+        {
+            if (value != null)
+            {
+                DateTime date;
+                if (DateTime.TryParse(value.ToString(), out date))
+                {
+                    picker.Value = date;
+                    picker.Checked = true;
+                    return;
+                }
+            }
+            picker.Checked = false;
         }
         private void planDatagridview_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -166,25 +186,69 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             }
             if (Columns["QuantityW1"] != null)
             {
-                Columns["QuantityW1"].HeaderText = "สัปดาห์ที่ 1";
+                string header = "สัปดาห์ที่ 1";
+                if (selectPlanSupplydataGridView.Rows.Count > 0)
+                {
+                    w1 = selectPlanSupplydataGridView.Rows[0].Cells["DateW1"].Value;
+                    SetDateTimePickerValue(dateTimePickerW1, w1);
+                    DateTime date;
+                    if (w1 != null && DateTime.TryParse(w1.ToString(), out date))
+                    {
+                        header = date.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("th-TH"));
+                    }
+                }
+                Columns["QuantityW1"].HeaderText = header;
                 Columns["QuantityW1"].Width = 80;
                 Columns["QuantityW1"].ReadOnly = false;
             }
             if (Columns["QuantityW2"] != null)
             {
-                Columns["QuantityW2"].HeaderText = "สัปดาห์ที่ 2";
+                string header = "สัปดาห์ที่ 2";
+                if (selectPlanSupplydataGridView.Rows.Count > 0)
+                {
+                    w2 = selectPlanSupplydataGridView.Rows[0].Cells["DateW2"].Value;
+                    SetDateTimePickerValue(dateTimePickerW2, w2);
+                    DateTime date;
+                    if (w2 != null && DateTime.TryParse(w2.ToString(), out date))
+                    {
+                        header = date.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("th-TH"));
+                    }
+                }
+                Columns["QuantityW2"].HeaderText = header;
                 Columns["QuantityW2"].Width = 80;
                 Columns["QuantityW2"].ReadOnly = false;
             }
             if (Columns["QuantityW3"] != null)
             {
-                Columns["QuantityW3"].HeaderText = "สัปดาห์ที่ 3";
+                string header = "สัปดาห์ที่ 3";
+                if (selectPlanSupplydataGridView.Rows.Count > 0)
+                {
+                    w3 = selectPlanSupplydataGridView.Rows[0].Cells["DateW3"].Value;
+                    SetDateTimePickerValue(dateTimePickerW3, w3);
+                    DateTime date;
+                    if (w3 != null && DateTime.TryParse(w3.ToString(), out date))
+                    {
+                        header = date.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("th-TH"));
+                    }
+                }
+                Columns["QuantityW3"].HeaderText = header;
                 Columns["QuantityW3"].Width = 80;
                 Columns["QuantityW3"].ReadOnly = false;
             }
             if (Columns["QuantityW4"] != null)
             {
-                Columns["QuantityW4"].HeaderText = "สัปดาห์ที่ 4";
+                string header = "สัปดาห์ที่ 4";
+                if (selectPlanSupplydataGridView.Rows.Count > 0)
+                {
+                    w4 = selectPlanSupplydataGridView.Rows[0].Cells["DateW4"].Value;
+                    SetDateTimePickerValue(dateTimePickerW4, w4);
+                    DateTime date;
+                    if (w4 != null && DateTime.TryParse(w4.ToString(), out date))
+                    {
+                        header = date.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("th-TH"));
+                    }
+                }
+                Columns["QuantityW4"].HeaderText = header;
                 Columns["QuantityW4"].Width = 80;
                 Columns["QuantityW4"].ReadOnly = false;
             }
@@ -193,6 +257,22 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                 Columns["Total"].HeaderText = "รวม";
                 Columns["Total"].Width = 40;
                 Columns["Total"].ReadOnly = true;
+            }
+            if (Columns["DateW1"] != null)
+            {
+                Columns["DateW1"].Visible = false;
+            }
+            if (Columns["DateW2"] != null)
+            {
+                Columns["DateW2"].Visible = false;
+            }
+            if (Columns["DateW3"] != null)
+            {
+                Columns["DateW3"].Visible = false;
+            }
+            if (Columns["DateW4"] != null)
+            {
+                Columns["DateW4"].Visible = false;
             }
             selectPlanSupplydataGridView.CellFormatting += selectPlanSupplydataGridView_CellFormatting;
         }
@@ -217,11 +297,20 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                     int qw3 = Convert.ToInt32(row.Cells["QuantityW3"].Value ?? 0);
                     int qw4 = Convert.ToInt32(row.Cells["QuantityW4"].Value ?? 0);
 
+                    DateTime? dateW1 = dateTimePickerW1.Checked ? (DateTime?)dateTimePickerW1.Value.Date : null;
+                    DateTime? dateW2 = dateTimePickerW2.Checked ? (DateTime?)dateTimePickerW2.Value.Date : null;
+                    DateTime? dateW3 = dateTimePickerW3.Checked ? (DateTime?)dateTimePickerW3.Value.Date : null;
+                    DateTime? dateW4 = dateTimePickerW4.Checked ? (DateTime?)dateTimePickerW4.Value.Date : null;
+
                     SupplyInPlan sip = new SupplyInPlan(sipid);
                     sip.ReqW1 = qw1;
                     sip.ReqW2 = qw2;
                     sip.ReqW3 = qw3;
                     sip.ReqW4 = qw4;
+                    sip.DateW1 = dateW1;
+                    sip.DateW2 = dateW2;
+                    sip.DateW3 = dateW3;
+                    sip.DateW4 = dateW4;
                     sip.Change();
                 }
                 GlobalVariable.EmailService.SendEmailForPlan(planName, monthName);
@@ -314,6 +403,10 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
                         sip.ReqW2 = 0;
                         sip.ReqW3 = 0;
                         sip.ReqW4 = 0;
+                        sip.DateW1 = null;
+                        sip.DateW2 = null;
+                        sip.DateW3 = null;
+                        sip.DateW4 = null;
                         sip.Change();
                     }
                     GlobalVariable.EmailService.SendEmailForPlan(planName, monthName);
@@ -351,6 +444,5 @@ namespace Admin_Program.SupplyManagement.UIClass.SupplyDeliveryPlan
             var export = new ExportExcellForSupplyPlan(selectPlanSupplydataGridView);
             export.ExportToExcel();
         }
-
     }
 }
