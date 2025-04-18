@@ -586,13 +586,19 @@ namespace Admin_Program.UIClass.EquipmentInstallationSource
         //Open invoice
         private void invoiceLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(acquisitionDocumentPath))
+            if(acquisitionDocumentPath != oldAcquisitionDocumentPath)
             {
-                Global.DownloadAndOpenPdf(acquisitionDocumentPath);
+                if (!string.IsNullOrEmpty(acquisitionDocumentPath))
+                {
+                    System.Diagnostics.Process.Start(acquisitionDocumentPath);
+                }
             }
             else
             {
-                ShowCustomMessageBox("ไม่เคยมีการบันทึกไฟล์");
+                if (!string.IsNullOrEmpty(oldAcquisitionDocumentPath))
+                {
+                    Global.DownloadAndOpenPdf(oldAcquisitionDocumentPath);
+                }
             }
         }
         //Call custom message box

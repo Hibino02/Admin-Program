@@ -172,9 +172,19 @@ namespace Admin_Program.SupplyManagement.UIClass.QuotationManage
         //Event to open QuotationPDF
         private void quotationlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(QuotationPDF))
+            if(QuotationPDF != oldQuotationPDF)
             {
-                Global.DownloadAndOpenPdf(QuotationPDF);
+                if (!string.IsNullOrEmpty(QuotationPDF))
+                {
+                    System.Diagnostics.Process.Start(QuotationPDF);
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(oldQuotationPDF))
+                {
+                    Global.DownloadAndOpenPdf(oldQuotationPDF);
+                }
             }
         }
         //Manage Supplier
