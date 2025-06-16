@@ -839,7 +839,7 @@ namespace Admin_Program.SupplyManagement.UIClass
                     var cell39_1 = worksheet.Cell(39, 1);
                     cell39_1.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                     cell39_1.Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                    cell39_1.Value = "0-3,000 baht";
+                    cell39_1.Value = "0 - 3,000 baht";
                     var cell39_3 = worksheet.Cell(39, 3);
                     cell39_3.Style.Border.RightBorder = XLBorderStyleValues.Thin;
                     cell39_3.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
@@ -858,7 +858,7 @@ namespace Admin_Program.SupplyManagement.UIClass
                     worksheet.Range("A40:B40").Merge();
                     var cell40_1 = worksheet.Cell(40, 1);
                     cell40_1.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                    cell40_1.Value = ("3,001-10,000 baht");
+                    cell40_1.Value = ("3,001 - 10,000 baht");
                     var cell40_3 = worksheet.Cell(40, 3);
                     cell40_3.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                     cell40_3.Style.Border.RightBorder = XLBorderStyleValues.Thin;
@@ -876,7 +876,7 @@ namespace Admin_Program.SupplyManagement.UIClass
                     worksheet.Range("A41:B41").Merge();
                     var cell41_1 = worksheet.Cell(41, 1);
                     cell41_1.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                    cell41_1.Value = ("10,001-50,000 baht");
+                    cell41_1.Value = ("10,001 - 50,000 baht");
                     var cell41_3 = worksheet.Cell(41, 3);
                     cell41_3.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                     cell41_3.Style.Border.RightBorder = XLBorderStyleValues.Thin;
@@ -894,25 +894,33 @@ namespace Admin_Program.SupplyManagement.UIClass
                     worksheet.Range("A42:B42").Merge();
                     var cell42_1 = worksheet.Cell(42, 1);
                     cell42_1.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                    cell42_1.Value = ("More than 50,000 baht");
+                    cell42_1.Value = ("50,001 - 100,000 baht");
                     var cell42_3 = worksheet.Cell(42, 3);
                     cell42_3.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                     cell42_3.Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                    cell42_3.Value = "DMG";
+                    cell42_3.Value = "ADM / DMG";
                     var cell42_4 = worksheet.Cell(42, 4);
                     cell42_4.Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                    cell42_4.Value = "MD";
+                    cell42_4.Value = "GM";
                     var cell42_6 = worksheet.Cell(42, 6);
                     cell42_6.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                     cell42_6.Value = "       [     ] อื่นๆ ( Others) ระบุ …………………………………";
                     worksheet.Cell(42, 9).Style.Border.RightBorder = XLBorderStyleValues.Thin;
                     //43
                     worksheet.Row(43).Height = 15;
+                    worksheet.Range("A43:D43").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    worksheet.Range("A43:B43").Merge();
+                    var cell43_1 = worksheet.Cell(43, 1);
+                    cell43_1.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                    cell43_1.Value = ("More than 100,000 baht");
                     worksheet.Range("A43:D43").Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                    worksheet.Cell(43, 1).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                    worksheet.Cell(43, 3).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                    worksheet.Cell(43, 3).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                    worksheet.Cell(43, 4).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                    var cell43_3 = worksheet.Cell(43, 3);
+                    cell43_3.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                    cell43_3.Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                    cell43_3.Value = "GM";
+                    var cell43_4 = worksheet.Cell(43, 4);
+                    cell43_4.Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                    cell43_4.Value = "MD";
                     worksheet.Range("F43:I43").Style.Border.BottomBorder = XLBorderStyleValues.Thin;
                     worksheet.Cell(43, 6).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                     worksheet.Cell(43, 9).Style.Border.RightBorder = XLBorderStyleValues.Thin;
@@ -1070,7 +1078,7 @@ namespace Admin_Program.SupplyManagement.UIClass
                     worksheet.Cell(55, 10).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                     worksheet.Range("A55:I55").Style.Border.BottomBorder = XLBorderStyleValues.Thin;
                     //Footer
-                    worksheet.PageSetup.Footer.Right.AddText("FR-Q-AM-034 Rev.02");
+                    worksheet.PageSetup.Footer.Right.AddText("FR-Q-AM-034 Rev.03");
 
                     // Show SaveFileDialog
                     SaveFileDialog saveFileDialog = new SaveFileDialog();

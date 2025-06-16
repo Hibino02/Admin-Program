@@ -71,15 +71,8 @@ namespace Admin_Program.GlobalVariable
             {
                 MessageBox.Show($"Error exporting to Excel: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            finally
-            {
-                // Cleanup
-                workbook.Close(false);
-                excelApp.Quit();
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
-            }
+            workbook.Close();
+            excelApp.Quit();
         }
     }
 }
