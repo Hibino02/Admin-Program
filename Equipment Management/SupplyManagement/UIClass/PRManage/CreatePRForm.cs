@@ -1581,7 +1581,7 @@ namespace Admin_Program.SupplyManagement.UIClass.PRManage
                 worksheet.Cell(55, 10).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                 worksheet.Range("A55:I55").Style.Border.BottomBorder = XLBorderStyleValues.Thin;
                 //Footer
-                worksheet.PageSetup.Footer.Right.AddText("FR-Q-AM-034 Rev.02");
+                worksheet.PageSetup.Footer.Right.AddText("FR-Q-AM-034 Rev.03");
 
                 // Show SaveFileDialog
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
