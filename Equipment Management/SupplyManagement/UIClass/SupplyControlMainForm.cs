@@ -516,12 +516,20 @@ namespace Admin_Program.SupplyManagement.UIClass
                     // Set row and content
                     //1
                     worksheet.Row(1).Height = 24.75;
-                    var cellNEC = worksheet.Cell(1, 1);
-                    cellNEC.Value = "NEC";
-                    cellNEC.Style.Font.SetBold();
-                    cellNEC.Style.Font.SetFontColor(XLColor.Blue);
-                    cellNEC.Style.Font.SetFontName("Tahoma");
-                    cellNEC.Style.Font.SetFontSize(25);
+
+                    var imagePath = Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory,
+                        "Images",
+                        "Picture1.png"
+                    );
+
+                    if (!File.Exists(imagePath))
+                        throw new FileNotFoundException($"Image not found at: {imagePath}");
+
+                    var picture = worksheet.AddPicture(imagePath)
+                                           .MoveTo(1, 1);
+                    picture.Width = 120;
+                    picture.Height = 35;
                     var cellNippon = worksheet.Cell(1, 3);
                     cellNippon.Value = "Nippon Express NEC Logistics (Thailand) Co., Ltd.";
                     cellNippon.Style.Font.SetFontName("Tahoma");
